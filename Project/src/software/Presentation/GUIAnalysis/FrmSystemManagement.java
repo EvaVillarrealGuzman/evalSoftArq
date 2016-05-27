@@ -236,11 +236,11 @@ public class FrmSystemManagement extends JFrame {
 
 		cmbSystemName = new JComboBox();
 		cmbSystemName.setToolTipText("Select system name");
-		cmbSystemName.addItemListener(new ItemListener() {
+		/*cmbSystemName.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				cmbSystemNameItemStateChanged(arg0);
 			};
-		});
+		});*/
 		cmbSystemName.setBounds(111, 32, 182, 20);
 		contentPane.add(cmbSystemName);
 
@@ -436,7 +436,7 @@ public class FrmSystemManagement extends JFrame {
 	/**
 	 * It detects when an combo's item is selected and prepare the view.
 	 */
-	private void cmbSystemNameItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_cmbNombreItemStateChanged
+	/*private void cmbSystemNameItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_cmbNombreItemStateChanged
 		if (this.getViewController().isEmpty(cmbSystemName)) {
 			this.prepareView(1);
 		} else {
@@ -445,7 +445,7 @@ public class FrmSystemManagement extends JFrame {
 			this.getViewController().setOpcABM(2);
 			this.prepareView(this.getViewController().getOpcABM());
 		}
-	}
+	}*/
 
 	public void setView() {
 		this.getViewController().getView();

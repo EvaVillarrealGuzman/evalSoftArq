@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+import org.eclipse.swt.widgets.DateTime;
+import org.hibernate.annotations.Type;
+
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
@@ -33,11 +36,11 @@ public class System implements Comparable{
 	
 	private String projectName;
 	
-	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date projectFinishDate;
+	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTimeTZ")
+	private DateTime  projectFinishDate;
 	
-	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date projectStartDate;
+	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTimeTZ")
+	private DateTime  projectStartDate;
 	
     @OneToMany(targetEntity = QualityRequirement.class, cascade = CascadeType.ALL)
 	private Set<QualityRequirement> qualityRequirements = new HashSet<QualityRequirement>();
@@ -54,7 +57,7 @@ public class System implements Comparable{
 	}
 	
 	public System(String psystemName, String pprojectName,
-			Date pprojectStartDate, Date pprojectFinishDate, boolean pstate) {
+			DateTime  pprojectStartDate, DateTime  pprojectFinishDate, boolean pstate) {
 		super();
 		this.projectFinishDate = pprojectFinishDate;
 		this.projectStartDate = pprojectStartDate;
@@ -72,19 +75,19 @@ public class System implements Comparable{
 		this.id = pid;
 	}
 	
-	public Date getProjectFinishDate() {
+	public DateTime  getProjectFinishDate() {
 		return projectFinishDate;
 	}
 	
-	public void setProjectFinishDate(Date pprojectFinishDate) {
+	public void setProjectFinishDate(DateTime  pprojectFinishDate) {
 		this.projectFinishDate = pprojectFinishDate;
 	}
 	
-	public Date getProjectStartDate() {
+	public DateTime  getProjectStartDate() {
 		return projectStartDate;
 	}
 	
-	public void setProjectStartDate(Date pprojectStartDate) {
+	public void setProjectStartDate(DateTime  pprojectStartDate) {
 		this.projectStartDate = pprojectStartDate;
 	}
 	

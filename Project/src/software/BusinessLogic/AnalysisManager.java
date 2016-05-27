@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 
+import org.eclipse.swt.widgets.DateTime;
+
 import software.DataManager.HibernateManager;
 import software.DomainModel.AnalysisEntity.Artifact;
 import software.DomainModel.AnalysisEntity.ArtifactType;
@@ -425,7 +427,7 @@ public class AnalysisManager extends HibernateManager {
 	 * 
 	 */
 	public void newSystem(String psystemname, String pprojectName,
-			Date pprojectStartDate, Date pprojectFinishDate, Boolean pstate) {
+			DateTime pprojectStartDate, DateTime pprojectFinishDate, Boolean pstate) {
 		this.setSystem(new software.DomainModel.AnalysisEntity.System(psystemname,
 				pprojectName, pprojectStartDate, pprojectFinishDate, pstate));
 	}
@@ -463,11 +465,11 @@ public class AnalysisManager extends HibernateManager {
 		this.getSystem().setProjectName(pprojectName);
 	}
 
-	public void setStartDate(Date pstartDate) {
+	public void setStartDate(DateTime pstartDate) {
 		this.getSystem().setProjectStartDate(pstartDate);
 	}
 
-	public void setFinishDate(Date pfinishDate) {
+	public void setFinishDate(DateTime pfinishDate) {
 		this.getSystem().setProjectFinishDate(pfinishDate);
 	}
 
@@ -480,11 +482,11 @@ public class AnalysisManager extends HibernateManager {
 		return this.getSystem().getProjectName();
 	}
 
-	public Date getStartDate() {
+	public DateTime getStartDate() {
 		return this.getSystem().getProjectStartDate();
 	}
 
-	public Date getFinishDate() {
+	public DateTime getFinishDate() {
 		return this.getSystem().getProjectFinishDate();
 	}
 

@@ -5,6 +5,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
+
 import software.BusinessLogic.AnalysisManager;
 import software.Presentation.GUIAnalysis.FrmSystemManagement;
 
@@ -109,8 +111,9 @@ public class SystemManagementController {
 	 * Create a new system
 	 */
 	public int newSystem() {
-		if (this.isValidData()) {
-			this.getManager()
+		return opcABM;
+		/*if (this.isValidData()) {
+			/*this.getManager()
 					.newSystem(
 							this.getFrmSystemManagement().getTxtSystemName()
 									.getText(),
@@ -123,16 +126,17 @@ public class SystemManagementController {
 			return 0;
 		} else {
 			return 1;
-		}
+		}*/
+		
 	}
 
 	/**
 	 * Update a system
 	 */
 	public int setSystem() {
-		if (this.isValidData()) {
-			this.getManager().setSystemName(
-					this.getFrmSystemManagement().getTxtSystemName().getText());
+		/*if (this.isValidData()) {
+			this.getManager().setSystemName(((IStructuredSelection) this.getFrmSystemManagement().getCboSystem().getSelection()).getFirstElement().toString() 
+					.getTxtSystemName().getText());
 			this.getManager()
 					.setProjectName(
 							this.getFrmSystemManagement().getTxtProjectName()
@@ -144,9 +148,9 @@ public class SystemManagementController {
 					this.getFrmSystemManagement().getCalendarFinishDate()
 							.getDate());
 			return 0;
-		} else {
+		} else {*/
 			return 1;
-		}
+	/*	}*/
 	}
 
 	/**
@@ -263,10 +267,10 @@ public class SystemManagementController {
 				.setText(this.getManager().getSystemName());
 		this.getFrmSystemManagement().getTxtProjectName()
 				.setText(this.getManager().getProjectName());
-		this.getFrmSystemManagement().getCalendarStartDate()
+		/*this.getFrmSystemManagement().getCalendarStartDate()
 				.setDate(this.getManager().getStartDate());
 		this.getFrmSystemManagement().getCalendarFinishDate()
-				.setDate(this.getManager().getFinishDate());
+				.setDate(this.getManager().getFinishDate());*/
 	}
 
 	public void removeView() {

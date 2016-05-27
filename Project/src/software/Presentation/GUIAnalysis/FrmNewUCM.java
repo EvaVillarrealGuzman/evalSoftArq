@@ -14,6 +14,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.ui.IWorkbenchPage;
+
 import javax.swing.UIManager;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
@@ -28,7 +32,7 @@ import javax.swing.ImageIcon;
  * Form SystemManagement
  * 
  * @author: FEM
- * @version: 06/11/2015
+ * @version: 19/05/2016
  */
 public class FrmNewUCM extends JFrame {
 
@@ -42,11 +46,13 @@ public class FrmNewUCM extends JFrame {
 	private JButton btnBrowse;
 	private int YES_NO_OPTION;
 	private JTextField textFileName;
+	
+	private JButton btnNew;
 
 	/**
 	 * Builder
 	 */
-	private FrmNewUCM(NewUCMController pthis) {
+	public FrmNewUCM(NewUCMController pthis) {
 		try {
 			initComponent();
 		} catch (Exception pe) {
@@ -165,6 +171,24 @@ public class FrmNewUCM extends JFrame {
 		});
 		btnCancel.setBounds(491, 211, 103, 23);
 		contentPane.add(btnCancel);
+		
+		btnNew = new JButton("New");
+		btnNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					try {
+						getViewController().openJUCMNav();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		});
+		btnNew.setIcon(new ImageIcon(FrmSystemManagement.class
+				.getResource("/Icons/new.png")));
+		btnNew.setFont(new Font("Cambria", Font.PLAIN, 12));
+		btnNew.setToolTipText("New");
+		btnNew.setBounds(10, 211, 103, 23);
+		contentPane.add(btnNew);
 	}
 
 	/**
@@ -192,6 +216,22 @@ public class FrmNewUCM extends JFrame {
 
 	public void settxtProjectName(JTextField ptxtProjectName) {
 		this.txtProjectName = ptxtProjectName;
+	}
+	
+	public JTextField getTxtProjectName() {
+		return txtProjectName;
+	}
+
+	public void setTxtProjectName(JTextField txtProjectName) {
+		this.txtProjectName = txtProjectName;
+	}
+
+	public JTextField getTextFileName() {
+		return textFileName;
+	}
+
+	public void setTextFileName(JTextField textFileName) {
+		this.textFileName = textFileName;
 	}
 
 	/**
@@ -228,6 +268,4 @@ public class FrmNewUCM extends JFrame {
 	public void clearView() {
 		txtProjectName.setText("");
 	}
-
-
 }
