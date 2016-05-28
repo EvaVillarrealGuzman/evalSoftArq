@@ -1,24 +1,18 @@
 package project.preferences;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import org.eclipse.jface.preference.*;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-
-import com.toedter.calendar.JDateChooser;
-
 import project.preferences.controller.SystemPPController;
-
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,7 +31,7 @@ import org.eclipse.swt.layout.GridLayout;
  */
 
 public class SystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-	
+
 	private DateTime calendarStartDate;
 	private DateTime calendarFinishDate;
 	private Label lblCalendarStarDate;
@@ -50,15 +44,14 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 	private StringFieldEditor projectName;
 	private static SystemPreferencePage SystemPP;
 	private SystemPPController viewController;
+	private Composite cProject;
 
 	public SystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SystemPPController();
 		this.setViewController(viewController);
-				
 	}
-
 
 	/*
 	 * (non-Javadoc)
@@ -69,34 +62,37 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 	public void init(IWorkbench workbench) {
 	}
 
-
 	@Override
 	protected void createFieldEditors() {
+
 		this.getViewController().setForm(this);
-		
+
 		GridLayout layout = new GridLayout(2, false);
 		getFieldEditorParent().setLayout(layout);
 
-		Label label = new Label(getFieldEditorParent(), SWT.NONE);
-		label.setText("SystemName: ");
-	    cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
-		//AAthis.loadCombo();
+		Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
+		labelSn.setText("System Name: ");
+		cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
 
-	  /*  cboSystem = new ComboFieldEditor("SystemName", "System name: ", new String[][] { { "16", "16" },
-			{ "8 bit (256)", "256" }, { "16 bit (65K)", "65536" }, { "24 bit (16M)", "16777216" } },
-			getFieldEditorParent());
-		addField(cboSystem);*/
+		cboSystem.setContentProvider(ArrayContentProvider.getInstance());
+		this.loadCombo();
 
-		/*Composite composite = new Composite(getFieldEditorParent(), SWT.EMBEDDED | SWT.NO_BACKGROUND);
-		Frame frame = SWT_AWT.new_Frame(composite);
-		
-		JPanel panel = new JPanel(new BorderLayout());
-		/*  JButton button = new JButton("Swing button");
-		  JLabel label = new JLabel("Swing label");
-		  panel.add(label,BorderLayout.NORTH);
-		  panel.add(button,BorderLayout.CENTER);
-		  frame.add(panel);*/
-		
+		cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (getViewController().getManager().existSystemTrue()) {
+					viewController.setModel(cboSystem);
+					viewController.getView();
+					prepareView(1);
+				} else {
+					JOptionPane.showOptionDialog(null, "No saved systems", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")),
+							new Object[] { "OK" }, "OK");
+				}
+			}
+		});
+
 		// Group for project properties
 		Group groupProject = new Group(getFieldEditorParent(), SWT.SHADOW_ETCHED_IN);
 		groupProject.setText("Project");
@@ -108,171 +104,191 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 		GridData dataProject = new GridData();
 		groupProject.setLayoutData(dataProject);
 
-		Composite cProject = new Composite(groupProject, SWT.NONE);
+		cProject = new Composite(groupProject, SWT.NONE);
 		dataProject = new GridData();
 		dataProject.grabExcessHorizontalSpace = true;
 		dataProject.horizontalIndent = 40;
 		cProject.setLayoutData(dataProject);
 
-		projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject); //$NON-NLS-1$
+		projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject);
+
 		addField(projectName);
 
 		lblCalendarStarDate = new Label(cProject, SWT.NONE);
 		lblCalendarStarDate.setText("Start Date");
 
-		
-
-		/*sd = new JDateChooser();
-		sd.setToolTipText("Sel");
-		sd.setBounds(102, 56, 184, 20);
-		panel.add(sd);
-		frame.add(panel);
-		*/
 		calendarStartDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
 		lblCalendarFinishDate = new Label(cProject, SWT.NONE);
 		lblCalendarFinishDate.setText("Finish Date");
 
 		calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
-		
+
 		Label label1 = new Label(getFieldEditorParent(), SWT.LEFT);
 
 		btnSave = new Button(getFieldEditorParent(), SWT.PUSH);
 		btnSave.setText(" Save ");
 		btnSave.setToolTipText("Save");
-		
 		btnSave.addSelectionListener(new SelectionAdapter() {
-		    @Override
-		    public void widgetSelected(SelectionEvent e) {
-		    	viewController.save();
-		        System.out.println("Called!");
-		    }
-		}); 
-		
-		btnEdit = new Button(getFieldEditorParent(), SWT.PUSH);
-		btnEdit.setText("Edit");
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				viewController.save();
+			}
+		});
 
 		btnRemove = new Button(getFieldEditorParent(), SWT.PUSH);
 		btnRemove.setText("Remove");
+		btnRemove.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (JOptionPane.showOptionDialog(null, "Do you want to delete the system?", "Warning",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
+						new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")),
+						new Object[] { "Yes", "No" }, "Yes") == 0) {
+					viewController.remove();
+				}
+			}
+		});
+
+		this.cleanView();
 
 	}
-	
 
 	public DateTime getCalendarStartDate() {
 		return calendarStartDate;
 	}
 
-
 	public void setCalendarStartDate(DateTime calendarStartDate) {
 		this.calendarStartDate = calendarStartDate;
 	}
-
 
 	public DateTime getCalendarFinishDate() {
 		return calendarFinishDate;
 	}
 
-
 	public void setCalendarFinishDate(DateTime calendarFinishDate) {
 		this.calendarFinishDate = calendarFinishDate;
 	}
-
 
 	public Label getLblCalendarStarDate() {
 		return lblCalendarStarDate;
 	}
 
-
 	public void setLblCalendarStarDate(Label lblCalendarStarDate) {
 		this.lblCalendarStarDate = lblCalendarStarDate;
 	}
-
 
 	public Label getLblCalendarFinishDate() {
 		return lblCalendarFinishDate;
 	}
 
-
 	public void setLblCalendarFinishDate(Label lblCalendarFinishDate) {
 		this.lblCalendarFinishDate = lblCalendarFinishDate;
 	}
-
 
 	public Button getBtnSave() {
 		return btnSave;
 	}
 
-
 	public void setBtnSave(Button btnSave) {
 		this.btnSave = btnSave;
 	}
-
 
 	public Button getBtnRemove() {
 		return btnRemove;
 	}
 
-
 	public void setBtnRemove(Button btnRemove) {
 		this.btnRemove = btnRemove;
 	}
-
 
 	public Button getBtnEdit() {
 		return btnEdit;
 	}
 
-
 	public void setBtnEdit(Button btnEdit) {
 		this.btnEdit = btnEdit;
 	}
-
 
 	public ComboViewer getCboSystem() {
 		return cboSystem;
 	}
 
-
 	public void setCboSystem(ComboViewer cboSystem) {
 		this.cboSystem = cboSystem;
 	}
-
 
 	public StringFieldEditor getProjectName() {
 		return projectName;
 	}
 
-
 	public void setProjectName(StringFieldEditor projectName) {
 		this.projectName = projectName;
 	}
-
 
 	public static SystemPreferencePage getSystemPP() {
 		return SystemPP;
 	}
 
-
 	public static void setSystemPP(SystemPreferencePage systemPP) {
 		SystemPP = systemPP;
 	}
-
 
 	public SystemPPController getViewController() {
 		return viewController;
 	}
 
-
 	public void setViewController(SystemPPController viewController) {
 		this.viewController = viewController;
 	}
-	
+
+	public Composite getcProject() {
+		return cProject;
+	}
+
+	public void setcProject(Composite cProject) {
+		this.cProject = cProject;
+	}
 
 	/**
 	 * load combo with system names
 	 */
 	public void loadCombo() {
-		this.getViewController().setModel(this.getCboSystem());
+		this.getViewController().setModel();
 	}
 
+	/**
+	 * clean view of the form
+	 */
+	private void cleanView() {
+		this.getCalendarStartDate().setEnabled(false);
+		this.getCalendarFinishDate().setEnabled(false);
+		this.getProjectName().getTextControl(this.getcProject()).setEnabled(false);
+	}
+
+	/**
+	 * edit view of the form
+	 */
+	private void EditView() {
+		this.getCalendarStartDate().setEnabled(true);
+		this.getCalendarFinishDate().setEnabled(true);
+		this.getProjectName().getTextControl(this.getcProject()).setEnabled(true);
+	}
+
+	public void prepareView(int pabm) {
+		switch (pabm) {
+		case 0:// New
+			this.getCalendarStartDate().setEnabled(false);
+			this.getCalendarFinishDate().setEnabled(false);
+			this.getProjectName().getTextControl(this.getcProject()).setEnabled(false);
+			break;
+		case 1:// Search
+			this.getCalendarStartDate().setEnabled(true);
+			this.getCalendarFinishDate().setEnabled(true);
+			this.getProjectName().getTextControl(this.getcProject()).setEnabled(true);
+			this.loadCombo();
+			break;
+		}
+
+	}
 }

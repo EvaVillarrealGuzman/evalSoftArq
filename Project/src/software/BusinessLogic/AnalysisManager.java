@@ -1,14 +1,12 @@
 package software.BusinessLogic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
-
-import org.eclipse.swt.widgets.DateTime;
-
 import software.DataManager.HibernateManager;
 import software.DomainModel.AnalysisEntity.Artifact;
 import software.DomainModel.AnalysisEntity.ArtifactType;
@@ -48,7 +46,7 @@ public class AnalysisManager extends HibernateManager {
 	/**
 	 * Builder
 	 */
-	private AnalysisManager() {
+	public AnalysisManager() {
 		super();
 	}
 
@@ -108,13 +106,14 @@ public class AnalysisManager extends HibernateManager {
 	 * 
 	 * @return ComboBoxModel with system names whose state==true
 	 */
-	public DefaultComboBoxModel getComboModelSystem() {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.System[]  getComboModelSystem() {
+		ArrayList<software.DomainModel.AnalysisEntity.System> systems = new ArrayList<software.DomainModel.AnalysisEntity.System>();
 		for (software.DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			auxModel.addElement(auxTipo);
+			systems.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.System[] arraySystem = new software.DomainModel.AnalysisEntity.System[systems.size()];
+		systems.toArray(arraySystem);
+		return arraySystem;
 	}
 
 	/**
@@ -122,8 +121,7 @@ public class AnalysisManager extends HibernateManager {
 	 * @return List<System> with the system names whose state==true
 	 */
 	public List<software.DomainModel.AnalysisEntity.System> listSystem() {
-		return this.listClass(software.DomainModel.AnalysisEntity.System.class,
-				"systemName", true);
+		return this.listClass(software.DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
 
 	/**
@@ -214,12 +212,10 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelStimulusSourceType(
-			QualityAttribute qualityAttribute) {
+	public DefaultComboBoxModel getComboModelStimulusSourceType(QualityAttribute qualityAttribute) {
 		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
 		auxModel.addElement("");
-		Iterator it = qualityAttribute.getGenericScenario()
-				.getStimulusSourceTypes().iterator();
+		Iterator it = qualityAttribute.getGenericScenario().getStimulusSourceTypes().iterator();
 		while (it.hasNext()) {
 			StimulusSourceType aux = (StimulusSourceType) it.next();
 			auxModel.addElement(aux);
@@ -241,12 +237,10 @@ public class AnalysisManager extends HibernateManager {
 	 *         of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelStimulusType(
-			QualityAttribute qualityAttribute) {
+	public DefaultComboBoxModel getComboModelStimulusType(QualityAttribute qualityAttribute) {
 		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
 		auxModel.addElement("");
-		Iterator it = qualityAttribute.getGenericScenario().getStimulusTypes()
-				.iterator();
+		Iterator it = qualityAttribute.getGenericScenario().getStimulusTypes().iterator();
 		while (it.hasNext()) {
 			StimulusType aux = (StimulusType) it.next();
 			auxModel.addElement(aux);
@@ -268,12 +262,10 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelEnvironmentType(
-			QualityAttribute qualityAttribute) {
+	public DefaultComboBoxModel getComboModelEnvironmentType(QualityAttribute qualityAttribute) {
 		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
 		auxModel.addElement("");
-		Iterator it = qualityAttribute.getGenericScenario()
-				.getEnvironmentTypes().iterator();
+		Iterator it = qualityAttribute.getGenericScenario().getEnvironmentTypes().iterator();
 		while (it.hasNext()) {
 			EnvironmentType aux = (EnvironmentType) it.next();
 			auxModel.addElement(aux);
@@ -295,12 +287,10 @@ public class AnalysisManager extends HibernateManager {
 	 *         of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelArtifactType(
-			QualityAttribute qualityAttribute) {
+	public DefaultComboBoxModel getComboModelArtifactType(QualityAttribute qualityAttribute) {
 		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
 		auxModel.addElement("");
-		Iterator it = qualityAttribute.getGenericScenario().getArtifactTypes()
-				.iterator();
+		Iterator it = qualityAttribute.getGenericScenario().getArtifactTypes().iterator();
 		while (it.hasNext()) {
 			ArtifactType aux = (ArtifactType) it.next();
 			auxModel.addElement(aux);
@@ -322,12 +312,10 @@ public class AnalysisManager extends HibernateManager {
 	 *         of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelResponseType(
-			QualityAttribute qualityAttribute) {
+	public DefaultComboBoxModel getComboModelResponseType(QualityAttribute qualityAttribute) {
 		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
 		auxModel.addElement("");
-		Iterator it = qualityAttribute.getGenericScenario().getResponseTypes()
-				.iterator();
+		Iterator it = qualityAttribute.getGenericScenario().getResponseTypes().iterator();
 		while (it.hasNext()) {
 			ResponseType aux = (ResponseType) it.next();
 			auxModel.addElement(aux);
@@ -349,12 +337,10 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelResponseMeasureType(
-			QualityAttribute qualityAttribute) {
+	public DefaultComboBoxModel getComboModelResponseMeasureType(QualityAttribute qualityAttribute) {
 		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
 		auxModel.addElement("");
-		Iterator it = qualityAttribute.getGenericScenario()
-				.getResponseMeasureTypes().iterator();
+		Iterator it = qualityAttribute.getGenericScenario().getResponseMeasureTypes().iterator();
 		while (it.hasNext()) {
 			ResponseMeasureType aux = (ResponseMeasureType) it.next();
 			auxModel.addElement(aux);
@@ -426,15 +412,16 @@ public class AnalysisManager extends HibernateManager {
 	 *            , projectName, projectStartDate, projectFinishDate, state
 	 * 
 	 */
-	public void newSystem(String psystemname, String pprojectName,
-			DateTime pprojectStartDate, DateTime pprojectFinishDate, Boolean pstate) {
-		this.setSystem(new software.DomainModel.AnalysisEntity.System(psystemname,
-				pprojectName, pprojectStartDate, pprojectFinishDate, pstate));
+	public void newSystem(String psystemname, String pprojectName, Date pprojectStartDate, Date pprojectFinishDate,
+			Boolean pstate) {
+		this.setSystem(new software.DomainModel.AnalysisEntity.System(psystemname, pprojectName, pprojectStartDate,
+				pprojectFinishDate, pstate));
 	}
 
 	/**
 	 * Creates the quality requirement and this is responsible for creating the
-	 * specific scenario (Creator Pattern). The quality requirement is added to the system.
+	 * specific scenario (Creator Pattern). The quality requirement is added to
+	 * the system.
 	 * 
 	 * @param psystem
 	 *            , pdescription, pqualityAttribute, pstimulusSource, pstimulus,
@@ -442,17 +429,13 @@ public class AnalysisManager extends HibernateManager {
 	 *            pcondition
 	 * 
 	 */
-	public void newQualityRequirement(
-			software.DomainModel.AnalysisEntity.System psystem, String pdescription,
-			boolean pstate, QualityAttribute pqualityAttribute,
-			StimulusSource pstimulusSource, Stimulus pstimulus,
-			Artifact partifact, Environment penvironment, Response presponse,
-			ResponseMeasure presponseMeasure, Condition pcondition) {
-		psystem.getQualityRequirements().add(
-				new QualityRequirement(pstate, new SpecificScenario(
-						pdescription, pqualityAttribute, pstimulusSource,
-						pstimulus, partifact, penvironment, presponse,
-						presponseMeasure, pcondition)));
+	public void newQualityRequirement(software.DomainModel.AnalysisEntity.System psystem, String pdescription,
+			boolean pstate, QualityAttribute pqualityAttribute, StimulusSource pstimulusSource, Stimulus pstimulus,
+			Artifact partifact, Environment penvironment, Response presponse, ResponseMeasure presponseMeasure,
+			Condition pcondition) {
+		psystem.getQualityRequirements()
+				.add(new QualityRequirement(pstate, new SpecificScenario(pdescription, pqualityAttribute,
+						pstimulusSource, pstimulus, partifact, penvironment, presponse, presponseMeasure, pcondition)));
 		this.setSystem(psystem);
 	}
 
@@ -465,11 +448,11 @@ public class AnalysisManager extends HibernateManager {
 		this.getSystem().setProjectName(pprojectName);
 	}
 
-	public void setStartDate(DateTime pstartDate) {
+	public void setStartDate(Date pstartDate) {
 		this.getSystem().setProjectStartDate(pstartDate);
 	}
 
-	public void setFinishDate(DateTime pfinishDate) {
+	public void setFinishDate(Date pfinishDate) {
 		this.getSystem().setProjectFinishDate(pfinishDate);
 	}
 
@@ -482,11 +465,11 @@ public class AnalysisManager extends HibernateManager {
 		return this.getSystem().getProjectName();
 	}
 
-	public DateTime getStartDate() {
+	public Date getStartDate() {
 		return this.getSystem().getProjectStartDate();
 	}
 
-	public DateTime getFinishDate() {
+	public Date getFinishDate() {
 		return this.getSystem().getProjectFinishDate();
 	}
 
@@ -553,13 +536,11 @@ public class AnalysisManager extends HibernateManager {
 
 	// Getters of specificScenario atribbutes
 	public String getDescriptionScenario() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getDescription();
+		return this.getQualityRequirement().getQualityScenario().getDescription();
 	}
 
 	public QualityAttribute getQualityAttribute() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getQualityAttribute();
+		return this.getQualityRequirement().getQualityScenario().getQualityAttribute();
 	}
 
 	public Condition getConditionScenario() {
@@ -567,157 +548,117 @@ public class AnalysisManager extends HibernateManager {
 	}
 
 	public String getDescriptionStimulusSource() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getStimulusSource().getDescription();
+		return this.getQualityRequirement().getQualityScenario().getStimulusSource().getDescription();
 	}
 
 	public StimulusSourceType getTypeStimulusSource() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getStimulusSource().getType();
+		return this.getQualityRequirement().getQualityScenario().getStimulusSource().getType();
 	}
 
 	public String getValueStimulusSource() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getStimulusSource().getValue();
+		return this.getQualityRequirement().getQualityScenario().getStimulusSource().getValue();
 	}
 
 	public String getDescriptionStimulus() {
-		return this.getQualityRequirement().getQualityScenario().getStimulus()
-				.getDescription();
+		return this.getQualityRequirement().getQualityScenario().getStimulus().getDescription();
 	}
 
 	public StimulusType getTypeStimulus() {
-		return this.getQualityRequirement().getQualityScenario().getStimulus()
-				.getType();
+		return this.getQualityRequirement().getQualityScenario().getStimulus().getType();
 	}
 
 	public String getValueStimulus() {
-		return this.getQualityRequirement().getQualityScenario().getStimulus()
-				.getValue();
+		return this.getQualityRequirement().getQualityScenario().getStimulus().getValue();
 	}
 
 	public String getDescriptionEnvironment() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getEnvironment().getDescription();
+		return this.getQualityRequirement().getQualityScenario().getEnvironment().getDescription();
 	}
 
 	public EnvironmentType getTypeEnvironment() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getEnvironment().getType();
+		return this.getQualityRequirement().getQualityScenario().getEnvironment().getType();
 	}
 
 	public String getValueEnvironment() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getEnvironment().getValue();
+		return this.getQualityRequirement().getQualityScenario().getEnvironment().getValue();
 	}
 
 	public String getDescriptionArtifact() {
-		return this.getQualityRequirement().getQualityScenario().getArtifact()
-				.getDescription();
+		return this.getQualityRequirement().getQualityScenario().getArtifact().getDescription();
 	}
 
 	public ArtifactType getTypeArtifact() {
-		return this.getQualityRequirement().getQualityScenario().getArtifact()
-				.getType();
+		return this.getQualityRequirement().getQualityScenario().getArtifact().getType();
 	}
 
 	public String getDescriptionResponse() {
-		return this.getQualityRequirement().getQualityScenario().getResponse()
-				.getDescription();
+		return this.getQualityRequirement().getQualityScenario().getResponse().getDescription();
 	}
 
 	public ResponseType getTypeResponse() {
-		return this.getQualityRequirement().getQualityScenario().getResponse()
-				.getType();
+		return this.getQualityRequirement().getQualityScenario().getResponse().getType();
 	}
 
 	public String getValueResponse() {
-		return this.getQualityRequirement().getQualityScenario().getResponse()
-				.getValue();
+		return this.getQualityRequirement().getQualityScenario().getResponse().getValue();
 	}
 
 	public String getDescriptionResponseMeasure() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getResponseMeasure().getDescription();
+		return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getDescription();
 	}
 
 	public ResponseMeasureType getTypeResponseMeasure() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getResponseMeasure().getType();
+		return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getType();
 	}
 
 	public Metric getMetric() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getResponseMeasure().getMetric();
+		return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric();
 	}
 
 	public String getValueResponseMeasure() {
-		return Double.toString(this.getQualityRequirement()
-				.getQualityScenario().getResponseMeasure().getValue());
+		return Double.toString(this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue());
 	}
 
 	public Unit getUnit() {
-		return this.getQualityRequirement().getQualityScenario()
-				.getResponseMeasure().getUnit();
+		return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit();
 	}
 
 	// Setters of specificScenario atribbutes (stimulusSource, stimulus,
 	// Enviroment, Artifact, Response, ResponseMeasure)
-	public void setStimulusSource(String pdescription, String pvalue,
-			StimulusSourceType ptype) {
-		this.getQualityRequirement().getQualityScenario().getStimulusSource()
-				.setDescription(pdescription);
-		this.getQualityRequirement().getQualityScenario().getStimulusSource()
-				.setValue(pvalue);
-		this.getQualityRequirement().getQualityScenario().getStimulusSource()
-				.setType(ptype);
+	public void setStimulusSource(String pdescription, String pvalue, StimulusSourceType ptype) {
+		this.getQualityRequirement().getQualityScenario().getStimulusSource().setDescription(pdescription);
+		this.getQualityRequirement().getQualityScenario().getStimulusSource().setValue(pvalue);
+		this.getQualityRequirement().getQualityScenario().getStimulusSource().setType(ptype);
 	}
 
-	public void setStimulus(String pdescription, String pvalue,
-			StimulusType ptype) {
-		this.getQualityRequirement().getQualityScenario().getStimulus()
-				.setDescription(pdescription);
-		this.getQualityRequirement().getQualityScenario().getStimulus()
-				.setValue(pvalue);
-		this.getQualityRequirement().getQualityScenario().getStimulus()
-				.setType(ptype);
+	public void setStimulus(String pdescription, String pvalue, StimulusType ptype) {
+		this.getQualityRequirement().getQualityScenario().getStimulus().setDescription(pdescription);
+		this.getQualityRequirement().getQualityScenario().getStimulus().setValue(pvalue);
+		this.getQualityRequirement().getQualityScenario().getStimulus().setType(ptype);
 	}
 
-	public void setEnvironment(String pdescription, String pvalue,
-			EnvironmentType ptype) {
-		this.getQualityRequirement().getQualityScenario().getEnvironment()
-				.setDescription(pdescription);
-		this.getQualityRequirement().getQualityScenario().getEnvironment()
-				.setValue(pvalue);
-		this.getQualityRequirement().getQualityScenario().getEnvironment()
-				.setType(ptype);
+	public void setEnvironment(String pdescription, String pvalue, EnvironmentType ptype) {
+		this.getQualityRequirement().getQualityScenario().getEnvironment().setDescription(pdescription);
+		this.getQualityRequirement().getQualityScenario().getEnvironment().setValue(pvalue);
+		this.getQualityRequirement().getQualityScenario().getEnvironment().setType(ptype);
 	}
 
 	public void setArtifact(String pdescription, ArtifactType ptype) {
-		this.getQualityRequirement().getQualityScenario().getArtifact()
-				.setDescription(pdescription);
-		this.getQualityRequirement().getQualityScenario().getArtifact()
-				.setType(ptype);
+		this.getQualityRequirement().getQualityScenario().getArtifact().setDescription(pdescription);
+		this.getQualityRequirement().getQualityScenario().getArtifact().setType(ptype);
 	}
 
-	public void setResponse(String pdescription, String pvalue,
-			ResponseType ptype) {
-		this.getQualityRequirement().getQualityScenario().getResponse()
-				.setDescription(pdescription);
-		this.getQualityRequirement().getQualityScenario().getResponse()
-				.setValue(pvalue);
-		this.getQualityRequirement().getQualityScenario().getResponse()
-				.setType(ptype);
+	public void setResponse(String pdescription, String pvalue, ResponseType ptype) {
+		this.getQualityRequirement().getQualityScenario().getResponse().setDescription(pdescription);
+		this.getQualityRequirement().getQualityScenario().getResponse().setValue(pvalue);
+		this.getQualityRequirement().getQualityScenario().getResponse().setType(ptype);
 	}
 
-	public void setResponseMeasure(String pdescription, double pvalue,
-			ResponseMeasureType ptype, Metric pmetric, Unit punit) {
-		this.getQualityRequirement().getQualityScenario().getResponseMeasure()
-				.setDescription(pdescription);
-		this.getQualityRequirement().getQualityScenario().getResponseMeasure()
-				.setValue(pvalue);
-		this.getQualityRequirement().getQualityScenario().getResponseMeasure()
-				.setType(ptype);
+	public void setResponseMeasure(String pdescription, double pvalue, ResponseMeasureType ptype, Metric pmetric,
+			Unit punit) {
+		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setDescription(pdescription);
+		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setValue(pvalue);
+		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setType(ptype);
 
 	}
 

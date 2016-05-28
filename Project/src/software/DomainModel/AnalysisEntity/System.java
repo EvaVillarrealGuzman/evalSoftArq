@@ -36,11 +36,11 @@ public class System implements Comparable{
 	
 	private String projectName;
 	
-	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTimeTZ")
-	private DateTime  projectFinishDate;
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date  projectFinishDate;
 	
-	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTimeTZ")
-	private DateTime  projectStartDate;
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date  projectStartDate;
 	
     @OneToMany(targetEntity = QualityRequirement.class, cascade = CascadeType.ALL)
 	private Set<QualityRequirement> qualityRequirements = new HashSet<QualityRequirement>();
@@ -57,7 +57,7 @@ public class System implements Comparable{
 	}
 	
 	public System(String psystemName, String pprojectName,
-			DateTime  pprojectStartDate, DateTime  pprojectFinishDate, boolean pstate) {
+			Date  pprojectStartDate, Date  pprojectFinishDate, boolean pstate) {
 		super();
 		this.projectFinishDate = pprojectFinishDate;
 		this.projectStartDate = pprojectStartDate;
@@ -75,19 +75,19 @@ public class System implements Comparable{
 		this.id = pid;
 	}
 	
-	public DateTime  getProjectFinishDate() {
+	public Date  getProjectFinishDate() {
 		return projectFinishDate;
 	}
 	
-	public void setProjectFinishDate(DateTime  pprojectFinishDate) {
+	public void setProjectFinishDate(Date  pprojectFinishDate) {
 		this.projectFinishDate = pprojectFinishDate;
 	}
 	
-	public DateTime  getProjectStartDate() {
+	public Date  getProjectStartDate() {
 		return projectStartDate;
 	}
 	
-	public void setProjectStartDate(DateTime  pprojectStartDate) {
+	public void setProjectStartDate(Date  pprojectStartDate) {
 		this.projectStartDate = pprojectStartDate;
 	}
 	

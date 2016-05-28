@@ -163,8 +163,8 @@ public class QualityRequirementController {
 	 * Sets the model of system combo
 	 */
 	public void setModelSystem() {
-		this.getFrmQualityRequirementManagement().getCmbSystem()
-				.setModel(getManager().getComboModelSystem());
+//		this.getFrmQualityRequirementManagement().getCmbSystem()
+	//			.setModel(getManager().getComboModelSystem());
 	}
 
 	/**

@@ -249,8 +249,8 @@ public class SystemManagementController {
 	 * Sets the model of system combo
 	 */
 	public void setModelSystem() {
-		this.getFrmSystemManagement().getCmbSystemName()
-				.setModel(getManager().getComboModelSystem());
+		//this.getFrmSystemManagement().getCmbSystemName()
+		//		.setModel(getManager().getComboModelSystem());
 	}
 
 	public void setModel(JComboBox pcmb) {
