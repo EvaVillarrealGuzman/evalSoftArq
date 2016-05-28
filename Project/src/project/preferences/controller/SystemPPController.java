@@ -1,7 +1,5 @@
 package project.preferences.controller;
 
-//TODO configurar los grabFocus
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -108,6 +106,7 @@ public class SystemPPController extends Controller {
 					JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
+			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
@@ -115,6 +114,7 @@ public class SystemPPController extends Controller {
 					JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
+			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		} else if (isAfter(this.getForm().getCalendarStartDate(), 
 				this.getForm().getCalendarFinishDate())) {
@@ -122,6 +122,7 @@ public class SystemPPController extends Controller {
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
+			getForm().getCalendarStartDate().setFocus();
 			return false;
 		} 
 

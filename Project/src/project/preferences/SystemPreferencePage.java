@@ -75,21 +75,13 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 		cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
 
 		cboSystem.setContentProvider(ArrayContentProvider.getInstance());
-		this.loadCombo();
 
 		cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (getViewController().getManager().existSystemTrue()) {
-					viewController.setModel(cboSystem);
-					viewController.getView();
-					prepareView(1);
-				} else {
-					JOptionPane.showOptionDialog(null, "No saved systems", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-							JOptionPane.ERROR_MESSAGE,
-							new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")),
-							new Object[] { "OK" }, "OK");
-				}
+				viewController.setModel(cboSystem);
+				viewController.getView();
+				prepareView(1);
 			}
 		});
 
@@ -133,6 +125,7 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewController.save();
+				prepareView(1);
 			}
 		});
 
@@ -146,11 +139,12 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 						new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")),
 						new Object[] { "Yes", "No" }, "Yes") == 0) {
 					viewController.remove();
+					prepareView(0);
 				}
 			}
 		});
 
-		this.cleanView();
+		this.prepareView(0);
 
 	}
 
@@ -249,6 +243,10 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 	public void setcProject(Composite cProject) {
 		this.cProject = cProject;
 	}
+	
+	public Composite getParent(){
+		return getFieldEditorParent();
+	}
 
 	/**
 	 * load combo with system names
@@ -258,37 +256,37 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 	}
 
 	/**
-	 * clean view of the form
+	 * manages the various types of views
+	 * 
+	 * @param pabm
 	 */
-	private void cleanView() {
-		this.getCalendarStartDate().setEnabled(false);
-		this.getCalendarFinishDate().setEnabled(false);
-		this.getProjectName().getTextControl(this.getcProject()).setEnabled(false);
-	}
-
-	/**
-	 * edit view of the form
-	 */
-	private void EditView() {
-		this.getCalendarStartDate().setEnabled(true);
-		this.getCalendarFinishDate().setEnabled(true);
-		this.getProjectName().getTextControl(this.getcProject()).setEnabled(true);
-	}
-
 	public void prepareView(int pabm) {
+		this.getCboSystem().getCombo().setFocus();
+		if (!getViewController().getManager().existSystemTrue()) {
+			JOptionPane.showOptionDialog(null, "No saved systems", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
+					"OK");
+			pabm = 0;
+		}
 		switch (pabm) {
-		case 0:// New
+		case 0:// Without system
 			this.getCalendarStartDate().setEnabled(false);
 			this.getCalendarFinishDate().setEnabled(false);
 			this.getProjectName().getTextControl(this.getcProject()).setEnabled(false);
+			this.getBtnRemove().setEnabled(false);
+			this.getBtnSave().setEnabled(false);
+			projectName.getTextControl(cProject).setText("");
+			loadCombo();
 			break;
-		case 1:// Search
+		case 1:// With system
 			this.getCalendarStartDate().setEnabled(true);
 			this.getCalendarFinishDate().setEnabled(true);
 			this.getProjectName().getTextControl(this.getcProject()).setEnabled(true);
-			this.loadCombo();
+			this.getBtnRemove().setEnabled(true);
+			this.getBtnSave().setEnabled(true);
 			break;
 		}
-
+		
 	}
 }
