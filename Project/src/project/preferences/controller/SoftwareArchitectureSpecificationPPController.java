@@ -5,28 +5,26 @@ import javax.swing.JOptionPane;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import project.preferences.SystemPreferencePage;
-import project.preferences.NewSystemPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
-public class SystemPPController extends Controller {
+public class SoftwareArchitectureSpecificationPPController extends Controller {
 
 	/**
 	 * Attributes
 	 */
-	private static SystemPPController controller;
+	private static SoftwareArchitectureSpecificationPPController controller;
 	private AnalysisManager manager;
 	private SystemPreferencePage form;
-	private NewSystemPreferencePage form2;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static SystemPPController getController() {
+	public static SoftwareArchitectureSpecificationPPController getController() {
 		return controller;
 	}
 
-	public static void setController(SystemPPController controller) {
-		SystemPPController.controller = controller;
+	public static void setController(SoftwareArchitectureSpecificationPPController controller) {
+		SoftwareArchitectureSpecificationPPController.controller = controller;
 	}
 
 	public AnalysisManager getManager() {
@@ -48,14 +46,6 @@ public class SystemPPController extends Controller {
 		this.form = form;
 	}
 
-	public NewSystemPreferencePage getForm2() {
-		return form2;
-	}
-
-	public void setForm2(NewSystemPreferencePage form2) {
-		this.form2 = form2;
-	}
-	
 	public void save() {
 		int err;
 		err = this.setSystem();
@@ -64,33 +54,6 @@ public class SystemPPController extends Controller {
 		}
 	}
 
-	public void saveNew() {
-		int err;
-		err = this.newSystem();
-		if (err == 0) {
-			this.getManager().saveSystem();
-		}
-	}
-	
-	/**
-	 * Create a new system
-	 */
-	public int newSystem() {
-		if (this.isValidDataNew()) {
-			this.getManager()
-					.newSystem(
-							this.getForm2().getSystemName().getStringValue(),
-							this.getForm2().getProjectName().getStringValue(),
-							convertDateTimeToDate(this.getForm2().getCalendarStartDate()),
-							convertDateTimeToDate(this.getForm2().getCalendarFinishDate()),
-							true
-							);
-			return 0;
-		} else {
-			return 1;
-		}	
-	}
-	
 	public void remove() {
 		this.getManager().removeSystem();
 	}
@@ -133,37 +96,6 @@ public class SystemPPController extends Controller {
 		this.getForm().getCalendarFinishDate().setYear(getYear(this.getManager().getFinishDate()));
 	}
 
-	/**
-	 * return true if they have completed the required fields
-	 */
-	public boolean isValidDataNew() {
-		if (this.isEmpty(this.getForm2().getSystemName())) {
-			createErrorDialog("Empty system name"); 
-			this.getForm2().getSystemName().getTextControl(this.getForm().getParent()).setFocus();
-			return false;
-		}
-		if (this.isEmpty(this.getForm2().getProjectName())) {
-			createErrorDialog("Empty project name"); 
-			JOptionPane.showOptionDialog(null, "Empty project name", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
-			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
-			return false;
-		} else if (isAfter(this.getForm2().getCalendarStartDate(), 
-				this.getForm2().getCalendarFinishDate())) {
-			createErrorDialog("The finish date is less than the start date"); 
-			JOptionPane.showOptionDialog(null, "The finish date is less than the start date", "Warning",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
-			getForm().getCalendarStartDate().setFocus();
-			return false;
-		} 
-
-		return true;
-	}
-	
 	// TODO ver los showoptioDialog
 	/**
 	 * return true if they have completed the required fields

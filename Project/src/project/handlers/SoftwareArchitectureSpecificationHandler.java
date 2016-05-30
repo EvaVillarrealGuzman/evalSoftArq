@@ -72,7 +72,7 @@ public class SoftwareArchitectureSpecificationHandler extends AbstractHandler {
 
         testfile.create(new ByteArrayInputStream("".getBytes()), false, null); //$NON-NLS-1$
         
-        //IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(testfile.getName());
         editor = (UCMNavMultiPageEditor) page.openEditor(new FileEditorInput(testfile), desc.getId());
         System.out.print("asdfasfdsaf");
@@ -97,7 +97,7 @@ public class SoftwareArchitectureSpecificationHandler extends AbstractHandler {
 	 * from the application context.
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		try {
+		/*try {
 			this.newJUCMNav();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -114,8 +114,8 @@ public class SoftwareArchitectureSpecificationHandler extends AbstractHandler {
 				e.printStackTrace();
 			}
 		}
-		return null;
-		 /*Shell activeShell = HandlerUtil.getActiveShell(event);
+		return null;*/
+		 Shell activeShell = HandlerUtil.getActiveShell(event);
 
 		  IWizard wizard = new seg.jUCMNav.views.wizards.NewUcmFileWizard();
 
@@ -123,7 +123,7 @@ public class SoftwareArchitectureSpecificationHandler extends AbstractHandler {
 
 		  dialog.open();
 
-		  return null;*/
+		  return null;
 	}
 	
 	public SoftwareArchitectureSpecificationManagementController getSoftwareArchitectureSpecificationManagementController() {

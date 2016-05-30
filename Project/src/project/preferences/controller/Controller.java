@@ -4,11 +4,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
+
+import project.preferences.SystemPreferencePage;
 
 public class Controller {
 
@@ -92,6 +98,27 @@ public class Controller {
 		Date dcf = convertDateTimeToDate(pcf);
 		System.out.println(dcs.before(dcf));
 		return dcs.after(dcf);
+	}
+	
+	/**
+	 * Created a Error Dialog
+	 * @param error
+	 */
+	public void createErrorDialog(String error) {
+		JOptionPane.showOptionDialog(null, error, "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.ERROR_MESSAGE, new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")),
+				new Object[] { "OK" }, "OK");
+	}
+
+	/**
+	 * Created a Delete Dialog
+	 * @return
+	 */
+	public int createDeleteDialog() {
+		return JOptionPane.showOptionDialog(null, "Do you want to delete the system?", "Warning",
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
+				new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "Yes", "No" },
+				"Yes");
 	}
 	
 }

@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            name="FEM Category"
+            name="UCM2DEVS Category"
             id="Project.commands.category">
       </category>
       <command
@@ -72,7 +72,7 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
                id="Project.menus.sampleMenu"
-               label="FEM"
+               label="UCM2DEVS"
                mnemonic="M">
             <command
                   commandId="Project.commands.systemCommand"
@@ -119,8 +119,18 @@
       <page
             class="project.preferences.SystemPreferencePage"
             id="project.preferences.SystemPreferencePage"
-            name="System ">
+            name="UCM2DEVS ">
       </page>
+      <page
+		name="Software Architecture Specification"
+		category="project.preferences.SystemPreferencePage"
+		class="project.preferences.SoftwareArchitectureSpecificationPage"
+		id="project.preferences.SoftwareArchitectureSpecificationPage"/>	
+	 <page
+		name="New System Preference Page"
+		category="project.preferences.SystemPreferencePage"
+		class="project.preferences.NewSystemPreferencePage"
+		id="project.preferences.NewSystemPreferencePage"/>	
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
