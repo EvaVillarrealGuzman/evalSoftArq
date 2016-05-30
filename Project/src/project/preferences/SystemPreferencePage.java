@@ -134,10 +134,7 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 		btnRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (JOptionPane.showOptionDialog(null, "Do you want to delete the system?", "Warning",
-						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-						new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")),
-						new Object[] { "Yes", "No" }, "Yes") == 0) {
+				if (viewController.createDeleteDialog()== 0) {
 					viewController.remove();
 					prepareView(0);
 				}

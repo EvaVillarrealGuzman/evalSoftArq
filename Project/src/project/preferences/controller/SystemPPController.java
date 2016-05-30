@@ -55,7 +55,7 @@ public class SystemPPController extends Controller {
 	public void setForm2(NewSystemPreferencePage form2) {
 		this.form2 = form2;
 	}
-	
+
 	public void save() {
 		int err;
 		err = this.setSystem();
@@ -71,30 +71,26 @@ public class SystemPPController extends Controller {
 			this.getManager().saveSystem();
 		}
 	}
-	
+
 	/**
 	 * Create a new system
 	 */
 	public int newSystem() {
 		if (this.isValidDataNew()) {
-			this.getManager()
-					.newSystem(
-							this.getForm2().getSystemName().getStringValue(),
-							this.getForm2().getProjectName().getStringValue(),
-							convertDateTimeToDate(this.getForm2().getCalendarStartDate()),
-							convertDateTimeToDate(this.getForm2().getCalendarFinishDate()),
-							true
-							);
+			this.getManager().newSystem(this.getForm2().getSystemName().getStringValue(),
+					this.getForm2().getProjectName().getStringValue(),
+					convertDateTimeToDate(this.getForm2().getCalendarStartDate()),
+					convertDateTimeToDate(this.getForm2().getCalendarFinishDate()), true);
 			return 0;
 		} else {
 			return 1;
-		}	
+		}
 	}
-	
+
 	public void remove() {
 		this.getManager().removeSystem();
 	}
-	
+
 	/**
 	 * Open the form
 	 * 
@@ -138,61 +134,50 @@ public class SystemPPController extends Controller {
 	 */
 	public boolean isValidDataNew() {
 		if (this.isEmpty(this.getForm2().getSystemName())) {
-			createErrorDialog("Empty system name"); 
+			createErrorDialog("Empty system name");
 			this.getForm2().getSystemName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm2().getProjectName())) {
-			createErrorDialog("Empty project name"); 
+			createErrorDialog("Empty project name");
 			JOptionPane.showOptionDialog(null, "Empty project name", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
 			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
-		} else if (isAfter(this.getForm2().getCalendarStartDate(), 
-				this.getForm2().getCalendarFinishDate())) {
-			createErrorDialog("The finish date is less than the start date"); 
+		} else if (isAfter(this.getForm2().getCalendarStartDate(), this.getForm2().getCalendarFinishDate())) {
+			createErrorDialog("The finish date is less than the start date");
 			JOptionPane.showOptionDialog(null, "The finish date is less than the start date", "Warning",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
 			getForm().getCalendarStartDate().setFocus();
 			return false;
-		} 
+		}
 
 		return true;
 	}
-	
+
 	// TODO ver los showoptioDialog
 	/**
 	 * return true if they have completed the required fields
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
-			JOptionPane.showOptionDialog(null, "System name empty", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
+			this.createErrorDialog("System name empty");
 			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
-			JOptionPane.showOptionDialog(null, "Empty project name", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
+			this.createErrorDialog("Empty project name");
 			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
-		} else if (isAfter(this.getForm().getCalendarStartDate(), 
-				this.getForm().getCalendarFinishDate())) {
-			JOptionPane.showOptionDialog(null, "The finish date is less than the start date", "Warning",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
+		} else if (isAfter(this.getForm().getCalendarStartDate(), this.getForm().getCalendarFinishDate())) {
+			this.createErrorDialog("The finish date is less than the start date");
 			getForm().getCalendarStartDate().setFocus();
 			return false;
-		} 
+		}
 
 		return true;
 	}

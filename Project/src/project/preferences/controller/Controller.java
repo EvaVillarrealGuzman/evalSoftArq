@@ -1,5 +1,6 @@
 package project.preferences.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +9,11 @@ import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -119,6 +125,19 @@ public class Controller {
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
 				new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "Yes", "No" },
 				"Yes");
+	}
+	
+	/**
+	 * Convert a File to IFile
+	 * @param file
+	 * @return
+	 */
+	public IFile convert(File file) {
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IPath location = Path.fromOSString(file.getAbsolutePath());
+		IFile ifile = workspace.getRoot().getFileForLocation(location);
+		return ifile;
+
 	}
 	
 }
