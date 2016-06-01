@@ -131,6 +131,11 @@
 		category="project.preferences.SystemPreferencePage"
 		class="project.preferences.NewSystemPreferencePage"
 		id="project.preferences.NewSystemPreferencePage"/>	
+	<page
+		name="New Quality Requirement Preference Page"
+		category="project.preferences.SystemPreferencePage"
+		class="project.preferences.NewQualityRequirementPreferencePage"
+		id="project.preferences.NewQualityRequirementPreferencePage"/>	
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">

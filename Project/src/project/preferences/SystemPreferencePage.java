@@ -7,6 +7,8 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.hibernate.exception.JDBCConnectionException;
+
 import project.preferences.controller.SystemPPController;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.swt.widgets.Composite;
@@ -51,6 +53,7 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 		noDefaultAndApplyButton();
 		viewController = new SystemPPController();
 		this.setViewController(viewController);
+		this.getViewController().setForm(this);
 	}
 
 	/*
@@ -65,83 +68,86 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 	@Override
 	protected void createFieldEditors() {
 
-		this.getViewController().setForm(this);
+		try {
+			GridLayout layout = new GridLayout(2, false);
+			getFieldEditorParent().setLayout(layout);
 
-		GridLayout layout = new GridLayout(2, false);
-		getFieldEditorParent().setLayout(layout);
+			Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
+			labelSn.setText("System Name: ");
+			cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
 
-		Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
-		labelSn.setText("System Name: ");
-		cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
+			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
 
-		cboSystem.setContentProvider(ArrayContentProvider.getInstance());
-
-		cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				viewController.setModel(cboSystem);
-				viewController.getView();
-				prepareView(1);
-			}
-		});
-
-		// Group for project properties
-		Group groupProject = new Group(getFieldEditorParent(), SWT.SHADOW_ETCHED_IN);
-		groupProject.setText("Project");
-
-		GridLayout layoutProject = new GridLayout();
-		layoutProject.numColumns = 1;
-		groupProject.setLayout(layoutProject);
-
-		GridData dataProject = new GridData();
-		groupProject.setLayoutData(dataProject);
-
-		cProject = new Composite(groupProject, SWT.NONE);
-		dataProject = new GridData();
-		dataProject.grabExcessHorizontalSpace = true;
-		dataProject.horizontalIndent = 40;
-		cProject.setLayoutData(dataProject);
-
-		projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject);
-
-		addField(projectName);
-
-		lblCalendarStarDate = new Label(cProject, SWT.NONE);
-		lblCalendarStarDate.setText("Start Date");
-
-		calendarStartDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
-
-		lblCalendarFinishDate = new Label(cProject, SWT.NONE);
-		lblCalendarFinishDate.setText("Finish Date");
-
-		calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
-
-		Label label1 = new Label(getFieldEditorParent(), SWT.LEFT);
-
-		btnSave = new Button(getFieldEditorParent(), SWT.PUSH);
-		btnSave.setText(" Save ");
-		btnSave.setToolTipText("Save");
-		btnSave.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				viewController.save();
-				prepareView(1);
-			}
-		});
-
-		btnRemove = new Button(getFieldEditorParent(), SWT.PUSH);
-		btnRemove.setText("Remove");
-		btnRemove.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (viewController.createDeleteDialog()== 0) {
-					viewController.remove();
-					prepareView(0);
+			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					viewController.setModel(cboSystem);
+					viewController.getView();
+					prepareView(1);
 				}
-			}
-		});
+			});
 
-		this.prepareView(0);
+			// Group for project properties
+			Group groupProject = new Group(getFieldEditorParent(), SWT.SHADOW_ETCHED_IN);
+			groupProject.setText("Project");
+
+			GridLayout layoutProject = new GridLayout();
+			layoutProject.numColumns = 1;
+			groupProject.setLayout(layoutProject);
+
+			GridData dataProject = new GridData();
+			groupProject.setLayoutData(dataProject);
+
+			cProject = new Composite(groupProject, SWT.NONE);
+			dataProject = new GridData();
+			dataProject.grabExcessHorizontalSpace = true;
+			dataProject.horizontalIndent = 40;
+			cProject.setLayoutData(dataProject);
+
+			projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject);
+
+			addField(projectName);
+
+			lblCalendarStarDate = new Label(cProject, SWT.NONE);
+			lblCalendarStarDate.setText("Start Date");
+
+			calendarStartDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
+
+			lblCalendarFinishDate = new Label(cProject, SWT.NONE);
+			lblCalendarFinishDate.setText("Finish Date");
+
+			calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
+
+			Label label1 = new Label(getFieldEditorParent(), SWT.LEFT);
+
+			btnSave = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnSave.setText(" Save ");
+			btnSave.setToolTipText("Save");
+			btnSave.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					viewController.save();
+					prepareView(1);
+				}
+			});
+
+			btnRemove = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnRemove.setText("Remove");
+			btnRemove.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					if (viewController.createDeleteDialog()== 0) {
+						viewController.remove();
+						prepareView(0);
+					}
+				}
+			});
+
+			this.prepareView(0);
+
+		} catch (JDBCConnectionException e){
+			viewController.createErrorDialog("Postgres service is not running");
+		}
 
 	}
 

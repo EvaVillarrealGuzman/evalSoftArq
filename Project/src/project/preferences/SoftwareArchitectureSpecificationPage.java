@@ -12,6 +12,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.hibernate.exception.JDBCConnectionException;
+
 import project.preferences.controller.SoftwareArchitectureSpecificationPPController;
 import seg.jUCMNav.editors.UCMNavMultiPageEditor;
 import org.eclipse.ui.IEditorDescriptor;
@@ -69,99 +71,103 @@ public class SoftwareArchitectureSpecificationPage extends FieldEditorPreference
 	@Override
 	protected void createFieldEditors() {
 
-		this.getViewController().setForm(this);
+		try {
+			this.getViewController().setForm(this);
 
-		GridLayout layout = new GridLayout(2, false);
-		getFieldEditorParent().setLayout(layout);
+			GridLayout layout = new GridLayout(2, false);
+			getFieldEditorParent().setLayout(layout);
 
-		Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
-		labelSn.setText("System Name: ");
-		cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
-		cboSystem.setContentProvider(ArrayContentProvider.getInstance());
-		loadCombo();
+			Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
+			labelSn.setText("System Name: ");
+			cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
+			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
+			loadCombo();
 
-		String[][] radioButtonOptions = new String[][] { { "Select UCM: ", "Select UCM" } };
+			String[][] radioButtonOptions = new String[][] { { "Select UCM: ", "Select UCM" } };
 
-		final RadioGroupFieldEditor radioButtonGroup = new RadioGroupFieldEditor("PrefValue", " UCM ", 1,
-				radioButtonOptions, getFieldEditorParent(), true);
-		addField(radioButtonGroup);
+			final RadioGroupFieldEditor radioButtonGroup = new RadioGroupFieldEditor("PrefValue", " UCM ", 1,
+					radioButtonOptions, getFieldEditorParent(), true);
+			addField(radioButtonGroup);
 
-		btnOptionOpenUCM = new Button(getFieldEditorParent(), SWT.RADIO);
-		btnOptionOpenUCM.setText("Select UCM: ");
-		btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				prepareView();
-			}
-		});
-
-		txtSelectUCM = new Text(getFieldEditorParent(), SWT.SINGLE | SWT.BORDER);
-		txtSelectUCM.setText("");
-
-		btnFileUCM = new Button(getFieldEditorParent(), SWT.PUSH);
-		btnFileUCM.setText(" File ");
-		btnFileUCM.setToolTipText("Search UCM file");
-
-		btnFileUCM.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Open a FileDialog that show only jucm file
-				chooseFile = new FileDialog(getFieldEditorParent().getShell(), SWT.OPEN);
-				chooseFile.setFilterNames(new String[] { "Jucm Files" });
-				chooseFile.setFilterExtensions(new String[] { "*.jucm" });
-				String filePath = chooseFile.open();
-				txtSelectUCM.setText(filePath);
-				txtSelectUCM.setToolTipText(filePath);
-				prepareView();
-			}
-		});
-
-		btnEditFileUCM = new Button(getFieldEditorParent(), SWT.PUSH);
-		btnEditFileUCM.setText(" Edit ");
-		btnEditFileUCM.setToolTipText("Edit UCM file");
-		btnEditFileUCM.addSelectionListener(new SelectionAdapter() {
-			// Open an existing jucm file
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				File file = new File(txtSelectUCM.getText());
-				IFile ifile = viewController.convert(file);
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
-						.getDefaultEditor(ifile.getName());
-				getFieldEditorParent().getShell().close();
-				try {
-					editor = (UCMNavMultiPageEditor) page.openEditor(new FileEditorInput(ifile), desc.getId());
-				} catch (PartInitException e1) {
-					viewController.createErrorDialog("There must be a project to open a file");
+			btnOptionOpenUCM = new Button(getFieldEditorParent(), SWT.RADIO);
+			btnOptionOpenUCM.setText("Select UCM: ");
+			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					prepareView();
 				}
-			}
-		});
+			});
 
-		btnOptionNewUCM = new Button(getFieldEditorParent(), SWT.RADIO);
-		btnOptionNewUCM.setText("Create UCM: ");
-		btnOptionNewUCM.setSelection(true);
-		btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				prepareView();
-			}
-		});
+			txtSelectUCM = new Text(getFieldEditorParent(), SWT.SINGLE | SWT.BORDER);
+			txtSelectUCM.setText("");
 
-		btnUCM = new Button(getFieldEditorParent(), SWT.PUSH);
-		btnUCM.setText(" New ");
-		btnUCM.setToolTipText("New UCM file");
-		btnUCM.addSelectionListener(new SelectionAdapter() {
-			// Open jUCMNav´s Wizard
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IWizard wizard = new seg.jUCMNav.views.wizards.NewUcmFileWizard();
-				WizardDialog dialog = new WizardDialog(getFieldEditorParent().getShell(), wizard);
-				dialog.open();
-				getFieldEditorParent().getShell().close();
-			}
-		});
+			btnFileUCM = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnFileUCM.setText(" File ");
+			btnFileUCM.setToolTipText("Search UCM file");
 
-		this.prepareView();
+			btnFileUCM.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					// Open a FileDialog that show only jucm file
+					chooseFile = new FileDialog(getFieldEditorParent().getShell(), SWT.OPEN);
+					chooseFile.setFilterNames(new String[] { "Jucm Files" });
+					chooseFile.setFilterExtensions(new String[] { "*.jucm" });
+					String filePath = chooseFile.open();
+					txtSelectUCM.setText(filePath);
+					txtSelectUCM.setToolTipText(filePath);
+					prepareView();
+				}
+			});
+
+			btnEditFileUCM = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnEditFileUCM.setText(" Edit ");
+			btnEditFileUCM.setToolTipText("Edit UCM file");
+			btnEditFileUCM.addSelectionListener(new SelectionAdapter() {
+				// Open an existing jucm file
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					File file = new File(txtSelectUCM.getText());
+					IFile ifile = viewController.convert(file);
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
+							.getDefaultEditor(ifile.getName());
+					getFieldEditorParent().getShell().close();
+					try {
+						editor = (UCMNavMultiPageEditor) page.openEditor(new FileEditorInput(ifile), desc.getId());
+					} catch (PartInitException e1) {
+						viewController.createErrorDialog("There must be a project to open a file");
+					}
+				}
+			});
+
+			btnOptionNewUCM = new Button(getFieldEditorParent(), SWT.RADIO);
+			btnOptionNewUCM.setText("Create UCM: ");
+			btnOptionNewUCM.setSelection(true);
+			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					prepareView();
+				}
+			});
+
+			btnUCM = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnUCM.setText(" New ");
+			btnUCM.setToolTipText("New UCM file");
+			btnUCM.addSelectionListener(new SelectionAdapter() {
+				// Open jUCMNav´s Wizard
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					IWizard wizard = new seg.jUCMNav.views.wizards.NewUcmFileWizard();
+					WizardDialog dialog = new WizardDialog(getFieldEditorParent().getShell(), wizard);
+					dialog.open();
+					getFieldEditorParent().getShell().close();
+				}
+			});
+
+			this.prepareView();
+		} catch (JDBCConnectionException e) {
+			viewController.createErrorDialog("Postgres service is not running");
+		}
 
 	}
 
