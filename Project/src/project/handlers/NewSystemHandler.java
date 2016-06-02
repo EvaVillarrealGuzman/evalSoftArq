@@ -14,12 +14,12 @@ import software.Presentation.ControllerAnalysis.QualityRequirementController;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class SystemHandler extends AbstractHandler {
+public class NewSystemHandler extends AbstractHandler {
 	private QualityRequirementController qualityRequirementController;
 	/**
 	 * The constructor.
 	 */
-	public SystemHandler() {
+	public NewSystemHandler() {
 
 	}
 
@@ -29,7 +29,7 @@ public class SystemHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) {
         PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                "project.preferences.SystemPreferencePage", new String[] { "project.preferences.SystemPreferencePage" }, null); 
+                "project.preferences.NewSystemPreferencePage", new String[] { "project.preferences.NewSystemPreferencePage" }, null); 
         if (pref != null)
             pref.open();
 		//this.getQualityRequirementController().openFrmQualityRequirementManagement(3);

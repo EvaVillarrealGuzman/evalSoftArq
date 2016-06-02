@@ -3,7 +3,7 @@ package project.preferences.controller;
 
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import project.preferences.SoftwareArchitectureSpecificationPage;
+import project.preferences.SoftwareArchitectureSpecificationPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
 public class SoftwareArchitectureSpecificationPPController extends Controller {
@@ -13,7 +13,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	private static SoftwareArchitectureSpecificationPPController controller;
 	private AnalysisManager manager;
-	private SoftwareArchitectureSpecificationPage form;
+	private SoftwareArchitectureSpecificationPreferencePage form;
 
 	/**
 	 * Getters and Setters
@@ -37,11 +37,11 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		this.manager = manager;
 	}
 
-	public SoftwareArchitectureSpecificationPage getForm() {
+	public SoftwareArchitectureSpecificationPreferencePage getForm() {
 		return form;
 	}
 
-	public void setForm(SoftwareArchitectureSpecificationPage form) {
+	public void setForm(SoftwareArchitectureSpecificationPreferencePage form) {
 		this.form = form;
 	}
 

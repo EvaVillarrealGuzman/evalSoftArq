@@ -13,7 +13,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.hibernate.exception.JDBCConnectionException;
-
 import project.preferences.controller.SoftwareArchitectureSpecificationPPController;
 import seg.jUCMNav.editors.UCMNavMultiPageEditor;
 import org.eclipse.ui.IEditorDescriptor;
@@ -38,7 +37,7 @@ import org.eclipse.swt.layout.GridLayout;
  * preferences can be accessed directly via the preference store.
  */
 
-public class SoftwareArchitectureSpecificationPage extends FieldEditorPreferencePage
+public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
 	private Button btnUCM;
@@ -52,7 +51,7 @@ public class SoftwareArchitectureSpecificationPage extends FieldEditorPreference
 	private Button btnOptionOpenUCM;
 	private UCMNavMultiPageEditor editor;
 
-	public SoftwareArchitectureSpecificationPage() {
+	public SoftwareArchitectureSpecificationPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SoftwareArchitectureSpecificationPPController();

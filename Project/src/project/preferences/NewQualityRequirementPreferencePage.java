@@ -656,7 +656,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		if (!getViewController().getManager().existSystemTrue()) {
 			JOptionPane.showOptionDialog(null, "No saved systems", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
+					new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
 			pabm = 0;
 		}

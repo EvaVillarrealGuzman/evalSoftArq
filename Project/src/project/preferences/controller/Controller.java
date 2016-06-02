@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
-import project.preferences.SystemPreferencePage;
+import project.preferences.EditSystemPreferencePage;
 
 public class Controller {
 
@@ -112,7 +112,7 @@ public class Controller {
 	 */
 	public void createErrorDialog(String error) {
 		JOptionPane.showOptionDialog(null, error, "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.ERROR_MESSAGE, new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")),
+				JOptionPane.ERROR_MESSAGE, new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")),
 				new Object[] { "OK" }, "OK");
 	}
 
@@ -123,7 +123,7 @@ public class Controller {
 	public int createDeleteDialog() {
 		return JOptionPane.showOptionDialog(null, "Do you want to delete the system?", "Warning",
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-				new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "Yes", "No" },
+				new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "Yes", "No" },
 				"Yes");
 	}
 	

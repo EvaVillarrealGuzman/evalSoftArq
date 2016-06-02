@@ -1,7 +1,5 @@
 package project.handlers;
 
-import java.io.ByteArrayInputStream;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -10,15 +8,15 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
+ * 
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class SoftwareArchitectureSpecificationHandler extends AbstractHandler {
-
+public class NewQualityRequirementHandler extends AbstractHandler {
 	/**
 	 * The constructor.
 	 */
-	public SoftwareArchitectureSpecificationHandler() {
+	public NewQualityRequirementHandler() {
 
 	}
 
@@ -29,8 +27,8 @@ public class SoftwareArchitectureSpecificationHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 		PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				"project.preferences.SoftwareArchitectureSpecificationPreferencePage",
-				new String[] { "project.preferences.SoftwareArchitectureSpecificationPreferencePage" }, null);
+				"project.preferences.NewQualityRequirementPreferencePage",
+				new String[] { "project.preferences.NewQualityRequirementPreferencePage" }, null);
 		if (pref != null)
 			pref.open();
 		return null;

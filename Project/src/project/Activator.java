@@ -7,6 +7,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -43,7 +45,6 @@ public class Activator extends AbstractUIPlugin {
 		} catch (UnsupportedLookAndFeelException ex) {
 			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
 		
 		/**
 		 * Initialize Hibernate

@@ -118,7 +118,6 @@ public class NewUCMController {
 	
 	public void openJUCMNav() throws Exception{
 	//	this.getHandler().openJUCMNav();
-		this.getHandler().setjUCMNav(true);
 		this.getFrmNewUCM().dispose();
 	}
 	

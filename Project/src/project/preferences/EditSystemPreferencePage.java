@@ -32,7 +32,7 @@ import org.eclipse.swt.layout.GridLayout;
  * preferences can be accessed directly via the preference store.
  */
 
-public class SystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class EditSystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	private DateTime calendarStartDate;
 	private DateTime calendarFinishDate;
@@ -44,11 +44,11 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 	private ComboViewer cboSystem;
 	private Group groupProject;
 	private StringFieldEditor projectName;
-	private static SystemPreferencePage SystemPP;
+	private static EditSystemPreferencePage SystemPP;
 	private SystemPPController viewController;
 	private Composite cProject;
 
-	public SystemPreferencePage() {
+	public EditSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SystemPPController();
@@ -223,11 +223,11 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 		this.projectName = projectName;
 	}
 
-	public static SystemPreferencePage getSystemPP() {
+	public static EditSystemPreferencePage getSystemPP() {
 		return SystemPP;
 	}
 
-	public static void setSystemPP(SystemPreferencePage systemPP) {
+	public static void setSystemPP(EditSystemPreferencePage systemPP) {
 		SystemPP = systemPP;
 	}
 
@@ -268,7 +268,7 @@ public class SystemPreferencePage extends FieldEditorPreferencePage implements I
 		if (!getViewController().getManager().existSystemTrue()) {
 			JOptionPane.showOptionDialog(null, "No saved systems", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
+					new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
 			pabm = 0;
 		}

@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import project.preferences.SystemPreferencePage;
+import project.preferences.EditSystemPreferencePage;
 import project.preferences.NewSystemPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
@@ -15,7 +15,7 @@ public class SystemPPController extends Controller {
 	 */
 	private static SystemPPController controller;
 	private AnalysisManager manager;
-	private SystemPreferencePage form;
+	private EditSystemPreferencePage form;
 	private NewSystemPreferencePage form2;
 
 	/**
@@ -40,11 +40,11 @@ public class SystemPPController extends Controller {
 		this.manager = manager;
 	}
 
-	public SystemPreferencePage getForm() {
+	public EditSystemPreferencePage getForm() {
 		return form;
 	}
 
-	public void setForm(SystemPreferencePage form) {
+	public void setForm(EditSystemPreferencePage form) {
 		this.form = form;
 	}
 
@@ -142,7 +142,7 @@ public class SystemPPController extends Controller {
 			createErrorDialog("Empty project name");
 			JOptionPane.showOptionDialog(null, "Empty project name", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
+					new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
 			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
@@ -150,7 +150,7 @@ public class SystemPPController extends Controller {
 			createErrorDialog("The finish date is less than the start date");
 			JOptionPane.showOptionDialog(null, "The finish date is less than the start date", "Warning",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(SystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
+					new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
 					"OK");
 			getForm().getCalendarStartDate().setFocus();
 			return false;
