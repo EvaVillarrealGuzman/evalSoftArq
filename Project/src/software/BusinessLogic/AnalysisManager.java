@@ -83,17 +83,18 @@ public class AnalysisManager extends HibernateManager {
 
 	/**
 	 * 
-	 * @return ComboBoxModel with quality attributes
+	 * @return ComboBoxModel with qualityAttribute names
 	 */
-	public DefaultComboBoxModel getComboModelQualityAttribute() {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
-		for (QualityAttribute auxTipo : this.listQualityAttribute()) {
-			auxModel.addElement(auxTipo);
+	public software.DomainModel.AnalysisEntity.QualityAttribute[]  getComboModelQualityAttribute() {
+		ArrayList<software.DomainModel.AnalysisEntity.QualityAttribute> qualityAttributes = new ArrayList<software.DomainModel.AnalysisEntity.QualityAttribute>();
+		for (software.DomainModel.AnalysisEntity.QualityAttribute auxTipo : this.listQualityAttribute()) {
+			qualityAttributes.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.QualityAttribute[] arrayQualityAttribute = new software.DomainModel.AnalysisEntity.QualityAttribute[qualityAttributes.size()];
+		qualityAttributes.toArray(arrayQualityAttribute);
+		return arrayQualityAttribute;
 	}
-
+	
 	/**
 	 * 
 	 * @return List<QualityAttribute> with the names of the quality attributes
@@ -189,15 +190,16 @@ public class AnalysisManager extends HibernateManager {
 	 * @return ComboBoxModel with condition names
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelCondition() {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
-		for (Condition auxTipo : this.listCondition()) {
-			auxModel.addElement(auxTipo);
+	public software.DomainModel.AnalysisEntity.Condition[]  getComboModelCondition() {
+		ArrayList<software.DomainModel.AnalysisEntity.Condition> conditions = new ArrayList<software.DomainModel.AnalysisEntity.Condition>();
+		for (software.DomainModel.AnalysisEntity.Condition auxTipo : this.listCondition()) {
+			conditions.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.Condition[] arrayCondition = new software.DomainModel.AnalysisEntity.Condition[conditions.size()];
+		conditions.toArray(arrayCondition);
+		return arrayCondition;
 	}
-
+	
 	/**
 	 * 
 	 * @return List<Condition> with the condition names
@@ -212,48 +214,34 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelStimulusSourceType(QualityAttribute qualityAttribute) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.StimulusSourceType[]  getComboModelStimulusSourceType(QualityAttribute qualityAttribute) {
+		ArrayList<software.DomainModel.AnalysisEntity.StimulusSourceType> stimulusSourceTypes = new ArrayList<software.DomainModel.AnalysisEntity.StimulusSourceType>();
 		Iterator it = qualityAttribute.getGenericScenario().getStimulusSourceTypes().iterator();
 		while (it.hasNext()) {
-			StimulusSourceType aux = (StimulusSourceType) it.next();
-			auxModel.addElement(aux);
+			StimulusSourceType auxTipo = (StimulusSourceType) it.next();
+			stimulusSourceTypes.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.StimulusSourceType[] arrayStimulusSourceType = new software.DomainModel.AnalysisEntity.StimulusSourceType[stimulusSourceTypes.size()];
+		stimulusSourceTypes.toArray(arrayStimulusSourceType);
+		return arrayStimulusSourceType;
 	}
-
-	/**
-	 * 
-	 * @return List<StimulusSourceType> with the stimulusSourceType names
-	 */
-	public List<StimulusSourceType> listStimulusSourceType() {
-		return this.listClass(StimulusSourceType.class, "name");
-	}
-
+	
 	/**
 	 * @param QualityAttribute
 	 * @return ComboBoxModel with stimulusType names for an specific attribute
 	 *         of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelStimulusType(QualityAttribute qualityAttribute) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.StimulusType[]  getComboModelStimulusType(QualityAttribute qualityAttribute) {
+		ArrayList<software.DomainModel.AnalysisEntity.StimulusType> stimulusTypes = new ArrayList<software.DomainModel.AnalysisEntity.StimulusType>();
 		Iterator it = qualityAttribute.getGenericScenario().getStimulusTypes().iterator();
 		while (it.hasNext()) {
-			StimulusType aux = (StimulusType) it.next();
-			auxModel.addElement(aux);
+			StimulusType auxTipo = (StimulusType) it.next();
+			stimulusTypes.add(auxTipo);
 		}
-		return auxModel;
-	}
-
-	/**
-	 * 
-	 * @return List<StimulusType> with the stimulusType names
-	 */
-	public List<StimulusType> listStimulusType() {
-		return this.listClass(StimulusType.class, "name");
+		software.DomainModel.AnalysisEntity.StimulusType[] arrayStimulusType = new software.DomainModel.AnalysisEntity.StimulusType[stimulusTypes.size()];
+		stimulusTypes.toArray(arrayStimulusType);
+		return arrayStimulusType;
 	}
 
 	/**
@@ -262,149 +250,107 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelEnvironmentType(QualityAttribute qualityAttribute) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.EnvironmentType[]  getComboModelEnvironmentType(QualityAttribute qualityAttribute) {
+		ArrayList<software.DomainModel.AnalysisEntity.EnvironmentType> environmentTypes = new ArrayList<software.DomainModel.AnalysisEntity.EnvironmentType>();
 		Iterator it = qualityAttribute.getGenericScenario().getEnvironmentTypes().iterator();
 		while (it.hasNext()) {
-			EnvironmentType aux = (EnvironmentType) it.next();
-			auxModel.addElement(aux);
+			EnvironmentType auxTipo = (EnvironmentType) it.next();
+			environmentTypes.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.EnvironmentType[] arrayEnvironmentType = new software.DomainModel.AnalysisEntity.EnvironmentType[environmentTypes.size()];
+		environmentTypes.toArray(arrayEnvironmentType);
+		return arrayEnvironmentType;
 	}
-
-	/**
-	 * 
-	 * @return List<EnvironmentType> with the environmentType names
-	 */
-	public List<EnvironmentType> listEnvironmentType() {
-		return this.listClass(EnvironmentType.class, "name");
-	}
-
+	
 	/**
 	 * @param QualityAttribute
 	 * @return ComboBoxModel with artifactType names for an specific attribute
 	 *         of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelArtifactType(QualityAttribute qualityAttribute) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.ArtifactType[]  getComboModelArtifactType(QualityAttribute qualityAttribute) {
+		ArrayList<software.DomainModel.AnalysisEntity.ArtifactType> artifactTypes = new ArrayList<software.DomainModel.AnalysisEntity.ArtifactType>();
 		Iterator it = qualityAttribute.getGenericScenario().getArtifactTypes().iterator();
 		while (it.hasNext()) {
-			ArtifactType aux = (ArtifactType) it.next();
-			auxModel.addElement(aux);
+			ArtifactType auxTipo = (ArtifactType) it.next();
+			artifactTypes.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.ArtifactType[] arrayArtifactType = new software.DomainModel.AnalysisEntity.ArtifactType[artifactTypes.size()];
+		artifactTypes.toArray(arrayArtifactType);
+		return arrayArtifactType;
 	}
-
-	/**
-	 * 
-	 * @return List<ArtifactType> with the artifactType names
-	 */
-	public List<ArtifactType> listArtifactType() {
-		return this.listClass(ArtifactType.class, "name");
-	}
-
+	
 	/**
 	 * @param QualityAttribute
 	 * @return ComboBoxModel with responseType names for an specific attribute
 	 *         of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelResponseType(QualityAttribute qualityAttribute) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.ResponseType[]  getComboModelResponseType(QualityAttribute qualityAttribute) {
+		ArrayList<software.DomainModel.AnalysisEntity.ResponseType> responseTypes = new ArrayList<software.DomainModel.AnalysisEntity.ResponseType>();
 		Iterator it = qualityAttribute.getGenericScenario().getResponseTypes().iterator();
 		while (it.hasNext()) {
-			ResponseType aux = (ResponseType) it.next();
-			auxModel.addElement(aux);
+			ResponseType auxTipo = (ResponseType) it.next();
+			responseTypes.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.ResponseType[] arrayResponseType = new software.DomainModel.AnalysisEntity.ResponseType[responseTypes.size()];
+		responseTypes.toArray(arrayResponseType);
+		return arrayResponseType;
 	}
-
-	/**
-	 * 
-	 * @return List<ResponseType> with the responseType names
-	 */
-	public List<ResponseType> listResponseType() {
-		return this.listClass(ResponseType.class, "name");
-	}
-
+	
 	/**
 	 * @param QualityAttribute
 	 * @return ComboBoxModel with responseMeasureType names for an specific
 	 *         attribute of quality
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelResponseMeasureType(QualityAttribute qualityAttribute) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.ResponseMeasureType[]  getComboModelResponseMeasureType(QualityAttribute qualityAttribute) {
+		ArrayList<software.DomainModel.AnalysisEntity.ResponseMeasureType> responseMeasureTypes = new ArrayList<software.DomainModel.AnalysisEntity.ResponseMeasureType>();
 		Iterator it = qualityAttribute.getGenericScenario().getResponseMeasureTypes().iterator();
 		while (it.hasNext()) {
-			ResponseMeasureType aux = (ResponseMeasureType) it.next();
-			auxModel.addElement(aux);
+			ResponseMeasureType auxTipo = (ResponseMeasureType) it.next();
+			responseMeasureTypes.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.ResponseMeasureType[] arrayResponseMeasureType = new software.DomainModel.AnalysisEntity.ResponseMeasureType[responseMeasureTypes.size()];
+		responseMeasureTypes.toArray(arrayResponseMeasureType);
+		return arrayResponseMeasureType;
 	}
-
-	/**
-	 * 
-	 * @return List<ResponseMeasureType> with the responseMeasureType names
-	 */
-	public List<ResponseMeasureType> listResponseMeasureType() {
-		return this.listClass(ResponseMeasureType.class, "name");
-	}
-
+	
 	/**
 	 * @param ResponseMeasureType
 	 * @return ComboBoxModel with metric names for an specific response measure
 	 *         type
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelMetric(ResponseMeasureType type) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
-		Iterator it = type.getMetrics().iterator();
+	public software.DomainModel.AnalysisEntity.Metric[]  getComboModelMetric(ResponseMeasureType type) {
+		ArrayList<software.DomainModel.AnalysisEntity.Metric> metrics = new ArrayList<software.DomainModel.AnalysisEntity.Metric>();
+		Iterator it =type.getMetrics().iterator();
 		while (it.hasNext()) {
-			Metric aux = (Metric) it.next();
-			auxModel.addElement(aux);
+			Metric auxTipo = (Metric) it.next();
+			metrics.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.Metric[] arrayMetric = new software.DomainModel.AnalysisEntity.Metric[metrics.size()];
+		metrics.toArray(arrayMetric);
+		return arrayMetric;
 	}
-
-	/**
-	 * 
-	 * @return List<Metric> with the metric names
-	 */
-	public List<Metric> listMetric() {
-		return this.listClass(Metric.class, "name");
-	}
-
+	
 	/**
 	 * @param Metric
 	 * @return ComboBoxModel with unit names for an specific metric
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelUnit(Metric type) {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
-		Iterator it = type.getUnits().iterator();
+	public software.DomainModel.AnalysisEntity.Unit[]  getComboModelUnit(Metric type) {
+		ArrayList<software.DomainModel.AnalysisEntity.Unit> units = new ArrayList<software.DomainModel.AnalysisEntity.Unit>();
+		Iterator it =type.getUnits().iterator();
 		while (it.hasNext()) {
-			Unit aux = (Unit) it.next();
-			auxModel.addElement(aux);
+			Unit auxTipo = (Unit) it.next();
+			units.add(auxTipo);
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.Unit[] arrayUnit = new software.DomainModel.AnalysisEntity.Unit[units.size()];
+		units.toArray(arrayUnit);
+		return arrayUnit;
 	}
-
-	/**
-	 * 
-	 * @return List<Unit> with the unit names
-	 */
-	public List<Unit> listUnit() {
-		return this.listClass(Unit.class, "name");
-	}
-
+	
 	/**
 	 * Sets the parameters of its attribute system
 	 * 

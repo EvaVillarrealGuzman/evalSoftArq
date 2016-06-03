@@ -10,7 +10,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import project.preferences.controller.SystemPPController;
+import project.preferences.controller.NewSystemPPController;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
@@ -44,13 +44,13 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	private Group groupProject;
 	private StringFieldEditor projectName;
 	private static NewSystemPreferencePage SystemPP;
-	private SystemPPController viewController;
+	private NewSystemPPController viewController;
 	private Composite cProject;
 
 	public NewSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new SystemPPController();
+		viewController = new NewSystemPPController();
 		this.setViewController(viewController);
 	}
 
@@ -66,13 +66,11 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	@Override
 	protected void createFieldEditors() {
 
-		this.getViewController().setForm2(this);
+		this.getViewController().setForm(this);
 
 		GridLayout layout = new GridLayout(2, false);
 		getFieldEditorParent().setLayout(layout);
 
-		/*Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
-		labelSn.setText("System Name: ");*/
 		systemName = new StringFieldEditor("systemName", "System Name: ", getFieldEditorParent());
 
 		// Group for project properties
@@ -114,7 +112,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 		btnNew.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewController.saveNew();
+				viewController.save();
 				prepareView(1);
 			}
 		});
@@ -187,11 +185,11 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 		SystemPP = systemPP;
 	}
 
-	public SystemPPController getViewController() {
+	public NewSystemPPController getViewController() {
 		return viewController;
 	}
 
-	public void setViewController(SystemPPController viewController) {
+	public void setViewController(NewSystemPPController viewController) {
 		this.viewController = viewController;
 	}
 

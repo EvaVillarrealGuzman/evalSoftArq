@@ -155,8 +155,8 @@ public class QualityRequirementController {
 	 * Sets the model of quality attribute combo
 	 */
 	public void setModelQualityAttribute() {
-		this.getFrmQualityRequirementManagement().getCmbQualityAttribute()
-				.setModel(getManager().getComboModelQualityAttribute());
+		//this.getFrmQualityRequirementManagement().getCmbQualityAttribute()
+		//		.setModel(getManager().getComboModelQualityAttribute());
 	}
 
 	/**
@@ -180,69 +180,69 @@ public class QualityRequirementController {
 	 * Sets the model of condition combo
 	 */
 	public void setModelCondition() {
-		this.getFrmQualityRequirementManagement().getCmbCondition()
-				.setModel(getManager().getComboModelCondition());
+		//this.getFrmQualityRequirementManagement().getCmbCondition()
+			//	.setModel(getManager().getComboModelCondition());
 	}
 
 	/**
 	 * Sets the model of types combo
 	 */
 	public void setModelStimulusSourceTypes(QualityAttribute qualityAttribute) {
-		this.getFrmQualityRequirementManagement()
-				.getCmbTypeStimulusSource()
-				.setModel(
-						getManager().getComboModelStimulusSourceType(
-								qualityAttribute));
+	//	this.getFrmQualityRequirementManagement()
+		//		.getCmbTypeStimulusSource()
+			//	.setModel(
+				//		getManager().getComboModelStimulusSourceType(
+					//			qualityAttribute));
 	}
 
 	public void setModelStimulusTypes(QualityAttribute qualityAttribute) {
-		this.getFrmQualityRequirementManagement()
-				.getCmbTypeStimulus()
-				.setModel(
-						getManager()
-								.getComboModelStimulusType(qualityAttribute));
+		//this.getFrmQualityRequirementManagement()
+			//	.getCmbTypeStimulus()
+				//.setModel(
+					//	getManager()
+						//		.getComboModelStimulusType(qualityAttribute));
 	}
 
 	public void setModelEnvironmentTypes(QualityAttribute qualityAttribute) {
-		this.getFrmQualityRequirementManagement()
-				.getCmbTypeEnvironment()
-				.setModel(
-						getManager().getComboModelEnvironmentType(
-								qualityAttribute));
+		//this.getFrmQualityRequirementManagement()
+			//	.getCmbTypeEnvironment()
+				//.setModel(
+					//	getManager().getComboModelEnvironmentType(
+						//		qualityAttribute));
 	}
 
 	public void setModelArtifactTypes(QualityAttribute qualityAttribute) {
-		this.getFrmQualityRequirementManagement()
-				.getCmbTypeArtifact()
-				.setModel(
-						getManager()
-								.getComboModelArtifactType(qualityAttribute));
+		//this.getFrmQualityRequirementManagement()
+			//	.getCmbTypeArtifact()
+				//.setModel(
+					//	getManager()
+						//		.getComboModelArtifactType(qualityAttribute));
 	}
 
 	public void setModelResponseTypes(QualityAttribute qualityAttribute) {
-		this.getFrmQualityRequirementManagement()
-				.getCmbTypeResponse()
-				.setModel(
-						getManager()
-								.getComboModelResponseType(qualityAttribute));
+		//this.getFrmQualityRequirementManagement()
+			//	.getCmbTypeResponse()
+				//.setModel(
+					//	getManager()
+						//		.getComboModelResponseType(qualityAttribute));
 	}
 
 	public void setModelResponseMeasureTypes(QualityAttribute qualityAttribute) {
-		this.getFrmQualityRequirementManagement()
-				.getCmbTypeResponseMeasure()
-				.setModel(
-						getManager().getComboModelResponseMeasureType(
-								qualityAttribute));
+		//this.getFrmQualityRequirementManagement()
+			//	.getCmbTypeResponseMeasure()
+				//.setModel(
+					//	getManager().getComboModelResponseMeasureType(
+						//		qualityAttribute));
 	}
 
 	public void setModelMetric(ResponseMeasureType type) {
-		this.getFrmQualityRequirementManagement().getCmbMetric()
-				.setModel(getManager().getComboModelMetric(type));
+		//this.getFrmQualityRequirementManagement().getCmbMetric()
+			//	.setModel(getManager().getComboModelMetric(type));
 	}
 
 	public void setModelUnit(Metric type) {
-		this.getFrmQualityRequirementManagement().getCmbUnit()
-				.setModel(getManager().getComboModelUnit(type));
+		//this.getFrmQualityRequirementManagement().getCmbUnit()
+				//.setModel(getManager().getComboModelUnit(type));
 	}
 
 	public int saveView() {

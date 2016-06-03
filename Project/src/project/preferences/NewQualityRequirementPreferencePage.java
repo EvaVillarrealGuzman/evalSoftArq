@@ -147,6 +147,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 		addField( new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cScenario));
 		
+		Label labelD = new Label(cScenario, SWT.NONE);
+		labelD.setText("Description: ");
+		
 		txtDescription = new Text(cScenario, SWT.BORDER | SWT.MULTI);
 		
 		Label labelQA = new Label(cScenario, SWT.NONE);
@@ -654,10 +657,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
-			JOptionPane.showOptionDialog(null, "No saved systems", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
+			this.getViewController().createErrorDialog("No saved systems");
 			pabm = 0;
 		}
 		switch (pabm) {

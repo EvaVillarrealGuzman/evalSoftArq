@@ -266,10 +266,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	public void prepareView(int pabm) {
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
-			JOptionPane.showOptionDialog(null, "No saved systems", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
+			this.getViewController().createErrorDialog("No saved systems");
 			pabm = 0;
 		}
 		switch (pabm) {
