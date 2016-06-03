@@ -172,8 +172,8 @@ public class QualityRequirementController {
 	 * requirements state=true
 	 */
 	public void setModelSystemSearch() {
-		this.getFrmQualityRequirementSearch().getCmbSystem()
-				.setModel(getManager().getComboModelSystemWithRequirements());
+		//this.getFrmQualityRequirementSearch().getCmbSystem()
+		//		.setModel(getManager().getComboModelSystemWithRequirements());
 	}
 
 	/**

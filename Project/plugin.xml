@@ -151,6 +151,12 @@
        class="project.preferences.NewQualityRequirementPreferencePage"
        id="project.preferences.NewQualityRequirementPreferencePage"
        name="New Quality Requirement Preference Page">
+	 </page>
+	  <page
+       category="project.preferences.SystemPreferencePage"
+       class="project.preferences.SearchQualityRequirementPreferencePage"
+       id="project.preferences.SearchQualityRequirementPreferencePage"
+       name="Search Quality Requirement Preference Page">
 	 </page>	
 	 <page
        category="project.preferences.SystemPreferencePage"

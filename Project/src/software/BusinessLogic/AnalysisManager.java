@@ -131,9 +131,8 @@ public class AnalysisManager extends HibernateManager {
 	 *         qualityRequirement!=empty and qualityRequirement.state==true
 	 * 
 	 */
-	public DefaultComboBoxModel getComboModelSystemWithRequirements() {
-		DefaultComboBoxModel auxModel = new DefaultComboBoxModel();
-		auxModel.addElement("");
+	public software.DomainModel.AnalysisEntity.System[]  getComboModelSystemWithRequirements() {
+		ArrayList<software.DomainModel.AnalysisEntity.System> systems = new ArrayList<software.DomainModel.AnalysisEntity.System>();
 		for (software.DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getQualityRequirements().isEmpty() == false) {
 				Iterator it = auxTipo.getQualityRequirements().iterator();
@@ -141,13 +140,15 @@ public class AnalysisManager extends HibernateManager {
 				while (it.hasNext() && i) {
 					QualityRequirement q = (QualityRequirement) it.next();
 					if (q.isState()) {
-						auxModel.addElement(auxTipo);
+						systems.add(auxTipo);
 						i = false;
 					}
 				}
-			}
+			}	
 		}
-		return auxModel;
+		software.DomainModel.AnalysisEntity.System[] arraySystem = new software.DomainModel.AnalysisEntity.System[systems.size()];
+		systems.toArray(arraySystem);
+		return arraySystem;
 	}
 
 	/**
