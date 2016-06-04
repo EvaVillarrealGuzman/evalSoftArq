@@ -1,5 +1,8 @@
 package project.preferences;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -26,6 +29,9 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.KeyListener;
 
 public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	/**
@@ -259,6 +265,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		});
 		txtValueResponseMeasure = new StringFieldEditor(PreferenceConstants.P_STRING, "", cParts);
 		addField(txtValueResponseMeasure);
+		/**txtValueResponseMeasure.addKeyListener(new KeyAdapter(){
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				valueResponseMeasureKeyTyped(arg0);
+			}
+		});**/
 		
 		cmbMetric = new ComboViewer(cScenario, SWT.READ_ONLY);
 		cmbMetric.setContentProvider(ArrayContentProvider.getInstance());
@@ -732,6 +744,34 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			break;
 		}
 		
+	}
+	
+	private void valueResponseMeasureKeyTyped(KeyEvent parg0) {
+		if (parg0.getKeyChar() == 46) {
+			if (viewController.firstPoint(txtValueResponseMeasure.getStringValue())) {
+				if (firstPoint) {
+					txtValueResponseMeasure.setStringValue("0");
+					firstTime = false;
+				} else {
+					txtValueResponseMeasure.setStringValue("0.");
+				}
+
+			} else {
+				if (parg0.getKeyChar() == 46 && !firstPoint) {
+					if (!viewController.checkPoint(txtValueResponseMeasure.getStringValue())) {
+						firstPoint = true;
+					}
+				}
+			}
+		}
+		if (Character.isDigit(parg0.getKeyChar())) {
+
+		} else if (parg0.getKeyChar() == 46 && firstPoint) {
+			firstPoint = false;
+		} else {
+			parg0.setKeyCode(Character.MIN_VALUE);
+			parg0.consume();
+		}
 	}
 	
 }

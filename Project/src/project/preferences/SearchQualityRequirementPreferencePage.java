@@ -1,7 +1,5 @@
 package project.preferences;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
@@ -9,14 +7,10 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import project.preferences.controller.QualityRequirementPPController;
-import software.DomainModel.AnalysisEntity.Metric;
-import software.DomainModel.AnalysisEntity.QualityAttribute;
-import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -24,7 +18,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -41,10 +34,11 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	private Group groupQualityRequirement;
 	private Composite cQualityRequirement;
 	private TableViewer tblViewerQualityRequirement;
-	TableViewerColumn colObject;
-	TableViewerColumn colCondition;
-	TableViewerColumn colQualityAttribute;
-	TableViewerColumn colDescriptionScenario;
+	private Table table;
+	private TableColumn colObject;
+	private TableColumn colCondition;
+	private TableColumn colQualityAttribute;
+	private TableColumn colDescriptionScenario;
 	private Button btnConsult;
 	private static SearchQualityRequirementPreferencePage qualityRequirementPP;
 	private QualityRequirementPPController viewController;
@@ -129,37 +123,29 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		tblViewerQualityRequirement = new TableViewer(cQualityRequirement, SWT.MULTI|SWT.V_SCROLL|SWT.BORDER);
 		
 		// make lines and header visible
-	    Table table = tblViewerQualityRequirement.getTable();
+	    table = tblViewerQualityRequirement.getTable();
 	    table.setLayoutData(new GridData(GridData.FILL_BOTH));
 	    table.setHeaderVisible(true);
 	    table.setLinesVisible(true); 
 	    
 	    // set the content provider
 	    tblViewerQualityRequirement.setContentProvider(ArrayContentProvider.getInstance());
-
-	 // create columns
-	    colObject = new TableViewerColumn(tblViewerQualityRequirement, SWT.NONE);
-	    colObject.getColumn().setWidth(0);
-	    colObject.getColumn().setText("Object");
-	    //colObject.setLabelProvider(new ColumnLabelProvider() {
-	      //@Override
-	      //public String getText(Object element) {
-	        //Person p = (Person) element;
-	        //return p.getFirstName();
-	      //}
-	    //});
-
-	    colCondition = new TableViewerColumn(tblViewerQualityRequirement, SWT.NONE);
-	    colCondition.getColumn().setWidth(200);
-	    colCondition.getColumn().setText("Condition");
 	    
-	    colQualityAttribute = new TableViewerColumn(tblViewerQualityRequirement, SWT.NONE);
-	    colQualityAttribute.getColumn().setWidth(200);
-	    colQualityAttribute.getColumn().setText("Quality Attribute");
+	    colObject = new TableColumn(table, SWT.NONE);
+	    colObject.setWidth(0);
+	    colObject.setText("Object");
+
+	    colCondition = new TableColumn(table, SWT.NONE);
+	    colCondition.setWidth(200);
+	    colCondition.setText("Condition");
 	    
-	    colDescriptionScenario = new TableViewerColumn(tblViewerQualityRequirement, SWT.NONE);
-	    colDescriptionScenario.getColumn().setWidth(200);
-	    colDescriptionScenario.getColumn().setText("Description Scenario");
+	    colQualityAttribute = new TableColumn(table, SWT.NONE);
+	    colQualityAttribute.setWidth(200);
+	    colQualityAttribute.setText("Quality Attribute");
+	    
+	    colDescriptionScenario = new TableColumn(table, SWT.NONE);
+	    colDescriptionScenario.setWidth(200);
+	    colDescriptionScenario.setText("Description Scenario");
 		
 		btnConsult = new Button(getFieldEditorParent(), SWT.PUSH);
 		btnConsult.setText(" Consult ");
@@ -242,37 +228,13 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.tblViewerQualityRequirement = tblViewerQualityRequirement;
 	}
 
-	public TableViewerColumn getColObject() {
-		return colObject;
+	public Table getTable() {
+		return table;
 	}
 
-	public void setColObject(TableViewerColumn colObject) {
-		this.colObject = colObject;
-	}
-
-	public TableViewerColumn getColCondition() {
-		return colCondition;
-	}
-
-	public void setColCondition(TableViewerColumn colCondition) {
-		this.colCondition = colCondition;
-	}
-
-	public TableViewerColumn getColQaulityAttribute() {
-		return colQualityAttribute;
-	}
-
-	public void setColQaulityAttribute(TableViewerColumn colQaulityAttribute) {
-		this.colQualityAttribute = colQaulityAttribute;
-	}
-
-	public TableViewerColumn getColDescriptionScenario() {
-		return colDescriptionScenario;
-	}
-
-	public void setColDescriptionScenario(TableViewerColumn colDescriptionScenario) {
-		this.colDescriptionScenario = colDescriptionScenario;
-	}
+	public void setTable(Table table) {
+		this.table = table;
+	}	
 
 	public Button getBtnConsult() {
 		return btnConsult;
@@ -327,13 +289,10 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			
 			break;
 		case 1:// With system selected
-			//this.getTxtDescription().setEnabled(true);
-			//this.getCmbQualityAttribute().getCombo().setEnabled(true);
-			//this.getCmbCondition().getCombo().setEnabled(true);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
 			
 			break;		
 		}
 		
 	}
-	
 }

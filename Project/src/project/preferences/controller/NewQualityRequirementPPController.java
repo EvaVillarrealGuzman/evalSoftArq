@@ -518,6 +518,17 @@ public class NewQualityRequirementPPController extends Controller {
 
 		return true;
 	}
+	
+	public boolean checkPoint(String ptext) {
+		return ptext.contains(".");
+	}
+
+	public boolean firstPoint(String ptext) {
+		if (ptext.length() > 0) {
+			return false;
+		}
+		return true;
+	}
 
 
 }

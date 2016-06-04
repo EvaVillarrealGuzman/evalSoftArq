@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.TableItem;
 
 import project.preferences.EditQualityRequirementPreferencePage;
 import project.preferences.SearchQualityRequirementPreferencePage;
@@ -329,20 +331,27 @@ public class QualityRequirementPPController extends Controller {
 	 */
 	public void setModelQualityRequirement(software.DomainModel.AnalysisEntity.System ptype) {
 		this.getManager().setSystem(ptype);
-		//while (this.getFormSearch().getModel().getRowCount() > 0) {
-		//	this.getFormSearch().getModel().removeRow(0);
-		//}
+		while (this.getFormSearch().getTable().getItems().length > 0) {
+			this.getFormSearch().getTable().remove(0);
+		}
+		int i=0;
 		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
 			if (dp.isState()) {
-		//		this.getFormSearch()
-		//				.getModel()
-		//				.addRow(new Object[] { dp,
-		//						dp.getQualityScenario().getQualityAttribute(),
-		//						dp.getQualityScenario().getDescription(),
-		//						dp.getQualityScenario().getCondition() });
+				TableItem item = new TableItem(this.getFormSearch().getTable(), SWT.NONE);
+				item.setText(new String[]{dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(), dp.getQualityScenario().getCondition().toString(), dp.getQualityScenario().getDescription().toString()});	
 			}
 		}
 	}
+	
+	public boolean checkPoint(String ptext) {
+		return ptext.contains(".");
+	}
 
+	public boolean firstPoint(String ptext) {
+		if (ptext.length() > 0) {
+			return false;
+		}
+		return true;
+	}
 
 }
