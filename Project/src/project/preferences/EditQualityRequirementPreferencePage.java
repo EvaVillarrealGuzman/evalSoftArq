@@ -53,7 +53,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	private StringFieldEditor txtValueStimulus;
 	private StringFieldEditor txtValueEnvironment;
 	private StringFieldEditor txtValueResponse;
-	private StringFieldEditor txtValueResponseMeasure;
+	private DoubleFieldEditor txtValueResponseMeasure;
 	private Label lblMetric;
 	private ComboViewer cmbMetric;
 	private Label lblType;
@@ -258,7 +258,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				}
 			}
 		});
-		txtValueResponseMeasure = new StringFieldEditor(PreferenceConstants.P_STRING, "", cParts);
+		txtValueResponseMeasure = new DoubleFieldEditor(PreferenceConstants.P_STRING, "", cParts);
 		addField(txtValueResponseMeasure);
 		
 		cmbMetric = new ComboViewer(cScenario, SWT.READ_ONLY);
@@ -483,11 +483,11 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		this.txtValueResponse = txtValueResponse;
 	}
 
-	public StringFieldEditor getTxtValueResponseMeasure() {
+	public DoubleFieldEditor getTxtValueResponseMeasure() {
 		return txtValueResponseMeasure;
 	}
 
-	public void setTxtValueResponseMeasure(StringFieldEditor txtValueResponseMeasure) {
+	public void setTxtValueResponseMeasure(DoubleFieldEditor txtValueResponseMeasure) {
 		this.txtValueResponseMeasure = txtValueResponseMeasure;
 	}
 

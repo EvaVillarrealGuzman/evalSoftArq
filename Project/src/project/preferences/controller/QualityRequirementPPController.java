@@ -186,7 +186,7 @@ public class QualityRequirementPPController extends Controller {
 					(ResponseType) ((IStructuredSelection) this.getForm().getCmbTypeResponse().getSelection()).getFirstElement());
 			ResponseMeasure responseMeasure = new ResponseMeasure(
 					this.getForm().getTxtDescriptionResponseMeasure().getStringValue(),
-					Double.parseDouble(this.getForm().getTxtValueResponseMeasure().getStringValue()),
+					this.getForm().getTxtValueResponseMeasure().getDoubleValue(),
 					(ResponseMeasureType) ((IStructuredSelection) this.getForm().getCmbTypeResponseMeasure().getSelection()).getFirstElement(),
 					(Metric) ((IStructuredSelection) this.getForm().getCmbMetric().getSelection()).getFirstElement(), 
 					(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection()).getFirstElement());
@@ -311,8 +311,13 @@ public class QualityRequirementPPController extends Controller {
 			this.getForm()
 					.getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
-		} else if (Double.parseDouble(this.getForm().getTxtValueResponseMeasure().getStringValue()) <= 0) {
+		} else if (!this.getForm().getTxtValueResponseMeasure().isValid()) {
 			this.createErrorDialog("Invalid response measure value");
+			this.getForm()
+					.getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
+			return false;
+		} else if (this.getForm().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
+			this.createErrorDialog("Invalid response measure value (negative number)");
 			this.getForm()
 					.getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;

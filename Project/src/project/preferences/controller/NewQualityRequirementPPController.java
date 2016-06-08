@@ -164,7 +164,7 @@ public class NewQualityRequirementPPController extends Controller {
 					(ResponseType) ((IStructuredSelection) this.getForm().getCmbTypeResponse().getSelection()).getFirstElement());
 			ResponseMeasure responseMeasure = new ResponseMeasure(
 					this.getForm().getTxtDescriptionResponseMeasure().getStringValue(),
-					Double.parseDouble(this.getForm().getTxtValueResponseMeasure().getStringValue()),
+					this.getForm().getTxtValueResponseMeasure().getDoubleValue(),
 					(ResponseMeasureType) ((IStructuredSelection) this.getForm().getCmbTypeResponseMeasure().getSelection()).getFirstElement(),
 					(Metric) ((IStructuredSelection) this.getForm().getCmbMetric().getSelection()).getFirstElement(), 
 					(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection()).getFirstElement());
@@ -190,328 +190,117 @@ public class NewQualityRequirementPPController extends Controller {
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog("Select system");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select system",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getTxtDescription())) {
 			this.createErrorDialog("Empty description");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty description",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getTxtDescription().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getCmbQualityAttribute())) {
 			this.createErrorDialog("Select quality attribute");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select Quality Attribute",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbQualityAttribute().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getCmbCondition())) {
 			this.createErrorDialog("Select condition");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select condition",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbCondition().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionStimulusSource())) {
 			this.createErrorDialog("Empty stimulus source description");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty stimulus source description",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtDescriptionStimulusSource().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionStimulus())) {
 			this.createErrorDialog("Empty stimulus description");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty stimulus description",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtDescriptionStimulus().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionEnvironment())) {
 			this.createErrorDialog("Empty environment description");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty environment description",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtDescriptionEnvironment().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionArtifact())) {
 			this.createErrorDialog("Empty artifact description");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty artifact description",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtDescriptionArtifact().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionResponse())) {
 			this.createErrorDialog("Empty response description");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty response description",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtDescriptionResponse().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionResponseMeasure())) {
 			this.createErrorDialog("Empty response measure description");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty response measure description",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtDescriptionResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulusSource())) {
 			this.createErrorDialog("Empty stimulus source value");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty stimulus source value",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtValueStimulusSource().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulus())) {
 			this.createErrorDialog("Empty stimulus value");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty stimulus value",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getTxtValueStimulus().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueEnvironment())) {
 			this.createErrorDialog("Empty environment value");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty environment value",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getTxtValueEnvironment().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponse())) {
 			this.createErrorDialog("Empty response value");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty response value",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getTxtValueResponse().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeStimulusSource())) {
 			this.createErrorDialog("Select stimulus source type");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select stimulus source type",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getCmbTypeStimulusSource().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeStimulus())) {
 			this.createErrorDialog("Select stimulus type");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select stimulus type",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbTypeStimulus().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeEnvironment())) {
 			this.createErrorDialog("Select environment type");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select environment type",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbTypeEnvironment().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeArtifact())) {
 			this.createErrorDialog("Select artifact type");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select artifact type",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbTypeArtifact().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeResponse())) {
 			this.createErrorDialog("Select response type");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select response type",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbTypeResponse().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeResponseMeasure())) {
 			this.createErrorDialog("Select response measure type");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select response measure type",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getCmbTypeResponseMeasure().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbMetric())) {
 			this.createErrorDialog("Select metric");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select metric",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbMetric().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponseMeasure())) {
 			this.createErrorDialog("Empty response measure value");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Empty response measure value",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm()
 					.getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
-		} else if (Double.parseDouble(this.getForm().getTxtValueResponseMeasure().getStringValue()) <= 0) {
+		} else if (!this.getForm().getTxtValueResponseMeasure().isValid()) {
 			this.createErrorDialog("Invalid response measure value");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Invalid response measure value",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
+			this.getForm()
+					.getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
+			return false;
+		} else if (this.getForm().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
+			this.createErrorDialog("Invalid response measure value (negative number)");
 			this.getForm()
 					.getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbUnit())) {
 			this.createErrorDialog("Select unit");
-//			JOptionPane.showOptionDialog(
-//					null,
-//					"Select unit",
-//					"Warning",
-//					JOptionPane.YES_NO_CANCEL_OPTION,
-//					JOptionPane.ERROR_MESSAGE,
-//					new ImageIcon(FrmSystemManagement.class
-//							.getResource("/Icons/error.png")),
-//					new Object[] { "OK" }, "OK");
 			this.getForm().getCmbUnit().getCombo().setFocus();
 			return false;
 		}
