@@ -49,7 +49,7 @@ public class DoubleFieldEditor extends StringFieldEditor {
 		this.parent = parent;
 		setTextLimit(textLimit);
 		setEmptyStringAllowed(false);
-		setErrorMessage(labelText + " " + JFaceResources.getString("not a valid double")); //$NON-NLS-1$
+		setErrorMessage(labelText + " " + JFaceResources.getString("Not a valid double")); //$NON-NLS-1$
 		createControl(parent);
 	}
 
@@ -64,6 +64,10 @@ public class DoubleFieldEditor extends StringFieldEditor {
 
 		setErrorMessage(JFaceResources.format("Entry must be a value between {1} and {2}", //$NON-NLS-1$
 			new Object[] { getLabelText(), min, max }));
+	}
+	
+	public void setMinRange(Double min){
+		minValidValue = min;
 	}
 
 	@Override
@@ -82,11 +86,14 @@ public class DoubleFieldEditor extends StringFieldEditor {
 				clearErrorMessage();
 				return true;
 			}
-
+			setErrorMessage(JFaceResources.format("The entry should no be a negative number", //$NON-NLS-1$
+					new Object[] { getLabelText()}));
 			showErrorMessage();
 			return false;
 
 		} catch (NumberFormatException e1) {
+			setErrorMessage(JFaceResources.format("Not a valid double", //$NON-NLS-1$
+					new Object[] { getLabelText()}));
 			showErrorMessage();
 		}
 

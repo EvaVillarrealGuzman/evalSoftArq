@@ -67,8 +67,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	private ComboViewer cmbUnit;
 	private Button btnSave;
 	private Button btnRemove;
-	private boolean firstPoint = true;
-	private boolean firstTime = true;
 	private static EditQualityRequirementPreferencePage qualityRequirementPP;
 	private QualityRequirementPPController viewController;
 	
@@ -259,6 +257,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			}
 		});
 		txtValueResponseMeasure = new DoubleFieldEditor(PreferenceConstants.P_STRING, "", cParts);
+		txtValueResponseMeasure.setMinRange(0.0);
 		addField(txtValueResponseMeasure);
 		
 		cmbMetric = new ComboViewer(cScenario, SWT.READ_ONLY);
@@ -570,23 +569,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public void setcParts(Composite cParts) {
 		this.cParts = cParts;
 	}
-
-	public boolean isFirstPoint() {
-		return firstPoint;
-	}
-
-	public void setFirstPoint(boolean firstPoint) {
-		this.firstPoint = firstPoint;
-	}
-
-	public boolean isFirstTime() {
-		return firstTime;
-	}
-
-	public void setFirstTime(boolean firstTime) {
-		this.firstTime = firstTime;
-	}
-
+	
 	public void loadCmbSystem() {
 		this.getViewController().setModelSystem();
 	}

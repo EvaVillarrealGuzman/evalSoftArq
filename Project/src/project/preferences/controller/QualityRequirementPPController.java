@@ -347,16 +347,5 @@ public class QualityRequirementPPController extends Controller {
 			}
 		}
 	}
-	
-	public boolean checkPoint(String ptext) {
-		return ptext.contains(".");
-	}
-
-	public boolean firstPoint(String ptext) {
-		if (ptext.length() > 0) {
-			return false;
-		}
-		return true;
-	}
 
 }
