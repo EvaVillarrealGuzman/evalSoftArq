@@ -402,6 +402,10 @@ public class AnalysisManager extends HibernateManager {
 	public void setFinishDate(Date pfinishDate) {
 		this.getSystem().setProjectFinishDate(pfinishDate);
 	}
+	
+	public void setPathUCM(String pathUCM) {
+		this.getSystem().setPathUCM(pathUCM);
+	}
 
 	// Getters of system atribbutes (name, projectName, startDate, finishDate)
 	public String getSystemName() {
@@ -418,6 +422,10 @@ public class AnalysisManager extends HibernateManager {
 
 	public Date getFinishDate() {
 		return this.getSystem().getProjectFinishDate();
+	}
+	
+	public String getPathUCM() {
+		return this.getSystem().getPathUCM();
 	}
 
 	public void saveSystem(int popcABM) {

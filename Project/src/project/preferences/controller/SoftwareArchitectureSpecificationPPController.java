@@ -3,6 +3,7 @@ package project.preferences.controller;
 
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+
 import project.preferences.SoftwareArchitectureSpecificationPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
@@ -70,4 +71,49 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		this.getManager().setSystem(pmodel);
 	}
 
+	public void save() {
+		int err;
+		err = this.setSystem();
+		if (err == 0) {
+			this.getManager().updateSystem();
+		}
+	}
+	
+	public int setSystem() {
+		if (this.isValidData()) {
+			this.getManager().setPathUCM(this.getForm().getTxtSelectUCM().getText());
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	
+	/**
+	 * return true if they have completed the required fields
+	 */
+	public boolean isValidData() {
+		if (this.isEmpty(this.getForm().getCboSystem())) {
+			this.createErrorDialog("System name empty");
+			this.getForm().getCboSystem().getCombo().setFocus();
+			return false;
+		}
+		if (this.isEmpty(this.getForm().getTxtSelectUCM())) {
+			this.createErrorDialog("File name empty");
+			this.getForm().getTxtSelectUCM().setFocus();
+			return false;
+		} 
+
+		return true;
+	}
+	
+	/**
+	 * Configure the form when a Combo´s item is selected
+	 */
+	public void getView() {
+		String pathUCM = this.getManager().getPathUCM();
+		if (!pathUCM.equals("")){
+			this.getForm().getTxtSelectUCM().setText(pathUCM);
+		}
+	}
+	
 }

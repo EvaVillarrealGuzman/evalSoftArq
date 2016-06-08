@@ -1,25 +1,25 @@
 package project.preferences;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import org.eclipse.jface.preference.*;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.hibernate.exception.JDBCConnectionException;
-
-import project.preferences.controller.SystemPPController;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.hibernate.exception.JDBCConnectionException;
+
+import project.preferences.controller.SystemPPController;
 
 /**
  * This class represents a preference page that is contributed to the
@@ -42,7 +42,6 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	private Button btnRemove;
 	private Button btnEdit;
 	private ComboViewer cboSystem;
-	private Group groupProject;
 	private StringFieldEditor projectName;
 	private static EditSystemPreferencePage SystemPP;
 	private SystemPPController viewController;
@@ -65,16 +64,14 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	public void init(IWorkbench workbench) {
 	}
 
-	@Override
-	protected void createFieldEditors() {
-
+	protected Control createContents(Composite parent) {
 		try {
 			GridLayout layout = new GridLayout(2, false);
-			getFieldEditorParent().setLayout(layout);
+			parent.setLayout(layout);
 
-			Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
+			Label labelSn = new Label(parent, SWT.NONE);
 			labelSn.setText("System Name: ");
-			cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
+			cboSystem = new ComboViewer(parent, SWT.READ_ONLY);
 
 			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
 
@@ -88,7 +85,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			});
 
 			// Group for project properties
-			Group groupProject = new Group(getFieldEditorParent(), SWT.SHADOW_ETCHED_IN);
+			Group groupProject = new Group(parent, SWT.SHADOW_ETCHED_IN);
 			groupProject.setText("Project");
 
 			GridLayout layoutProject = new GridLayout();
@@ -118,9 +115,9 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 			calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
-			Label label1 = new Label(getFieldEditorParent(), SWT.LEFT);
+			new Label(parent, SWT.LEFT);
 
-			btnSave = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnSave = new Button(parent, SWT.PUSH);
 			btnSave.setText(" Save ");
 			btnSave.setToolTipText("Save");
 			btnSave.addSelectionListener(new SelectionAdapter() {
@@ -131,12 +128,12 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 				}
 			});
 
-			btnRemove = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnRemove = new Button(parent, SWT.PUSH);
 			btnRemove.setText("Remove");
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.createDeleteDialog()== 0) {
+					if (viewController.createDeleteDialog() == 0) {
 						viewController.remove();
 						prepareView(0);
 					}
@@ -145,10 +142,15 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 			this.prepareView(0);
 
-		} catch (JDBCConnectionException e){
+		} catch (JDBCConnectionException e) {
 			viewController.createErrorDialog("Postgres service is not running");
 		}
 
+		return new Composite(parent, SWT.NULL);
+	}
+
+	@Override
+	protected void createFieldEditors() {
 	}
 
 	public DateTime getCalendarStartDate() {
@@ -246,9 +248,10 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	public void setcProject(Composite cProject) {
 		this.cProject = cProject;
 	}
-	
-	public Composite getParent(){
-		return getFieldEditorParent();
+
+	//TODO ver
+	public Composite getParent() {
+		return getParent();
 	}
 
 	/**
@@ -287,6 +290,6 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			this.getBtnSave().setEnabled(true);
 			break;
 		}
-		
+
 	}
 }

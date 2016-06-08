@@ -51,7 +51,7 @@ public class System implements Comparable{
     
 	private boolean state;
 	
-	private String pathArchitecture;
+	private String pathUCM;
 	
 	//Builders
 	public System (){
@@ -117,6 +117,14 @@ public class System implements Comparable{
 		this.qualityRequirements = pqualityRequirements;
 	}
 	
+	public String getPathUCM() {
+		return pathUCM;
+	}
+
+	public void setPathUCM(String pathUCM) {
+		this.pathUCM = pathUCM;
+	}
+
 	public boolean isState() {
 		return state;
 	}

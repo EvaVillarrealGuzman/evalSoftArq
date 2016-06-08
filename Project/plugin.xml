@@ -38,6 +38,11 @@
             id="Project.commands.editSystemCommand"
             name="EditSystem">
       </command>
+      <command
+            categoryId="Project.commands.category"
+            id="Project.commands.searchQualityRequirementCommand"
+            name="SearchQualityRequirement">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -64,6 +69,10 @@
       <handler
             class="project.handlers.EditSystemHandler"
             commandId="Project.commands.editSystemCommand">
+      </handler>
+      <handler
+            class="project.handlers.searchQualityRequirementHandler"
+            commandId="Project.commands.searchQualityRequirementCommand">
       </handler>
    </extension>
    <extension
@@ -108,10 +117,10 @@
                   mnemonic="SAS">
             </command>
             <command
-                  commandId="Project.commands.softwareArchitectureEvaluationCommand"
-                  id="Project.menus.softwareArchitectureEvaluationCommand"
-                  label="Software Architecture Evaluation"
-                  mnemonic="SAE">
+                  commandId="Project.commands.searchQualityRequirementCommand"
+                  id="Project.menus.searchQualityRequirementCommand"
+                  label="Search Quality Requirement"
+                  mnemonic="SQR">
             </command>
             <command
                   commandId="Project.commands.reportsCommand"
@@ -121,48 +130,42 @@
             </command>
          </menu>
       </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="Project.toolbars.sampleToolbar">
-            <command
-                  commandId="Project.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  tooltip="Say hello world"
-                  id="Project.toolbars.sampleCommand">
-            </command>
-         </toolbar>
-      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            class="project.preferences.UCM2DEVSPreferencePage"
+            id="project.preferences.UCM2DEVS"
+            name="UCM2DEVS">
+      </page>
+      <page
+      		category="project.preferences.UCM2DEVS"
             class="project.preferences.NewSystemPreferencePage"
             id="project.preferences.NewSystemPreferencePage"
             name="New System ">
       </page>
       <page
-		name="Software Architecture Specification"
-		category="project.preferences.SystemPreferencePage"
-		class="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
-		id="project.preferences.SoftwareArchitectureSpecificationPreferencePage"/>	
-	<page
-       category="project.preferences.SystemPreferencePage"
-       class="project.preferences.NewQualityRequirementPreferencePage"
-       id="project.preferences.NewQualityRequirementPreferencePage"
-       name="New Quality Requirement Preference Page">
-	 </page>
+			name="Software Architecture Specification"
+			category="project.preferences.UCM2DEVS"
+			class="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
+			id="project.preferences.SoftwareArchitectureSpecificationPreferencePage"/>	
 	  <page
-       category="project.preferences.SystemPreferencePage"
-       class="project.preferences.SearchQualityRequirementPreferencePage"
-       id="project.preferences.SearchQualityRequirementPreferencePage"
-       name="Search Quality Requirement Preference Page">
+      		category="project.preferences.UCM2DEVS"
+       		class="project.preferences.NewQualityRequirementPreferencePage"
+       		id="project.preferences.NewQualityRequirementPreferencePage"
+       		name="New Quality Requirement">
+	  </page>
+	  <page
+       		category="project.preferences.UCM2DEVS"
+       		class="project.preferences.SearchQualityRequirementPreferencePage"
+       		id="project.preferences.SearchQualityRequirementPreferencePage"
+       		name="Search Quality Requirement">
 	 </page>	
 	 <page
-       category="project.preferences.SystemPreferencePage"
-       class="project.preferences.EditSystemPreferencePage"
-       id="project.preferences.EditSystemPreferencePage"
-       name="Edit System Preference Page">
+       		category="project.preferences.UCM2DEVS"
+       		class="project.preferences.EditSystemPreferencePage"
+       		id="project.preferences.EditSystemPreferencePage"
+       		name="Edit System">
 	 </page>	
    </extension>
    <extension

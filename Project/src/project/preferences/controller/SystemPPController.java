@@ -1,11 +1,9 @@
 package project.preferences.controller;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+
 import project.preferences.EditSystemPreferencePage;
-import project.preferences.NewSystemPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
 public class SystemPPController extends Controller {
@@ -54,6 +52,7 @@ public class SystemPPController extends Controller {
 			this.getManager().updateSystem();
 		}
 	}
+	
 	public void remove() {
 		this.getManager().removeSystem();
 	}

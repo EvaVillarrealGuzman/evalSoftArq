@@ -1,30 +1,33 @@
 package project.preferences;
 
 import java.io.File;
+
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jface.preference.*;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.hibernate.exception.JDBCConnectionException;
+
 import project.preferences.controller.SoftwareArchitectureSpecificationPPController;
-import seg.jUCMNav.editors.UCMNavMultiPageEditor;
-import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
 
 /**
  * This class represents a preference page that is contributed to the
@@ -43,13 +46,13 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	private Button btnUCM;
 	private Button btnFileUCM;
 	private Button btnEditFileUCM;
+	private Button btnSave;
 	private ComboViewer cboSystem;
 	private SoftwareArchitectureSpecificationPPController viewController;
 	private Text txtSelectUCM;
 	private FileDialog chooseFile;
 	private Button btnOptionNewUCM;
 	private Button btnOptionOpenUCM;
-	private UCMNavMultiPageEditor editor;
 
 	public SoftwareArchitectureSpecificationPreferencePage() {
 		super(GRID);
@@ -66,29 +69,28 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	 */
 	public void init(IWorkbench workbench) {
 	}
-
-	@Override
-	protected void createFieldEditors() {
-
+	
+	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setForm(this);
 
 			GridLayout layout = new GridLayout(2, false);
-			getFieldEditorParent().setLayout(layout);
+			parent.setLayout(layout);
 
-			Label labelSn = new Label(getFieldEditorParent(), SWT.NONE);
+			Label labelSn = new Label(parent, SWT.NONE);
 			labelSn.setText("System Name: ");
-			cboSystem = new ComboViewer(getFieldEditorParent(), SWT.READ_ONLY);
+			cboSystem = new ComboViewer(parent, SWT.READ_ONLY);
 			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
 			loadCombo();
+			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					viewController.setModel(cboSystem);
+					viewController.getView();
+				}
+			});
 
-			String[][] radioButtonOptions = new String[][] { { "Select UCM: ", "Select UCM" } };
-
-			final RadioGroupFieldEditor radioButtonGroup = new RadioGroupFieldEditor("PrefValue", " UCM ", 1,
-					radioButtonOptions, getFieldEditorParent(), true);
-			addField(radioButtonGroup);
-
-			btnOptionOpenUCM = new Button(getFieldEditorParent(), SWT.RADIO);
+			btnOptionOpenUCM = new Button(parent, SWT.RADIO);
 			btnOptionOpenUCM.setText("Select UCM: ");
 			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -97,10 +99,11 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				}
 			});
 
-			txtSelectUCM = new Text(getFieldEditorParent(), SWT.SINGLE | SWT.BORDER);
+			txtSelectUCM = new Text(parent, SWT.SINGLE | SWT.BORDER);
 			txtSelectUCM.setText("");
+			txtSelectUCM.setEnabled(false);
 
-			btnFileUCM = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnFileUCM = new Button(parent, SWT.PUSH);
 			btnFileUCM.setText(" File ");
 			btnFileUCM.setToolTipText("Search UCM file");
 
@@ -108,7 +111,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// Open a FileDialog that show only jucm file
-					chooseFile = new FileDialog(getFieldEditorParent().getShell(), SWT.OPEN);
+					chooseFile = new FileDialog(parent.getShell(), SWT.OPEN);
 					chooseFile.setFilterNames(new String[] { "Jucm Files" });
 					chooseFile.setFilterExtensions(new String[] { "*.jucm" });
 					String filePath = chooseFile.open();
@@ -118,7 +121,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				}
 			});
 
-			btnEditFileUCM = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnEditFileUCM = new Button(parent, SWT.PUSH);
 			btnEditFileUCM.setText(" Edit ");
 			btnEditFileUCM.setToolTipText("Edit UCM file");
 			btnEditFileUCM.addSelectionListener(new SelectionAdapter() {
@@ -130,16 +133,16 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
 							.getDefaultEditor(ifile.getName());
-					getFieldEditorParent().getShell().close();
+					parent.getShell().close();
 					try {
-						editor = (UCMNavMultiPageEditor) page.openEditor(new FileEditorInput(ifile), desc.getId());
+						 page.openEditor(new FileEditorInput(ifile), desc.getId());
 					} catch (PartInitException e1) {
 						viewController.createErrorDialog("There must be a project to open a file");
 					}
 				}
 			});
 
-			btnOptionNewUCM = new Button(getFieldEditorParent(), SWT.RADIO);
+			btnOptionNewUCM = new Button(parent, SWT.RADIO);
 			btnOptionNewUCM.setText("Create UCM: ");
 			btnOptionNewUCM.setSelection(true);
 			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
@@ -149,7 +152,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				}
 			});
 
-			btnUCM = new Button(getFieldEditorParent(), SWT.PUSH);
+			btnUCM = new Button(parent, SWT.PUSH);
 			btnUCM.setText(" New ");
 			btnUCM.setToolTipText("New UCM file");
 			btnUCM.addSelectionListener(new SelectionAdapter() {
@@ -157,9 +160,19 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					IWizard wizard = new seg.jUCMNav.views.wizards.NewUcmFileWizard();
-					WizardDialog dialog = new WizardDialog(getFieldEditorParent().getShell(), wizard);
+					WizardDialog dialog = new WizardDialog(parent.getShell(), wizard);
 					dialog.open();
-					getFieldEditorParent().getShell().close();
+					parent.getShell().close();
+				}
+			});
+			
+			btnSave = new Button(parent, SWT.PUSH);
+			btnSave.setText(" Save ");
+			btnSave.setToolTipText("Save");
+			btnSave.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					viewController.save();
 				}
 			});
 
@@ -167,7 +180,13 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		} catch (JDBCConnectionException e) {
 			viewController.createErrorDialog("Postgres service is not running");
 		}
+		
+		return  new Composite(parent, SWT.NULL);
 
+	}
+	
+	@Override
+	protected void createFieldEditors() {
 	}
 
 	// Getters and Setters
@@ -243,6 +262,14 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		this.btnOptionOpenUCM = btnOptionOpenUCM;
 	}
 
+	public Button getBtnSave() {
+		return btnSave;
+	}
+
+	public void setBtnSave(Button btnSave) {
+		this.btnSave = btnSave;
+	}
+
 	/**
 	 * load combo with system names
 	 */
@@ -256,10 +283,12 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	 * @param pabm
 	 */
 	public void prepareView() {
+		if (!getViewController().getManager().existSystemTrue()) {
+			this.getViewController().createErrorDialog("No saved systems");
+		}
 		if (this.getBtnOptionOpenUCM().getSelection() == true) {
 			// Prepate view when button of open ucm is select
 			this.getBtnFileUCM().setEnabled(true);
-			this.getTxtSelectUCM().setEnabled(true);
 			if (!this.getTxtSelectUCM().getText().equals("")) {
 				this.getBtnEditFileUCM().setEnabled(true);
 			} else {
@@ -270,7 +299,6 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 			// Prepate view when button of new ucm is select
 			this.getBtnEditFileUCM().setEnabled(false);
 			this.getBtnFileUCM().setEnabled(false);
-			this.getTxtSelectUCM().setEnabled(false);
 			this.getBtnUCM().setEnabled(true);
 		}
 	}

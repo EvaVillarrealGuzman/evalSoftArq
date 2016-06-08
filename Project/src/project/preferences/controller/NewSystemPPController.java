@@ -74,31 +74,20 @@ public class NewSystemPPController extends Controller {
 	/**
 	 * return true if they have completed the required fields
 	 */
+	//TODO ver getParent como solucionarlo
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getSystemName())) {
 			this.createErrorDialog("System name empty");
-			//JOptionPane.showOptionDialog(null, "System name empty", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-			//		JOptionPane.ERROR_MESSAGE,
-			//		new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-			//		"OK");
-			this.getForm().getSystemName().getTextControl(this.getForm().getParent()).setFocus();
+			//this.getForm().getSystemName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
 			this.createErrorDialog("Project name empty");
-			//JOptionPane.showOptionDialog(null, "Empty project name", "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-			//		JOptionPane.ERROR_MESSAGE,
-			//		new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-			//		"OK");
-			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
+			//this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		} else if (isAfter(this.getForm().getCalendarStartDate(), 
 				this.getForm().getCalendarFinishDate())) {
 			this.createErrorDialog("The finish date is less than the start date");
-			//JOptionPane.showOptionDialog(null, "The finish date is less than the start date", "Warning",
-			//		JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-			//		new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-			//		"OK");
 			getForm().getCalendarStartDate().setFocus();
 			return false;
 		} 
