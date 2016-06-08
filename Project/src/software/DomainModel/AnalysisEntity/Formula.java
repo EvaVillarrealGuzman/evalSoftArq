@@ -7,32 +7,33 @@ import javax.persistence.Table;
 
 /**
  * This class defines the formula of a metric
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "FORMULA")
-public class Formula implements Comparable{
+public class Formula implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
-	private String formula; 
 
-	//Builders
-	public Formula(){
-		
+	private String formula;
+
+	// Builders
+	public Formula() {
+
 	}
-	
+
 	public Formula(String pformula) {
 		super();
 		this.formula = pformula;
 	}
-	
-	//Getters and Setters
+
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -40,7 +41,7 @@ public class Formula implements Comparable{
 	public void setId(int pid) {
 		this.id = pid;
 	}
-	
+
 	public String getFormula() {
 		return formula;
 	}
@@ -49,10 +50,10 @@ public class Formula implements Comparable{
 		this.formula = pformula;
 	}
 
-	//CompareTo
+	// CompareTo
 	public int compareTo(Object p) {
-        Formula t = (Formula) p;
-        return this.toString().compareTo(t.toString());
-    }
-	
+		Formula t = (Formula) p;
+		return this.toString().compareTo(t.toString());
+	}
+
 }

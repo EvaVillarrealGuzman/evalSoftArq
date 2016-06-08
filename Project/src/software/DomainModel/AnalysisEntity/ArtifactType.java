@@ -7,32 +7,33 @@ import javax.persistence.Table;
 
 /**
  * This class defines the generic artifact of a generic scenario of quality
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "ARTIFACTTYPE")
-public class ArtifactType implements Comparable{
+public class ArtifactType implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
 
-	//Builder
-	public ArtifactType(){
-		
+	// Builder
+	public ArtifactType() {
+
 	}
-	
+
 	public ArtifactType(String pname) {
 		super();
 		this.name = pname;
 	}
-	
-	//Getters and Setters
+
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -48,17 +49,17 @@ public class ArtifactType implements Comparable{
 	public void setName(String pname) {
 		this.name = pname;
 	}
-	
-	//toString
+
+	// toString
 	@Override
 	public String toString() {
 		return this.getName();
 	}
-	
-	//ComparaTo
+
+	// ComparaTo
 	public int compareTo(Object p) {
-        ArtifactType t = (ArtifactType) p;
-        return this.toString().compareTo(t.toString());
-    }
-	
+		ArtifactType t = (ArtifactType) p;
+		return this.toString().compareTo(t.toString());
+	}
+
 }

@@ -7,32 +7,33 @@ import javax.persistence.Table;
 
 /**
  * This class defines the generic environment of a generic scenario of quality
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "ENVIRONMENTTYPE")
-public class EnvironmentType implements Comparable{
+public class EnvironmentType implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
-	
-	//Builder
-	public EnvironmentType(){
-		
+
+	// Builder
+	public EnvironmentType() {
+
 	}
-	
+
 	public EnvironmentType(String pname) {
 		super();
 		this.name = pname;
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -49,16 +50,16 @@ public class EnvironmentType implements Comparable{
 		this.name = pname;
 	}
 
-	//toString
+	// toString
 	@Override
 	public String toString() {
 		return this.getName();
 	}
-	
-	//CompareTo
+
+	// CompareTo
 	public int compareTo(Object p) {
-        EnvironmentType t = (EnvironmentType) p;
-        return this.toString().compareTo(t.toString());
-    }
-	
+		EnvironmentType t = (EnvironmentType) p;
+		return this.toString().compareTo(t.toString());
+	}
+
 }

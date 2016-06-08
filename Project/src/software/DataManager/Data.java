@@ -7,13 +7,11 @@ import software.BusinessLogic.AnalysisManager;
 import software.DomainModel.AnalysisEntity.ArtifactType;
 import software.DomainModel.AnalysisEntity.Condition;
 import software.DomainModel.AnalysisEntity.EnvironmentType;
-import software.DomainModel.AnalysisEntity.Formula;
 import software.DomainModel.AnalysisEntity.GenericScenario;
 import software.DomainModel.AnalysisEntity.Metric;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 import software.DomainModel.AnalysisEntity.ResponseType;
-import software.DomainModel.AnalysisEntity.SpecificScenario;
 import software.DomainModel.AnalysisEntity.StimulusSourceType;
 import software.DomainModel.AnalysisEntity.StimulusType;
 import software.DomainModel.AnalysisEntity.Unit;
@@ -50,12 +48,9 @@ public class Data {
 		pmanager.saveObject(c2);
 	}
 
-	private static void createQualityAttributeAvailability(
-			HibernateManager pmanager, Unit punit1, Unit punit2) {
-		StimulusSourceType ss1 = new StimulusSourceType(
-				"Internal to the system");
-		StimulusSourceType ss2 = new StimulusSourceType(
-				"External to the system");
+	private static void createQualityAttributeAvailability(HibernateManager pmanager, Unit punit1, Unit punit2) {
+		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
+		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
 		stimulusSourceTypes.add(ss1);
 		stimulusSourceTypes.add(ss2);
@@ -89,10 +84,8 @@ public class Data {
 		ResponseType r1 = new ResponseType("Record it");
 		ResponseType r2 = new ResponseType("Notify");
 		ResponseType r3 = new ResponseType("Disable sources of events");
-		ResponseType r4 = new ResponseType(
-				"Be unavailable for a prespecified interval");
-		ResponseType r5 = new ResponseType(
-				"Continue to operate in normal or degraded mode");
+		ResponseType r4 = new ResponseType("Be unavailable for a prespecified interval");
+		ResponseType r5 = new ResponseType("Continue to operate in normal or degraded mode");
 		Set<ResponseType> responseTypes = new HashSet<ResponseType>();
 		responseTypes.add(r1);
 		responseTypes.add(r2);
@@ -112,15 +105,11 @@ public class Data {
 		metrics.add(metric1);
 		metrics.add(metric2);
 
-		ResponseMeasureType type1 = new ResponseMeasureType(
-				"Time interval when the system must be available", metrics);
-		ResponseMeasureType type2 = new ResponseMeasureType(
-				"Availability Time", metrics);
-		ResponseMeasureType type3 = new ResponseMeasureType(
-				"Time interval in which system can be in degraded mode",
+		ResponseMeasureType type1 = new ResponseMeasureType("Time interval when the system must be available", metrics);
+		ResponseMeasureType type2 = new ResponseMeasureType("Availability Time", metrics);
+		ResponseMeasureType type3 = new ResponseMeasureType("Time interval in which system can be in degraded mode",
 				metrics);
-		ResponseMeasureType type4 = new ResponseMeasureType("Repair time",
-				metrics);
+		ResponseMeasureType type4 = new ResponseMeasureType("Repair time", metrics);
 		Set<ResponseMeasureType> responseMeasureTypes = new HashSet<ResponseMeasureType>();
 		responseMeasureTypes.add(type1);
 		responseMeasureTypes.add(type2);
@@ -128,20 +117,16 @@ public class Data {
 		responseMeasureTypes.add(type4);
 
 		QualityAttribute attribute;
-		attribute = new QualityAttribute("Availability", new GenericScenario(
-				stimulusSourceTypes, stimulusTypes, environmentTypes,
-				artifactTypes, responseTypes, responseMeasureTypes));
+		attribute = new QualityAttribute("Availability", new GenericScenario(stimulusSourceTypes, stimulusTypes,
+				environmentTypes, artifactTypes, responseTypes, responseMeasureTypes));
 		attribute.setAttributeGenericScenario();
 		pmanager.saveObject(attribute);
 
 	}
 
-	private static void createQualityAttributeConfiability(
-			HibernateManager pmanager, Unit punit1, Unit punit2) {
-		StimulusSourceType ss1 = new StimulusSourceType(
-				"Internal to the system");
-		StimulusSourceType ss2 = new StimulusSourceType(
-				"External to the system");
+	private static void createQualityAttributeConfiability(HibernateManager pmanager, Unit punit1, Unit punit2) {
+		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
+		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
 		stimulusSourceTypes.add(ss1);
 		stimulusSourceTypes.add(ss2);
@@ -175,10 +160,8 @@ public class Data {
 		ResponseType r1 = new ResponseType("Record it");
 		ResponseType r2 = new ResponseType("Notify");
 		ResponseType r3 = new ResponseType("Disable sources of events");
-		ResponseType r4 = new ResponseType(
-				"Be unavailable for a prespecified interval");
-		ResponseType r5 = new ResponseType(
-				"Continue to operate in normal or degraded mode");
+		ResponseType r4 = new ResponseType("Be unavailable for a prespecified interval");
+		ResponseType r5 = new ResponseType("Continue to operate in normal or degraded mode");
 		Set<ResponseType> responseTypes = new HashSet<ResponseType>();
 		responseTypes.add(r1);
 		responseTypes.add(r2);
@@ -198,15 +181,11 @@ public class Data {
 		metrics.add(metric1);
 		metrics.add(metric2);
 
-		ResponseMeasureType type1 = new ResponseMeasureType(
-				"Time interval when the system must be available", metrics);
-		ResponseMeasureType type2 = new ResponseMeasureType(
-				"Confiability Time", metrics);
-		ResponseMeasureType type3 = new ResponseMeasureType(
-				"Time interval in which system can be in degraded mode",
+		ResponseMeasureType type1 = new ResponseMeasureType("Time interval when the system must be available", metrics);
+		ResponseMeasureType type2 = new ResponseMeasureType("Confiability Time", metrics);
+		ResponseMeasureType type3 = new ResponseMeasureType("Time interval in which system can be in degraded mode",
 				metrics);
-		ResponseMeasureType type4 = new ResponseMeasureType("Repair time",
-				metrics);
+		ResponseMeasureType type4 = new ResponseMeasureType("Repair time", metrics);
 		Set<ResponseMeasureType> responseMeasureTypes = new HashSet<ResponseMeasureType>();
 		responseMeasureTypes.add(type1);
 		responseMeasureTypes.add(type2);
@@ -214,20 +193,16 @@ public class Data {
 		responseMeasureTypes.add(type4);
 
 		QualityAttribute attribute;
-		attribute = new QualityAttribute("Confiability", new GenericScenario(
-				stimulusSourceTypes, stimulusTypes, environmentTypes,
-				artifactTypes, responseTypes, responseMeasureTypes));
+		attribute = new QualityAttribute("Confiability", new GenericScenario(stimulusSourceTypes, stimulusTypes,
+				environmentTypes, artifactTypes, responseTypes, responseMeasureTypes));
 		attribute.setAttributeGenericScenario();
 		pmanager.saveObject(attribute);
 
 	}
 
-	private static void createQualityAttributePerformance(
-			HibernateManager pmanager, Unit punit1, Unit punit2) {
-		StimulusSourceType ss1 = new StimulusSourceType(
-				"Stimulus from internal source");
-		StimulusSourceType ss2 = new StimulusSourceType(
-				"Stimulus from external source");
+	private static void createQualityAttributePerformance(HibernateManager pmanager, Unit punit1, Unit punit2) {
+		StimulusSourceType ss1 = new StimulusSourceType("Stimulus from internal source");
+		StimulusSourceType ss2 = new StimulusSourceType("Stimulus from external source");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
 		stimulusSourceTypes.add(ss1);
 		stimulusSourceTypes.add(ss2);
@@ -272,13 +247,10 @@ public class Data {
 
 		ResponseMeasureType type1 = new ResponseMeasureType("Latency", metrics);
 		ResponseMeasureType type2 = new ResponseMeasureType("Deadline", metrics);
-		ResponseMeasureType type3 = new ResponseMeasureType("Throughput",
-				metrics);
+		ResponseMeasureType type3 = new ResponseMeasureType("Throughput", metrics);
 		ResponseMeasureType type4 = new ResponseMeasureType("Jitter", metrics);
-		ResponseMeasureType type5 = new ResponseMeasureType("Miss rate",
-				metrics);
-		ResponseMeasureType type6 = new ResponseMeasureType("Data loss",
-				metrics);
+		ResponseMeasureType type5 = new ResponseMeasureType("Miss rate", metrics);
+		ResponseMeasureType type6 = new ResponseMeasureType("Data loss", metrics);
 		Set<ResponseMeasureType> responseMeasureTypes = new HashSet<ResponseMeasureType>();
 		responseMeasureTypes.add(type1);
 		responseMeasureTypes.add(type2);
@@ -288,9 +260,8 @@ public class Data {
 		responseMeasureTypes.add(type6);
 
 		QualityAttribute attribute;
-		attribute = new QualityAttribute("Performance", new GenericScenario(
-				stimulusSourceTypes, stimulusTypes, environmentTypes,
-				artifactTypes, responseTypes, responseMeasureTypes));
+		attribute = new QualityAttribute("Performance", new GenericScenario(stimulusSourceTypes, stimulusTypes,
+				environmentTypes, artifactTypes, responseTypes, responseMeasureTypes));
 		attribute.setAttributeGenericScenario();
 		pmanager.saveObject(attribute);
 

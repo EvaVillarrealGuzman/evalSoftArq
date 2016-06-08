@@ -7,64 +7,68 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "RESPONSEMEASURETYPE")
-public class ResponseMeasureType implements Comparable{
+public class ResponseMeasureType implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
-	
+
 	@ManyToMany(targetEntity = Metric.class)
 	private Set<Metric> metrics = new HashSet<Metric>();
-	
-	//Builders
+
+	// Builders
 	public ResponseMeasureType() {
-		
+
 	}
 
 	public ResponseMeasureType(String pname, Set<Metric> pmetrics) {
 		super();
-		this.name=pname;
+		this.name = pname;
 		this.metrics = pmetrics;
 	}
-	
-	//Getters and Setters
+
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int pid) {
 		this.id = pid;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String pname) {
 		this.name = pname;
 	}
+
 	public Set<Metric> getMetrics() {
 		return metrics;
 	}
+
 	public void setMetrics(Set<Metric> pmetrics) {
 		this.metrics = pmetrics;
 	}
-	
-	//toString
+
+	// toString
 	@Override
 	public String toString() {
 		return this.getName();
 	}
-	
-	//CompareTo
+
+	// CompareTo
 	public int compareTo(Object p) {
 		ResponseMeasureType t = (ResponseMeasureType) p;
 		return this.toString().compareTo(t.toString());
 	}
-		
+
 }

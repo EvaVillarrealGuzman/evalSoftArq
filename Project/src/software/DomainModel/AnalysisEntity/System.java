@@ -1,7 +1,7 @@
 package software.DomainModel.AnalysisEntity;
 
-import java.util.HashSet;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,54 +12,52 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
-import org.eclipse.swt.widgets.DateTime;
-import org.hibernate.annotations.Type;
-
 import software.DomainModel.ReportsEntity.Simulator;
 
 /**
  * This class defines the system of a project
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "SYSTEM")
-public class System implements Comparable{
+public class System implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String systemName;
-	
+
 	private String projectName;
-	
+
 	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date  projectFinishDate;
-	
+	private Date projectFinishDate;
+
 	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date  projectStartDate;
-	
-    @OneToMany(targetEntity = QualityRequirement.class, cascade = CascadeType.ALL)
+	private Date projectStartDate;
+
+	@OneToMany(targetEntity = QualityRequirement.class, cascade = CascadeType.ALL)
 	private Set<QualityRequirement> qualityRequirements = new HashSet<QualityRequirement>();
-    
-    //VER QUE PUEDE SER CERO
-    @OneToMany(targetEntity = Simulator.class, cascade = CascadeType.ALL)
-   	private Set<Simulator> architectures = new HashSet<Simulator>();
-    
+
+	// VER QUE PUEDE SER CERO
+	@OneToMany(targetEntity = Simulator.class, cascade = CascadeType.ALL)
+	private Set<Simulator> architectures = new HashSet<Simulator>();
+
 	private boolean state;
-	
+
 	private String pathUCM;
-	
-	//Builders
-	public System (){
-		
+
+	// Builders
+	public System() {
+
 	}
-	
-	public System(String psystemName, String pprojectName,
-			Date  pprojectStartDate, Date  pprojectFinishDate, boolean pstate) {
+
+	public System(String psystemName, String pprojectName, Date pprojectStartDate, Date pprojectFinishDate,
+			boolean pstate) {
 		super();
 		this.projectFinishDate = pprojectFinishDate;
 		this.projectStartDate = pprojectStartDate;
@@ -67,56 +65,56 @@ public class System implements Comparable{
 		this.systemName = psystemName;
 		this.state = pstate;
 	}
-	
-	//Getters and Setters
+
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int pid) {
 		this.id = pid;
 	}
-	
-	public Date  getProjectFinishDate() {
+
+	public Date getProjectFinishDate() {
 		return projectFinishDate;
 	}
-	
-	public void setProjectFinishDate(Date  pprojectFinishDate) {
+
+	public void setProjectFinishDate(Date pprojectFinishDate) {
 		this.projectFinishDate = pprojectFinishDate;
 	}
-	
-	public Date  getProjectStartDate() {
+
+	public Date getProjectStartDate() {
 		return projectStartDate;
 	}
-	
-	public void setProjectStartDate(Date  pprojectStartDate) {
+
+	public void setProjectStartDate(Date pprojectStartDate) {
 		this.projectStartDate = pprojectStartDate;
 	}
-	
+
 	public String getProjectName() {
 		return projectName;
 	}
-	
+
 	public void setProjectName(String pprojectName) {
 		this.projectName = pprojectName;
 	}
-	
+
 	public String getSystemName() {
 		return systemName;
 	}
-	
+
 	public void setSystemName(String psystemName) {
 		this.systemName = psystemName;
 	}
-	
+
 	public Set<QualityRequirement> getQualityRequirements() {
 		return qualityRequirements;
 	}
-	
+
 	public void setQualityRequirements(Set<QualityRequirement> pqualityRequirements) {
 		this.qualityRequirements = pqualityRequirements;
 	}
-	
+
 	public String getPathUCM() {
 		return pathUCM;
 	}
@@ -128,11 +126,11 @@ public class System implements Comparable{
 	public boolean isState() {
 		return state;
 	}
-	
+
 	public void setState(boolean pstate) {
 		this.state = pstate;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getSystemName();
@@ -143,14 +141,16 @@ public class System implements Comparable{
 		System t = (System) p;
 		return this.toString().compareTo(t.toString());
 	}
-	
+
 	/**
-     * Method removes a system logically, by setting their status to false
-     * @param doesn't apply
-     * @return void
-     */
+	 * Method removes a system logically, by setting their status to false
+	 * 
+	 * @param doesn't
+	 *            apply
+	 * @return void
+	 */
 	public void remove() {
-        this.setState(false);
-    }
-	
+		this.setState(false);
+	}
+
 }

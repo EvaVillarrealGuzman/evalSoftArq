@@ -3,29 +3,29 @@ package software.DomainModel.AnalysisEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
  * This class defines the generic response of a generic scenario of quality
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "RESPONSETYPE")
-public class ResponseType implements Comparable{
+public class ResponseType implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
 
-	//Builders
+	// Builders
 	public ResponseType() {
-		
+
 	}
 
 	public ResponseType(String pname) {
@@ -33,7 +33,7 @@ public class ResponseType implements Comparable{
 		this.name = pname;
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -41,25 +41,25 @@ public class ResponseType implements Comparable{
 	public void setId(int pid) {
 		this.id = pid;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String pname) {
 		this.name = pname;
 	}
 
-	//toString
+	// toString
 	@Override
 	public String toString() {
 		return this.getName();
 	}
 
-	//CompareTo
+	// CompareTo
 	public int compareTo(Object p) {
 		ResponseType t = (ResponseType) p;
 		return this.toString().compareTo(t.toString());
 	}
-	
+
 }

@@ -7,32 +7,33 @@ import javax.persistence.Table;
 
 /**
  * This class defines the generic stimulus of a generic scenario of quality
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "STIMULUSTYPE")
-public class StimulusType implements Comparable{
+public class StimulusType implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
 
-	//Builders
+	// Builders
 	public StimulusType() {
-		
+
 	}
-	
+
 	public StimulusType(String pname) {
 		super();
 		this.name = pname;
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -48,7 +49,7 @@ public class StimulusType implements Comparable{
 	public void setName(String pname) {
 		this.name = pname;
 	}
-	
+
 	// toString
 	@Override
 	public String toString() {

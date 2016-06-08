@@ -17,9 +17,9 @@ public class SpecificScenario implements Comparable {
 	private int id;
 
 	private String description;
-	
+
 	@ManyToOne(targetEntity = QualityAttribute.class)
-	private QualityAttribute qualityAttribute; 
+	private QualityAttribute qualityAttribute;
 
 	@ManyToOne(targetEntity = StimulusSource.class, cascade = CascadeType.ALL)
 	private StimulusSource stimulusSource;
@@ -44,12 +44,11 @@ public class SpecificScenario implements Comparable {
 
 	// Builders
 	public SpecificScenario() {
-		
+
 	}
 
-	public SpecificScenario(String pdescription, QualityAttribute pqualityAttribute,
-			StimulusSource pstimulusSource, Stimulus pstimulus,
-			Artifact partifact, Environment penviroment, Response presponse,
+	public SpecificScenario(String pdescription, QualityAttribute pqualityAttribute, StimulusSource pstimulusSource,
+			Stimulus pstimulus, Artifact partifact, Environment penviroment, Response presponse,
 			ResponseMeasure presponseMeasure, Condition pcondition) {
 		super();
 		this.description = pdescription;

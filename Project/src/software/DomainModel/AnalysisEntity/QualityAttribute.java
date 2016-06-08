@@ -5,43 +5,42 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import software.DataManager.HibernateManager;
-
 /**
- * This class defines a attribute of quality (availability, confiability and performance)
+ * This class defines a attribute of quality (availability, confiability and
+ * performance)
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "QUALITYATTRIBUTE")
-public class QualityAttribute implements Comparable{
+public class QualityAttribute implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
-	
-	@OneToOne(targetEntity=GenericScenario.class, cascade = CascadeType.ALL)
+
+	@OneToOne(targetEntity = GenericScenario.class, cascade = CascadeType.ALL)
 	private GenericScenario genericScenario;
-	
-	//Builders
-	public QualityAttribute(){
-		
+
+	// Builders
+	public QualityAttribute() {
+
 	}
-	
+
 	public QualityAttribute(String pname, GenericScenario pgenericScenario) {
 		super();
 		this.genericScenario = pgenericScenario;
 		this.name = pname;
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -66,17 +65,17 @@ public class QualityAttribute implements Comparable{
 		this.genericScenario = pgenericScenario;
 	}
 
-	//toString
+	// toString
 	@Override
 	public String toString() {
 		return this.getName();
 	}
 
-	//CompareTo
+	// CompareTo
 	public int compareTo(Object p) {
-        QualityAttribute t = (QualityAttribute) p;
-        return this.toString().compareTo(t.toString());
-    }
+		QualityAttribute t = (QualityAttribute) p;
+		return this.toString().compareTo(t.toString());
+	}
 
 	public void setAttributeGenericScenario() {
 		this.getGenericScenario().setQualityAttribute(this);

@@ -17,34 +17,30 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "INDIRECTMETRICS" )
-@PrimaryKeyJoinColumn(name="id" )
+@Table(name = "INDIRECTMETRICS")
+@PrimaryKeyJoinColumn(name = "id")
 public class IndirectMetric extends Metric {
 
-        @OneToMany(targetEntity = Metric.class, cascade = CascadeType.ALL)
-        private Set<Metric> metrics = new HashSet<Metric>();
+	@OneToMany(targetEntity = Metric.class, cascade = CascadeType.ALL)
+	private Set<Metric> metrics = new HashSet<Metric>();
 
-        // Composite pattern
+	// Composite pattern
 
-        public void add(Metric pmetric) {
-               metrics.add( pmetric);
-       }
+	public void add(Metric pmetric) {
+		metrics.add(pmetric);
+	}
 
-        public void delete(Metric pmetric) {
-               metrics.remove( pmetric);
-       }
+	public void delete(Metric pmetric) {
+		metrics.remove(pmetric);
+	}
 
-        // Getters and Setters
+	// Getters and Setters
 
-        public Set<Metric> getMetrics() {
-               return metrics ;
-       }
+	public Set<Metric> getMetrics() {
+		return metrics;
+	}
 
-        public void setMetrics(Set<Metric> metrics) {
-               this.metrics = metrics ;
-       }
+	public void setMetrics(Set<Metric> metrics) {
+		this.metrics = metrics;
+	}
 }
-
-
-
-

@@ -7,47 +7,49 @@ import javax.persistence.Table;
 
 /**
  * This class defines the unity of a or more metric
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "UNIT")
-public class Unit implements Comparable{
+public class Unit implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
-	
-	//Builders
+
+	// Builders
 	public Unit() {
-		
+
 	}
+
 	public Unit(String pname) {
 		super();
 		this.name = pname;
 	}
-	
-	//Getters and Setters
+
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int pid) {
 		this.id = pid;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String pname) {
 		this.name = pname;
 	}
-	
+
 	// toString
 	@Override
 	public String toString() {
@@ -59,5 +61,5 @@ public class Unit implements Comparable{
 		Unit t = (Unit) p;
 		return this.toString().compareTo(t.toString());
 	}
-	
+
 }

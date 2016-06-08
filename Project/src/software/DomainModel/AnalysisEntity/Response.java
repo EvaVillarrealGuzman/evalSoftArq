@@ -8,66 +8,73 @@ import javax.persistence.Table;
 
 /**
  * This class defines the concrete response of a particular scenario of quality
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "RESPONSE")
-public class Response implements Comparable{
+public class Response implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
 	private String description;
 	private String value;
-	
+
 	@ManyToOne(targetEntity = ResponseType.class)
 	private ResponseType type;
-	
-	public Response(){
-		
+
+	public Response() {
+
 	}
-	
-	//toString
+
+	// toString
 	public Response(String pdescription, String pvalue, ResponseType ptype) {
 		super();
 		this.description = pdescription;
 		this.value = pvalue;
 		this.type = ptype;
 	}
-	
-	//Getters and Setters
+
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int pid) {
 		this.id = pid;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String pdescription) {
 		this.description = pdescription;
 	}
+
 	public String getValue() {
 		return value;
 	}
+
 	public void setValue(String pvalue) {
 		this.value = pvalue;
 	}
+
 	public ResponseType getType() {
 		return type;
 	}
+
 	public void setType(ResponseType ptype) {
 		this.type = ptype;
 	}
-	
-	//CompareTo
+
+	// CompareTo
 	public int compareTo(Object p) {
-        Response t = (Response) p;
-        return this.toString().compareTo(t.toString());
-    }
+		Response t = (Response) p;
+		return this.toString().compareTo(t.toString());
+	}
 }

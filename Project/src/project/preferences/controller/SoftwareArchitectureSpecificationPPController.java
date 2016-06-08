@@ -1,5 +1,6 @@
 package project.preferences.controller;
 
+import java.io.File;
 
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -78,7 +79,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			this.getManager().updateSystem();
 		}
 	}
-	
+
 	public int setSystem() {
 		if (this.isValidData()) {
 			this.getManager().setPathUCM(this.getForm().getTxtSelectUCM().getText());
@@ -87,7 +88,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			return 1;
 		}
 	}
-	
+
 	/**
 	 * return true if they have completed the required fields
 	 */
@@ -101,19 +102,23 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			this.createErrorDialog("File name empty");
 			this.getForm().getTxtSelectUCM().setFocus();
 			return false;
-		} 
+		}
 
 		return true;
 	}
-	
+
 	/**
 	 * Configure the form when a Combo´s item is selected
 	 */
 	public void getView() {
 		String pathUCM = this.getManager().getPathUCM();
-		if (!pathUCM.equals("")){
+		if (pathUCM != null) {
+			File file = new File(pathUCM);
+			if (!file.exists()) {
+				createErrorDialog("The UCM file does not exist");
+			}
 			this.getForm().getTxtSelectUCM().setText(pathUCM);
 		}
 	}
-	
+
 }

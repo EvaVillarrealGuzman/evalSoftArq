@@ -7,32 +7,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * This class defines the concrete environment of a particular scenario of quality
+ * This class defines the concrete environment of a particular scenario of
+ * quality
+ * 
  * @author: FEM
  * @version: 06/11/2015
  */
 
 @Entity
 @Table(name = "ENVIRONMENT")
-public class Environment implements Comparable{
-	
-	//Attributes
+public class Environment implements Comparable {
+
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
+
 	private String description;
-	
+
 	private String value;
-	
+
 	@ManyToOne(targetEntity = EnvironmentType.class)
 	private EnvironmentType type;
-	
-	//Builder
-	public Environment(){
-		
+
+	// Builder
+	public Environment() {
+
 	}
-	
+
 	public Environment(String pdescription, String pvalue, EnvironmentType ptype) {
 		super();
 		this.description = pdescription;
@@ -40,42 +42,42 @@ public class Environment implements Comparable{
 		this.type = ptype;
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int pid) {
 		this.id = pid;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String pdescription) {
 		this.description = pdescription;
 	}
-	
+
 	public String getValue() {
 		return value;
 	}
-	
+
 	public void setValue(String pvalue) {
 		this.value = pvalue;
 	}
-	
+
 	public EnvironmentType getType() {
 		return type;
 	}
-	
+
 	public void setType(EnvironmentType ptype) {
 		this.type = ptype;
 	}
-	
-	//CompareTo
+
+	// CompareTo
 	public int compareTo(Object p) {
-        Environment t = (Environment) p;
-        return this.toString().compareTo(t.toString());
-    }
+		Environment t = (Environment) p;
+		return this.toString().compareTo(t.toString());
+	}
 }

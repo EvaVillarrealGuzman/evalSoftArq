@@ -1,7 +1,5 @@
 package project.handlers;
 
-import java.io.ByteArrayInputStream;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -10,6 +8,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
+ * 
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
