@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 import org.eclipse.swt.widgets.DateTime;
 import org.hibernate.annotations.Type;
 
-import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+import software.DomainModel.ReportsEntity.Simulator;
 
 /**
  * This class defines the system of a project
@@ -46,10 +46,12 @@ public class System implements Comparable{
 	private Set<QualityRequirement> qualityRequirements = new HashSet<QualityRequirement>();
     
     //VER QUE PUEDE SER CERO
-    @OneToMany(targetEntity = Architecture.class, cascade = CascadeType.ALL)
-   	private Set<Architecture> architectures = new HashSet<Architecture>();
+    @OneToMany(targetEntity = Simulator.class, cascade = CascadeType.ALL)
+   	private Set<Simulator> architectures = new HashSet<Simulator>();
     
 	private boolean state;
+	
+	private String pathArchitecture;
 	
 	//Builders
 	public System (){

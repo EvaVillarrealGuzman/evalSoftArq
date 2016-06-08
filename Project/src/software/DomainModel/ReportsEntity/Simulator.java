@@ -23,9 +23,6 @@ public class Simulator implements Comparable{
     @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany(targetEntity = SpecificationParameter.class, cascade = CascadeType.ALL)
-	private Set<SpecificationParameter> SpecificationParameters = new HashSet<SpecificationParameter>();
-	
 	@OneToOne(targetEntity = SimulationParameter.class)
 	private SimulationParameter simulationParameter;
 	

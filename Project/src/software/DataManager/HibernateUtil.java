@@ -67,17 +67,11 @@ public class HibernateUtil {
                       conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.System. class);
                       conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Unit. class);
                      
-                      conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture. class);
-                      conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.CompoundComponent. class);
-                      conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.SingleComponent. class);
-                      conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsability. class);
-                     
                       conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Indicator. class);
                       conf.addAnnotatedClass(software.DomainModel.ReportsEntity.IndicatorType. class);
                       conf.addAnnotatedClass(software.DomainModel.ReportsEntity.ResponsabilityIndicator. class);
                       conf.addAnnotatedClass(software.DomainModel.ReportsEntity.SystemIndicator. class);
                       conf.addAnnotatedClass(software.DomainModel.ReportsEntity.SimulationParameter. class);
-                      conf.addAnnotatedClass(software.DomainModel.ReportsEntity.SpecificationParameter. class);
                       conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Simulator. class);
                       conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Run. class);
                      
