@@ -71,7 +71,7 @@
             commandId="Project.commands.editSystemCommand">
       </handler>
       <handler
-            class="project.handlers.searchQualityRequirementHandler"
+            class="project.handlers.SearchQualityRequirementHandler"
             commandId="Project.commands.searchQualityRequirementCommand">
       </handler>
    </extension>
