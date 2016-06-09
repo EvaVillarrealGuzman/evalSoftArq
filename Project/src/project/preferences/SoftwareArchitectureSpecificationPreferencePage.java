@@ -9,14 +9,18 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbench;
@@ -53,6 +57,8 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	private FileDialog chooseFile;
 	private Button btnOptionNewUCM;
 	private Button btnOptionOpenUCM;
+	private Composite cSystemName;
+	private GridData gridData;
 
 	public SoftwareArchitectureSpecificationPreferencePage() {
 		super(GRID);
@@ -69,29 +75,56 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	 */
 	public void init(IWorkbench workbench) {
 	}
-	
+
 	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setForm(this);
 
-			GridLayout layout = new GridLayout(2, false);
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 4;
 			parent.setLayout(layout);
 
-			Label labelSn = new Label(parent, SWT.NONE);
+			cSystemName = new Composite(parent, SWT.NULL);
+			cSystemName.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cSystemName.setLayoutData(gridData);
+
+			Label labelSn = new Label(cSystemName, SWT.NONE);
 			labelSn.setText("System Name: ");
-			cboSystem = new ComboViewer(parent, SWT.READ_ONLY);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+
+			cboSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
 			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
+			cboSystem.getCombo().setLayoutData(gridData);
 			loadCombo();
 			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.setModel(cboSystem);
 					viewController.getView();
+					txtSelectUCM.setToolTipText(txtSelectUCM.getText());
+					prepareView();
 				}
 			});
 
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Label labelEmptyOne = new Label(parent, SWT.NULL);
+			labelEmptyOne.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnOptionOpenUCM = new Button(parent, SWT.RADIO);
 			btnOptionOpenUCM.setText("Select UCM: ");
+			btnOptionOpenUCM.setLayoutData(gridData);
 			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -99,14 +132,32 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				}
 			});
 
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.widthHint = 210;
+			gridData.horizontalAlignment = GridData.FILL_HORIZONTAL;
+			gridData.grabExcessHorizontalSpace = true;
+
 			txtSelectUCM = new Text(parent, SWT.SINGLE | SWT.BORDER);
 			txtSelectUCM.setText("");
-			txtSelectUCM.setEnabled(false);
+			txtSelectUCM.setLayoutData(gridData);
+			txtSelectUCM.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					  e.doit = false;
+				}
+			});
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.widthHint = 75;
 
 			btnFileUCM = new Button(parent, SWT.PUSH);
 			btnFileUCM.setText(" File ");
 			btnFileUCM.setToolTipText("Search UCM file");
-
+			btnFileUCM.setLayoutData(gridData);
+			;
 			btnFileUCM.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -121,9 +172,16 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				}
 			});
 
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.widthHint = 75;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnEditFileUCM = new Button(parent, SWT.PUSH);
 			btnEditFileUCM.setText(" Edit ");
 			btnEditFileUCM.setToolTipText("Edit UCM file");
+			btnEditFileUCM.setLayoutData(gridData);
 			btnEditFileUCM.addSelectionListener(new SelectionAdapter() {
 				// Open an existing jucm file
 				@Override
@@ -131,20 +189,35 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 					File file = new File(txtSelectUCM.getText());
 					IFile ifile = viewController.convert(file);
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
-							.getDefaultEditor(ifile.getName());
-					parent.getShell().close();
 					try {
-						 page.openEditor(new FileEditorInput(ifile), desc.getId());
-					} catch (PartInitException e1) {
-						viewController.createErrorDialog("There must be a project to open a file");
+						IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
+								.getDefaultEditor(ifile.getName());
+						parent.getShell().close();
+						page.openEditor(new FileEditorInput(ifile), desc.getId());
+					} catch (Exception e1) {
+						viewController.createErrorDialog("There must be a project in Eclipse to open a file");
 					}
 				}
 			});
 
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Label labelEmptyTwo = new Label(parent, SWT.NULL);
+			labelEmptyTwo.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnOptionNewUCM = new Button(parent, SWT.RADIO);
 			btnOptionNewUCM.setText("Create UCM: ");
 			btnOptionNewUCM.setSelection(true);
+			btnOptionNewUCM.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.grabExcessHorizontalSpace = true;
 			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -152,9 +225,15 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				}
 			});
 
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.widthHint = 75;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnUCM = new Button(parent, SWT.PUSH);
 			btnUCM.setText(" New ");
 			btnUCM.setToolTipText("New UCM file");
+			btnUCM.setLayoutData(gridData);
 			btnUCM.addSelectionListener(new SelectionAdapter() {
 				// Open jUCMNav´s Wizard
 				@Override
@@ -162,13 +241,27 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 					IWizard wizard = new seg.jUCMNav.views.wizards.NewUcmFileWizard();
 					WizardDialog dialog = new WizardDialog(parent.getShell(), wizard);
 					dialog.open();
+					// TODO implementar que solo se cierre si no se cancela
 					parent.getShell().close();
 				}
 			});
-			
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 2;
+
+			Label labelEmptyTree = new Label(parent, SWT.NULL);
+			labelEmptyTree.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.widthHint = 100;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnSave = new Button(parent, SWT.PUSH);
 			btnSave.setText(" Save ");
-			btnSave.setToolTipText("Save");
+			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -180,11 +273,11 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		} catch (JDBCConnectionException e) {
 			viewController.createErrorDialog("Postgres service is not running");
 		}
-		
-		return  new Composite(parent, SWT.NULL);
+
+		return new Composite(parent, SWT.NULL);
 
 	}
-	
+
 	@Override
 	protected void createFieldEditors() {
 	}
@@ -289,6 +382,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		if (this.getBtnOptionOpenUCM().getSelection() == true) {
 			// Prepate view when button of open ucm is select
 			this.getBtnFileUCM().setEnabled(true);
+			this.getTxtSelectUCM().setToolTipText(this.getTxtSelectUCM().getText());
 			if (!this.getTxtSelectUCM().getText().equals("")) {
 				this.getBtnEditFileUCM().setEnabled(true);
 			} else {

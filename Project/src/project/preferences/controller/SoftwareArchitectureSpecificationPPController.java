@@ -118,6 +118,8 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 				createErrorDialog("The UCM file does not exist");
 			}
 			this.getForm().getTxtSelectUCM().setText(pathUCM);
+		} else {
+			this.getForm().getTxtSelectUCM().setText("");
 		}
 	}
 
