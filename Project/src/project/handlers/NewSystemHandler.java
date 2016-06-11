@@ -6,8 +6,6 @@ import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 
-import software.Presentation.ControllerAnalysis.QualityRequirementController;
-
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
  * 
@@ -15,7 +13,6 @@ import software.Presentation.ControllerAnalysis.QualityRequirementController;
  * @see org.eclipse.core.commands.AbstractHandler
  */
 public class NewSystemHandler extends AbstractHandler {
-	private QualityRequirementController qualityRequirementController;
 
 	/**
 	 * The constructor.
@@ -37,11 +34,6 @@ public class NewSystemHandler extends AbstractHandler {
 			pref.open();
 		// this.getQualityRequirementController().openFrmQualityRequirementManagement(3);
 		return null;
-	}
-
-	public QualityRequirementController getQualityRequirementController() {
-		qualityRequirementController = QualityRequirementController.getController();
-		return qualityRequirementController;
 	}
 
 }

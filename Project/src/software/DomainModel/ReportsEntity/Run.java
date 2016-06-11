@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "RUN")
-public class Run implements Comparable {
+public class Run implements Comparable { // NOPMD by Usuario-Pc on 10/06/16 21:53
 
 	// Attributes
 	@Id

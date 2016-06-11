@@ -295,7 +295,7 @@ public class QualityRequirementPPController extends Controller {
 	 * @param ptype
 	 *            (System)
 	 */
-	public void setModelQualityRequirement(software.DomainModel.AnalysisEntity.System ptype) {
+	public void setModelQualityRequirement(software.DomainModel.AnalysisEntity.System ptype) { // NOPMD by Usuario-Pc on 10/06/16 21:46
 		this.getManager().setSystem(ptype);
 		while (this.getFormSearch().getTable().getItems().length > 0) {
 			this.getFormSearch().getTable().remove(0);

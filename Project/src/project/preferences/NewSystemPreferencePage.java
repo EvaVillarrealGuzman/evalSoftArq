@@ -42,7 +42,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	private Button btnNew;
 	private StringFieldEditor systemName;
 	private StringFieldEditor projectName;
-	private static NewSystemPreferencePage SystemPP;
+	private static NewSystemPreferencePage SystemPP; // NOPMD by Usuario-Pc on 10/06/16 21:49
 	private NewSystemPPController viewController;
 	private Composite cProject;
 	private Composite cSystemName;
@@ -52,7 +52,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new NewSystemPPController();
-		this.setViewController(viewController);
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:49
 		this.getViewController().setForm(this);
 	}
 

@@ -71,7 +71,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new NewQualityRequirementPPController();
-		this.setViewController(viewController);
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:48
 	}
 
 	/*
@@ -645,7 +645,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.clearScenario();
 	}
 
-	public void prepareView(int pabm) {
+	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog("No saved systems");

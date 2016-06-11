@@ -18,16 +18,10 @@ import software.DataManager.HibernateUtil;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "Project"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "Project"; // NOPMD by Usuario-Pc on 11/06/16 12:41
 
 	// The shared instance
-	private static Activator plugin;
-
-	/**
-	 * The constructor
-	 */
-	public Activator() {
-	}
+	private static Activator plugin; // NOPMD by Usuario-Pc on 11/06/16 12:39
 
 	/*
 	 * (non-Javadoc)
@@ -35,15 +29,15 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.
 	 * BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception {
+	public void start(BundleContext context) throws Exception { // NOPMD by Usuario-Pc on 11/06/16 12:38
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (InstantiationException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD by Usuario-Pc on 11/06/16 12:36
 		} catch (IllegalAccessException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD by Usuario-Pc on 11/06/16 12:36
 		} catch (UnsupportedLookAndFeelException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD by Usuario-Pc on 11/06/16 12:38
 		}
 
 		/**
@@ -61,8 +55,8 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.
 	 * BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
+	public void stop(BundleContext context) throws Exception { // NOPMD by Usuario-Pc on 11/06/16 12:38
+		plugin = null; // NOPMD by Usuario-Pc on 11/06/16 12:40
 		super.stop(context);
 	}
 
@@ -83,7 +77,7 @@ public class Activator extends AbstractUIPlugin {
 	 *            the path
 	 * @return the image descriptor
 	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
+	public static ImageDescriptor getImageDescriptor(String path) { // NOPMD by Usuario-Pc on 11/06/16 12:39
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 }

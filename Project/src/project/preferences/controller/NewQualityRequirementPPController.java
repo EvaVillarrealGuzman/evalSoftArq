@@ -106,8 +106,7 @@ public class NewQualityRequirementPPController extends Controller {
 	}
 
 	public void save() {
-		int err = 0;
-		err = this.newQualityRequirement();
+		int err = this.newQualityRequirement();
 		if (err == 0) {
 			this.getManager().saveQualityRequirement();
 		}

@@ -43,7 +43,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	private Button btnEdit;
 	private ComboViewer cboSystem;
 	private StringFieldEditor projectName;
-	private static EditSystemPreferencePage SystemPP;
+	private static EditSystemPreferencePage SystemPP; // NOPMD by Usuario-Pc on 10/06/16 21:50
 	private SystemPPController viewController;
 	private Composite cProject;
 	private Composite cSystemName;
@@ -53,7 +53,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SystemPPController();
-		this.setViewController(viewController);
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:49
 		this.getViewController().setForm(this);
 	}
 
@@ -311,7 +311,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	 * 
 	 * @param pabm
 	 */
-	public void prepareView(int pabm) {
+	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog("No saved systems");

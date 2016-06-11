@@ -1,6 +1,5 @@
 package software.DomainModel.ReportsEntity;
 
-import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import software.DomainModel.AnalysisEntity.QualityRequirement;
 
 @Entity
 @Table(name = "SIMULATOR")

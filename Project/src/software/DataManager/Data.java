@@ -23,7 +23,7 @@ import software.DomainModel.AnalysisEntity.Unit;
  * @author: FEM
  * @version: 06/11/2015
  */
-public class Data {
+public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 
 	public static void initialize() {
 
