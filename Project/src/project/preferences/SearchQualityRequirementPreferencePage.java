@@ -180,7 +180,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				public void widgetSelected(SelectionEvent e) {
 					getViewController().setModel((QualityRequirement)table.getItem(table.getSelectionIndex()).getData());
 					//getViewController().getForm().setView();
-					//TODO falta mostrar la vista.
+					//TODO falta mostrar la vista
 				}
 			});
 
