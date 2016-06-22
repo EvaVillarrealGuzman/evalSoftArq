@@ -1,6 +1,9 @@
 package project.preferences.controller;
 
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -54,6 +57,9 @@ public class QualityRequirementPPController extends Controller {
 	}
 
 	public EditQualityRequirementPreferencePage getForm() {
+		if (form == null){
+			form= new EditQualityRequirementPreferencePage();
+		}
 		return form;
 	}
 
@@ -300,14 +306,73 @@ public class QualityRequirementPPController extends Controller {
 		while (this.getFormSearch().getTable().getItems().length > 0) {
 			this.getFormSearch().getTable().remove(0);
 		}
+//		final TableViewer viewer = this.getFormSearch().getTblViewerQualityRequirement(); 
+//		
+//		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
+//			if (dp.isState()) {
+//				Object[] row = new Object[4];
+//				row [0]= dp;
+//				row [1] = dp.getQualityScenario().getQualityAttribute();
+//				row [2] = dp.getQualityScenario().getCondition();
+//				row [3] = dp.getQualityScenario().getDescription();
+//				viewer.add(row);
+//			}
+//		}
+//		
+//        //viewer.add(this.getManager().getQualityRequirements());
+//        //viewer.setSelection(new StructuredSelection(this.getManager().getQualityRequirements()));
 		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
 			if (dp.isState()) {
 				TableItem item = new TableItem(this.getFormSearch().getTable(), SWT.NONE);
+				item.setData(dp);
 				item.setText(new String[] { dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
 						dp.getQualityScenario().getCondition().toString(),
 						dp.getQualityScenario().getDescription().toString() });
 			}
 		}
+	}
+	
+	public void setModel(QualityRequirement pmodel) {
+		this.getManager().setQualityRequirement(pmodel);
+	}
+
+	public void getView() {
+		this.getForm().loadCmbSystem();
+		this.getForm().loadCmbQualityAttribute();
+		this.getForm().loadCmbCondition();
+		
+		this.getForm().loadCmbMetric(this.getManager().getTypeResponseMeasure());
+		this.getForm().loadCmbUnit(this.getManager().getMetric());
+
+		this.getForm().getCmbSystem().setInput(this.getManager().getSystem());
+		this.getForm().getTxtDescription().setText(this.getManager().getDescriptionScenario());
+		this.getForm().getCmbQualityAttribute().setInput(this.getManager().getQualityAttribute());
+		this.getForm().getCmbCondition().setInput(this.getManager().getConditionScenario());
+
+		this.getForm().getTxtDescriptionStimulusSource().setStringValue(this.getManager().getDescriptionStimulusSource());
+		this.getForm().getCmbTypeStimulusSource().setInput(this.getManager().getTypeStimulusSource());
+		this.getForm().getTxtValueStimulusSource().setStringValue(this.getManager().getValueStimulusSource());
+
+		this.getForm().getTxtDescriptionStimulus().setStringValue(this.getManager().getDescriptionStimulus());
+		this.getForm().getCmbTypeStimulus().setInput(this.getManager().getTypeStimulus());
+		this.getForm().getTxtValueStimulus().setStringValue(this.getManager().getValueStimulus());
+
+		this.getForm().getTxtDescriptionEnvironment().setStringValue(this.getManager().getDescriptionEnvironment());
+		this.getForm().getCmbTypeEnvironment().setInput(this.getManager().getTypeEnvironment());
+		this.getForm().getTxtValueEnvironment().setStringValue(this.getManager().getValueEnvironment());
+
+		this.getForm().getTxtDescriptionArtifact().setStringValue(this.getManager().getDescriptionArtifact());
+		this.getForm().getCmbTypeArtifact().setInput(this.getManager().getTypeArtifact());
+
+		this.getForm().getTxtDescriptionResponse().setStringValue(this.getManager().getDescriptionResponse());
+		this.getForm().getCmbTypeResponse().setInput(this.getManager().getTypeResponse());
+		this.getForm().getTxtValueResponse().setStringValue(this.getManager().getValueResponse());
+
+		this.getForm().getTxtDescriptionResponseMeasure().setStringValue(this.getManager().getDescriptionResponseMeasure());
+		this.getForm().getCmbTypeResponseMeasure().setInput(this.getManager().getTypeResponseMeasure());
+		this.getForm().getCmbMetric().setInput(this.getManager().getMetric());
+		this.getForm().getTxtValueResponseMeasure().setStringValue(this.getManager().getValueResponseMeasure());
+		this.getForm().getCmbUnit().setInput(this.getManager().getUnit());
 	}
 
 }

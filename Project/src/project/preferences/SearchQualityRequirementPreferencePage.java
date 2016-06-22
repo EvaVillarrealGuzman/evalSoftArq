@@ -1,11 +1,18 @@
 package project.preferences;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -16,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IWorkbench;
@@ -23,6 +31,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
 import project.preferences.controller.QualityRequirementPPController;
+import software.DomainModel.AnalysisEntity.QualityRequirement;
 
 public class SearchQualityRequirementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
@@ -118,20 +127,21 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			cQualityRequirement.setLayoutData(dataQualityRequirement);
 
 			addField(new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cQualityRequirement));
-
-			// definite the tableViewer
-			tblViewerQualityRequirement = new TableViewer(cQualityRequirement, SWT.MULTI | SWT.V_SCROLL | SWT.BORDER);
-
-			// make lines and header visible
-			table = tblViewerQualityRequirement.getTable();
-			table.setLayoutData(new GridData(GridData.FILL_BOTH));
-			table.setHeaderVisible(true);
-			table.setLinesVisible(true);
-
-			// set the content provider
-			tblViewerQualityRequirement.setContentProvider(ArrayContentProvider.getInstance());
-
-			colObject = new TableColumn(table, SWT.NONE);
+			
+			//Create column names
+			String[] columnNames = new String[] {"Object", "Condition", "Quality Attribute", "Description Scenario"};
+			//Create styles
+			int style = SWT.FULL_SELECTION | SWT.BORDER | SWT.V_SCROLL;	
+			//create table
+			table = new Table(cQualityRequirement, style);
+			TableLayout layout = new TableLayout(); 
+	        table.setLayout(layout); 
+	        GridData gridData = new GridData(GridData.FILL_BOTH); 
+	        table.setLayoutData(gridData); 
+	        table.setLinesVisible(true); 
+	        table.setHeaderVisible(true);
+	        //Create columns
+	        colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
 			colObject.setText("Object");
 
@@ -147,15 +157,30 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			colDescriptionScenario.setWidth(200);
 			colDescriptionScenario.setText("Description Scenario");
 
+	        //Create TableViewer
+			tblViewerQualityRequirement = new TableViewer(table); 
+			tblViewerQualityRequirement.setUseHashlookup(true); 
+	        tblViewerQualityRequirement.setColumnProperties(columnNames); 
+	        
+	        // Create the cell editors 
+	        CellEditor[] editors = new CellEditor[columnNames.length]; 
+	        editors[0] = null; 
+	        editors[1] = null; 
+	        editors[2] = null;
+	        editors[3] = null; 
+	 
+	        // Assign the cell editors to the viewer 
+	        tblViewerQualityRequirement.setCellEditors(editors); 
+	        
 			btnConsult = new Button(parent, SWT.PUSH);
 			btnConsult.setText(" Consult ");
 			btnConsult.setToolTipText("Consult");
 			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.save();
-					clearView();
-					prepareView(0);
+					getViewController().setModel((QualityRequirement)table.getItem(table.getSelectionIndex()).getData());
+					//getViewController().getForm().setView();
+					//TODO falta mostrar la vista.
 				}
 			});
 
@@ -242,6 +267,38 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 	public void setTable(Table table) {
 		this.table = table;
+	}
+
+	public TableColumn getColObject() {
+		return colObject;
+	}
+
+	public void setColObject(TableColumn colObject) {
+		this.colObject = colObject;
+	}
+
+	public TableColumn getColCondition() {
+		return colCondition;
+	}
+
+	public void setColCondition(TableColumn colCondition) {
+		this.colCondition = colCondition;
+	}
+
+	public TableColumn getColQualityAttribute() {
+		return colQualityAttribute;
+	}
+
+	public void setColQualityAttribute(TableColumn colQualityAttribute) {
+		this.colQualityAttribute = colQualityAttribute;
+	}
+
+	public TableColumn getColDescriptionScenario() {
+		return colDescriptionScenario;
+	}
+
+	public void setColDescriptionScenario(TableColumn colDescriptionScenario) {
+		this.colDescriptionScenario = colDescriptionScenario;
 	}
 
 	public Button getBtnConsult() {
