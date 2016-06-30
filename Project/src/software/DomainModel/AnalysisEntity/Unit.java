@@ -14,31 +14,31 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "UNIT")
-public class Unit implements Comparable {
+public class Unit implements Comparable { // NOPMD by Usuario-Pc on 11/06/16 12:33
 
 	// Attributes
 	@Id
 	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-	private int id;
+	private int id; // NOPMD by Usuario-Pc on 11/06/16 12:43
 
-	private String name;
+	private String name; // NOPMD by Usuario-Pc on 11/06/16 12:43
 
 	// Builders
 	public Unit() {
 
 	}
 
-	public Unit(String pname) {
+	public Unit(String pname) { // NOPMD by Usuario-Pc on 11/06/16 12:43
 		super();
 		this.name = pname;
 	}
 
 	// Getters and Setters
-	public int getId() {
+	public int getId() { // NOPMD by Usuario-Pc on 11/06/16 12:43
 		return id;
 	}
 
-	public void setId(int pid) {
+	public void setId(int pid) { // NOPMD by Usuario-Pc on 11/06/16 12:43
 		this.id = pid;
 	}
 
@@ -46,18 +46,18 @@ public class Unit implements Comparable {
 		return name;
 	}
 
-	public void setName(String pname) {
+	public void setName(String pname) { // NOPMD by Usuario-Pc on 11/06/16 12:43
 		this.name = pname;
 	}
 
 	// toString
 	@Override
-	public String toString() {
+	public String toString() { // NOPMD by Usuario-Pc on 11/06/16 12:43
 		return this.getName();
 	}
 
 	// compareTo
-	public int compareTo(Object p) {
+	public int compareTo(Object p) { // NOPMD by Usuario-Pc on 11/06/16 12:43
 		Unit t = (Unit) p;
 		return this.toString().compareTo(t.toString());
 	}

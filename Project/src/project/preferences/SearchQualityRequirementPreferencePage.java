@@ -51,7 +51,8 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new QualityRequirementPPController();
-		this.setViewController(viewController);
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+												// 10/06/16 21:48
 	}
 
 	/*
@@ -341,7 +342,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.clearScenario();
 	}
 
-	public void prepareView(int pabm) {
+	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
 			this.getViewController().createErrorDialog("No saved systems with quality requirements");

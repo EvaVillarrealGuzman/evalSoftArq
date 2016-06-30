@@ -84,13 +84,12 @@ public class AnalysisManager extends HibernateManager {
 	 * 
 	 * @return ComboBoxModel with qualityAttribute names
 	 */
-	public software.DomainModel.AnalysisEntity.QualityAttribute[] getComboModelQualityAttribute() {
-		ArrayList<software.DomainModel.AnalysisEntity.QualityAttribute> qualityAttributes = new ArrayList<software.DomainModel.AnalysisEntity.QualityAttribute>();
-		for (software.DomainModel.AnalysisEntity.QualityAttribute auxTipo : this.listQualityAttribute()) {
+	public QualityAttribute[] getComboModelQualityAttribute() {
+		ArrayList<QualityAttribute> qualityAttributes = new ArrayList<QualityAttribute>();
+		for (QualityAttribute auxTipo : this.listQualityAttribute()) {
 			qualityAttributes.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.QualityAttribute[] arrayQualityAttribute = new software.DomainModel.AnalysisEntity.QualityAttribute[qualityAttributes
-				.size()];
+		QualityAttribute[] arrayQualityAttribute = new QualityAttribute[qualityAttributes.size()];
 		qualityAttributes.toArray(arrayQualityAttribute);
 		return arrayQualityAttribute;
 	}
@@ -107,7 +106,12 @@ public class AnalysisManager extends HibernateManager {
 	 * 
 	 * @return ComboBoxModel with system names whose state==true
 	 */
-	public software.DomainModel.AnalysisEntity.System[] getComboModelSystem() {
+	public software.DomainModel.AnalysisEntity.System[] getComboModelSystem() { // NOPMD
+																				// by
+																				// Usuario-Pc
+																				// on
+																				// 10/06/16
+																				// 21:42
 		ArrayList<software.DomainModel.AnalysisEntity.System> systems = new ArrayList<software.DomainModel.AnalysisEntity.System>();
 		for (software.DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			systems.add(auxTipo);
@@ -132,7 +136,12 @@ public class AnalysisManager extends HibernateManager {
 	 *         qualityRequirement!=empty and qualityRequirement.state==true
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.System[] getComboModelSystemWithRequirements() {
+	public software.DomainModel.AnalysisEntity.System[] getComboModelSystemWithRequirements() { // NOPMD
+																								// by
+																								// Usuario-Pc
+																								// on
+																								// 10/06/16
+																								// 21:41
 		ArrayList<software.DomainModel.AnalysisEntity.System> systems = new ArrayList<software.DomainModel.AnalysisEntity.System>();
 		for (software.DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getQualityRequirements().isEmpty() == false) {
@@ -173,7 +182,11 @@ public class AnalysisManager extends HibernateManager {
 	 *         else return false
 	 * 
 	 */
-	public boolean existSystemTrueWithQualityRequirementTrue() {
+	public boolean existSystemTrueWithQualityRequirementTrue() { // NOPMD by
+																	// Usuario-Pc
+																	// on
+																	// 10/06/16
+																	// 21:44
 		for (software.DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getQualityRequirements().isEmpty() == false) {
 				Iterator it = auxTipo.getQualityRequirements().iterator();
@@ -193,13 +206,12 @@ public class AnalysisManager extends HibernateManager {
 	 * @return ComboBoxModel with condition names
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.Condition[] getComboModelCondition() {
-		ArrayList<software.DomainModel.AnalysisEntity.Condition> conditions = new ArrayList<software.DomainModel.AnalysisEntity.Condition>();
-		for (software.DomainModel.AnalysisEntity.Condition auxTipo : this.listCondition()) {
+	public Condition[] getComboModelCondition() {
+		ArrayList<Condition> conditions = new ArrayList<Condition>();
+		for (Condition auxTipo : this.listCondition()) {
 			conditions.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.Condition[] arrayCondition = new software.DomainModel.AnalysisEntity.Condition[conditions
-				.size()];
+		Condition[] arrayCondition = new Condition[conditions.size()];
 		conditions.toArray(arrayCondition);
 		return arrayCondition;
 	}
@@ -218,16 +230,14 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.StimulusSourceType[] getComboModelStimulusSourceType(
-			QualityAttribute qualityAttribute) {
-		ArrayList<software.DomainModel.AnalysisEntity.StimulusSourceType> stimulusSourceTypes = new ArrayList<software.DomainModel.AnalysisEntity.StimulusSourceType>();
+	public StimulusSourceType[] getComboModelStimulusSourceType(QualityAttribute qualityAttribute) {
+		ArrayList<StimulusSourceType> stimulusSourceTypes = new ArrayList<StimulusSourceType>();
 		Iterator it = qualityAttribute.getGenericScenario().getStimulusSourceTypes().iterator();
 		while (it.hasNext()) {
 			StimulusSourceType auxTipo = (StimulusSourceType) it.next();
 			stimulusSourceTypes.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.StimulusSourceType[] arrayStimulusSourceType = new software.DomainModel.AnalysisEntity.StimulusSourceType[stimulusSourceTypes
-				.size()];
+		StimulusSourceType[] arrayStimulusSourceType = new StimulusSourceType[stimulusSourceTypes.size()];
 		stimulusSourceTypes.toArray(arrayStimulusSourceType);
 		return arrayStimulusSourceType;
 	}
@@ -238,16 +248,14 @@ public class AnalysisManager extends HibernateManager {
 	 *         of quality
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.StimulusType[] getComboModelStimulusType(
-			QualityAttribute qualityAttribute) {
-		ArrayList<software.DomainModel.AnalysisEntity.StimulusType> stimulusTypes = new ArrayList<software.DomainModel.AnalysisEntity.StimulusType>();
+	public StimulusType[] getComboModelStimulusType(QualityAttribute qualityAttribute) {
+		ArrayList<StimulusType> stimulusTypes = new ArrayList<StimulusType>();
 		Iterator it = qualityAttribute.getGenericScenario().getStimulusTypes().iterator();
 		while (it.hasNext()) {
 			StimulusType auxTipo = (StimulusType) it.next();
 			stimulusTypes.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.StimulusType[] arrayStimulusType = new software.DomainModel.AnalysisEntity.StimulusType[stimulusTypes
-				.size()];
+		StimulusType[] arrayStimulusType = new StimulusType[stimulusTypes.size()];
 		stimulusTypes.toArray(arrayStimulusType);
 		return arrayStimulusType;
 	}
@@ -258,16 +266,14 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.EnvironmentType[] getComboModelEnvironmentType(
-			QualityAttribute qualityAttribute) {
-		ArrayList<software.DomainModel.AnalysisEntity.EnvironmentType> environmentTypes = new ArrayList<software.DomainModel.AnalysisEntity.EnvironmentType>();
+	public EnvironmentType[] getComboModelEnvironmentType(QualityAttribute qualityAttribute) {
+		ArrayList<EnvironmentType> environmentTypes = new ArrayList<EnvironmentType>();
 		Iterator it = qualityAttribute.getGenericScenario().getEnvironmentTypes().iterator();
 		while (it.hasNext()) {
 			EnvironmentType auxTipo = (EnvironmentType) it.next();
 			environmentTypes.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.EnvironmentType[] arrayEnvironmentType = new software.DomainModel.AnalysisEntity.EnvironmentType[environmentTypes
-				.size()];
+		EnvironmentType[] arrayEnvironmentType = new EnvironmentType[environmentTypes.size()];
 		environmentTypes.toArray(arrayEnvironmentType);
 		return arrayEnvironmentType;
 	}
@@ -278,16 +284,14 @@ public class AnalysisManager extends HibernateManager {
 	 *         of quality
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.ArtifactType[] getComboModelArtifactType(
-			QualityAttribute qualityAttribute) {
-		ArrayList<software.DomainModel.AnalysisEntity.ArtifactType> artifactTypes = new ArrayList<software.DomainModel.AnalysisEntity.ArtifactType>();
+	public ArtifactType[] getComboModelArtifactType(QualityAttribute qualityAttribute) {
+		ArrayList<ArtifactType> artifactTypes = new ArrayList<ArtifactType>();
 		Iterator it = qualityAttribute.getGenericScenario().getArtifactTypes().iterator();
 		while (it.hasNext()) {
 			ArtifactType auxTipo = (ArtifactType) it.next();
 			artifactTypes.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.ArtifactType[] arrayArtifactType = new software.DomainModel.AnalysisEntity.ArtifactType[artifactTypes
-				.size()];
+		ArtifactType[] arrayArtifactType = new ArtifactType[artifactTypes.size()];
 		artifactTypes.toArray(arrayArtifactType);
 		return arrayArtifactType;
 	}
@@ -298,16 +302,14 @@ public class AnalysisManager extends HibernateManager {
 	 *         of quality
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.ResponseType[] getComboModelResponseType(
-			QualityAttribute qualityAttribute) {
-		ArrayList<software.DomainModel.AnalysisEntity.ResponseType> responseTypes = new ArrayList<software.DomainModel.AnalysisEntity.ResponseType>();
+	public ResponseType[] getComboModelResponseType(QualityAttribute qualityAttribute) {
+		ArrayList<ResponseType> responseTypes = new ArrayList<ResponseType>();
 		Iterator it = qualityAttribute.getGenericScenario().getResponseTypes().iterator();
 		while (it.hasNext()) {
 			ResponseType auxTipo = (ResponseType) it.next();
 			responseTypes.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.ResponseType[] arrayResponseType = new software.DomainModel.AnalysisEntity.ResponseType[responseTypes
-				.size()];
+		ResponseType[] arrayResponseType = new ResponseType[responseTypes.size()];
 		responseTypes.toArray(arrayResponseType);
 		return arrayResponseType;
 	}
@@ -318,16 +320,14 @@ public class AnalysisManager extends HibernateManager {
 	 *         attribute of quality
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.ResponseMeasureType[] getComboModelResponseMeasureType(
-			QualityAttribute qualityAttribute) {
-		ArrayList<software.DomainModel.AnalysisEntity.ResponseMeasureType> responseMeasureTypes = new ArrayList<software.DomainModel.AnalysisEntity.ResponseMeasureType>();
+	public ResponseMeasureType[] getComboModelResponseMeasureType(QualityAttribute qualityAttribute) {
+		ArrayList<ResponseMeasureType> responseMeasureTypes = new ArrayList<ResponseMeasureType>();
 		Iterator it = qualityAttribute.getGenericScenario().getResponseMeasureTypes().iterator();
 		while (it.hasNext()) {
 			ResponseMeasureType auxTipo = (ResponseMeasureType) it.next();
 			responseMeasureTypes.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.ResponseMeasureType[] arrayResponseMeasureType = new software.DomainModel.AnalysisEntity.ResponseMeasureType[responseMeasureTypes
-				.size()];
+		ResponseMeasureType[] arrayResponseMeasureType = new ResponseMeasureType[responseMeasureTypes.size()];
 		responseMeasureTypes.toArray(arrayResponseMeasureType);
 		return arrayResponseMeasureType;
 	}
@@ -338,15 +338,14 @@ public class AnalysisManager extends HibernateManager {
 	 *         type
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.Metric[] getComboModelMetric(ResponseMeasureType type) {
-		ArrayList<software.DomainModel.AnalysisEntity.Metric> metrics = new ArrayList<software.DomainModel.AnalysisEntity.Metric>();
+	public Metric[] getComboModelMetric(ResponseMeasureType type) {
+		ArrayList<Metric> metrics = new ArrayList<Metric>();
 		Iterator it = type.getMetrics().iterator();
 		while (it.hasNext()) {
 			Metric auxTipo = (Metric) it.next();
 			metrics.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.Metric[] arrayMetric = new software.DomainModel.AnalysisEntity.Metric[metrics
-				.size()];
+		Metric[] arrayMetric = new Metric[metrics.size()];
 		metrics.toArray(arrayMetric);
 		return arrayMetric;
 	}
@@ -356,15 +355,14 @@ public class AnalysisManager extends HibernateManager {
 	 * @return ComboBoxModel with unit names for an specific metric
 	 * 
 	 */
-	public software.DomainModel.AnalysisEntity.Unit[] getComboModelUnit(Metric type) {
-		ArrayList<software.DomainModel.AnalysisEntity.Unit> units = new ArrayList<software.DomainModel.AnalysisEntity.Unit>();
+	public Unit[] getComboModelUnit(Metric type) {
+		ArrayList<Unit> units = new ArrayList<Unit>();
 		Iterator it = type.getUnits().iterator();
 		while (it.hasNext()) {
 			Unit auxTipo = (Unit) it.next();
 			units.add(auxTipo);
 		}
-		software.DomainModel.AnalysisEntity.Unit[] arrayUnit = new software.DomainModel.AnalysisEntity.Unit[units
-				.size()];
+		Unit[] arrayUnit = new Unit[units.size()];
 		units.toArray(arrayUnit);
 		return arrayUnit;
 	}
@@ -475,7 +473,6 @@ public class AnalysisManager extends HibernateManager {
 	}
 
 	public void saveSystem() {
-		System.out.println(getSystem().toString());
 		this.saveObject(this.getSystem());
 
 	}

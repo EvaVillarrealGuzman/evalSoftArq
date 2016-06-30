@@ -43,15 +43,17 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	private Button btnEdit;
 	private ComboViewer cboSystem;
 	private StringFieldEditor projectName;
-	private static EditSystemPreferencePage SystemPP;
+	private static EditSystemPreferencePage SystemPP; // NOPMD by Usuario-Pc on 10/06/16 21:50
 	private SystemPPController viewController;
 	private Composite cProject;
+	private Composite cSystemName;
+	private GridData gridData;
 
 	public EditSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SystemPPController();
-		this.setViewController(viewController);
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:49
 		this.getViewController().setForm(this);
 	}
 
@@ -66,15 +68,27 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 	protected Control createContents(Composite parent) {
 		try {
-			GridLayout layout = new GridLayout(2, false);
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 4;
 			parent.setLayout(layout);
 
-			Label labelSn = new Label(parent, SWT.NONE);
+			cSystemName = new Composite(parent, SWT.NULL);
+			cSystemName.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cSystemName.setLayoutData(gridData);
+
+			Label labelSn = new Label(cSystemName, SWT.NONE);
 			labelSn.setText("System Name: ");
-			cboSystem = new ComboViewer(parent, SWT.READ_ONLY);
 
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+
+			cboSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
 			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
-
+			cboSystem.getCombo().setLayoutData(gridData);
 			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -83,23 +97,29 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 					prepareView(1);
 				}
 			});
+			
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Label labelEmptyOne = new Label(parent, SWT.NULL);
+			labelEmptyOne.setLayoutData(gridData);
 
 			// Group for project properties
 			Group groupProject = new Group(parent, SWT.SHADOW_ETCHED_IN);
 			groupProject.setText("Project");
+			groupProject.setLayout(layout);
 
-			GridLayout layoutProject = new GridLayout();
-			layoutProject.numColumns = 1;
-			groupProject.setLayout(layoutProject);
-
-			GridData dataProject = new GridData();
-			groupProject.setLayoutData(dataProject);
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.horizontalSpan = 4;
+			groupProject.setLayoutData(gridData);
 
 			cProject = new Composite(groupProject, SWT.NONE);
-			dataProject = new GridData();
-			dataProject.grabExcessHorizontalSpace = true;
-			dataProject.horizontalIndent = 40;
-			cProject.setLayoutData(dataProject);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.horizontalAlignment = GridData.FILL;
+			cProject.setLayoutData(gridData);
 
 			projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject);
 
@@ -115,11 +135,28 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 			calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
-			new Label(parent, SWT.LEFT);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Label labelEmptyTwo = new Label(parent, SWT.NULL);
+			labelEmptyTwo.setLayoutData(gridData);
+			
+			gridData = new GridData();
+			gridData.horizontalSpan = 2;
+
+			Label labelEmptyTre = new Label(parent, SWT.NULL);
+			labelEmptyTre.setLayoutData(gridData);
+			
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.widthHint = 100;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
+			gridData.grabExcessHorizontalSpace = true;
 
 			btnSave = new Button(parent, SWT.PUSH);
 			btnSave.setText(" Save ");
-			btnSave.setToolTipText("Save");
+			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -128,8 +165,16 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 				}
 			});
 
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.widthHint = 100;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnRemove = new Button(parent, SWT.PUSH);
 			btnRemove.setText("Remove");
+			btnRemove.setLayoutData(gridData);
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -249,7 +294,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		this.cProject = cProject;
 	}
 
-	//TODO ver
+	// TODO ver
 	public Composite getParent() {
 		return getParent();
 	}
@@ -266,7 +311,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	 * 
 	 * @param pabm
 	 */
-	public void prepareView(int pabm) {
+	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog("No saved systems");

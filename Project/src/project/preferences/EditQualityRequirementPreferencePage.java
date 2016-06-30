@@ -72,7 +72,8 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public EditQualityRequirementPreferencePage(QualityRequirementPPController viewController) {
 		super(GRID);
 		noDefaultAndApplyButton();
-		this.setViewController(viewController);
+		viewController = new QualityRequirementPPController();
+		this.setViewController( new QualityRequirementPPController()); // NOPMD by Usuario-Pc on 10/06/16 21:48
 	}
 
 	/*
@@ -85,7 +86,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	}
 
 	protected Control createContents(Composite parent) {
-	    
 		try {
 			this.getViewController().setForm(this);
 
@@ -742,10 +742,9 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			break;
 		case 4:// With metric selected
 			this.getCmbUnit().getCombo().setEnabled(true);
-
+			   
 			break;
 		}
-
 	}
 	
 	public void setView() {

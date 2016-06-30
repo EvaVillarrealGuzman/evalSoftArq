@@ -42,15 +42,18 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	private Button btnNew;
 	private StringFieldEditor systemName;
 	private StringFieldEditor projectName;
-	private static NewSystemPreferencePage SystemPP;
+	private static NewSystemPreferencePage SystemPP; // NOPMD by Usuario-Pc on 10/06/16 21:49
 	private NewSystemPPController viewController;
 	private Composite cProject;
+	private Composite cSystemName;
+	private GridData gridData;
 
 	public NewSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new NewSystemPPController();
-		this.setViewController(viewController);
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:49
+		this.getViewController().setForm(this);
 	}
 
 	/*
@@ -64,29 +67,34 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 
 	protected Control createContents(Composite parent) {
 		try {
-			this.getViewController().setForm(this);
-
-			GridLayout layout = new GridLayout(2, false);
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 1;
 			parent.setLayout(layout);
 
-			systemName = new StringFieldEditor("systemName", "System Name: ", parent);
+			cSystemName = new Composite(parent, SWT.NULL);
+			cSystemName.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			cSystemName.setLayoutData(gridData);
+
+			systemName = new StringFieldEditor("systemName", "System Name: ", cSystemName);
+
+			new Label(parent, SWT.NULL);
 
 			// Group for project properties
 			Group groupProject = new Group(parent, SWT.SHADOW_ETCHED_IN);
 			groupProject.setText("Project");
+			groupProject.setLayout(layout);
 
-			GridLayout layoutProject = new GridLayout();
-			layoutProject.numColumns = 1;
-			groupProject.setLayout(layoutProject);
-
-			GridData dataProject = new GridData();
-			groupProject.setLayoutData(dataProject);
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			groupProject.setLayoutData(gridData);
 
 			cProject = new Composite(groupProject, SWT.NONE);
-			dataProject = new GridData();
-			dataProject.grabExcessHorizontalSpace = true;
-			dataProject.horizontalIndent = 40;
-			cProject.setLayoutData(dataProject);
+			gridData = new GridData();
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.horizontalAlignment = GridData.FILL;
+			cProject.setLayoutData(gridData);
 
 			projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject);
 
@@ -104,18 +112,25 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 
 			new Label(parent, SWT.LEFT);
 
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.widthHint = 100;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnNew = new Button(parent, SWT.PUSH);
 			btnNew.setText("Save");
-			btnNew.setToolTipText("Save");
+			btnNew.setLayoutData(gridData);
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.save();
-					prepareView(1, parent);
+					prepareView(1);
 				}
 			});
 
-			this.prepareView(0, parent);
+			this.prepareView(0);
 		} catch (
 
 		JDBCConnectionException e) {
@@ -215,8 +230,8 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	 * 
 	 * @param pabm
 	 */
-	public void prepareView(int pabm, Composite pparent) {
-		this.getSystemName().getTextControl(pparent).setFocus();
+	public void prepareView(int pabm) {
+		this.getSystemName().getTextControl(cSystemName).setFocus();
 		switch (pabm) {
 		case 1:// System created
 			Calendar currentDate = GregorianCalendar.getInstance();
@@ -225,14 +240,14 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			this.getCalendarFinishDate().setDate(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
 					currentDate.get(Calendar.DAY_OF_MONTH));
 			this.getProjectName().getTextControl(this.getcProject()).setText("");
-			this.getSystemName().getTextControl(pparent).setText("");
+			this.getSystemName().getTextControl(cSystemName).setText("");
 			this.getBtnNew().setEnabled(true);
 			break;
 		case 0:// New system
 			this.getCalendarStartDate().setEnabled(true);
 			this.getCalendarFinishDate().setEnabled(true);
 			this.getProjectName().getTextControl(this.getcProject()).setEnabled(true);
-			this.getSystemName().getTextControl(pparent).setEnabled(true);
+			this.getSystemName().getTextControl(cSystemName).setEnabled(true);
 			this.getBtnNew().setEnabled(true);
 			break;
 		}
