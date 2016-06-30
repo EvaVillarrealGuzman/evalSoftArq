@@ -1,8 +1,5 @@
 package project.preferences;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -11,8 +8,6 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -23,7 +18,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IWorkbench;
@@ -172,9 +166,18 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	        // Assign the cell editors to the viewer 
 	        tblViewerQualityRequirement.setCellEditors(editors); 
 	        
+	        
+	        table.addSelectionListener(new SelectionAdapter(){
+	        	@Override
+				public void widgetSelected(SelectionEvent e) {
+					btnConsult.setEnabled(true);
+				}
+	        });
+	        
 			btnConsult = new Button(parent, SWT.PUSH);
 			btnConsult.setText(" Consult ");
 			btnConsult.setToolTipText("Consult");
+			btnConsult.setEnabled(false);
 			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {

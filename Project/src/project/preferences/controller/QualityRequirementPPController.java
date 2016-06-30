@@ -1,9 +1,6 @@
 package project.preferences.controller;
 
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -58,7 +55,7 @@ public class QualityRequirementPPController extends Controller {
 
 	public EditQualityRequirementPreferencePage getForm() {
 		if (form == null){
-			form= new EditQualityRequirementPreferencePage();
+			form= new EditQualityRequirementPreferencePage(this);
 		}
 		return form;
 	}
@@ -76,7 +73,7 @@ public class QualityRequirementPPController extends Controller {
 	}
 
 	public void setModelSystem() {
-		this.getForm().getCmbSystem().setInput(getManager().getComboModelSystem());
+		this.getForm().getCmbSystem().setInput(this.getManager().getComboModelSystem());
 	}
 
 	public void setModelSystemSearch() {
