@@ -1,8 +1,6 @@
 package project.preferences;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.PreferenceDialog;
-import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -10,8 +8,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -23,11 +19,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.hibernate.exception.JDBCConnectionException;
 
 import project.preferences.controller.QualityRequirementPPController;
@@ -38,13 +31,11 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	/**
 	 * Attributes
 	 */
-	private Group groupPropierties;
-	private Group cPropierties;
 	private ComboViewer cmbSystem;
 	private Group groupQualityRequirement;
-	private Composite cQualityRequirement;
 	private TableViewer tblViewerQualityRequirement;
 	private Table table;
+	GridData gridData;
 	private TableColumn colObject;
 	private TableColumn colCondition;
 	private TableColumn colQualityAttribute;
@@ -73,43 +64,27 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setFormSearch(this);
-			
-			Group group = new Group(parent, SWT.NONE);
-			GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
-			group.setLayoutData(gridData);
-			group.setText("lasdfsa");
-			
-			group.setLayout(new GridLayout(2, false));	
-						
-			new Label(group,SWT.BORDER).setText("User name:");
-			
-			Text username_Text = new Text(group,SWT.BORDER);
-			username_Text.setText("....");
-			username_Text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-/*
-			GridLayout layoutPropierties = new GridLayout();
-			layoutPropierties.numColumns = 1;
-			groupPropierties.setLayout(layoutPropierties);
 
-			GridData dataPropierties = new GridData();
-			groupPropierties.setLayoutData(dataPropierties);
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 4;
+			parent.setLayout(layout);
 
-			cPropierties = new Composite(groupPropierties, SWT.NONE);
-			dataPropierties = new GridData();
-			dataPropierties.grabExcessHorizontalSpace = true;
-			dataPropierties.horizontalIndent = 40;
-			cPropierties.setLayoutData(dataPropierties);
+			Composite cSystemName = new Composite(parent, SWT.NULL);
+			cSystemName.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cSystemName.setLayoutData(gridData);
 
-			addField(new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cPropierties));
+			Label labelSn = new Label(cSystemName, SWT.NONE);
+			labelSn.setText("System Name: ");
 
-			Label labelS = new Label(cPropierties, SWT.NONE);
-			labelS.setText("System: ");
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
 
-			cmbSystem = new ComboViewer(cPropierties, SWT.READ_ONLY);
-
+			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
 			cmbSystem.setContentProvider(ArrayContentProvider.getInstance());
-
 			cmbSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -121,40 +96,38 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 					}
 					btnConsult.setEnabled(false);
 				}
-			});*/
+			});
 
-			/*groupQualityRequirement = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupQualityRequirement.setText("Quality Requirements");
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
 
-			GridLayout layoutQualityRequirement = new GridLayout();
-			layoutQualityRequirement.numColumns = 1;
-			groupQualityRequirement.setLayout(layoutQualityRequirement);
+			Label labelEmptyOne = new Label(cSystemName, SWT.NULL);
+			labelEmptyOne.setLayoutData(gridData);
 
-			GridData dataQualityRequirement = new GridData();
-			groupQualityRequirement.setLayoutData(dataQualityRequirement);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
 
-			cQualityRequirement = new Composite(groupQualityRequirement, SWT.NONE);
-			dataQualityRequirement = new GridData();
-			dataQualityRequirement.grabExcessHorizontalSpace = true;
-			dataQualityRequirement.horizontalIndent = 40;
-			cQualityRequirement.setLayoutData(dataQualityRequirement);
+			Group gQualityRequirement = new Group(cSystemName, SWT.NONE);
+			gQualityRequirement.setLayoutData(gridData);
+			gQualityRequirement.setText("Quality Requirements");
+			gQualityRequirement.setLayout(new GridLayout(2, false));
 
-			addField(new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cQualityRequirement));
-			
-			//Create column names
-			String[] columnNames = new String[] {"Object", "Condition", "Quality Attribute", "Description Scenario"};
-			//Create styles
-			int style = SWT.FULL_SELECTION | SWT.BORDER | SWT.V_SCROLL;	
-			//create table
-			table = new Table(cQualityRequirement, style);
-			TableLayout layout = new TableLayout(); 
-	        table.setLayout(layout); 
-	        GridData gridData = new GridData(GridData.FILL_BOTH); 
-	        table.setLayoutData(gridData); 
-	        table.setLinesVisible(true); 
-	        table.setHeaderVisible(true);
-	        //Create columns
-	        colObject = new TableColumn(table, SWT.NONE);
+			// Create column names
+			String[] columnNames = new String[] { "Object", "Condition", "Quality Attribute", "Description Scenario" };
+			// Create styles
+			int style = SWT.FULL_SELECTION | SWT.BORDER | SWT.V_SCROLL;
+			// create table
+			table = new Table(gQualityRequirement, style);
+			TableLayout tableLayout = new TableLayout();
+			table.setLayout(tableLayout);
+			gridData = new GridData(GridData.FILL_BOTH);
+			gridData.horizontalSpan = 4;
+			table.setLayoutData(gridData);
+			table.setLinesVisible(true);
+			table.setHeaderVisible(true);
+			// Create columns
+			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
 			colObject.setText("Object");
 
@@ -170,54 +143,52 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			colDescriptionScenario.setWidth(200);
 			colDescriptionScenario.setText("Description Scenario");
 
-	        //Create TableViewer
-			tblViewerQualityRequirement = new TableViewer(table); 
-			tblViewerQualityRequirement.setUseHashlookup(true); 
-	        tblViewerQualityRequirement.setColumnProperties(columnNames); 
-	        
-	        // Create the cell editors 
-	        CellEditor[] editors = new CellEditor[columnNames.length]; 
-	        editors[0] = null; 
-	        editors[1] = null; 
-	        editors[2] = null;
-	        editors[3] = null; 
-	 
-	        // Assign the cell editors to the viewer 
-	        tblViewerQualityRequirement.setCellEditors(editors); 
-	        
-	        
-	        table.addSelectionListener(new SelectionAdapter(){
-	        	@Override
-				public void widgetSelected(SelectionEvent e) {
-					table.showSelection();
-	        		btnConsult.setEnabled(true);
-				}
-	        });
-	        
-	        
-			btnConsult = new Button(parent, SWT.PUSH);
-			btnConsult.setText(" Consult ");
-			btnConsult.setToolTipText("Consult");
-			btnConsult.setEnabled(false);
-			btnConsult.addSelectionListener(new SelectionAdapter() {
+			// Create TableViewer
+			tblViewerQualityRequirement = new TableViewer(table);
+			tblViewerQualityRequirement.setUseHashlookup(true);
+			tblViewerQualityRequirement.setColumnProperties(columnNames);
+
+			// Create the cell editors
+			CellEditor[] editors = new CellEditor[columnNames.length];
+			editors[0] = null;
+			editors[1] = null;
+			editors[2] = null;
+			editors[3] = null;
+
+			// Assign the cell editors to the viewer
+			tblViewerQualityRequirement.setCellEditors(editors);
+
+			table.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					getViewController().setModel((QualityRequirement)table.getItem(table.getSelectionIndex()).getData());
-					
-					PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-							"project.preferences.EditQualityRequirementPreferencePage",
-							new String[] { "project.preferences.EditQualityRequirementPreferencePage" }, null);
-					if (pref != null)
-						pref.open();
-					
-					getViewController().getForm().setView();
-					//TODO falta mostrar la vista
-					
+					table.showSelection();
+					btnConsult.setEnabled(true);
 				}
 			});
 
-			this.prepareView(0);*/
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.widthHint = 100;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
+			gridData.grabExcessHorizontalSpace = true;
+
+			btnConsult = new Button(gQualityRequirement, SWT.PUSH);
+			btnConsult.setText(" Consult ");
+			btnConsult.setEnabled(false);
+			btnConsult.setLayoutData(gridData);
+			btnConsult.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					getViewController()
+							.setModel((QualityRequirement) table.getItem(table.getSelectionIndex()).getData());
+					// getViewController().getForm().setView();
+					// TODO falta mostrar la vista
+				}
+			});
+
+			this.prepareView(0);
+
 		} catch (JDBCConnectionException e) {
 			viewController.createErrorDialog("Postgres service is not running");
 		}
@@ -246,22 +217,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.viewController = viewController;
 	}
 
-	public Group getGroupPropierties() {
-		return groupPropierties;
-	}
-
-	public void setGroupPropierties(Group groupPropierties) {
-		this.groupPropierties = groupPropierties;
-	}
-
-	public Composite getcPropierties() {
-		return cPropierties;
-	}
-
-	public void setcPropierties(Group cPropierties) {
-		this.cPropierties = cPropierties;
-	}
-
 	public ComboViewer getCmbSystem() {
 		return cmbSystem;
 	}
@@ -276,14 +231,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 	public void setGroupQualityRequirement(Group groupQualityRequirement) {
 		this.groupQualityRequirement = groupQualityRequirement;
-	}
-
-	public Composite getcQualityRequirement() {
-		return cQualityRequirement;
-	}
-
-	public void setcQualityRequirement(Composite cQualityRequirement) {
-		this.cQualityRequirement = cQualityRequirement;
 	}
 
 	public TableViewer getTblViewerQualityRequirement() {
@@ -384,7 +331,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 
-			//this.getBtnConsult().setEnabled(true);
+			// this.getBtnConsult().setEnabled(true);
 
 			break;
 		case 1:// With system selected

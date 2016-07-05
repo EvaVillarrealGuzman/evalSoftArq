@@ -180,43 +180,33 @@ public class NewQualityRequirementPPController extends Controller {
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionStimulusSource())) {
 			this.createErrorDialog("Empty stimulus source description");
-			this.getForm().getTxtDescriptionStimulusSource().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionStimulus())) {
 			this.createErrorDialog("Empty stimulus description");
-			this.getForm().getTxtDescriptionStimulus().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionEnvironment())) {
 			this.createErrorDialog("Empty environment description");
-			this.getForm().getTxtDescriptionEnvironment().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionArtifact())) {
 			this.createErrorDialog("Empty artifact description");
-			this.getForm().getTxtDescriptionArtifact().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionResponse())) {
 			this.createErrorDialog("Empty response description");
-			this.getForm().getTxtDescriptionResponse().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtDescriptionResponseMeasure())) {
 			this.createErrorDialog("Empty response measure description");
-			this.getForm().getTxtDescriptionResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulusSource())) {
 			this.createErrorDialog("Empty stimulus source value");
-			this.getForm().getTxtValueStimulusSource().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulus())) {
 			this.createErrorDialog("Empty stimulus value");
-			this.getForm().getTxtValueStimulus().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueEnvironment())) {
 			this.createErrorDialog("Empty environment value");
-			this.getForm().getTxtValueEnvironment().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponse())) {
 			this.createErrorDialog("Empty response value");
-			this.getForm().getTxtValueResponse().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeStimulusSource())) {
 			this.createErrorDialog("Select stimulus source type");
@@ -248,15 +238,12 @@ public class NewQualityRequirementPPController extends Controller {
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponseMeasure())) {
 			this.createErrorDialog("Empty response measure value");
-			this.getForm().getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (!this.getForm().getTxtValueResponseMeasure().isValid()) {
 			this.createErrorDialog("Invalid response measure value");
-			this.getForm().getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.getForm().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
 			this.createErrorDialog("Invalid response measure value (negative number)");
-			this.getForm().getTxtValueResponseMeasure().getTextControl(this.getForm().getcParts()).setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbUnit())) {
 			this.createErrorDialog("Select unit");

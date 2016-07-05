@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -29,39 +31,35 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	/**
 	 * Attributes
 	 */
-	private Group groupPropierties;
-	private Composite cPropierties;
 	private ComboViewer cmbSystem;
-	private Group groupScenario;
-	private Composite cScenario;
 	private Text txtDescription;
 	private ComboViewer cmbQualityAttribute;
 	private ComboViewer cmbCondition;
-	private Group groupParts;
-	private Composite cParts;
-	private Label lblDescription;
 	private StringFieldEditor txtDescriptionStimulusSource;
 	private StringFieldEditor txtDescriptionStimulus;
 	private StringFieldEditor txtDescriptionEnvironment;
 	private StringFieldEditor txtDescriptionArtifact;
 	private StringFieldEditor txtDescriptionResponse;
 	private StringFieldEditor txtDescriptionResponseMeasure;
-	private Label lblValue;
 	private StringFieldEditor txtValueStimulusSource;
 	private StringFieldEditor txtValueStimulus;
 	private StringFieldEditor txtValueEnvironment;
 	private StringFieldEditor txtValueResponse;
 	private DoubleFieldEditor txtValueResponseMeasure;
-	private Label lblMetric;
+	private Group gStimulusSource;
+	private Group gResponse;
+	private Group gStimulus;
+	private Group gArtifact;
+	private Group gEnvironment;
+	private Group gResponseMeasure;
 	private ComboViewer cmbMetric;
-	private Label lblType;
 	private ComboViewer cmbTypeStimulusSource;
 	private ComboViewer cmbTypeStimulus;
 	private ComboViewer cmbTypeEnvironment;
 	private ComboViewer cmbTypeArtifact;
 	private ComboViewer cmbTypeResponse;
 	private ComboViewer cmbTypeResponseMeasure;
-	private Label lblUnit;
+	private GridData gridData;
 	private ComboViewer cmbUnit;
 	private Button btnNew;
 	private static NewQualityRequirementPreferencePage qualityRequirementPP;
@@ -71,7 +69,8 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new NewQualityRequirementPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:48
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+												// 10/06/16 21:48
 	}
 
 	/*
@@ -86,38 +85,28 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setForm(this);
-			
-			Label labelS = new Label( parent, SWT.NONE);
-			labelS.setText("System: ");
 
-			groupPropierties = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupPropierties.setText("Propierties");
-			
-			Label labelAS = new Label( groupPropierties, SWT.NONE);
-			labelS.setText("System: ");
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 4;
+			parent.setLayout(layout);
 
-			GridLayout layoutPropierties = new GridLayout();
-			layoutPropierties.numColumns = 1;
-			groupPropierties.setLayout(layoutPropierties);
+			Composite cSystemName = new Composite(parent, SWT.NULL);
+			cSystemName.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cSystemName.setLayoutData(gridData);
 
-			GridData dataPropierties = new GridData();
-			groupPropierties.setLayoutData(dataPropierties);
+			Label labelSn = new Label(cSystemName, SWT.NONE);
+			labelSn.setText("System Name: ");
 
-			cPropierties = new Composite(groupPropierties, SWT.NONE);
-			dataPropierties = new GridData();
-			dataPropierties.grabExcessHorizontalSpace = true;
-			dataPropierties.horizontalIndent = 40;
-			cPropierties.setLayoutData(dataPropierties);
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
 
-			addField(new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cPropierties));
-
-			Label labelA = new Label(groupPropierties, SWT.NONE);
-			labelS.setText("System: ");
-
-			cmbSystem = new ComboViewer(cPropierties, SWT.READ_ONLY);
-
+			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
 			cmbSystem.setContentProvider(ArrayContentProvider.getInstance());
-
+			cmbSystem.getCombo().setLayoutData(gridData);
 			cmbSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -130,36 +119,39 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			groupScenario = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupScenario.setText("Scenario");
+			Label labelEmptyOne = new Label(cSystemName, SWT.NULL);
+			labelEmptyOne.setLayoutData(gridData);
 
-			GridLayout layoutScenario = new GridLayout();
-			layoutScenario.numColumns = 1;
-			groupScenario.setLayout(layoutScenario);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
 
-			GridData dataScenario = new GridData();
-			groupScenario.setLayoutData(dataScenario);
+			Label labelEmptyTwo = new Label(cSystemName, SWT.NULL);
+			labelEmptyTwo.setLayoutData(gridData);
 
-			cScenario = new Composite(groupScenario, SWT.NONE);
-			dataScenario = new GridData();
-			dataScenario.grabExcessHorizontalSpace = true;
-			dataScenario.horizontalIndent = 40;
-			cScenario.setLayoutData(dataScenario);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
 
-			addField(new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cScenario));
+			Group gScenario = new Group(cSystemName, SWT.NONE);
+			gScenario.setLayoutData(gridData);
+			gScenario.setText("Scenario");
+			gScenario.setLayout(new GridLayout(2, false));
 
-			Label labelD = new Label(cScenario, SWT.NONE);
+			Label labelD = new Label(gScenario, SWT.NONE);
 			labelD.setText("Description: ");
 
-			txtDescription = new Text(cScenario, SWT.BORDER | SWT.MULTI);
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
 
-			Label labelQA = new Label(cScenario, SWT.NONE);
+			txtDescription = new Text(gScenario, SWT.BORDER | SWT.MULTI);
+			txtDescription.setLayoutData(gridData);
+
+			Label labelQA = new Label(gScenario, SWT.NONE);
 			labelQA.setText("Quality Attribute: ");
 
-			cmbQualityAttribute = new ComboViewer(cScenario, SWT.READ_ONLY);
-
+			cmbQualityAttribute = new ComboViewer(gScenario, SWT.READ_ONLY);
 			cmbQualityAttribute.setContentProvider(ArrayContentProvider.getInstance());
-
 			cmbQualityAttribute.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -172,82 +164,175 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			Label labelC = new Label(cScenario, SWT.NONE);
+			Label labelC = new Label(gScenario, SWT.NONE);
 			labelC.setText("Condition: ");
 
-			cmbCondition = new ComboViewer(cScenario, SWT.READ_ONLY);
-
+			cmbCondition = new ComboViewer(gScenario, SWT.READ_ONLY);
 			cmbCondition.setContentProvider(ArrayContentProvider.getInstance());
 
-			groupParts = new Group(cScenario, SWT.SHADOW_ETCHED_IN);
-			groupParts.setText("Parts");
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
 
-			GridLayout layoutParts = new GridLayout();
-			layoutParts.numColumns = 5;
-			groupParts.setLayout(layoutParts);
+			Label labelEmptyTree = new Label(cSystemName, SWT.NULL);
+			labelEmptyTree.setLayoutData(gridData);
 
-			GridData dataParts = new GridData();
-			groupParts.setLayoutData(dataParts);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
 
-			cParts = new Composite(groupParts, SWT.NONE);
-			dataParts = new GridData();
-			dataParts.grabExcessHorizontalSpace = true;
-			dataParts.horizontalIndent = 40;
-			cPropierties.setLayoutData(dataParts);
+			TabFolder folder = new TabFolder(cSystemName, SWT.NONE);
+			folder.setLayoutData(gridData);
 
-			lblDescription = new Label(cParts, SWT.NONE);
-			lblDescription.setText("Description");
+			/*---------------------------------------------------------------------------*/
+			TabItem tabStimulusSource = new TabItem(folder, SWT.NONE);
+			tabStimulusSource.setText("Stimulus Source");
 
-			lblType = new Label(cParts, SWT.NONE);
-			lblType.setText("Type");
+			gStimulusSource = new Group(folder, SWT.NONE);
+			gStimulusSource.setLayoutData(gridData);
 
-			lblMetric = new Label(cParts, SWT.NONE);
-			lblMetric.setText("Metric");
+			txtDescriptionStimulusSource = new StringFieldEditor("description", "Description: ", gStimulusSource);
 
-			lblValue = new Label(cParts, SWT.NONE);
-			lblValue.setText("Value");
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
 
-			lblUnit = new Label(cParts, SWT.NONE);
-			lblUnit.setText("Unit");
+			txtDescriptionStimulusSource.getTextControl(gStimulusSource).setLayoutData(gridData);
 
-			txtDescriptionStimulusSource = new StringFieldEditor(PreferenceConstants.P_STRING, "Stimulus Source: ",
-					cParts);
-			addField(txtDescriptionStimulusSource);
-			cmbTypeStimulusSource = new ComboViewer(cScenario, SWT.READ_ONLY);
+			Label labelSST = new Label(gStimulusSource, SWT.NONE);
+			labelSST.setText("Type: ");
+
+			cmbTypeStimulusSource = new ComboViewer(gStimulusSource, SWT.READ_ONLY);
 			cmbTypeStimulusSource.setContentProvider(ArrayContentProvider.getInstance());
-			txtValueStimulusSource = new StringFieldEditor(PreferenceConstants.P_STRING, "", cParts);
-			addField(txtValueStimulusSource);
 
-			txtDescriptionStimulus = new StringFieldEditor(PreferenceConstants.P_STRING, "Stimulus Source: ", cParts);
-			addField(txtDescriptionStimulus);
-			cmbTypeStimulus = new ComboViewer(cScenario, SWT.READ_ONLY);
+			txtValueStimulusSource = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gStimulusSource);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+
+			tabStimulusSource.setControl(gStimulusSource);
+
+			/*---------------------------------------------------------------------------*/
+			TabItem tabStimulus = new TabItem(folder, SWT.NONE);
+			tabStimulus.setText("Stimulus");
+
+			gStimulus = new Group(folder, SWT.NONE);
+			gStimulus.setLayoutData(gridData);
+
+			txtDescriptionStimulus = new StringFieldEditor("description", "Description: ", gStimulus);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+
+			txtDescriptionStimulus.getTextControl(gStimulus).setLayoutData(gridData);
+
+			Label labelST = new Label(gStimulus, SWT.NONE);
+			labelST.setText("Type: ");
+
+			cmbTypeStimulus = new ComboViewer(gStimulus, SWT.READ_ONLY);
 			cmbTypeStimulus.setContentProvider(ArrayContentProvider.getInstance());
-			txtValueStimulus = new StringFieldEditor(PreferenceConstants.P_STRING, "", cParts);
-			addField(txtValueStimulus);
 
-			txtDescriptionEnvironment = new StringFieldEditor(PreferenceConstants.P_STRING, "Environment: ", cParts);
-			addField(txtDescriptionEnvironment);
-			cmbTypeEnvironment = new ComboViewer(cScenario, SWT.READ_ONLY);
+			txtValueStimulus = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gStimulus);
+
+			tabStimulus.setControl(gStimulus);
+
+			/*---------------------------------------------------------------------------*/
+			TabItem tabEnvironment = new TabItem(folder, SWT.NONE);
+			tabEnvironment.setText("Environment");
+
+			gEnvironment = new Group(folder, SWT.NONE);
+			gEnvironment.setLayoutData(gridData);
+
+			txtDescriptionEnvironment = new StringFieldEditor("description", "Description: ", gEnvironment);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+
+			txtDescriptionEnvironment.getTextControl(gEnvironment).setLayoutData(gridData);
+
+			Label labelET = new Label(gEnvironment, SWT.NONE);
+			labelET.setText("Type: ");
+
+			cmbTypeEnvironment = new ComboViewer(gEnvironment, SWT.READ_ONLY);
 			cmbTypeEnvironment.setContentProvider(ArrayContentProvider.getInstance());
-			txtValueEnvironment = new StringFieldEditor(PreferenceConstants.P_STRING, "", cParts);
-			addField(txtValueEnvironment);
 
-			txtDescriptionArtifact = new StringFieldEditor(PreferenceConstants.P_STRING, "Artifact: ", cParts);
-			addField(txtDescriptionArtifact);
-			cmbTypeArtifact = new ComboViewer(cScenario, SWT.READ_ONLY);
+			txtValueEnvironment = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gEnvironment);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+
+			tabEnvironment.setControl(gEnvironment);
+
+			/*---------------------------------------------------------------------------*/
+			TabItem tabArtifact = new TabItem(folder, SWT.NONE);
+			tabArtifact.setText("Artifact");
+
+			gArtifact = new Group(folder, SWT.NONE);
+			gArtifact.setLayoutData(gridData);
+
+			txtDescriptionArtifact = new StringFieldEditor("description", "Description: ", gArtifact);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+
+			txtDescriptionArtifact.getTextControl(gArtifact).setLayoutData(gridData);
+
+			Label labelAT = new Label(gArtifact, SWT.NONE);
+			labelAT.setText("Type: ");
+
+			cmbTypeArtifact = new ComboViewer(gArtifact, SWT.READ_ONLY);
 			cmbTypeArtifact.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtDescriptionResponse = new StringFieldEditor(PreferenceConstants.P_STRING, "Response: ", cParts);
-			addField(txtDescriptionResponse);
-			cmbTypeResponse = new ComboViewer(cScenario, SWT.READ_ONLY);
-			cmbTypeResponse.setContentProvider(ArrayContentProvider.getInstance());
-			txtValueResponse = new StringFieldEditor(PreferenceConstants.P_STRING, "", cParts);
-			addField(txtValueResponse);
+			tabArtifact.setControl(gArtifact);
 
-			txtDescriptionResponseMeasure = new StringFieldEditor(PreferenceConstants.P_STRING, "Response Measure: ",
-					cParts);
-			addField(txtDescriptionResponseMeasure);
-			cmbTypeResponseMeasure = new ComboViewer(cScenario, SWT.READ_ONLY);
+			/*---------------------------------------------------------------------------*/
+			TabItem tabResponse = new TabItem(folder, SWT.NONE);
+			tabResponse.setText("Response");
+
+			gResponse = new Group(folder, SWT.NONE);
+			gResponse.setLayoutData(gridData);
+
+			txtDescriptionResponse = new StringFieldEditor("description", "Description: ", gResponse);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+
+			txtDescriptionResponse.getTextControl(gResponse).setLayoutData(gridData);
+
+			Label labelRT = new Label(gResponse, SWT.NONE);
+			labelRT.setText("Type: ");
+
+			cmbTypeResponse = new ComboViewer(gResponse, SWT.READ_ONLY);
+			cmbTypeResponse.setContentProvider(ArrayContentProvider.getInstance());
+
+			txtValueResponse = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gResponse);
+
+			/*---------------------------------------------------------------------------*/
+			tabResponse.setControl(gResponse);
+
+			TabItem tabResponseMeasure = new TabItem(folder, SWT.NONE);
+			tabResponseMeasure.setText("Response Measure");
+
+			gResponseMeasure = new Group(folder, SWT.NONE);
+			gResponseMeasure.setLayoutData(gridData);
+
+			txtDescriptionResponseMeasure = new StringFieldEditor("description", "Description: ", gResponseMeasure);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+
+			txtDescriptionResponseMeasure.getTextControl(gResponseMeasure).setLayoutData(gridData);
+
+			Label labelRMM = new Label(gResponseMeasure, SWT.NONE);
+			labelRMM.setText("Metric: ");
+
+			cmbTypeResponseMeasure = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbTypeResponseMeasure.setContentProvider(ArrayContentProvider.getInstance());
 			cmbTypeResponseMeasure.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -261,11 +346,10 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			txtValueResponseMeasure = new DoubleFieldEditor(PreferenceConstants.P_STRING, "", cParts);
-			txtValueResponseMeasure.setMinRange(0.0);
-			addField(txtValueResponseMeasure);
+			Label labelRMT = new Label(gResponseMeasure, SWT.NONE);
+			labelRMT.setText("Type: ");
 
-			cmbMetric = new ComboViewer(cScenario, SWT.READ_ONLY);
+			cmbMetric = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbMetric.setContentProvider(ArrayContentProvider.getInstance());
 			cmbMetric.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -278,12 +362,35 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			cmbUnit = new ComboViewer(cScenario, SWT.READ_ONLY);
+			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure);
+			txtValueResponseMeasure.setMinRange(0.0);
+
+			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
+			labelRMU.setText("Unit: ");
+
+			cmbUnit = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbUnit.setContentProvider(ArrayContentProvider.getInstance());
 
-			btnNew = new Button(parent, SWT.PUSH);
-			btnNew.setText(" Save ");
-			btnNew.setToolTipText("Save");
+			tabResponseMeasure.setControl(gResponseMeasure);
+
+			/*---------------------------------------------------------------------------*/
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Label labelEmptyFour = new Label(cSystemName, SWT.NULL);
+			labelEmptyFour.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.widthHint = 100;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
+			gridData.grabExcessHorizontalSpace = true;
+
+			btnNew = new Button(cSystemName, SWT.PUSH);
+			btnNew.setText("Save");
+			btnNew.setLayoutData(gridData);
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -321,36 +428,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.viewController = viewController;
 	}
 
-	public Group getGroupPropierties() {
-		return groupPropierties;
-	}
-
-	public void setGroupPropierties(Group groupPropierties) {
-		this.groupPropierties = groupPropierties;
-	}
-
-	public Composite getcPropierties() {
-		return cPropierties;
-	}
-
-	public void setcPropierties(Composite cPropierties) {
-		this.cPropierties = cPropierties;
-	}
-
 	public ComboViewer getCmbSystem() {
 		return cmbSystem;
 	}
 
 	public void setCmbSystem(ComboViewer cmbSystem) {
 		this.cmbSystem = cmbSystem;
-	}
-
-	public Group getGroupScenario() {
-		return groupScenario;
-	}
-
-	public void setGroupScenario(Group groupScenario) {
-		this.groupScenario = groupScenario;
 	}
 
 	public Button getBtnNew() {
@@ -383,14 +466,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 	public void setCmbCondition(ComboViewer cmbCondition) {
 		this.cmbCondition = cmbCondition;
-	}
-
-	public Group getGroupParts() {
-		return groupParts;
-	}
-
-	public void setGroupParts(Group groupParts) {
-		this.groupParts = groupParts;
 	}
 
 	public StringFieldEditor getTxtDescriptionStimulusSource() {
@@ -545,22 +620,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.cmbUnit = cmbUnit;
 	}
 
-	public Composite getcScenario() {
-		return cScenario;
-	}
-
-	public void setcScenario(Composite cScenario) {
-		this.cScenario = cScenario;
-	}
-
-	public Composite getcParts() {
-		return cParts;
-	}
-
-	public void setcParts(Composite cParts) {
-		this.cParts = cParts;
-	}
-
 	public void loadCmbSystem() {
 		this.getViewController().setModelSystem();
 	}
@@ -666,12 +725,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
 			this.getCmbCondition().getCombo().setEnabled(false);
 
-			this.getTxtDescriptionStimulusSource().setEnabled(false, cParts);
-			this.getTxtDescriptionStimulus().setEnabled(false, cParts);
-			this.getTxtDescriptionEnvironment().setEnabled(false, cParts);
-			this.getTxtDescriptionArtifact().setEnabled(false, cParts);
-			this.getTxtDescriptionResponse().setEnabled(false, cParts);
-			this.getTxtDescriptionResponseMeasure().setEnabled(false, cParts);
+			this.getTxtDescriptionStimulusSource().setEnabled(false, gStimulusSource);
+			this.getTxtDescriptionStimulus().setEnabled(false, gStimulus);
+			this.getTxtDescriptionEnvironment().setEnabled(false, gEnvironment);
+			this.getTxtDescriptionArtifact().setEnabled(false, gArtifact);
+			this.getTxtDescriptionResponse().setEnabled(false, gResponse);
+			this.getTxtDescriptionResponseMeasure().setEnabled(false, gResponseMeasure);
 
 			this.getCmbTypeStimulusSource().getCombo().setEnabled(false);
 			this.getCmbTypeStimulus().getCombo().setEnabled(false);
@@ -682,11 +741,11 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getCmbMetric().getCombo().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 
-			this.getTxtValueStimulusSource().setEnabled(false, cParts);
-			this.getTxtValueStimulus().setEnabled(false, cParts);
-			this.getTxtValueEnvironment().setEnabled(false, cParts);
-			this.getTxtValueResponse().setEnabled(false, cParts);
-			this.getTxtValueResponseMeasure().setEnabled(false, cParts);
+			this.getTxtValueStimulusSource().setEnabled(false, gStimulusSource);
+			this.getTxtValueStimulus().setEnabled(false, gStimulus);
+			this.getTxtValueEnvironment().setEnabled(false, gEnvironment);
+			this.getTxtValueResponse().setEnabled(false, gResponse);
+			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
 
 			this.getBtnNew().setEnabled(true);
 
@@ -698,12 +757,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			break;
 		case 2:// With quality attribute selected
-			this.getTxtDescriptionStimulusSource().setEnabled(true, cParts);
-			this.getTxtDescriptionStimulus().setEnabled(true, cParts);
-			this.getTxtDescriptionEnvironment().setEnabled(true, cParts);
-			this.getTxtDescriptionArtifact().setEnabled(true, cParts);
-			this.getTxtDescriptionResponse().setEnabled(true, cParts);
-			this.getTxtDescriptionResponseMeasure().setEnabled(true, cParts);
+			this.getTxtDescriptionStimulusSource().setEnabled(true, gStimulusSource);
+			this.getTxtDescriptionStimulus().setEnabled(true, gStimulus);
+			this.getTxtDescriptionEnvironment().setEnabled(true, gEnvironment);
+			this.getTxtDescriptionArtifact().setEnabled(true, gArtifact);
+			this.getTxtDescriptionResponse().setEnabled(true, gResponse);
+			this.getTxtDescriptionResponseMeasure().setEnabled(true, gResponseMeasure);
 
 			this.getCmbTypeStimulusSource().getCombo().setEnabled(true);
 			this.getCmbTypeStimulus().getCombo().setEnabled(true);
@@ -712,11 +771,11 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getCmbTypeResponse().getCombo().setEnabled(true);
 			this.getCmbTypeResponseMeasure().getCombo().setEnabled(true);
 
-			this.getTxtValueStimulusSource().setEnabled(true, cParts);
-			this.getTxtValueStimulus().setEnabled(true, cParts);
-			this.getTxtValueEnvironment().setEnabled(true, cParts);
-			this.getTxtValueResponse().setEnabled(true, cParts);
-			this.getTxtValueResponseMeasure().setEnabled(true, cParts);
+			this.getTxtValueStimulusSource().setEnabled(true, gStimulusSource);
+			this.getTxtValueStimulus().setEnabled(true, gStimulus);
+			this.getTxtValueEnvironment().setEnabled(true, gEnvironment);
+			this.getTxtValueResponse().setEnabled(true, gResponse);
+			this.getTxtValueResponseMeasure().setEnabled(true, gResponseMeasure);
 
 			break;
 		case 3:// With type response measure selected

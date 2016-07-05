@@ -140,7 +140,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			Group gScenario = new Group(cSystemName, SWT.NONE);
 			gScenario.setLayoutData(gridData);
 			gScenario.setText("Scenario");
-
 			gScenario.setLayout(new GridLayout(2, false));
 
 			Label labelD = new Label(gScenario, SWT.NONE);
@@ -382,7 +381,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			/*---------------------------------------------------------------------------*/
 
 			gridData = new GridData();
-			gridData.horizontalSpan = 4;
+			gridData.horizontalSpan = 2;
 
 			Label labelEmptyFour = new Label(cSystemName, SWT.NULL);
 			labelEmptyFour.setLayoutData(gridData);
@@ -405,11 +404,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 					prepareView(0);
 				}
 			});
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 4;
-			Label empty = new Label(gResponseMeasure, SWT.NONE);
-			empty.setLayoutData(gridData);
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 1;
