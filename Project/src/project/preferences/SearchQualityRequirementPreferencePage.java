@@ -145,6 +145,11 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			colDescriptionScenario.setText("Description Scenario");
 
 			for (int i = 0; i < 6; i++) {
+			      TableItem item = new TableItem(table, SWT.NONE);
+			      item.setText("Item " + i);
+			}
+			
+			for (int i = 0; i < 6; i++) {
 				TableItem item = new TableItem(table, SWT.NONE);
 				item.setText("Item " + i);
 			}
