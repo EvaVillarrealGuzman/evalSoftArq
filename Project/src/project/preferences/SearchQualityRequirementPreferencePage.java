@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
@@ -132,15 +133,16 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			//Create column names
 			String[] columnNames = new String[] {"Object", "Condition", "Quality Attribute", "Description Scenario"};
 			//Create styles
-			int style = SWT.FULL_SELECTION | SWT.BORDER | SWT.V_SCROLL;	
+			int style = SWT.FULL_SELECTION | SWT.BORDER ;	
 			//create table
 			table = new Table(cQualityRequirement, style);
 			TableLayout layout = new TableLayout(); 
 	        table.setLayout(layout); 
 	        GridData gridData = new GridData(GridData.FILL_BOTH); 
 	        table.setLayoutData(gridData); 
-	        table.setLinesVisible(true); 
+	        table.setLinesVisible(true);
 	        table.setHeaderVisible(true);
+	        
 	        //Create columns
 	        colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
@@ -158,6 +160,11 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			colDescriptionScenario.setWidth(200);
 			colDescriptionScenario.setText("Description Scenario");
 
+			for (int i = 0; i < 6; i++) {
+			      TableItem item = new TableItem(table, SWT.NONE);
+			      item.setText("Item " + i);
+			}
+			
 	        //Create TableViewer
 			tblViewerQualityRequirement = new TableViewer(table); 
 			tblViewerQualityRequirement.setUseHashlookup(true); 
