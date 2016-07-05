@@ -13,8 +13,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -72,8 +74,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public EditQualityRequirementPreferencePage(QualityRequirementPPController viewController) {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new QualityRequirementPPController();
-		this.setViewController( new QualityRequirementPPController()); // NOPMD by Usuario-Pc on 10/06/16 21:48
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:48	
 	}
 
 	/*

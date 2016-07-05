@@ -9,6 +9,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -102,6 +104,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 						clearScenario();
 						prepareView(0);
 					}
+					btnConsult.setEnabled(false);
 				}
 			});
 
@@ -174,6 +177,12 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 					btnConsult.setEnabled(true);
 				}
 	        });
+	        table.addMouseListener( new MouseAdapter() {
+	            public void mouseClicked( MouseEvent e ) { 
+	          
+	            }
+	          });
+	        
 	        
 			btnConsult = new Button(parent, SWT.PUSH);
 			btnConsult.setText(" Consult ");
@@ -185,6 +194,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 					getViewController().setModel((QualityRequirement)table.getItem(table.getSelectionIndex()).getData());
 					//getViewController().getForm().setView();
 					//TODO falta mostrar la vista
+					
 				}
 			});
 
@@ -355,7 +365,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 
-			this.getBtnConsult().setEnabled(true);
+			//this.getBtnConsult().setEnabled(true);
 
 			break;
 		case 1:// With system selected

@@ -89,7 +89,6 @@ public class DoubleFieldEditor extends StringFieldEditor {
 			setErrorMessage(JFaceResources.format("The entry should no be a negative number", //$NON-NLS-1$
 					new Object[] { getLabelText()}));
 			showErrorMessage();
-			return false;
 
 		} catch (NumberFormatException e1) {
 			setErrorMessage(JFaceResources.format("Not a valid double", //$NON-NLS-1$
