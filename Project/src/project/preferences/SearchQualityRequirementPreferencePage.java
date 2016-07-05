@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
@@ -116,7 +117,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			// Create column names
 			String[] columnNames = new String[] { "Object", "Condition", "Quality Attribute", "Description Scenario" };
 			// Create styles
-			int style = SWT.FULL_SELECTION | SWT.BORDER | SWT.V_SCROLL;
+			int style = SWT.FULL_SELECTION | SWT.BORDER;
 			// create table
 			table = new Table(gQualityRequirement, style);
 			TableLayout tableLayout = new TableLayout();
@@ -142,6 +143,11 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			colDescriptionScenario = new TableColumn(table, SWT.NONE);
 			colDescriptionScenario.setWidth(200);
 			colDescriptionScenario.setText("Description Scenario");
+
+			for (int i = 0; i < 6; i++) {
+				TableItem item = new TableItem(table, SWT.NONE);
+				item.setText("Item " + i);
+			}
 
 			// Create TableViewer
 			tblViewerQualityRequirement = new TableViewer(table);
