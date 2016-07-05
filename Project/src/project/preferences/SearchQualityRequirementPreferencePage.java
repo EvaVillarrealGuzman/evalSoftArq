@@ -177,14 +177,10 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	        table.addSelectionListener(new SelectionAdapter(){
 	        	@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnConsult.setEnabled(true);
+					table.showSelection();
+	        		btnConsult.setEnabled(true);
 				}
 	        });
-	        table.addMouseListener( new MouseAdapter() {
-	            public void mouseClicked( MouseEvent e ) { 
-	          
-	            }
-	          });
 	        
 	        
 			btnConsult = new Button(parent, SWT.PUSH);
