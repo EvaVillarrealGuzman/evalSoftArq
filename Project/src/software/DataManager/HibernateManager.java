@@ -78,7 +78,7 @@ public class HibernateManager extends HibernateUtil {
 			System.out.println(" updateObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD by Usuario-Pc on 10/06/16 22:02
 			JOptionPane.showOptionDialog(null, "Done successfully!", "Notice", JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.INFORMATION_MESSAGE,
-					new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
+					new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/success.png")), new Object[] { "OK" },
 					"OK");
 			return true;
 		} catch (HibernateException pe) {
