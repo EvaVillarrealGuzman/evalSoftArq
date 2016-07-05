@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
@@ -38,7 +39,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	 * Attributes
 	 */
 	private Group groupPropierties;
-	private Composite cPropierties;
+	private Group cPropierties;
 	private ComboViewer cmbSystem;
 	private Group groupQualityRequirement;
 	private Composite cQualityRequirement;
@@ -72,10 +73,21 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setFormSearch(this);
-
-			groupPropierties = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupPropierties.setText("Propierties");
-
+			
+			Group group = new Group(parent, SWT.NONE);
+			GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+			group.setLayoutData(gridData);
+			group.setText("lasdfsa");
+			
+			group.setLayout(new GridLayout(2, false));	
+						
+			new Label(group,SWT.BORDER).setText("User name:");
+			
+			Text username_Text = new Text(group,SWT.BORDER);
+			username_Text.setText("....");
+			username_Text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			
+/*
 			GridLayout layoutPropierties = new GridLayout();
 			layoutPropierties.numColumns = 1;
 			groupPropierties.setLayout(layoutPropierties);
@@ -109,9 +121,9 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 					}
 					btnConsult.setEnabled(false);
 				}
-			});
+			});*/
 
-			groupQualityRequirement = new Group(parent, SWT.SHADOW_ETCHED_IN);
+			/*groupQualityRequirement = new Group(parent, SWT.SHADOW_ETCHED_IN);
 			groupQualityRequirement.setText("Quality Requirements");
 
 			GridLayout layoutQualityRequirement = new GridLayout();
@@ -205,7 +217,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				}
 			});
 
-			this.prepareView(0);
+			this.prepareView(0);*/
 		} catch (JDBCConnectionException e) {
 			viewController.createErrorDialog("Postgres service is not running");
 		}
@@ -246,7 +258,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		return cPropierties;
 	}
 
-	public void setcPropierties(Composite cPropierties) {
+	public void setcPropierties(Group cPropierties) {
 		this.cPropierties = cPropierties;
 	}
 
