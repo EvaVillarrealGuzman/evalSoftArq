@@ -43,6 +43,11 @@
             id="Project.commands.searchQualityRequirementCommand"
             name="SearchQualityRequirement">
       </command>
+      <command
+            categoryId="Project.commands.category"
+            id="Project.commands.editQualityRequirementCommand"
+            name="EditQualityRequirement">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -73,6 +78,10 @@
       <handler
             class="project.handlers.SearchQualityRequirementHandler"
             commandId="Project.commands.searchQualityRequirementCommand">
+      </handler>
+      <handler
+            class="project.handlers.EditQualityRequirementHandler"
+            commandId="Project.commands.editQualityRequirementCommand">
       </handler>
    </extension>
    <extension
@@ -166,7 +175,13 @@
        		class="project.preferences.EditSystemPreferencePage"
        		id="project.preferences.EditSystemPreferencePage"
        		name="Edit System">
-	 </page>	
+	 </page>
+  <page
+        category="project.preferences.UCM2DEVS"
+        class="project.preferences.EditQualityRequirementPreferencePage"
+        id="project.preferences.EditQualityRequirementPreferencePage"
+        name="Edit Quality Requirement">
+  </page>	
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">

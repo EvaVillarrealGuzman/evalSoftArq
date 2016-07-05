@@ -22,6 +22,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
+import project.preferences.controller.NewQualityRequirementPPController;
 import project.preferences.controller.QualityRequirementPPController;
 import software.DomainModel.AnalysisEntity.Metric;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
@@ -71,9 +72,10 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	private static EditQualityRequirementPreferencePage qualityRequirementPP;
 	private QualityRequirementPPController viewController;
 
-	public EditQualityRequirementPreferencePage(QualityRequirementPPController viewController) {
+	public EditQualityRequirementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
+		viewController = new QualityRequirementPPController();
 		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:48	
 	}
 

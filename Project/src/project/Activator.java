@@ -10,6 +10,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import software.DataManager.Data;
 import software.DataManager.HibernateUtil;
 
 /**
@@ -44,7 +45,7 @@ public class Activator extends AbstractUIPlugin {
 		 * Initialize Hibernate
 		 */
 		HibernateUtil.initialize();
-		// Data.initialize();
+		//Data.initialize();
 		super.start(context);
 		plugin = this;
 	}

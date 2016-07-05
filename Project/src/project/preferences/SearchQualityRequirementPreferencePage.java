@@ -1,6 +1,7 @@
 package project.preferences;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -24,6 +25,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.hibernate.exception.JDBCConnectionException;
 
 import project.preferences.controller.QualityRequirementPPController;
@@ -192,7 +195,15 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					getViewController().setModel((QualityRequirement)table.getItem(table.getSelectionIndex()).getData());
-					//getViewController().getForm().setView();
+					
+					PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+							"project.preferences.EditQualityRequirementPreferencePage",
+							new String[] { "project.preferences.EditQualityRequirementPreferencePage" }, null);
+					if (pref != null)
+						pref.open();
+					
+					getViewController().getForm().setView();
 					//TODO falta mostrar la vista
 					
 				}

@@ -55,7 +55,7 @@ public class QualityRequirementPPController extends Controller {
 
 	public EditQualityRequirementPreferencePage getForm() {
 		if (form == null){
-			form= new EditQualityRequirementPreferencePage(this);
+			form= new EditQualityRequirementPreferencePage();
 		}
 		return form;
 	}

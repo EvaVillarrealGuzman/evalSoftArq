@@ -86,9 +86,15 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setForm(this);
+			
+			Label labelS = new Label( parent, SWT.NONE);
+			labelS.setText("System: ");
 
 			groupPropierties = new Group(parent, SWT.SHADOW_ETCHED_IN);
 			groupPropierties.setText("Propierties");
+			
+			Label labelAS = new Label( groupPropierties, SWT.NONE);
+			labelS.setText("System: ");
 
 			GridLayout layoutPropierties = new GridLayout();
 			layoutPropierties.numColumns = 1;
@@ -105,7 +111,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			addField(new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cPropierties));
 
-			Label labelS = new Label(cPropierties, SWT.NONE);
+			Label labelA = new Label(groupPropierties, SWT.NONE);
 			labelS.setText("System: ");
 
 			cmbSystem = new ComboViewer(cPropierties, SWT.READ_ONLY);
