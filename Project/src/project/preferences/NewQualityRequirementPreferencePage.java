@@ -8,6 +8,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -59,6 +60,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private ComboViewer cmbTypeArtifact;
 	private ComboViewer cmbTypeResponse;
 	private ComboViewer cmbTypeResponseMeasure;
+	private org.eclipse.swt.widgets.Label lblvalueResponseMeasure;
 	private GridData gridData;
 	private ComboViewer cmbUnit;
 	private Button btnNew;
@@ -325,7 +327,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
-			gridData.grabExcessHorizontalSpace = true;
+			//gridData.grabExcessHorizontalSpace = true;
 
 			txtDescriptionResponseMeasure.getTextControl(gResponseMeasure).setLayoutData(gridData);
 
@@ -362,9 +364,15 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure);
+			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure, this);
 			txtValueResponseMeasure.setMinRange(0.0);
 
+			Color transparent = this.getShell().getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT);
+			Label labelRMv = new Label(gResponseMeasure, SWT.NONE);
+			labelRMv.setText("Doubles only");
+			labelRMv.setForeground(transparent);
+			lblvalueResponseMeasure = labelRMv;
+			
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
 			labelRMU.setText("Unit: ");
 
@@ -434,6 +442,14 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 	public void setCmbSystem(ComboViewer cmbSystem) {
 		this.cmbSystem = cmbSystem;
+	}
+
+	public Label getLblvalueResponseMeasure() {
+		return lblvalueResponseMeasure;
+	}
+
+	public void setLblvalueResponseMeasure(Label lblvalueResponseMeasure) {
+		this.lblvalueResponseMeasure = lblvalueResponseMeasure;
 	}
 
 	public Button getBtnNew() {

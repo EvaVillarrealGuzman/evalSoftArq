@@ -55,7 +55,7 @@ public class QualityRequirementPPController extends Controller {
 
 	public EditQualityRequirementPreferencePage getForm() {
 		if (form == null){
-			form= new EditQualityRequirementPreferencePage();
+			form= new EditQualityRequirementPreferencePage(this, formSearch.getShell());
 		}
 		return form;
 	}
