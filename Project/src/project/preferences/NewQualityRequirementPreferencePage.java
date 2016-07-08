@@ -8,7 +8,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -323,12 +322,10 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			gResponseMeasure = new Group(folder, SWT.NONE);
 			gResponseMeasure.setLayoutData(gridData);
 
-			txtDescriptionResponseMeasure = new StringFieldEditor("description", "Description: ", gResponseMeasure);
-
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
-			//gridData.grabExcessHorizontalSpace = true;
 
+			txtDescriptionResponseMeasure = new StringFieldEditor("description", "Description: ", gResponseMeasure);
 			txtDescriptionResponseMeasure.getTextControl(gResponseMeasure).setLayoutData(gridData);
 
 			Label labelRMM = new Label(gResponseMeasure, SWT.NONE);
@@ -367,12 +364,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure, this);
 			txtValueResponseMeasure.setMinRange(0.0);
 
-			Color transparent = this.getShell().getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT);
-			Label labelRMv = new Label(gResponseMeasure, SWT.NONE);
-			labelRMv.setText("Doubles only");
-			labelRMv.setForeground(transparent);
-			lblvalueResponseMeasure = labelRMv;
-			
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
 			labelRMU.setText("Unit: ");
 

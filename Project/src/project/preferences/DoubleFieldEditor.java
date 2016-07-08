@@ -87,7 +87,7 @@ public class DoubleFieldEditor extends StringFieldEditor {
 	}
 
 	@Override
-	protected boolean checkState() {
+	public boolean isValid() {
 
 		Text text = getTextControl();
 
@@ -102,26 +102,10 @@ public class DoubleFieldEditor extends StringFieldEditor {
 		try {
 			double number = Double.valueOf(numberString).doubleValue();
 			if ((minValidValue == null || number >= minValidValue) && (maxValidValue == null || number <= maxValidValue))  {
-				//clearErrorMessage();
-				this.getForm().getLblvalueResponseMeasure().setText("Doubles only");
-				this.getForm().getLblvalueResponseMeasure().setForeground(transparent);
-				this.getForm().getLblvalueResponseMeasure().setVisible(true);
 				return true;
 			}
-			this.getForm().getLblvalueResponseMeasure().setText("Negative number");
-			this.getForm().getLblvalueResponseMeasure().setForeground(red);
-			this.getForm().getLblvalueResponseMeasure().setVisible(true);
-			//setErrorMessage(JFaceResources.format("The entry should no be a negative number", //$NON-NLS-1$
-				//	new Object[] { getLabelText()}));
-			//showErrorMessage();
-
 		} catch (NumberFormatException e1) {
-			this.getForm().getLblvalueResponseMeasure().setText("Invalid double");
-			this.getForm().getLblvalueResponseMeasure().setForeground(red);
-			this.getForm().getLblvalueResponseMeasure().setVisible(true);
-			//setErrorMessage(JFaceResources.format("Not a valid double", //$NON-NLS-1$
-				//	new Object[] { getLabelText()}));
-			//showErrorMessage();
+			return false;
 		}
 
 		return false;
@@ -184,9 +168,5 @@ public class DoubleFieldEditor extends StringFieldEditor {
 	public void setEnabled(boolean enabled) {
 		setEnabled(enabled, this.parent);
 	}
-	
-	@Override
-	public boolean isValid(){
-		return checkState();
-	}
+
 }
