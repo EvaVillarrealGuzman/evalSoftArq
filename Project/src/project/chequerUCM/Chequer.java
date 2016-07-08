@@ -30,11 +30,11 @@ public class Chequer {
 	/**
 	 * Chequea que el UCM sea válido Si devuelve 0 es porque es válido Si
 	 * devuelve 1 es porque existen elementos en el UCM que no están en el
-	 * 'dibujo' 
-	 * Si devuelve 2 es porque existe más de un startPoint o más de un
-	 * endPoint 
-	 * Si devuelve 3 es porque no es correcta la definición de los
-	 * metadatos en las responsabilidades
+	 * 'dibujo'; Si devuelve 2 es porque existe más de un startPoint o más de un
+	 * endPoint; Si devuelve 3 es porque no es correcta la definición de los
+	 * metadatos en las responsabilidades; Si devuelve 4 es porque existen
+	 * elementos con nombres duplicados; Si devuleve 5 es porque no existen
+	 * responsabilidades; Si devuelve 6 es porque no existen componentes
 	 * 
 	 * @return
 	 */
@@ -51,21 +51,35 @@ public class Chequer {
 			doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
 
-			if (isInDefinition() == 0) {
-				if (isOneStartPointEndPoint() == 0) {
-					if (isMetadataInResponsibilities() == 0) {
-						return 0;
+			if (isOneStartPointEndPoint() == 0) {
+				if (isResponsibilities() == 0) {
+					if (isComponents() == 0) {
+						if (isDuplicateName() == 0) {
+							if (isInDefinition() == 0) {
+								if (isMetadataInResponsibilities() == 0) {
+									return 0;
+								} else {
+									return 3;
+								}
+							} else {
+								return 1;
+							}
+						} else {
+							return 4;
+						}
 					} else {
-						return 3;
+						return 6;
 					}
 				} else {
-					return 2;
+					return 5;
 				}
 			} else {
-				return 1;
+				return 2;
 			}
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			return -1;
 		}
 
@@ -245,6 +259,74 @@ public class Chequer {
 
 				String contRefs = eComponent.getAttribute("contRefs");
 				if (contRefs.equals("")) {
+					return -1;
+				}
+
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * Chequea que exista al menos una responsabilidad
+	 * 
+	 * @return
+	 */
+	private int isResponsibilities() {
+		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
+		if (responsibilitiesList.getLength() > 0) {
+			return 0;
+		}
+		return -1;
+	}
+
+	/**
+	 * Chequea que exista al menos un componente
+	 * 
+	 * @return
+	 */
+	private int isComponents() {
+		NodeList componentsList = doc.getElementsByTagName("components");
+		if (componentsList.getLength() > 0) {
+			return 0;
+		}
+		return -1;
+	}
+
+	/**
+	 * Chequea que no existan nombres duplicados de responsabilidades y de
+	 * componentes
+	 * 
+	 * @return
+	 */
+	private int isDuplicateName() {
+		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
+
+		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
+			Node responsibility = responsibilitiesList.item(i);
+
+			if (responsibility.getNodeType() == Node.ELEMENT_NODE) {
+				Element eResponsibility = (Element) responsibility;
+
+				String respRefs = eResponsibility.getAttribute("respRefs");
+				String[] respRefsList = respRefs.split(" ");
+				if (respRefsList.length > 1) {
+					return -1;
+				}
+			}
+		}
+
+		NodeList componentsList = doc.getElementsByTagName("components");
+
+		for (int i = 0; i < componentsList.getLength(); i++) {
+			Node component = componentsList.item(i);
+
+			if (component.getNodeType() == Node.ELEMENT_NODE) {
+				Element eComponent = (Element) component;
+
+				String contRefs = eComponent.getAttribute("contRefs");
+				String[] contRefsList = contRefs.split(" ");
+				if (contRefsList.length > 1) {
 					return -1;
 				}
 
