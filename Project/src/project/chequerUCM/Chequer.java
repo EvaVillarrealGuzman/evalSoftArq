@@ -34,7 +34,8 @@ public class Chequer {
 	 * endPoint; Si devuelve 3 es porque no es correcta la definición de los
 	 * metadatos en las responsabilidades; Si devuelve 4 es porque existen
 	 * elementos con nombres duplicados; Si devuleve 5 es porque no existen
-	 * responsabilidades; Si devuelve 6 es porque no existen componentes
+	 * responsabilidades; Si devuelve 6 es porque no existen componentes; Si
+	 * devuelve 7 es porque el dato del start point no esta bien ingresado
 	 * 
 	 * @return
 	 */
@@ -56,10 +57,14 @@ public class Chequer {
 					if (isComponents() == 0) {
 						if (isDuplicateName() == 0) {
 							if (isInDefinition() == 0) {
-								if (isMetadataInResponsibilities() == 0) {
-									return 0;
+								if (isMetadataInStartPoint() == 0) {
+									if (isMetadataInResponsibilities() == 0) {
+										return 0;
+									} else {
+										return 3;
+									}
 								} else {
-									return 3;
+									return 7;
 								}
 							} else {
 								return 1;
@@ -125,7 +130,6 @@ public class Chequer {
 		return 0;
 	}
 
-	// TODO agregar chequeo de MeanTimeBRequest en start point
 	/**
 	 * Chequea si los metadatos de cada responsabilidad, están ingresador
 	 * correctamente
@@ -219,6 +223,64 @@ public class Chequer {
 		}
 
 		if (isMeanTimeBFail && isMeanDowntime && isMeanRecoveryTime && isMeanExecutionTime) {
+			return 0;
+		}
+
+		return -1;
+	}
+
+	/**
+	 * Chequea si los metadatos del start point, están ingresador correctamente
+	 * 
+	 * @return
+	 */
+	private int isMetadataInStartPoint() {
+		Boolean isMeanTimeBRequest = false;
+
+		NodeList nodesList = doc.getElementsByTagName("nodes");
+
+		for (int i = 0; i < nodesList.getLength(); i++) {
+
+			Node node = nodesList.item(i);
+
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element eNode = (Element) node;
+
+				String typeNode = eNode.getAttribute("xsi:type");
+
+				if (typeNode.equals("ucm.map:StartPoint")) {
+					NodeList metadataList = eNode.getElementsByTagName("metadata");
+
+					for (int k = 0; k < metadataList.getLength(); k++) {
+						Node metadata = metadataList.item(k);
+						Element eMetadata = (Element) metadata;
+						String nameMetadata = eMetadata.getAttribute("name");
+
+						if (nameMetadata.equals("MeanTimeBRequest")) {
+							try {
+								String valueMetadata = eMetadata.getAttribute("value");
+								double value = Double.parseDouble(valueMetadata);
+								if (!isMeanTimeBRequest) {
+									isMeanTimeBRequest = true;
+								} else {
+									return -1;
+								}
+							} catch (Exception e) {
+								// Si llega acá, es porque el valor ingresado no
+								// se
+								// puede castear a double
+								// por lo tanto, MeanTimeBRequest queda igual a
+								// false
+							}
+						}
+
+					}
+
+				}
+			}
+		}
+
+		if (isMeanTimeBRequest) {
 			return 0;
 		}
 
