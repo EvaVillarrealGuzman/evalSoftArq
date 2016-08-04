@@ -133,6 +133,13 @@ public class Controller {
 				new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")),
 				new Object[] { "Yes", "No" }, "Yes");
 	}
+	
+	public int createDeleteRequirementDialog() {
+		return JOptionPane.showOptionDialog(null, "Do you want to delete the quality requirement?", "Warning",
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
+				new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")),
+				new Object[] { "Yes", "No" }, "Yes");
+	}
 
 	/**
 	 * Convert a File to IFile

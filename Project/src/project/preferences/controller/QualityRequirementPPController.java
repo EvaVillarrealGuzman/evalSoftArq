@@ -1,10 +1,10 @@
 package project.preferences.controller;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 
-import project.preferences.EditQualityRequirementPreferencePage;
 import project.preferences.SearchQualityRequirementPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 import software.DomainModel.AnalysisEntity.Artifact;
@@ -31,7 +31,6 @@ public class QualityRequirementPPController extends Controller {
 	 */
 	private static QualityRequirementPPController controller;
 	private AnalysisManager manager;
-	private EditQualityRequirementPreferencePage form;
 	private SearchQualityRequirementPreferencePage formSearch;
 
 	public static QualityRequirementPPController getController() {
@@ -53,17 +52,6 @@ public class QualityRequirementPPController extends Controller {
 		this.manager = manager;
 	}
 
-	public EditQualityRequirementPreferencePage getForm() {
-		if (form == null){
-			form= new EditQualityRequirementPreferencePage(this, formSearch.getShell());
-		}
-		return form;
-	}
-
-	public void setForm(EditQualityRequirementPreferencePage form) {
-		this.form = form;
-	}
-
 	public SearchQualityRequirementPreferencePage getFormSearch() {
 		return formSearch;
 	}
@@ -72,57 +60,54 @@ public class QualityRequirementPPController extends Controller {
 		this.formSearch = formSearch;
 	}
 
-	public void setModelSystem() {
-		this.getForm().getCmbSystem().setInput(this.getManager().getComboModelSystem());
-	}
 
 	public void setModelSystemSearch() {
 		this.getFormSearch().getCmbSystem().setInput(getManager().getComboModelSystemWithRequirements());
 	}
 
 	public void setModelQualityAttribute() {
-		this.getForm().getCmbQualityAttribute().setInput(getManager().getComboModelQualityAttribute());
+		this.getFormSearch().getCmbQualityAttribute().setInput(getManager().getComboModelQualityAttribute());
 	}
 
 	public void setModelCondition() {
-		this.getForm().getCmbCondition().setInput(getManager().getComboModelCondition());
+		this.getFormSearch().getCmbCondition().setInput(getManager().getComboModelCondition());
 	}
 
 	/**
 	 * Sets the model of types combo
 	 */
 	public void setModelStimulusSourceTypes(QualityAttribute qualityAttribute) {
-		this.getForm().getCmbTypeStimulusSource()
+		this.getFormSearch().getCmbTypeStimulusSource()
 				.setInput(getManager().getComboModelStimulusSourceType(qualityAttribute));
 	}
 
 	public void setModelStimulusTypes(QualityAttribute qualityAttribute) {
-		this.getForm().getCmbTypeStimulus().setInput(getManager().getComboModelStimulusType(qualityAttribute));
+		this.getFormSearch().getCmbTypeStimulus().setInput(getManager().getComboModelStimulusType(qualityAttribute));
 	}
 
 	public void setModelEnvironmentTypes(QualityAttribute qualityAttribute) {
-		this.getForm().getCmbTypeEnvironment().setInput(getManager().getComboModelEnvironmentType(qualityAttribute));
+		this.getFormSearch().getCmbTypeEnvironment().setInput(getManager().getComboModelEnvironmentType(qualityAttribute));
 	}
 
 	public void setModelArtifactTypes(QualityAttribute qualityAttribute) {
-		this.getForm().getCmbTypeArtifact().setInput(getManager().getComboModelArtifactType(qualityAttribute));
+		this.getFormSearch().getCmbTypeArtifact().setInput(getManager().getComboModelArtifactType(qualityAttribute));
 	}
 
 	public void setModelResponseTypes(QualityAttribute qualityAttribute) {
-		this.getForm().getCmbTypeResponse().setInput(getManager().getComboModelResponseType(qualityAttribute));
+		this.getFormSearch().getCmbTypeResponse().setInput(getManager().getComboModelResponseType(qualityAttribute));
 	}
 
 	public void setModelResponseMeasureTypes(QualityAttribute qualityAttribute) {
-		this.getForm().getCmbTypeResponseMeasure()
+		this.getFormSearch().getCmbTypeResponseMeasure()
 				.setInput(getManager().getComboModelResponseMeasureType(qualityAttribute));
 	}
 
 	public void setModelMetric(ResponseMeasureType type) {
-		this.getForm().getCmbMetric().setInput(getManager().getComboModelMetric(type));
+		this.getFormSearch().getCmbMetric().setInput(getManager().getComboModelMetric(type));
 	}
 
 	public void setModelUnit(Metric type) {
-		this.getForm().getCmbUnit().setInput(getManager().getComboModelUnit(type));
+		this.getFormSearch().getCmbUnit().setInput(getManager().getComboModelUnit(type));
 	}
 
 	public void save() {
@@ -139,44 +124,33 @@ public class QualityRequirementPPController extends Controller {
 
 	public int setQualityRequirement() {
 		if (this.isValidData()) {
-			StimulusSource stimulusSource = new StimulusSource(
-					this.getForm().getTxtDescriptionStimulusSource().getStringValue(),
-					this.getForm().getTxtValueStimulusSource().getStringValue(),
-					(StimulusSourceType) ((IStructuredSelection) this.getForm().getCmbTypeStimulusSource()
+			this.getManager().setStimulusSource(
+					this.getFormSearch().getTxtDescriptionStimulusSource().getStringValue(),
+					this.getFormSearch().getTxtValueStimulusSource().getStringValue(),
+					(StimulusSourceType) ((IStructuredSelection) this.getFormSearch().getCmbTypeStimulusSource()
 							.getSelection()).getFirstElement());
-			Stimulus stimulus = new Stimulus(this.getForm().getTxtDescriptionStimulus().getStringValue(),
-					this.getForm().getTxtValueStimulus().getStringValue(),
-					(StimulusType) ((IStructuredSelection) this.getForm().getCmbTypeStimulus().getSelection())
+			this.getManager().setStimulus(this.getFormSearch().getTxtDescriptionStimulus().getStringValue(),
+					this.getFormSearch().getTxtValueStimulus().getStringValue(),
+					(StimulusType) ((IStructuredSelection) this.getFormSearch().getCmbTypeStimulus().getSelection())
 							.getFirstElement());
-			Environment environment = new Environment(this.getForm().getTxtDescriptionEnvironment().getStringValue(),
-					this.getForm().getTxtValueEnvironment().getStringValue(),
-					(EnvironmentType) ((IStructuredSelection) this.getForm().getCmbTypeEnvironment().getSelection())
+			this.getManager().setEnvironment(this.getFormSearch().getTxtDescriptionEnvironment().getStringValue(),
+					this.getFormSearch().getTxtValueEnvironment().getStringValue(),
+					(EnvironmentType) ((IStructuredSelection) this.getFormSearch().getCmbTypeEnvironment().getSelection())
 							.getFirstElement());
-			Artifact artifact = new Artifact(this.getForm().getTxtDescriptionArtifact().getStringValue(),
-					(ArtifactType) ((IStructuredSelection) this.getForm().getCmbTypeArtifact().getSelection())
+			this.getManager().setArtifact(this.getFormSearch().getTxtDescriptionArtifact().getStringValue(),
+					(ArtifactType) ((IStructuredSelection) this.getFormSearch().getCmbTypeArtifact().getSelection())
 							.getFirstElement());
-			Response response = new Response(this.getForm().getTxtDescriptionResponse().getStringValue(),
-					this.getForm().getTxtValueResponse().getStringValue(),
-					(ResponseType) ((IStructuredSelection) this.getForm().getCmbTypeResponse().getSelection())
+			this.getManager().setResponse(this.getFormSearch().getTxtDescriptionResponse().getStringValue(),
+					this.getFormSearch().getTxtValueResponse().getStringValue(),
+					(ResponseType) ((IStructuredSelection) this.getFormSearch().getCmbTypeResponse().getSelection())
 							.getFirstElement());
-			ResponseMeasure responseMeasure = new ResponseMeasure(
-					this.getForm().getTxtDescriptionResponseMeasure().getStringValue(),
-					this.getForm().getTxtValueResponseMeasure().getDoubleValue(),
-					(ResponseMeasureType) ((IStructuredSelection) this.getForm().getCmbTypeResponseMeasure()
+			this.getManager().setResponseMeasure(
+					this.getFormSearch().getTxtDescriptionResponseMeasure().getStringValue(),
+					this.getFormSearch().getTxtValueResponseMeasure().getDoubleValue(),
+					(ResponseMeasureType) ((IStructuredSelection) this.getFormSearch().getCmbTypeResponseMeasure()
 							.getSelection()).getFirstElement(),
-					(Metric) ((IStructuredSelection) this.getForm().getCmbMetric().getSelection()).getFirstElement(),
-					(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection()).getFirstElement());
-
-			this.getManager()
-					.newQualityRequirement(
-							(software.DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getForm()
-									.getCmbSystem().getSelection()).getFirstElement(),
-							this.getForm().getTxtDescription().getText(), true,
-							(QualityAttribute) ((IStructuredSelection) this.getForm().getCmbQualityAttribute()
-									.getSelection()).getFirstElement(),
-							stimulusSource, stimulus, artifact, environment, response, responseMeasure,
-							(Condition) ((IStructuredSelection) this.getForm().getCmbCondition().getSelection())
-									.getFirstElement());
+					(Metric) ((IStructuredSelection) this.getFormSearch().getCmbMetric().getSelection()).getFirstElement(),
+					(Unit) ((IStructuredSelection) this.getFormSearch().getCmbUnit().getSelection()).getFirstElement());
 			return 0;
 		} else {
 			return 1;
@@ -184,95 +158,95 @@ public class QualityRequirementPPController extends Controller {
 	}
 
 	public boolean isValidData() {
-		if (this.isEmpty(this.getForm().getCmbSystem())) {
+		if (this.isEmpty(this.getFormSearch().getCmbSystem())) {
 			this.createErrorDialog("Select system");
-			this.getForm().getCmbSystem().getCombo().setFocus();
+			this.getFormSearch().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
-		if (this.isEmpty(this.getForm().getTxtDescription())) {
+		if (this.isEmpty(this.getFormSearch().getTxtDescription())) {
 			this.createErrorDialog("Empty description");
-			this.getForm().getTxtDescription().setFocus();
+			this.getFormSearch().getTxtDescription().setFocus();
 			return false;
 		}
-		if (this.isEmpty(this.getForm().getCmbQualityAttribute())) {
+		if (this.isEmpty(this.getFormSearch().getCmbQualityAttribute())) {
 			this.createErrorDialog("Select quality attribute");
-			this.getForm().getCmbQualityAttribute().getCombo().setFocus();
+			this.getFormSearch().getCmbQualityAttribute().getCombo().setFocus();
 			return false;
 		}
-		if (this.isEmpty(this.getForm().getCmbCondition())) {
+		if (this.isEmpty(this.getFormSearch().getCmbCondition())) {
 			this.createErrorDialog("Select condition");
-			this.getForm().getCmbCondition().getCombo().setFocus();
+			this.getFormSearch().getCmbCondition().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtDescriptionStimulusSource())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtDescriptionStimulusSource())) {
 			this.createErrorDialog("Empty stimulus source description");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtDescriptionStimulus())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtDescriptionStimulus())) {
 			this.createErrorDialog("Empty stimulus description");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtDescriptionEnvironment())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtDescriptionEnvironment())) {
 			this.createErrorDialog("Empty environment description");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtDescriptionArtifact())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtDescriptionArtifact())) {
 			this.createErrorDialog("Empty artifact description");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtDescriptionResponse())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtDescriptionResponse())) {
 			this.createErrorDialog("Empty response description");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtDescriptionResponseMeasure())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtDescriptionResponseMeasure())) {
 			this.createErrorDialog("Empty response measure description");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtValueStimulusSource())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtValueStimulusSource())) {
 			this.createErrorDialog("Empty stimulus source value");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtValueStimulus())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtValueStimulus())) {
 			this.createErrorDialog("Empty stimulus value");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtValueEnvironment())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtValueEnvironment())) {
 			this.createErrorDialog("Empty environment value");
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtValueResponse())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtValueResponse())) {
 			this.createErrorDialog("Empty response value");
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbTypeStimulusSource())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbTypeStimulusSource())) {
 			this.createErrorDialog("Select stimulus source type");
-			this.getForm().getCmbTypeStimulusSource().getCombo().setFocus();
+			this.getFormSearch().getCmbTypeStimulusSource().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbTypeStimulus())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbTypeStimulus())) {
 			this.createErrorDialog("Select stimulus type");
-			this.getForm().getCmbTypeStimulus().getCombo().setFocus();
+			this.getFormSearch().getCmbTypeStimulus().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbTypeEnvironment())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbTypeEnvironment())) {
 			this.createErrorDialog("Select environment type");
-			this.getForm().getCmbTypeEnvironment().getCombo().setFocus();
+			this.getFormSearch().getCmbTypeEnvironment().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbTypeArtifact())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbTypeArtifact())) {
 			this.createErrorDialog("Select artifact type");
-			this.getForm().getCmbTypeArtifact().getCombo().setFocus();
+			this.getFormSearch().getCmbTypeArtifact().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbTypeResponse())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbTypeResponse())) {
 			this.createErrorDialog("Select response type");
-			this.getForm().getCmbTypeResponse().getCombo().setFocus();
+			this.getFormSearch().getCmbTypeResponse().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbTypeResponseMeasure())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbTypeResponseMeasure())) {
 			this.createErrorDialog("Select response measure type");
-			this.getForm().getCmbTypeResponseMeasure().getCombo().setFocus();
+			this.getFormSearch().getCmbTypeResponseMeasure().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbMetric())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbMetric())) {
 			this.createErrorDialog("Select metric");
-			this.getForm().getCmbMetric().getCombo().setFocus();
+			this.getFormSearch().getCmbMetric().getCombo().setFocus();
 			return false;
-		} else if (this.isEmpty(this.getForm().getTxtValueResponseMeasure())) {
+		} else if (this.isEmpty(this.getFormSearch().getTxtValueResponseMeasure())) {
 			this.createErrorDialog("Empty response measure value");
 			return false;
-		} else if (!this.getForm().getTxtValueResponseMeasure().isValid()) {
+		} else if (!this.getFormSearch().getTxtValueResponseMeasure().isValid()) {
 			this.createErrorDialog("Invalid response measure value");
 			return false;
-		} else if (this.getForm().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
+		} else if (this.getFormSearch().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
 			this.createErrorDialog("Invalid response measure value (negative number)");
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbUnit())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbUnit())) {
 			this.createErrorDialog("Select unit");
-			this.getForm().getCmbUnit().getCombo().setFocus();
+			this.getFormSearch().getCmbUnit().getCombo().setFocus();
 			return false;
 		}
 
@@ -321,42 +295,41 @@ public class QualityRequirementPPController extends Controller {
 	}
 
 	public void getView() {
-		this.getForm().loadCmbSystem();
-		this.getForm().loadCmbQualityAttribute();
-		this.getForm().loadCmbCondition();
+		this.getFormSearch().loadCmbQualityAttribute();
+		this.getFormSearch().loadCmbCondition();
 		
-		this.getForm().loadCmbMetric(this.getManager().getTypeResponseMeasure());
-		this.getForm().loadCmbUnit(this.getManager().getMetric());
+		this.getFormSearch().loadGenericScenario(this.getManager().getQualityAttribute());
+		this.getFormSearch().loadCmbMetric(this.getManager().getTypeResponseMeasure());
+		this.getFormSearch().loadCmbUnit(this.getManager().getMetric());
 
-		this.getForm().getCmbSystem().setInput(this.getManager().getSystem());
-		this.getForm().getTxtDescription().setText(this.getManager().getDescriptionScenario());
-		this.getForm().getCmbQualityAttribute().setInput(this.getManager().getQualityAttribute());
-		this.getForm().getCmbCondition().setInput(this.getManager().getConditionScenario());
+		this.getFormSearch().getTxtDescription().setText(this.getManager().getDescriptionScenario());
+		this.getFormSearch().getCmbQualityAttribute().setSelection(new StructuredSelection(this.getManager().getQualityAttribute()));
+		this.getFormSearch().getCmbCondition().setSelection(new StructuredSelection(this.getManager().getConditionScenario()));
 
-		this.getForm().getTxtDescriptionStimulusSource().setStringValue(this.getManager().getDescriptionStimulusSource());
-		this.getForm().getCmbTypeStimulusSource().setInput(this.getManager().getTypeStimulusSource());
-		this.getForm().getTxtValueStimulusSource().setStringValue(this.getManager().getValueStimulusSource());
+		this.getFormSearch().getTxtDescriptionStimulusSource().setStringValue(this.getManager().getDescriptionStimulusSource());
+		this.getFormSearch().getCmbTypeStimulusSource().setSelection(new StructuredSelection(this.getManager().getTypeStimulusSource()));
+		this.getFormSearch().getTxtValueStimulusSource().setStringValue(this.getManager().getValueStimulusSource());
 
-		this.getForm().getTxtDescriptionStimulus().setStringValue(this.getManager().getDescriptionStimulus());
-		this.getForm().getCmbTypeStimulus().setInput(this.getManager().getTypeStimulus());
-		this.getForm().getTxtValueStimulus().setStringValue(this.getManager().getValueStimulus());
+		this.getFormSearch().getTxtDescriptionStimulus().setStringValue(this.getManager().getDescriptionStimulus());
+		this.getFormSearch().getCmbTypeStimulus().setSelection(new StructuredSelection(this.getManager().getTypeStimulus()));
+		this.getFormSearch().getTxtValueStimulus().setStringValue(this.getManager().getValueStimulus());
 
-		this.getForm().getTxtDescriptionEnvironment().setStringValue(this.getManager().getDescriptionEnvironment());
-		this.getForm().getCmbTypeEnvironment().setInput(this.getManager().getTypeEnvironment());
-		this.getForm().getTxtValueEnvironment().setStringValue(this.getManager().getValueEnvironment());
+		this.getFormSearch().getTxtDescriptionEnvironment().setStringValue(this.getManager().getDescriptionEnvironment());
+		this.getFormSearch().getCmbTypeEnvironment().setSelection(new StructuredSelection(this.getManager().getTypeEnvironment()));
+		this.getFormSearch().getTxtValueEnvironment().setStringValue(this.getManager().getValueEnvironment());
 
-		this.getForm().getTxtDescriptionArtifact().setStringValue(this.getManager().getDescriptionArtifact());
-		this.getForm().getCmbTypeArtifact().setInput(this.getManager().getTypeArtifact());
+		this.getFormSearch().getTxtDescriptionArtifact().setStringValue(this.getManager().getDescriptionArtifact());
+		this.getFormSearch().getCmbTypeArtifact().setSelection(new StructuredSelection(this.getManager().getTypeArtifact()));
 
-		this.getForm().getTxtDescriptionResponse().setStringValue(this.getManager().getDescriptionResponse());
-		this.getForm().getCmbTypeResponse().setInput(this.getManager().getTypeResponse());
-		this.getForm().getTxtValueResponse().setStringValue(this.getManager().getValueResponse());
+		this.getFormSearch().getTxtDescriptionResponse().setStringValue(this.getManager().getDescriptionResponse());
+		this.getFormSearch().getCmbTypeResponse().setSelection(new StructuredSelection(this.getManager().getTypeResponse()));
+		this.getFormSearch().getTxtValueResponse().setStringValue(this.getManager().getValueResponse());
 
-		this.getForm().getTxtDescriptionResponseMeasure().setStringValue(this.getManager().getDescriptionResponseMeasure());
-		this.getForm().getCmbTypeResponseMeasure().setInput(this.getManager().getTypeResponseMeasure());
-		this.getForm().getCmbMetric().setInput(this.getManager().getMetric());
-		this.getForm().getTxtValueResponseMeasure().setStringValue(this.getManager().getValueResponseMeasure());
-		this.getForm().getCmbUnit().setInput(this.getManager().getUnit());
+		this.getFormSearch().getTxtDescriptionResponseMeasure().setStringValue(this.getManager().getDescriptionResponseMeasure());
+		this.getFormSearch().getCmbTypeResponseMeasure().setSelection(new StructuredSelection(this.getManager().getTypeResponseMeasure()));
+		this.getFormSearch().getCmbMetric().setSelection(new StructuredSelection(this.getManager().getMetric()));
+		this.getFormSearch().getTxtValueResponseMeasure().setStringValue(this.getManager().getValueResponseMeasure());
+		this.getFormSearch().getCmbUnit().setSelection(new StructuredSelection(this.getManager().getUnit()));
 	}
 
 }
