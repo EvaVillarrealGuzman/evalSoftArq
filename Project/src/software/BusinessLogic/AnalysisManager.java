@@ -592,6 +592,13 @@ public class AnalysisManager extends HibernateManager {
 		return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit();
 	}
 
+	public void setDescriptionScenario(String pdescription) {
+		this.getQualityRequirement().getQualityScenario().setDescription(pdescription);
+	}
+	
+	public void setConditionScenario(Condition pcondition) {
+		this.getQualityRequirement().getQualityScenario().setCondition(pcondition);;
+	}
 	// Setters of specificScenario atribbutes (stimulusSource, stimulus,
 	// Enviroment, Artifact, Response, ResponseMeasure)
 	public void setStimulusSource(String pdescription, String pvalue, StimulusSourceType ptype) {

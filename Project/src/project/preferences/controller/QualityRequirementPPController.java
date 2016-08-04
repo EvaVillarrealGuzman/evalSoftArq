@@ -124,6 +124,9 @@ public class QualityRequirementPPController extends Controller {
 
 	public int setQualityRequirement() {
 		if (this.isValidData()) {
+			this.getManager().setDescriptionScenario(this.getFormSearch().getTxtDescription().getText());
+			this.getManager().setConditionScenario((Condition)((IStructuredSelection) this.getFormSearch().getCmbCondition()
+					.getSelection()).getFirstElement());
 			this.getManager().setStimulusSource(
 					this.getFormSearch().getTxtDescriptionStimulusSource().getStringValue(),
 					this.getFormSearch().getTxtValueStimulusSource().getStringValue(),
@@ -264,21 +267,6 @@ public class QualityRequirementPPController extends Controller {
 		while (this.getFormSearch().getTable().getItems().length > 0) {
 			this.getFormSearch().getTable().remove(0);
 		}
-//		final TableViewer viewer = this.getFormSearch().getTblViewerQualityRequirement(); 
-//		
-//		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
-//			if (dp.isState()) {
-//				Object[] row = new Object[4];
-//				row [0]= dp;
-//				row [1] = dp.getQualityScenario().getQualityAttribute();
-//				row [2] = dp.getQualityScenario().getCondition();
-//				row [3] = dp.getQualityScenario().getDescription();
-//				viewer.add(row);
-//			}
-//		}
-//		
-//        //viewer.add(this.getManager().getQualityRequirements());
-//        //viewer.setSelection(new StructuredSelection(this.getManager().getQualityRequirements()));
 		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
 			if (dp.isState()) {
 				TableItem item = new TableItem(this.getFormSearch().getTable(), SWT.NONE);

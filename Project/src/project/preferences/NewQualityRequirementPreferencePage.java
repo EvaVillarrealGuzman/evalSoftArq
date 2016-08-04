@@ -5,6 +5,7 @@ import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -689,14 +690,14 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		txtDescriptionResponse.setStringValue("");
 		txtDescriptionResponseMeasure.setStringValue("");
 
-		cmbTypeStimulusSource.getCombo().clearSelection();
-		cmbTypeStimulus.getCombo().clearSelection();
-		cmbTypeEnvironment.getCombo().clearSelection();
-		cmbTypeArtifact.getCombo().clearSelection();
-		cmbTypeResponse.getCombo().clearSelection();
-		cmbTypeResponseMeasure.getCombo().clearSelection();
-		cmbMetric.getCombo().clearSelection();
-		cmbUnit.getCombo().clearSelection();
+		cmbTypeStimulusSource.setSelection(StructuredSelection.EMPTY);
+		cmbTypeStimulus.setSelection(StructuredSelection.EMPTY);
+		cmbTypeEnvironment.setSelection(StructuredSelection.EMPTY);
+		cmbTypeArtifact.setSelection(StructuredSelection.EMPTY);
+		cmbTypeResponse.setSelection(StructuredSelection.EMPTY);
+		cmbTypeResponseMeasure.setSelection(StructuredSelection.EMPTY);
+		cmbMetric.setSelection(StructuredSelection.EMPTY);
+		cmbUnit.setSelection(StructuredSelection.EMPTY);
 
 		txtValueStimulusSource.setStringValue("");
 		txtValueStimulus.setStringValue("");
@@ -707,13 +708,13 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 	public void clearScenario() {
 		txtDescription.setText("");
-		cmbQualityAttribute.getCombo().clearSelection();
-		cmbCondition.getCombo().clearSelection();
+		cmbQualityAttribute.setSelection(StructuredSelection.EMPTY);
+		cmbCondition.setSelection(StructuredSelection.EMPTY);
 		this.clearParts();
 	}
 
 	public void clearView() {
-		cmbSystem.getCombo().clearSelection();
+		cmbSystem.setSelection(StructuredSelection.EMPTY);
 		this.clearScenario();
 	}
 

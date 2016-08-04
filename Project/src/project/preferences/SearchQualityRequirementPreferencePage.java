@@ -6,6 +6,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -78,7 +79,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	private TableColumn colCondition;
 	private TableColumn colQualityAttribute;
 	private TableColumn colDescriptionScenario;
-	private Button btnConsult;
 	private static SearchQualityRequirementPreferencePage qualityRequirementPP;
 	private QualityRequirementPPController viewController;
 
@@ -132,7 +132,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 						clearScenario();
 						prepareView(0);
 					}
-					btnConsult.setEnabled(false);
 				}
 			});
 
@@ -210,7 +209,9 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					table.showSelection();
-					btnConsult.setEnabled(true);
+					getViewController().setModel((QualityRequirement) table.getItem(table.getSelectionIndex()).getData());
+					getViewController().getFormSearch().setView();
+					prepareView(6);
 				}
 			});
 
@@ -220,21 +221,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			gridData.horizontalAlignment = GridData.END;
 			gridData.verticalAlignment = SWT.BOTTOM;
 			gridData.grabExcessHorizontalSpace = true;
-
-			btnConsult = new Button(gQualityRequirement, SWT.PUSH);
-			btnConsult.setText(" Consult ");
-			btnConsult.setEnabled(false);
-			btnConsult.setLayoutData(gridData);
-			btnConsult.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					getViewController().setModel((QualityRequirement) table.getItem(table.getSelectionIndex()).getData());
-					getViewController().getFormSearch().setView();
-					prepareView(6);
-				}
-			});
 			
-			//DESDE ACA LO QUE AGREGUÉ
 			GridLayout layout1 = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout1);
@@ -506,8 +493,8 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.save();
-					clearView();
-					prepareView(0);
+					fillTable();
+					prepareView(7);
 				}
 			});
 
@@ -526,8 +513,8 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				public void widgetSelected(SelectionEvent e) {
 					if (viewController.createDeleteRequirementDialog() == 0) {
 						viewController.remove();
-						clearView();
-						prepareView(0);
+						fillTable();
+						prepareView(7);
 					}
 				}
 			});
@@ -820,14 +807,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.colDescriptionScenario = colDescriptionScenario;
 	}
 
-	public Button getBtnConsult() {
-		return btnConsult;
-	}
-
-	public void setBtnConsult(Button btnConsult) {
-		this.btnConsult = btnConsult;
-	}
-
 	public void loadCmbSystem() {
 		this.getViewController().setModelSystemSearch();
 	}
@@ -879,6 +858,13 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.getViewController().setModelUnit(metric);
 	}
 
+	public void clearScenario() {
+		txtDescription.setText("");
+		cmbQualityAttribute.setSelection(StructuredSelection.EMPTY);
+		cmbCondition.setSelection(StructuredSelection.EMPTY);
+		this.clearParts();
+	}
+
 	public void clearParts() {
 		txtDescriptionStimulusSource.setStringValue("");
 		txtDescriptionStimulus.setStringValue("");
@@ -887,27 +873,20 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		txtDescriptionResponse.setStringValue("");
 		txtDescriptionResponseMeasure.setStringValue("");
 
-		cmbTypeStimulusSource.getCombo().clearSelection();
-		cmbTypeStimulus.getCombo().clearSelection();
-		cmbTypeEnvironment.getCombo().clearSelection();
-		cmbTypeArtifact.getCombo().clearSelection();
-		cmbTypeResponse.getCombo().clearSelection();
-		cmbTypeResponseMeasure.getCombo().clearSelection();
-		cmbMetric.getCombo().clearSelection();
-		cmbUnit.getCombo().clearSelection();
+		cmbTypeStimulusSource.setSelection(StructuredSelection.EMPTY);
+		cmbTypeStimulus.setSelection(StructuredSelection.EMPTY);
+		cmbTypeEnvironment.setSelection(StructuredSelection.EMPTY);
+		cmbTypeArtifact.setSelection(StructuredSelection.EMPTY);
+		cmbTypeResponse.setSelection(StructuredSelection.EMPTY);
+		cmbTypeResponseMeasure.setSelection(StructuredSelection.EMPTY);
+		cmbMetric.setSelection(StructuredSelection.EMPTY);
+		cmbUnit.setSelection(StructuredSelection.EMPTY);
 
-		txtValueStimulusSource.setStringValue("");
+		txtValueStimulusSource.getTextControl(gStimulusSource).setText("");
 		txtValueStimulus.setStringValue("");
 		txtValueEnvironment.setStringValue("");
 		txtValueResponse.setStringValue("");
 		txtValueResponseMeasure.setStringValue("");
-	}
-
-	public void clearScenario() {
-		txtDescription.setText("");
-		cmbQualityAttribute.getCombo().clearSelection();
-		cmbCondition.getCombo().clearSelection();
-		this.clearParts();
 	}
 
 	public void clearView() {
@@ -1000,7 +979,8 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 			break;
 		case 6: //With bottom consult selected
-			this.getCmbQualityAttribute().getCombo().setEnabled(true);
+			this.getTxtDescription().setEnabled(true);
+			this.getCmbQualityAttribute().getCombo().setEnabled(false);
 			this.getCmbCondition().getCombo().setEnabled(true);
 			
 			this.getTxtDescriptionStimulusSource().setEnabled(true, gStimulusSource);
@@ -1028,6 +1008,46 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			this.getCmbUnit().getCombo().setEnabled(true);
 
 			break;
+			
+		case 7:// Search quality requirement
+			this.getCmbSystem().getCombo().setEnabled(true);
+			
+			this.clearScenario();
+
+			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
+			this.getTxtDescription().setEnabled(false);
+			this.getCmbQualityAttribute().getCombo().setEnabled(false);
+			this.getCmbCondition().getCombo().setEnabled(false);
+
+			this.getTxtDescriptionStimulusSource().setEnabled(false, gStimulusSource);
+			this.getTxtDescriptionStimulus().setEnabled(false, gStimulus);
+			this.getTxtDescriptionEnvironment().setEnabled(false, gEnvironment);
+			this.getTxtDescriptionArtifact().setEnabled(false, gArtifact);
+			this.getTxtDescriptionResponse().setEnabled(false, gResponse);
+			this.getTxtDescriptionResponseMeasure().setEnabled(false, gResponseMeasure);
+
+			this.getCmbTypeStimulusSource().getCombo().setEnabled(false);
+			this.getCmbTypeStimulus().getCombo().setEnabled(false);
+			this.getCmbTypeEnvironment().getCombo().setEnabled(false);
+			this.getCmbTypeArtifact().getCombo().setEnabled(false);
+			this.getCmbTypeResponse().getCombo().setEnabled(false);
+			this.getCmbTypeResponseMeasure().getCombo().setEnabled(false);
+			this.getCmbMetric().getCombo().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(false);
+
+			this.getTxtValueStimulusSource().setEnabled(false, gStimulusSource);
+			this.getTxtValueStimulus().setEnabled(false, gStimulus);
+			this.getTxtValueEnvironment().setEnabled(false, gEnvironment);
+			this.getTxtValueResponse().setEnabled(false, gResponse);
+			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
+
+			this.getBtnSave().setEnabled(true);
+			this.getBtnRemove().setEnabled(true);
+
+			// this.getBtnConsult().setEnabled(true);
+
+			break;
+
 		}
 	}
 
