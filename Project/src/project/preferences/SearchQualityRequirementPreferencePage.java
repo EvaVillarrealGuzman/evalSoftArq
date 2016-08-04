@@ -58,7 +58,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	private StringFieldEditor txtValueStimulus;
 	private StringFieldEditor txtValueEnvironment;
 	private StringFieldEditor txtValueResponse;
-	private DoubleFieldEditor2 txtValueResponseMeasure;
+	private DoubleFieldEditor txtValueResponseMeasure;
 	private ComboViewer cmbMetric;
 	private ComboViewer cmbTypeStimulusSource;
 	private ComboViewer cmbTypeStimulus;
@@ -460,7 +460,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				}
 			});
 
-			txtValueResponseMeasure = new DoubleFieldEditor2("value", "Value: ", gResponseMeasure,this);
+			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure);
 			txtValueResponseMeasure.setMinRange(0.0);
 
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
@@ -639,11 +639,11 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.txtValueResponse = txtValueResponse;
 	}
 
-	public DoubleFieldEditor2 getTxtValueResponseMeasure() {
+	public DoubleFieldEditor getTxtValueResponseMeasure() {
 		return txtValueResponseMeasure;
 	}
 
-	public void setTxtValueResponseMeasure(DoubleFieldEditor2 txtValueResponseMeasure) {
+	public void setTxtValueResponseMeasure(DoubleFieldEditor txtValueResponseMeasure) {
 		this.txtValueResponseMeasure = txtValueResponseMeasure;
 	}
 

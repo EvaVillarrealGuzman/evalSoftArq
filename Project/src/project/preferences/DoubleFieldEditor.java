@@ -12,9 +12,7 @@ package project.preferences;
 
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
@@ -28,7 +26,6 @@ public class DoubleFieldEditor extends StringFieldEditor {
 	private Double minValidValue;
 	private Double maxValidValue;
 	private final Composite parent;
-	private NewQualityRequirementPreferencePage form;
 
 	/**
 	 * Creates an double field editor.
@@ -36,10 +33,6 @@ public class DoubleFieldEditor extends StringFieldEditor {
 	 * @param labelText the label text of the field editor
 	 * @param parent the parent of the field editor's control
 	 */
-	public DoubleFieldEditor(String name, String labelText, Composite parent, NewQualityRequirementPreferencePage f) {
-		this(name, labelText, parent, DoubleFieldEditor.DEFAULT_TEXT_LIMIT);
-		form = f;
-	}
 	
 	public DoubleFieldEditor(String name, String labelText, Composite parent) {
 		this(name, labelText, parent, DoubleFieldEditor.DEFAULT_TEXT_LIMIT);
@@ -59,14 +52,6 @@ public class DoubleFieldEditor extends StringFieldEditor {
 		setEmptyStringAllowed(false);
 		setErrorMessage(labelText + " " + JFaceResources.getString("Not a valid double")); //$NON-NLS-1$
 		createControl(parent);
-	}
-
-	public NewQualityRequirementPreferencePage getForm() {
-		return form;
-	}
-
-	public void setForm(NewQualityRequirementPreferencePage form) {
-		this.form = form;
 	}
 
 	/**
@@ -96,8 +81,6 @@ public class DoubleFieldEditor extends StringFieldEditor {
 		}
 
 		String numberString = text.getText();
-		Color red = this.getForm().getShell().getDisplay().getSystemColor(SWT.COLOR_RED);
-		Color transparent = this.getForm().getShell().getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT);
 		
 		try {
 			double number = Double.valueOf(numberString).doubleValue();

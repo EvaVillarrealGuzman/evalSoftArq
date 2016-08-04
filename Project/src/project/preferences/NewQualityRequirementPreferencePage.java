@@ -362,7 +362,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure, this);
+			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure);
 			txtValueResponseMeasure.setMinRange(0.0);
 
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
