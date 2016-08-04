@@ -109,6 +109,8 @@ public class NewQualityRequirementPPController extends Controller {
 		int err = this.newQualityRequirement();
 		if (err == 0) {
 			this.getManager().saveQualityRequirement();
+			this.getForm().clearView();
+			this.getForm().prepareView(0);
 		}
 	}
 

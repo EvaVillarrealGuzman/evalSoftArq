@@ -115,11 +115,15 @@ public class QualityRequirementPPController extends Controller {
 		err = this.setQualityRequirement();
 		if (err == 0) {
 			this.getManager().updateQualityRequirement();
+			this.getFormSearch().fillTable();
+			this.getFormSearch().prepareView(7);
 		}
 	}
 
 	public void remove() {
 		this.getManager().removeQualityRequirement();
+		this.getFormSearch().fillTable();
+		this.getFormSearch().prepareView(7);
 	}
 
 	public int setQualityRequirement() {

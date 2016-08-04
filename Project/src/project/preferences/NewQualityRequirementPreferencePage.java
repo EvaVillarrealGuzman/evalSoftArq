@@ -395,8 +395,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.save();
-					clearView();
-					prepareView(0);
 				}
 			});
 

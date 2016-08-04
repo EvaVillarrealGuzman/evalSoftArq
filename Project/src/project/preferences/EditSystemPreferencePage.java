@@ -161,7 +161,6 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.save();
-					prepareView(1);
 				}
 			});
 
@@ -179,8 +178,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (viewController.createDeleteDialog() == 0) {
-						viewController.remove();
-						prepareView(0);
+						viewController.remove();	
 					}
 				}
 			});

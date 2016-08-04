@@ -47,6 +47,7 @@ public class NewSystemPPController extends Controller {
 		err = this.newSystem();
 		if (err == 0) {
 			this.getManager().saveSystem();
+			this.getForm().prepareView(1);
 		}
 	}
 

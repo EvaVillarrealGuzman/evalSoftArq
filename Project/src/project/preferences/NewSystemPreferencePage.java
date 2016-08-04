@@ -126,7 +126,6 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.save();
-					prepareView(1);
 				}
 			});
 

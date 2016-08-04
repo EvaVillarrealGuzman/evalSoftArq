@@ -493,8 +493,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.save();
-					fillTable();
-					prepareView(7);
 				}
 			});
 
@@ -513,8 +511,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				public void widgetSelected(SelectionEvent e) {
 					if (viewController.createDeleteRequirementDialog() == 0) {
 						viewController.remove();
-						fillTable();
-						prepareView(7);
 					}
 				}
 			});

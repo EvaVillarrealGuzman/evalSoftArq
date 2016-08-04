@@ -50,11 +50,13 @@ public class SystemPPController extends Controller {
 		err = this.setSystem();
 		if (err == 0) {
 			this.getManager().updateSystem();
+			this.getForm().prepareView(1);
 		}
 	}
 	
 	public void remove() {
 		this.getManager().removeSystem();
+		this.getForm().prepareView(0);
 	}
 
 	/**
