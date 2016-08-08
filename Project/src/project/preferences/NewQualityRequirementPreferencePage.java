@@ -36,12 +36,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private Text txtDescription;
 	private ComboViewer cmbQualityAttribute;
 	private ComboViewer cmbCondition;
-	private StringFieldEditor txtDescriptionStimulusSource;
-	private StringFieldEditor txtDescriptionStimulus;
-	private StringFieldEditor txtDescriptionEnvironment;
-	private StringFieldEditor txtDescriptionArtifact;
-	private StringFieldEditor txtDescriptionResponse;
-	private StringFieldEditor txtDescriptionResponseMeasure;
+	private Text txtDescriptionStimulusSource;
+	private Text txtDescriptionStimulus;
+	private Text txtDescriptionEnvironment;
+	private Text txtDescriptionArtifact;
+	private Text txtDescriptionResponse;
+	private Text txtDescriptionResponseMeasure;
 	private StringFieldEditor txtValueStimulusSource;
 	private StringFieldEditor txtValueStimulus;
 	private StringFieldEditor txtValueEnvironment;
@@ -192,13 +192,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			gStimulusSource = new Group(folder, SWT.NONE);
 			gStimulusSource.setLayoutData(gridData);
 
-			txtDescriptionStimulusSource = new StringFieldEditor("description", "Description: ", gStimulusSource);
-
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
-
-			txtDescriptionStimulusSource.getTextControl(gStimulusSource).setLayoutData(gridData);
 
 			Label labelSST = new Label(gStimulusSource, SWT.NONE);
 			labelSST.setText("Type: ");
@@ -206,7 +202,13 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			cmbTypeStimulusSource = new ComboViewer(gStimulusSource, SWT.READ_ONLY);
 			cmbTypeStimulusSource.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueStimulusSource = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gStimulusSource);
+			txtValueStimulusSource = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Stimulus Source): ", gStimulusSource);
+			
+			Label labelDSS = new Label(gStimulusSource, SWT.NONE);
+			labelDSS.setText("Description: ");
+			
+			txtDescriptionStimulusSource = new Text(gStimulusSource, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+			txtDescriptionStimulusSource.setLayoutData(gridData);
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
@@ -221,13 +223,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			gStimulus = new Group(folder, SWT.NONE);
 			gStimulus.setLayoutData(gridData);
 
-			txtDescriptionStimulus = new StringFieldEditor("description", "Description: ", gStimulus);
-
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
-
-			txtDescriptionStimulus.getTextControl(gStimulus).setLayoutData(gridData);
 
 			Label labelST = new Label(gStimulus, SWT.NONE);
 			labelST.setText("Type: ");
@@ -235,7 +233,13 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			cmbTypeStimulus = new ComboViewer(gStimulus, SWT.READ_ONLY);
 			cmbTypeStimulus.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueStimulus = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gStimulus);
+			txtValueStimulus = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Stimulus): ", gStimulus);
+
+			Label labelDS = new Label(gStimulus, SWT.NONE);
+			labelDS.setText("Description: ");
+			
+			txtDescriptionStimulus = new Text(gStimulus, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+			txtDescriptionStimulus.setLayoutData(gridData);
 
 			tabStimulus.setControl(gStimulus);
 
@@ -246,13 +250,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			gEnvironment = new Group(folder, SWT.NONE);
 			gEnvironment.setLayoutData(gridData);
 
-			txtDescriptionEnvironment = new StringFieldEditor("description", "Description: ", gEnvironment);
-
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
-
-			txtDescriptionEnvironment.getTextControl(gEnvironment).setLayoutData(gridData);
 
 			Label labelET = new Label(gEnvironment, SWT.NONE);
 			labelET.setText("Type: ");
@@ -260,11 +260,13 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			cmbTypeEnvironment = new ComboViewer(gEnvironment, SWT.READ_ONLY);
 			cmbTypeEnvironment.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueEnvironment = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gEnvironment);
+			txtValueEnvironment = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Environment): ", gEnvironment);
 
-			gridData = new GridData();
-			gridData.horizontalSpan = 4;
-			gridData.horizontalAlignment = GridData.FILL;
+			Label labelDE = new Label(gEnvironment, SWT.NONE);
+			labelDE.setText("Description: ");
+
+			txtDescriptionEnvironment = new Text(gEnvironment, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+			txtDescriptionEnvironment.setLayoutData(gridData);
 
 			tabEnvironment.setControl(gEnvironment);
 
@@ -275,20 +277,26 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			gArtifact = new Group(folder, SWT.NONE);
 			gArtifact.setLayoutData(gridData);
 
-			txtDescriptionArtifact = new StringFieldEditor("description", "Description: ", gArtifact);
-
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
-
-			txtDescriptionArtifact.getTextControl(gArtifact).setLayoutData(gridData);
 
 			Label labelAT = new Label(gArtifact, SWT.NONE);
 			labelAT.setText("Type: ");
 
 			cmbTypeArtifact = new ComboViewer(gArtifact, SWT.READ_ONLY);
 			cmbTypeArtifact.setContentProvider(ArrayContentProvider.getInstance());
+			
+			Label labelDA = new Label(gArtifact, SWT.NONE);
+			labelDA.setText("Description: ");
 
+			txtDescriptionArtifact = new Text(gArtifact, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+			txtDescriptionArtifact.setLayoutData(gridData);
+
+			StringFieldEditor text = new StringFieldEditor(PreferenceConstants.P_STRING, "", gArtifact);
+			text.getLabelControl(gArtifact).setVisible(false);
+			text.getTextControl(gArtifact).setVisible(false);
+			
 			tabArtifact.setControl(gArtifact);
 
 			/*---------------------------------------------------------------------------*/
@@ -298,13 +306,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			gResponse = new Group(folder, SWT.NONE);
 			gResponse.setLayoutData(gridData);
 
-			txtDescriptionResponse = new StringFieldEditor("description", "Description: ", gResponse);
-
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
-
-			txtDescriptionResponse.getTextControl(gResponse).setLayoutData(gridData);
 
 			Label labelRT = new Label(gResponse, SWT.NONE);
 			labelRT.setText("Type: ");
@@ -312,7 +316,13 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			cmbTypeResponse = new ComboViewer(gResponse, SWT.READ_ONLY);
 			cmbTypeResponse.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueResponse = new StringFieldEditor(PreferenceConstants.P_STRING, "Value: ", gResponse);
+			txtValueResponse = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Response): ", gResponse);
+
+			Label labelDR = new Label(gResponse, SWT.NONE);
+			labelDR.setText("Description: ");
+
+			txtDescriptionResponse = new Text(gResponse, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+			txtDescriptionResponse.setLayoutData(gridData);
 
 			/*---------------------------------------------------------------------------*/
 			tabResponse.setControl(gResponse);
@@ -326,11 +336,8 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
 
-			txtDescriptionResponseMeasure = new StringFieldEditor("description", "Description: ", gResponseMeasure);
-			txtDescriptionResponseMeasure.getTextControl(gResponseMeasure).setLayoutData(gridData);
-
 			Label labelRMM = new Label(gResponseMeasure, SWT.NONE);
-			labelRMM.setText("Metric: ");
+			labelRMM.setText("Type: ");
 
 			cmbTypeResponseMeasure = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbTypeResponseMeasure.setContentProvider(ArrayContentProvider.getInstance());
@@ -347,7 +354,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			});
 
 			Label labelRMT = new Label(gResponseMeasure, SWT.NONE);
-			labelRMT.setText("Type: ");
+			labelRMT.setText("Metric: ");
 
 			cmbMetric = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbMetric.setContentProvider(ArrayContentProvider.getInstance());
@@ -362,7 +369,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value: ", gResponseMeasure);
+			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value (Response Measure): ", gResponseMeasure);
 			txtValueResponseMeasure.setMinRange(0.0);
 
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
@@ -370,6 +377,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			cmbUnit = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbUnit.setContentProvider(ArrayContentProvider.getInstance());
+			
+			Label labelDRM = new Label(gResponseMeasure, SWT.NONE);
+			labelDRM.setText("Description: ");
+
+			txtDescriptionResponseMeasure = new Text(gResponseMeasure, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+			txtDescriptionResponseMeasure.setLayoutData(gridData);
 
 			tabResponseMeasure.setControl(gResponseMeasure);
 
@@ -474,51 +487,51 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.cmbCondition = cmbCondition;
 	}
 
-	public StringFieldEditor getTxtDescriptionStimulusSource() {
+	public Text getTxtDescriptionStimulusSource() {
 		return txtDescriptionStimulusSource;
 	}
 
-	public void setTxtDescriptionStimulusSource(StringFieldEditor txtDescriptionStimulusSource) {
+	public void setTxtDescriptionStimulusSource(Text txtDescriptionStimulusSource) {
 		this.txtDescriptionStimulusSource = txtDescriptionStimulusSource;
 	}
-
-	public StringFieldEditor getTxtDescriptionStimulus() {
+	
+	public Text getTxtDescriptionStimulus() {
 		return txtDescriptionStimulus;
 	}
 
-	public void setTxtDescriptionStimulus(StringFieldEditor txtDescriptionStimulus) {
+	public void setTxtDescriptionStimulus(Text txtDescriptionStimulus) {
 		this.txtDescriptionStimulus = txtDescriptionStimulus;
 	}
 
-	public StringFieldEditor getTxtDescriptionEnvironment() {
+	public Text getTxtDescriptionEnvironment() {
 		return txtDescriptionEnvironment;
 	}
 
-	public void setTxtDescriptionEnvironment(StringFieldEditor txtDescriptionEnvironment) {
+	public void setTxtDescriptionEnvironment(Text txtDescriptionEnvironment) {
 		this.txtDescriptionEnvironment = txtDescriptionEnvironment;
 	}
 
-	public StringFieldEditor getTxtDescriptionArtifact() {
+	public Text getTxtDescriptionArtifact() {
 		return txtDescriptionArtifact;
 	}
 
-	public void setTxtDescriptionArtifact(StringFieldEditor txtDescriptionArtifact) {
+	public void setTxtDescriptionArtifact(Text txtDescriptionArtifact) {
 		this.txtDescriptionArtifact = txtDescriptionArtifact;
 	}
 
-	public StringFieldEditor getTxtDescriptionResponse() {
+	public Text getTxtDescriptionResponse() {
 		return txtDescriptionResponse;
 	}
 
-	public void setTxtDescriptionResponse(StringFieldEditor txtDescriptionResponse) {
+	public void setTxtDescriptionResponse(Text txtDescriptionResponse) {
 		this.txtDescriptionResponse = txtDescriptionResponse;
 	}
 
-	public StringFieldEditor getTxtDescriptionResponseMeasure() {
+	public Text getTxtDescriptionResponseMeasure() {
 		return txtDescriptionResponseMeasure;
 	}
 
-	public void setTxtDescriptionResponseMeasure(StringFieldEditor txtDescriptionResponseMeasure) {
+	public void setTxtDescriptionResponseMeasure(Text txtDescriptionResponseMeasure) {
 		this.txtDescriptionResponseMeasure = txtDescriptionResponseMeasure;
 	}
 
@@ -681,12 +694,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	}
 
 	public void clearParts() {
-		txtDescriptionStimulusSource.setStringValue("");
-		txtDescriptionStimulus.setStringValue("");
-		txtDescriptionEnvironment.setStringValue("");
-		txtDescriptionArtifact.setStringValue("");
-		txtDescriptionResponse.setStringValue("");
-		txtDescriptionResponseMeasure.setStringValue("");
+		txtDescriptionStimulusSource.setText("");
+		txtDescriptionStimulus.setText("");
+		txtDescriptionEnvironment.setText("");
+		txtDescriptionArtifact.setText("");
+		txtDescriptionResponse.setText("");
+		txtDescriptionResponseMeasure.setText("");
 
 		cmbTypeStimulusSource.setSelection(StructuredSelection.EMPTY);
 		cmbTypeStimulus.setSelection(StructuredSelection.EMPTY);
@@ -731,12 +744,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
 			this.getCmbCondition().getCombo().setEnabled(false);
 
-			this.getTxtDescriptionStimulusSource().setEnabled(false, gStimulusSource);
-			this.getTxtDescriptionStimulus().setEnabled(false, gStimulus);
-			this.getTxtDescriptionEnvironment().setEnabled(false, gEnvironment);
-			this.getTxtDescriptionArtifact().setEnabled(false, gArtifact);
-			this.getTxtDescriptionResponse().setEnabled(false, gResponse);
-			this.getTxtDescriptionResponseMeasure().setEnabled(false, gResponseMeasure);
+			this.getTxtDescriptionStimulusSource().setEnabled(false);
+			this.getTxtDescriptionStimulus().setEnabled(false);
+			this.getTxtDescriptionEnvironment().setEnabled(false);
+			this.getTxtDescriptionArtifact().setEnabled(false);
+			this.getTxtDescriptionResponse().setEnabled(false);
+			this.getTxtDescriptionResponseMeasure().setEnabled(false);
 
 			this.getCmbTypeStimulusSource().getCombo().setEnabled(false);
 			this.getCmbTypeStimulus().getCombo().setEnabled(false);
@@ -763,12 +776,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			break;
 		case 2:// With quality attribute selected
-			this.getTxtDescriptionStimulusSource().setEnabled(true, gStimulusSource);
-			this.getTxtDescriptionStimulus().setEnabled(true, gStimulus);
-			this.getTxtDescriptionEnvironment().setEnabled(true, gEnvironment);
-			this.getTxtDescriptionArtifact().setEnabled(true, gArtifact);
-			this.getTxtDescriptionResponse().setEnabled(true, gResponse);
-			this.getTxtDescriptionResponseMeasure().setEnabled(true, gResponseMeasure);
+			this.getTxtDescriptionStimulusSource().setEnabled(true);
+			this.getTxtDescriptionStimulus().setEnabled(true);
+			this.getTxtDescriptionEnvironment().setEnabled(true);
+			this.getTxtDescriptionArtifact().setEnabled(true);
+			this.getTxtDescriptionResponse().setEnabled(true);
+			this.getTxtDescriptionResponseMeasure().setEnabled(true);
 
 			this.getCmbTypeStimulusSource().getCombo().setEnabled(true);
 			this.getCmbTypeStimulus().getCombo().setEnabled(true);
