@@ -35,6 +35,10 @@ import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.AnalysisEntity.QualityRequirement;
 import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 
+/**
+ * To search, consult, edit or remove a quality requirement
+ * @author: Micaela 
+ */
 public class SearchQualityRequirementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 	/**
@@ -82,6 +86,9 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	private static SearchQualityRequirementPreferencePage qualityRequirementPP;
 	private QualityRequirementPPController viewController;
 
+	/**
+	 * Constructor
+	 */
 	public SearchQualityRequirementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
@@ -92,13 +99,15 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 */
 	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setFormSearch(this);
@@ -521,8 +530,6 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				}
 			});
 
-			//HASTA ACA
-
 			this.prepareView(0);
 
 		} catch (JDBCConnectionException e) {
@@ -533,10 +540,17 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 */
 	@Override
 	protected void createFieldEditors() {
 	}
 
+	/**
+	 * Getters and Setters
+	 */
 	public Text getTxtDescription() {
 		return txtDescription;
 	}
@@ -808,29 +822,45 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	public void setColDescriptionScenario(TableColumn colDescriptionScenario) {
 		this.colDescriptionScenario = colDescriptionScenario;
 	}
-
+	
+	/**
+	 * Load systems with state=true and requirements with state=true in the combo
+	 */
 	public void loadCmbSystem() {
 		this.getViewController().setModelSystemSearch();
 	}
 
+	/**
+	 * When a system is selected, fill table with its quality requirements and prepare the view
+	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.fillTable();
 		this.prepareView(1);
 	}
 
+	/**
+	 * Fill table with system's quality requirements (quality attribute, description and condition)
+	 */
 	public void fillTable() {
 		this.getViewController().setModelQualityRequirement(
 				(software.DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCmbSystem().getSelection())
 						.getFirstElement());
 	}
-	
+
+	/**
+	 * When a quality attribute is selected, enables the especification and load the generic scenario
+	 */
 	private void cmbQualityAttributeItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(3);
 		this.loadGenericScenario(
 				(QualityAttribute) ((IStructuredSelection) this.getCmbQualityAttribute().getSelection())
 						.getFirstElement());
 	}
-
+	
+	/**
+	 * Load the types of the generic scenario for a specific quality attribute
+	 * @param qualityAtribute 
+	 */
 	public void loadGenericScenario(QualityAttribute qualityAttribute) {
 		this.getViewController().setModelStimulusSourceTypes(qualityAttribute);
 		this.getViewController().setModelStimulusTypes(qualityAttribute);
@@ -839,7 +869,10 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.getViewController().setModelResponseTypes(qualityAttribute);
 		this.getViewController().setModelResponseMeasureTypes(qualityAttribute);
 	}
-
+	
+	/**
+	 * When a response measure type is selected, load the metrics
+	 */
 	private void cmbTypeResponseMeasureItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(4);
 		this.loadCmbMetric(
@@ -847,19 +880,33 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 						.getFirstElement());
 	}
 
+	/**
+	 * Load all metrics for a specific response measure type
+	 * param responseMeasureType
+	 */
 	public void loadCmbMetric(ResponseMeasureType responseMeasureType) {
 		this.getViewController().setModelMetric(responseMeasureType);
 	}
-
+	
+	/**
+	 * When a metric is selected, load the units
+	 */
 	private void cmbMetricItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(5);
 		this.loadCmbUnit((Metric) ((IStructuredSelection) this.getCmbMetric().getSelection()).getFirstElement());
 	}
 
+	/**
+	 * Load all units for a specific metric
+	 * param metric
+	 */
 	public void loadCmbUnit(Metric metric) {
 		this.getViewController().setModelUnit(metric);
 	}
 
+	/**
+	 * Clean the quality scenario (description, quality attribute, condition and parts)
+	 */
 	public void clearScenario() {
 		txtDescription.setText("");
 		cmbQualityAttribute.setSelection(StructuredSelection.EMPTY);
@@ -867,6 +914,9 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.clearParts();
 	}
 
+	/**
+	 * Clean the parts of quality scenario (descriptions, types and values)
+	 */
 	public void clearParts() {
 		txtDescriptionStimulusSource.setText("");
 		txtDescriptionStimulus.setText("");
@@ -890,12 +940,19 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		txtValueResponse.setStringValue("");
 		txtValueResponseMeasure.setStringValue("");
 	}
-
+	
+	/**
+	 * Clean the system selected and the quality scenario
+	 */
 	public void clearView() {
 		cmbSystem.getCombo().clearSelection();
 		this.clearScenario();
 	}
 
+	/**
+	 * prepare the view for the different actions that are possible
+	 * @param pabm
+	 */
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
@@ -1050,14 +1107,23 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		}
 	}
 
+	/**
+	 * Sets the view whit quality scenario of the quality requirement selected
+	 */
 	public void setView() {
 		this.getViewController().getView();
 	}
 
+	/**
+	 * Load all quality attributes in the combo
+	 */
 	public void loadCmbCondition() {
 		this.getViewController().setModelCondition();
 	}
-
+	
+	/**
+	 * Load all conditions in the combo
+	 */
 	public void loadCmbQualityAttribute() {
 		this.getViewController().setModelQualityAttribute();
 		

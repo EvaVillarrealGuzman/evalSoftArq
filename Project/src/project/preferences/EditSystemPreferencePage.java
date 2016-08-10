@@ -22,18 +22,14 @@ import org.hibernate.exception.JDBCConnectionException;
 import project.preferences.controller.SystemPPController;
 
 /**
- * This class represents a preference page that is contributed to the
- * Preferences dialog. By subclassing <samp>FieldEditorPreferencePage</samp>, we
- * can use the field support built into JFace that allows us to create a page
- * that is small and knows how to save, restore and apply itself.
- * <p>
- * This page is used to modify preferences only. They are stored in the
- * preference store that belongs to the main plug-in class. That way,
- * preferences can be accessed directly via the preference store.
+ * To search, consult, edit or remove a system
+ * @author: Eva 
  */
 
 public class EditSystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-
+	/**
+	 * Attributes
+	 */
 	private DateTime calendarStartDate;
 	private DateTime calendarFinishDate;
 	private Label lblCalendarStarDate;
@@ -49,6 +45,9 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	private Composite cSystemName;
 	private GridData gridData;
 
+	/**
+	 * Constructor
+	 */
 	public EditSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
@@ -59,13 +58,15 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 */
 	protected Control createContents(Composite parent) {
 		try {
 			GridLayout layout = new GridLayout();
@@ -192,10 +193,17 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		return new Composite(parent, SWT.NULL);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 */
 	@Override
 	protected void createFieldEditors() {
 	}
 
+	/**
+	 * Getters and Setters
+	 */
 	public DateTime getCalendarStartDate() {
 		return calendarStartDate;
 	}
@@ -298,15 +306,14 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	}
 
 	/**
-	 * load combo with system names
+	 * load combo with system whit state=true
 	 */
 	public void loadCombo() {
 		this.getViewController().setModel();
 	}
 
 	/**
-	 * manages the various types of views
-	 * 
+	 * prepare the view for the different actions that are possible
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34

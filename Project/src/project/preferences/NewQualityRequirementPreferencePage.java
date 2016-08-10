@@ -28,6 +28,10 @@ import software.DomainModel.AnalysisEntity.Metric;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 
+/**
+ * To create a new quality requirement
+ * @author: Micaela 
+ */
 public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	/**
 	 * Attributes
@@ -67,23 +71,27 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private static NewQualityRequirementPreferencePage qualityRequirementPP;
 	private NewQualityRequirementPPController viewController;
 
+	/**
+	 * Constructor
+	 */
 	public NewQualityRequirementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new NewQualityRequirementPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on
-												// 10/06/16 21:48
+		this.setViewController(viewController);
 	}
 
-	/*
+	/* 
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 */
 	protected Control createContents(Composite parent) {
 		try {
 			this.getViewController().setForm(this);
@@ -420,10 +428,17 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		return new Composite(parent, SWT.NULL);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 */
 	@Override
 	protected void createFieldEditors() {
 	}
 
+	/**
+	 * Getters and Setters
+	 */
 	public static NewQualityRequirementPreferencePage getQualityRequirementPP() {
 		return qualityRequirementPP;
 	}
@@ -640,24 +655,39 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.cmbUnit = cmbUnit;
 	}
 
+	/**
+	 * Load systems with state=true in the combo
+	 */
 	public void loadCmbSystem() {
 		this.getViewController().setModelSystem();
 	}
-
+	
+	/**
+	 * Load all quality attributes in the combo
+	 */
 	public void loadCmbQualityAttribute() {
 		this.getViewController().setModelQualityAttribute();
 	}
 
+	/**
+	 * Load all conditions in the combo
+	 */
 	public void loadCmbCondition() {
 		this.getViewController().setModelCondition();
 	}
 
+	/**
+	 * When a system is selected, prepare the view and load quality attributes and conditions
+	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(1);
 		this.loadCmbQualityAttribute();
 		this.loadCmbCondition();
 	}
 
+	/**
+	 * When a quality attribute is selected, enables the especification and load the generic scenario
+	 */
 	private void cmbQualityAttributeItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(2);
 		this.loadGenericScenario(
@@ -665,6 +695,10 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 						.getFirstElement());
 	}
 
+	/**
+	 * Load the types of the generic scenario for a specific quality attribute
+	 * @param qualityAtribute 
+	 */
 	public void loadGenericScenario(QualityAttribute qualityAttribute) {
 		this.getViewController().setModelStimulusSourceTypes(qualityAttribute);
 		this.getViewController().setModelStimulusTypes(qualityAttribute);
@@ -674,6 +708,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.getViewController().setModelResponseMeasureTypes(qualityAttribute);
 	}
 
+	/**
+	 * When a response measure type is selected, load the metrics
+	 */
 	private void cmbTypeResponseMeasureItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(3);
 		this.loadCmbMetric(
@@ -681,19 +718,33 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 						.getFirstElement());
 	}
 
+	/**
+	 * Load all metrics for a specific response measure type
+	 * param responseMeasureType
+	 */
 	public void loadCmbMetric(ResponseMeasureType responseMeasureType) {
 		this.getViewController().setModelMetric(responseMeasureType);
 	}
 
+	/**
+	 * When a metric is selected, load the units
+	 */
 	private void cmbMetricItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(4);
 		this.loadCmbUnit((Metric) ((IStructuredSelection) this.getCmbMetric().getSelection()).getFirstElement());
 	}
 
+	/**
+	 * Load all units for a specific metric
+	 * param metric
+	 */
 	public void loadCmbUnit(Metric metric) {
 		this.getViewController().setModelUnit(metric);
 	}
 
+	/**
+	 * Clean the parts of quality scenario (descriptions, types and values)
+	 */
 	public void clearParts() {
 		txtDescriptionStimulusSource.setText("");
 		txtDescriptionStimulus.setText("");
@@ -718,6 +769,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		txtValueResponseMeasure.setStringValue("");
 	}
 
+	/**
+	 * Clean the quality scenario (description, quality attribute, condition and parts)
+	 */
 	public void clearScenario() {
 		txtDescription.setText("");
 		cmbQualityAttribute.setSelection(StructuredSelection.EMPTY);
@@ -725,12 +779,19 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.clearParts();
 	}
 
+	/**
+	 * Clean the system selected and the quality scenario
+	 */
 	public void clearView() {
 		cmbSystem.setSelection(StructuredSelection.EMPTY);
 		this.clearScenario();
 	}
 
-	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
+	/**
+	 * prepare the view for the different actions that are possible
+	 * @param pabm
+	 */
+	public void prepareView(int pabm) { 
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog("No saved systems");
