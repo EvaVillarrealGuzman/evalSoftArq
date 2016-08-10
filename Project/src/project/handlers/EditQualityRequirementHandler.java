@@ -12,12 +12,12 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class SearchQualityRequirementHandler extends AbstractHandler {
+public class EditQualityRequirementHandler extends AbstractHandler {
 
 	/**
 	 * The constructor.
 	 */
-	public SearchQualityRequirementHandler() {
+	public EditQualityRequirementHandler() {
 
 	}
 
@@ -28,8 +28,8 @@ public class SearchQualityRequirementHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 		PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				"project.preferences.SearchQualityRequirementPreferencePage",
-				new String[] { "project.preferences.SearchQualityRequirementPreferencePage" }, null);
+				"project.preferences.EditQualityRequirementPreferencePage",
+				new String[] { "project.preferences.EditQualityRequirementPreferencePage" }, null);
 		if (pref != null)
 			pref.open();
 		return null;

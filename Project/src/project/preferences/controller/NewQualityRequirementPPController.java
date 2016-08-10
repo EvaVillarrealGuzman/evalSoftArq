@@ -21,6 +21,11 @@ import software.DomainModel.AnalysisEntity.StimulusSourceType;
 import software.DomainModel.AnalysisEntity.StimulusType;
 import software.DomainModel.AnalysisEntity.Unit;
 
+/**
+ * Controller for NewQualityRequirementPreferencePage
+ * @author Micaela
+ *
+ */
 public class NewQualityRequirementPPController extends Controller {
 	/**
 	 * Attributes
@@ -29,6 +34,9 @@ public class NewQualityRequirementPPController extends Controller {
 	private AnalysisManager manager;
 	private NewQualityRequirementPreferencePage form;
 
+	/**
+	 * Getters and Setters
+	 */
 	public static NewQualityRequirementPPController getController() {
 		return controller;
 	}
@@ -69,42 +77,74 @@ public class NewQualityRequirementPPController extends Controller {
 	}
 
 	/**
-	 * Sets the model of types combo
+	 * Sets the model of stimulus source type combo for a specific quality attribute
+	 * @param qualityAttribute
 	 */
 	public void setModelStimulusSourceTypes(QualityAttribute qualityAttribute) {
 		this.getForm().getCmbTypeStimulusSource()
 				.setInput(getManager().getComboModelStimulusSourceType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of stimulus type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelStimulusTypes(QualityAttribute qualityAttribute) {
 		this.getForm().getCmbTypeStimulus().setInput(getManager().getComboModelStimulusType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of environment type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelEnvironmentTypes(QualityAttribute qualityAttribute) {
 		this.getForm().getCmbTypeEnvironment().setInput(getManager().getComboModelEnvironmentType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of artifact type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelArtifactTypes(QualityAttribute qualityAttribute) {
 		this.getForm().getCmbTypeArtifact().setInput(getManager().getComboModelArtifactType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of response type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelResponseTypes(QualityAttribute qualityAttribute) {
 		this.getForm().getCmbTypeResponse().setInput(getManager().getComboModelResponseType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of response measure type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelResponseMeasureTypes(QualityAttribute qualityAttribute) {
 		this.getForm().getCmbTypeResponseMeasure()
 				.setInput(getManager().getComboModelResponseMeasureType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of metric combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelMetric(ResponseMeasureType type) {
 		this.getForm().getCmbMetric().setInput(getManager().getComboModelMetric(type));
 	}
 
+	/**
+	 * Sets the model of unit combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelUnit(Metric type) {
 		this.getForm().getCmbUnit().setInput(getManager().getComboModelUnit(type));
 	}
 
+	/**
+	 * Create the quality requirement and prepare the view
+	 */
 	public void save() {
 		int err = this.newQualityRequirement();
 		if (err == 0) {
@@ -114,6 +154,10 @@ public class NewQualityRequirementPPController extends Controller {
 		}
 	}
 
+	/**
+	 * Create a new quality requirement
+	 * @return int (indicates if the quality requirement was created successfully)
+	 */
 	public int newQualityRequirement() {
 		if (this.isValidData()) {
 			StimulusSource stimulusSource = new StimulusSource(
@@ -160,6 +204,10 @@ public class NewQualityRequirementPPController extends Controller {
 		}
 	}
 
+	/**
+	 * Validate the necessary data for the creation of the quality requirement
+	 * @return boolean (is true if they have completed the required fields)
+	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog("Select system");

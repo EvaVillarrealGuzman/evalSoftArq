@@ -6,24 +6,29 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import project.preferences.EditSystemPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
-public class SystemPPController extends Controller {
+/**
+ * Controller for EditSystemPreferencePage
+ * @author Eva
+ *
+ */
+public class EditSystemPPController extends Controller {
 
 	/**
 	 * Attributes
 	 */
-	private static SystemPPController controller;
+	private static EditSystemPPController controller;
 	private AnalysisManager manager;
 	private EditSystemPreferencePage form;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static SystemPPController getController() {
+	public static EditSystemPPController getController() {
 		return controller;
 	}
 
-	public static void setController(SystemPPController controller) {
-		SystemPPController.controller = controller;
+	public static void setController(EditSystemPPController controller) {
+		EditSystemPPController.controller = controller;
 	}
 
 	public AnalysisManager getManager() {
@@ -45,6 +50,9 @@ public class SystemPPController extends Controller {
 		this.form = form;
 	}
 
+	/**
+	 * Update the system and prepare the view
+	 */
 	public void save() {
 		int err;
 		err = this.setSystem();
@@ -54,22 +62,17 @@ public class SystemPPController extends Controller {
 		}
 	}
 	
+	/**
+	 * Remove a system and prepare the view
+	 */
 	public void remove() {
 		this.getManager().removeSystem();
 		this.getForm().prepareView(0);
 	}
 
 	/**
-	 * Open the form
-	 * 
-	 * @param pabm
-	 */
-	public void open() {
-		// TODO
-	}
-
-	/**
 	 * Update a system
+	 * @return int (indicates if the update was successfully)
 	 */
 	public int setSystem() {
 		if (this.isValidData()) {
@@ -85,7 +88,7 @@ public class SystemPPController extends Controller {
 	}
 
 	/**
-	 * Configure the form when a Combo´s item is selected
+	 * Configure the view when a Combo's item is selected
 	 */
 	public void getView() {
 		this.getForm().getProjectName().setStringValue(this.getManager().getProjectName());
@@ -96,9 +99,10 @@ public class SystemPPController extends Controller {
 		this.getForm().getCalendarFinishDate().setMonth(getMonth(this.getManager().getFinishDate()));
 		this.getForm().getCalendarFinishDate().setYear(getYear(this.getManager().getFinishDate()));
 	}
-	// TODO ver los showoptioDialog
+	
 	/**
-	 * return true if they have completed the required fields
+	 * Validate the necessary data for the update of the system 
+	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {

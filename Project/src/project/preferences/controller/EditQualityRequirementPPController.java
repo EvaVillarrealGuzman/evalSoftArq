@@ -5,7 +5,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 
-import project.preferences.SearchQualityRequirementPreferencePage;
+import project.preferences.EditQualityRequirementPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 import software.DomainModel.AnalysisEntity.Artifact;
 import software.DomainModel.AnalysisEntity.ArtifactType;
@@ -25,20 +25,28 @@ import software.DomainModel.AnalysisEntity.StimulusSourceType;
 import software.DomainModel.AnalysisEntity.StimulusType;
 import software.DomainModel.AnalysisEntity.Unit;
 
-public class QualityRequirementPPController extends Controller {
+/**
+ * Controller for EditQualityRequirementPreferencePage
+ * @author Micaela
+ *
+ */
+public class EditQualityRequirementPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static QualityRequirementPPController controller;
+	private static EditQualityRequirementPPController controller;
 	private AnalysisManager manager;
-	private SearchQualityRequirementPreferencePage formSearch;
+	private EditQualityRequirementPreferencePage formSearch;
 
-	public static QualityRequirementPPController getController() {
+	/**
+	 * Getters and Setters
+	 */
+	public static EditQualityRequirementPPController getController() {
 		return controller;
 	}
 
-	public static void setController(QualityRequirementPPController controller) {
-		QualityRequirementPPController.controller = controller;
+	public static void setController(EditQualityRequirementPPController controller) {
+		EditQualityRequirementPPController.controller = controller;
 	}
 
 	public AnalysisManager getManager() {
@@ -52,64 +60,104 @@ public class QualityRequirementPPController extends Controller {
 		this.manager = manager;
 	}
 
-	public SearchQualityRequirementPreferencePage getFormSearch() {
+	public EditQualityRequirementPreferencePage getFormSearch() {
 		return formSearch;
 	}
 
-	public void setFormSearch(SearchQualityRequirementPreferencePage formSearch) {
+	public void setFormSearch(EditQualityRequirementPreferencePage formSearch) {
 		this.formSearch = formSearch;
 	}
 
-
+	/**
+	 * Sets the model of system combo
+	 */
 	public void setModelSystemSearch() {
 		this.getFormSearch().getCmbSystem().setInput(getManager().getComboModelSystemWithRequirements());
 	}
 
+	/**
+	 * Sets the model of quality attribute combo
+	 */
 	public void setModelQualityAttribute() {
 		this.getFormSearch().getCmbQualityAttribute().setInput(getManager().getComboModelQualityAttribute());
 	}
 
+	/**
+	 * Sets the model of condition combo
+	 */
 	public void setModelCondition() {
 		this.getFormSearch().getCmbCondition().setInput(getManager().getComboModelCondition());
 	}
 
 	/**
-	 * Sets the model of types combo
+	 * Sets the model of stimulus source type combo for a specific quality attribute
+	 * @param qualityAttribute
 	 */
 	public void setModelStimulusSourceTypes(QualityAttribute qualityAttribute) {
 		this.getFormSearch().getCmbTypeStimulusSource()
 				.setInput(getManager().getComboModelStimulusSourceType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of stimulus type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelStimulusTypes(QualityAttribute qualityAttribute) {
 		this.getFormSearch().getCmbTypeStimulus().setInput(getManager().getComboModelStimulusType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of environment type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelEnvironmentTypes(QualityAttribute qualityAttribute) {
 		this.getFormSearch().getCmbTypeEnvironment().setInput(getManager().getComboModelEnvironmentType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of artifact type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelArtifactTypes(QualityAttribute qualityAttribute) {
 		this.getFormSearch().getCmbTypeArtifact().setInput(getManager().getComboModelArtifactType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of response type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelResponseTypes(QualityAttribute qualityAttribute) {
 		this.getFormSearch().getCmbTypeResponse().setInput(getManager().getComboModelResponseType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of response measure type combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelResponseMeasureTypes(QualityAttribute qualityAttribute) {
 		this.getFormSearch().getCmbTypeResponseMeasure()
 				.setInput(getManager().getComboModelResponseMeasureType(qualityAttribute));
 	}
 
+	/**
+	 * Sets the model of metric combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelMetric(ResponseMeasureType type) {
 		this.getFormSearch().getCmbMetric().setInput(getManager().getComboModelMetric(type));
 	}
 
+	/**
+	 * Sets the model of unit combo for a specific quality attribute
+	 * @param qualityAttribute
+	 */
 	public void setModelUnit(Metric type) {
 		this.getFormSearch().getCmbUnit().setInput(getManager().getComboModelUnit(type));
 	}
 
+	/**
+	 * Update the quality requirement and prepare the view
+	 */
 	public void save() {
 		int err;
 		err = this.setQualityRequirement();
@@ -120,12 +168,19 @@ public class QualityRequirementPPController extends Controller {
 		}
 	}
 
+	/**
+	 * Remove a quality requirement and prepare the view
+	 */
 	public void remove() {
 		this.getManager().removeQualityRequirement();
 		this.getFormSearch().fillTable();
 		this.getFormSearch().prepareView(7);
 	}
 
+	/**
+	 * Update a quality requirement
+	 * @return int (indicates if the quality requirement was updated successfully)
+	 */
 	public int setQualityRequirement() {
 		if (this.isValidData()) {
 			this.getManager().setDescriptionScenario(this.getFormSearch().getTxtDescription().getText());
@@ -164,6 +219,10 @@ public class QualityRequirementPPController extends Controller {
 		}
 	}
 
+	/**
+	 * Validate the necessary data for the update of the quality requirement
+	 * @return boolean (is true if they have completed the required fields)
+	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getFormSearch().getCmbSystem())) {
 			this.createErrorDialog("Select system");
@@ -244,9 +303,7 @@ public class QualityRequirementPPController extends Controller {
 
 	/**
 	 * Sets the model table of the quality requirements of a specific system
-	 * 
 	 * @param ptype
-	 *            (System)
 	 */
 	public void setModelQualityRequirement(software.DomainModel.AnalysisEntity.System ptype) { // NOPMD by Usuario-Pc on 10/06/16 21:46
 		this.getManager().setSystem(ptype);
@@ -264,10 +321,17 @@ public class QualityRequirementPPController extends Controller {
 		}
 	}
 	
+	/**
+	 * Sets the manager's model (its quality requirement)
+	 * @param pmodel
+	 */
 	public void setModel(QualityRequirement pmodel) {
 		this.getManager().setQualityRequirement(pmodel);
 	}
 
+	/**
+	 * Configure the view when a table's item is selected
+	 */
 	public void getView() {
 		this.getFormSearch().loadCmbQualityAttribute();
 		this.getFormSearch().loadCmbCondition();

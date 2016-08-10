@@ -19,7 +19,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
-import project.preferences.controller.SystemPPController;
+import project.preferences.controller.EditSystemPPController;
 
 /**
  * To search, consult, edit or remove a system
@@ -40,7 +40,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	private ComboViewer cboSystem;
 	private StringFieldEditor projectName;
 	private static EditSystemPreferencePage SystemPP; // NOPMD by Usuario-Pc on 10/06/16 21:50
-	private SystemPPController viewController;
+	private EditSystemPPController viewController;
 	private Composite cProject;
 	private Composite cSystemName;
 	private GridData gridData;
@@ -51,7 +51,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	public EditSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new SystemPPController();
+		viewController = new EditSystemPPController();
 		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:49
 		this.getViewController().setForm(this);
 	}
@@ -284,11 +284,11 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		SystemPP = systemPP;
 	}
 
-	public SystemPPController getViewController() {
+	public EditSystemPPController getViewController() {
 		return viewController;
 	}
 
-	public void setViewController(SystemPPController viewController) {
+	public void setViewController(EditSystemPPController viewController) {
 		this.viewController = viewController;
 	}
 

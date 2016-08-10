@@ -40,11 +40,6 @@
       </command>
       <command
             categoryId="Project.commands.category"
-            id="Project.commands.searchQualityRequirementCommand"
-            name="SearchQualityRequirement">
-      </command>
-      <command
-            categoryId="Project.commands.category"
             id="Project.commands.editQualityRequirementCommand"
             name="EditQualityRequirement">
       </command>
@@ -74,10 +69,6 @@
       <handler
             class="project.handlers.EditSystemHandler"
             commandId="Project.commands.editSystemCommand">
-      </handler>
-      <handler
-            class="project.handlers.SearchQualityRequirementHandler"
-            commandId="Project.commands.searchQualityRequirementCommand">
       </handler>
       <handler
             class="project.handlers.EditQualityRequirementHandler"
@@ -126,9 +117,9 @@
                   mnemonic="SAS">
             </command>
             <command
-                  commandId="Project.commands.searchQualityRequirementCommand"
-                  id="Project.menus.searchQualityRequirementCommand"
-                  label="Search Quality Requirement"
+                  commandId="Project.commands.editQualityRequirementCommand"
+                  id="Project.menus.editQualityRequirementCommand"
+                  label="Edit Quality Requirement"
                   mnemonic="SQR">
             </command>
             <command
@@ -166,22 +157,16 @@
 	  </page>
 	  <page
        		category="project.preferences.UCM2DEVS"
-       		class="project.preferences.SearchQualityRequirementPreferencePage"
-       		id="project.preferences.SearchQualityRequirementPreferencePage"
-       		name="Search Quality Requirement">
+       		class="project.preferences.EditQualityRequirementPreferencePage"
+       		id="project.preferences.EditQualityRequirementPreferencePage"
+       		name="Edit Quality Requirement">
 	 </page>	
 	 <page
        		category="project.preferences.UCM2DEVS"
        		class="project.preferences.EditSystemPreferencePage"
        		id="project.preferences.EditSystemPreferencePage"
        		name="Edit System">
-	 </page>
-  <page
-        category="project.preferences.UCM2DEVS"
-        class="project.preferences.EditQualityRequirementPreferencePage"
-        id="project.preferences.EditQualityRequirementPreferencePage"
-        name="Edit Quality Requirement">
-  </page>	
+	 </page>	
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">

@@ -29,7 +29,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
-import project.preferences.controller.QualityRequirementPPController;
+import project.preferences.controller.EditQualityRequirementPPController;
 import software.DomainModel.AnalysisEntity.Metric;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.AnalysisEntity.QualityRequirement;
@@ -39,7 +39,7 @@ import software.DomainModel.AnalysisEntity.ResponseMeasureType;
  * To search, consult, edit or remove a quality requirement
  * @author: Micaela 
  */
-public class SearchQualityRequirementPreferencePage extends FieldEditorPreferencePage
+public class EditQualityRequirementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 	/**
 	 * Attributes
@@ -83,16 +83,16 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 	private TableColumn colCondition;
 	private TableColumn colQualityAttribute;
 	private TableColumn colDescriptionScenario;
-	private static SearchQualityRequirementPreferencePage qualityRequirementPP;
-	private QualityRequirementPPController viewController;
+	private static EditQualityRequirementPreferencePage qualityRequirementPP;
+	private EditQualityRequirementPPController viewController;
 
 	/**
 	 * Constructor
 	 */
-	public SearchQualityRequirementPreferencePage() {
+	public EditQualityRequirementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new QualityRequirementPPController();
+		viewController = new EditQualityRequirementPPController();
 		this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:48
 	}
@@ -136,6 +136,8 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != "") {
+						clearScenario();
+						prepareView(7);
 						cmbSystemItemStateChanged();
 					} else {
 						clearScenario();
@@ -743,19 +745,19 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		this.btnRemove = btnRemove;
 	}
 
-	public static SearchQualityRequirementPreferencePage getQualityRequirementPP() {
+	public static EditQualityRequirementPreferencePage getQualityRequirementPP() {
 		return qualityRequirementPP;
 	}
 
-	public static void setQualityRequirementPP(SearchQualityRequirementPreferencePage qualityRequirementPP) {
-		SearchQualityRequirementPreferencePage.qualityRequirementPP = qualityRequirementPP;
+	public static void setQualityRequirementPP(EditQualityRequirementPreferencePage qualityRequirementPP) {
+		EditQualityRequirementPreferencePage.qualityRequirementPP = qualityRequirementPP;
 	}
 
-	public QualityRequirementPPController getViewController() {
+	public EditQualityRequirementPPController getViewController() {
 		return viewController;
 	}
 
-	public void setViewController(QualityRequirementPPController viewController) {
+	public void setViewController(EditQualityRequirementPPController viewController) {
 		this.viewController = viewController;
 	}
 
@@ -938,7 +940,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 		txtValueStimulus.setStringValue("");
 		txtValueEnvironment.setStringValue("");
 		txtValueResponse.setStringValue("");
-		txtValueResponseMeasure.setStringValue("");
+		txtValueResponseMeasure.setStringValue("0.0");
 	}
 	
 	/**

@@ -18,11 +18,13 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * Parent controller with the reusable methods
+ */
 public class Controller {
 
 	/**
 	 * Validate whether a StringFieldEditor is empty
-	 * 
 	 * @param ptxt
 	 */
 	public boolean isEmpty(StringFieldEditor ptxt) {
@@ -30,8 +32,7 @@ public class Controller {
 	}
 
 	/**
-	 * Validate whether a Text is empty
-	 * 
+	 * Validate whether a Text is empty 
 	 * @param ptxt
 	 */
 	public boolean isEmpty(Text ptxt) {
@@ -40,7 +41,6 @@ public class Controller {
 
 	/**
 	 * Validate whether a JComboBox is empty
-	 * 
 	 * @param pcmb
 	 */
 	public boolean isEmpty(ComboViewer pcmb) {
@@ -49,7 +49,6 @@ public class Controller {
 
 	/**
 	 * Convert a DateTime to Date
-	 * 
 	 * @param dt
 	 * @return
 	 */
@@ -65,7 +64,6 @@ public class Controller {
 
 	/**
 	 * Methods to get day, month and year of date
-	 * 
 	 * @param pdate
 	 * @return
 	 */
@@ -95,10 +93,9 @@ public class Controller {
 
 	/**
 	 * Valid if a date is before that other
-	 * 
 	 * @param pcs
 	 * @param pcf
-	 * @return
+	 * @return boolean (indicates if finish date is before start date)
 	 */
 	public boolean isAfter(DateTime pcs, DateTime pcf) {
 		Date dcs = convertDateTimeToDate(pcs);
@@ -107,8 +104,7 @@ public class Controller {
 	}
 
 	/**
-	 * Created a Error Dialog
-	 * 
+	 * Created a dialog for error
 	 * @param error
 	 */
 	public void createErrorDialog(String error) {
@@ -116,23 +112,25 @@ public class Controller {
 	}
 
 	/**
-	 * Created a Delete Dialog
-	 * 
-	 * @return
+	 * Created a dialog for system's delete
+	 * @return boolean
 	 */
 	public boolean createDeleteDialog() {
 		return MessageDialog.openQuestion(null, "Question", "Do you want to delete the system?");
 	}
 	
+	/**
+	 * Created a dialog for quality requirement's delete
+	 * @return boolean
+	 */
 	public boolean createDeleteRequirementDialog() {
 		return MessageDialog.openQuestion(null, "Question", "Do you want to delete the quality requirement?");
 	}
 
 	/**
 	 * Convert a File to IFile
-	 * 
 	 * @param file
-	 * @return
+	 * @return IFile
 	 */
 	public IFile convert(File file) {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();

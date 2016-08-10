@@ -3,6 +3,11 @@ package project.preferences.controller;
 import project.preferences.NewSystemPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
+/**
+ * Controller for NewSystemPreferencePage
+ * @author Eva
+ *
+ */
 public class NewSystemPPController extends Controller {
 
 	/**
@@ -42,6 +47,9 @@ public class NewSystemPPController extends Controller {
 		this.form = form;
 	}
 
+	/**
+	 * Create the system and prepare the view
+	 */
 	public void save() {
 		int err;
 		err = this.newSystem();
@@ -53,6 +61,7 @@ public class NewSystemPPController extends Controller {
 
 	/**
 	 * Create a new system
+	 * @return int (indicates if the system was created successfully)
 	 */
 	public int newSystem() {
 		if (this.isValidData()) {
@@ -67,18 +76,16 @@ public class NewSystemPPController extends Controller {
 	}
 
 	/**
-	 * return true if they have completed the required fields
+	 * Validate the necessary data for the creation of the system 
+	 * @return boolean (is true if they have completed the required fields)
 	 */
-	// TODO ver getParent como solucionarlo
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getSystemName())) {
 			this.createErrorDialog("System name empty");
-			// this.getForm().getSystemName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
 			this.createErrorDialog("Project name empty");
-			// this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		} else if (isAfter(this.getForm().getCalendarStartDate(), this.getForm().getCalendarFinishDate())) {
 			this.createErrorDialog("The finish date is less than the start date");

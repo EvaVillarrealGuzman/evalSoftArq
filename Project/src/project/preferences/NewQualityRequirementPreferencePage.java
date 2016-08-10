@@ -121,6 +121,8 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != "") {
+						clearScenario();
+						prepareView(5);
 						cmbSystemItemStateChanged();
 					} else {
 						clearScenario();
@@ -766,7 +768,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		txtValueStimulus.setStringValue("");
 		txtValueEnvironment.setStringValue("");
 		txtValueResponse.setStringValue("");
-		txtValueResponseMeasure.setStringValue("");
+		txtValueResponseMeasure.setStringValue("0.0");
 	}
 
 	/**
@@ -865,6 +867,37 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			break;
 		case 4:// With metric selected
 			this.getCmbUnit().getCombo().setEnabled(true);
+			break;
+		case 5: 
+			this.getCmbSystem().getCombo().setEnabled(true);
+
+			this.getTxtDescription().setEnabled(true);
+			this.getCmbQualityAttribute().getCombo().setEnabled(true);
+			this.getCmbCondition().getCombo().setEnabled(true);
+
+			this.getTxtDescriptionStimulusSource().setEnabled(false);
+			this.getTxtDescriptionStimulus().setEnabled(false);
+			this.getTxtDescriptionEnvironment().setEnabled(false);
+			this.getTxtDescriptionArtifact().setEnabled(false);
+			this.getTxtDescriptionResponse().setEnabled(false);
+			this.getTxtDescriptionResponseMeasure().setEnabled(false);
+
+			this.getCmbTypeStimulusSource().getCombo().setEnabled(false);
+			this.getCmbTypeStimulus().getCombo().setEnabled(false);
+			this.getCmbTypeEnvironment().getCombo().setEnabled(false);
+			this.getCmbTypeArtifact().getCombo().setEnabled(false);
+			this.getCmbTypeResponse().getCombo().setEnabled(false);
+			this.getCmbTypeResponseMeasure().getCombo().setEnabled(false);
+			this.getCmbMetric().getCombo().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(false);
+
+			this.getTxtValueStimulusSource().setEnabled(false, gStimulusSource);
+			this.getTxtValueStimulus().setEnabled(false, gStimulus);
+			this.getTxtValueEnvironment().setEnabled(false, gEnvironment);
+			this.getTxtValueResponse().setEnabled(false, gResponse);
+			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
+
+			this.getBtnNew().setEnabled(true);
 
 			break;
 		}
