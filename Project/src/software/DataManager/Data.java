@@ -36,7 +36,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 
 		createConditions(manager);
 		createQualityAttributeAvailability(manager, unit1, unit2);
-		createQualityAttributeRebiability(manager, unit1, unit2);
+		createQualityAttributeReliability(manager, unit1, unit2);
 		createQualityAttributePerformance(manager, unit1, unit2);
 
 	}
@@ -124,7 +124,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 
 	}
 
-	private static void createQualityAttributeRebiability(HibernateManager pmanager, Unit punit1, Unit punit2) {
+	private static void createQualityAttributeReliability(HibernateManager pmanager, Unit punit1, Unit punit2) {
 		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
 		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -173,8 +173,8 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		units.add(punit1);
 		units.add(punit2);
 
-		Metric metric1 = new Metric("Rebiability average time", units);
-		Metric metric2 = new Metric("Rebiability half time", units);
+		Metric metric1 = new Metric("Reliability average time", units);
+		Metric metric2 = new Metric("Reliability half time", units);
 		pmanager.saveObject(metric1);
 		pmanager.saveObject(metric2);
 		Set<Metric> metrics = new HashSet<Metric>();
@@ -182,7 +182,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		metrics.add(metric2);
 
 		ResponseMeasureType type1 = new ResponseMeasureType("Time interval when the system must be available", metrics);
-		ResponseMeasureType type2 = new ResponseMeasureType("Rebiability Time", metrics);
+		ResponseMeasureType type2 = new ResponseMeasureType("Reliability Time", metrics);
 		ResponseMeasureType type3 = new ResponseMeasureType("Time interval in which system can be in degraded mode",
 				metrics);
 		ResponseMeasureType type4 = new ResponseMeasureType("Repair time", metrics);
@@ -193,7 +193,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		responseMeasureTypes.add(type4);
 
 		QualityAttribute attribute;
-		attribute = new QualityAttribute("Rebiability", new GenericScenario(stimulusSourceTypes, stimulusTypes,
+		attribute = new QualityAttribute("Reliability", new GenericScenario(stimulusSourceTypes, stimulusTypes,
 				environmentTypes, artifactTypes, responseTypes, responseMeasureTypes));
 		attribute.setAttributeGenericScenario();
 		pmanager.saveObject(attribute);

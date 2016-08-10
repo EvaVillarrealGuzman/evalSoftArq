@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * This class defines a attribute of quality (availability, rebiability and
+ * This class defines a attribute of quality (availability, reliability and
  * performance)
  * 
  * @author: FEM
