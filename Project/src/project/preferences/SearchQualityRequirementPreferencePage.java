@@ -514,7 +514,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.createDeleteRequirementDialog() == 0) {
+					if (viewController.createDeleteRequirementDialog() == true) {
 						viewController.remove();
 					}
 				}

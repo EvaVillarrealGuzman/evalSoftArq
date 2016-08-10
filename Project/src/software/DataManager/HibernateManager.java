@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -50,20 +51,14 @@ public class HibernateManager extends HibernateUtil {
 			s.save(pobjet);
 			tx.commit();
 			System.out.println(" saveObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD by Usuario-Pc on 10/06/16 22:02
-			JOptionPane.showOptionDialog(null, "Done successfully!", "Notice", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.INFORMATION_MESSAGE,
-					new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/success.png")),
-					new Object[] { "OK" }, "OK");
+			MessageDialog.openInformation(null, "Info", "Done successfully!");
 			return true;
 		} catch (Exception pex) {
 			System.out.println("error " + pex); // NOPMD by Usuario-Pc on 10/06/16 22:02
 			System.out.println( // NOPMD by Usuario-Pc on 10/06/16 22:02
 					"Repository.saveObjet(Object objetj)" + pobjet.getClass() + ": " + pobjet.toString() + pex);
 			pex.printStackTrace();
-			JOptionPane.showOptionDialog(null, "The object can not be saved", "Error", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
+			MessageDialog.openError(null, "Error", "The object can not be saved");
 			getTx().rollback();
 			return false;
 		}
@@ -76,22 +71,13 @@ public class HibernateManager extends HibernateUtil {
 			s.update(pobjet);
 			tx.commit();
 			System.out.println(" updateObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD by Usuario-Pc on 10/06/16 22:02
-			JOptionPane.showOptionDialog(null, "Done successfully!", "Notice", JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.INFORMATION_MESSAGE,
-					new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/success.png")), new Object[] { "OK" },
-					"OK");
+			MessageDialog.openInformation(null, "Info", "Done successfully!");
 			return true;
 		} catch (HibernateException pe) {
 			JOptionPane.showMessageDialog(null, pe);
 			tx.rollback();
-			JOptionPane.showOptionDialog(null, "You can not save data. \nThese have been modified by someone else.",
-					"Error", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
-			JOptionPane.showOptionDialog(null, "The object can not be updated" + pe.getMessage(), "Error",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-					new ImageIcon(NewSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-					"OK");
+			MessageDialog.openError(null, "Error", "You can not save data \nThese have been modified by someone else.");
+			MessageDialog.openError(null, "Error", "The object can not be updated" + pe.getMessage());
 			return false;
 		}
 	}

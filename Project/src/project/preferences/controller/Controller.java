@@ -6,21 +6,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
-
-import project.preferences.EditSystemPreferencePage;
 
 public class Controller {
 
@@ -116,10 +112,7 @@ public class Controller {
 	 * @param error
 	 */
 	public void createErrorDialog(String error) {
-		JOptionPane.showOptionDialog(null, error, "Warning", JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.ERROR_MESSAGE,
-				new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")), new Object[] { "OK" },
-				"OK");
+		MessageDialog.openError(null, "Error", "Error occured");
 	}
 
 	/**
@@ -127,18 +120,12 @@ public class Controller {
 	 * 
 	 * @return
 	 */
-	public int createDeleteDialog() {
-		return JOptionPane.showOptionDialog(null, "Do you want to delete the system?", "Warning",
-				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-				new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")),
-				new Object[] { "Yes", "No" }, "Yes");
+	public boolean createDeleteDialog() {
+		return MessageDialog.openQuestion(null, "Question", "Do you want to delete the system?");
 	}
 	
-	public int createDeleteRequirementDialog() {
-		return JOptionPane.showOptionDialog(null, "Do you want to delete the quality requirement?", "Warning",
-				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
-				new ImageIcon(EditSystemPreferencePage.class.getResource("/Icons/error.png")),
-				new Object[] { "Yes", "No" }, "Yes");
+	public boolean createDeleteRequirementDialog() {
+		return MessageDialog.openQuestion(null, "Question", "Do you want to delete the quality requirement?");
 	}
 
 	/**

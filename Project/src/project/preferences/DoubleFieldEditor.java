@@ -70,9 +70,9 @@ public class DoubleFieldEditor extends StringFieldEditor {
 	public void setMinRange(Double min){
 		minValidValue = min;
 	}
-
+	
 	@Override
-	public boolean isValid() {
+	protected boolean checkState() {
 
 		Text text = getTextControl();
 
@@ -81,14 +81,18 @@ public class DoubleFieldEditor extends StringFieldEditor {
 		}
 
 		String numberString = text.getText();
-		
 		try {
 			double number = Double.valueOf(numberString).doubleValue();
-			if ((minValidValue == null || number >= minValidValue) && (maxValidValue == null || number <= maxValidValue))  {
+			if ((minValidValue == null || number >= minValidValue) && (maxValidValue == null || number <= maxValidValue)) {
+				clearErrorMessage();
 				return true;
 			}
-		} catch (NumberFormatException e1) {
+
+			showErrorMessage();
 			return false;
+
+		} catch (NumberFormatException e1) {
+			showErrorMessage();
 		}
 
 		return false;
