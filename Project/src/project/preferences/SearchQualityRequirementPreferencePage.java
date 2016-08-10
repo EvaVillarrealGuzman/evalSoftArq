@@ -462,6 +462,7 @@ public class SearchQualityRequirementPreferencePage extends FieldEditorPreferenc
 
 			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value (Response Measure): ", gResponseMeasure);
 			txtValueResponseMeasure.setMinRange(0.0);
+			txtValueResponseMeasure.setPage(this);
 
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
 			labelRMU.setText("Unit: ");

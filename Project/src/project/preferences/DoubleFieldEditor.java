@@ -50,7 +50,7 @@ public class DoubleFieldEditor extends StringFieldEditor {
 		this.parent = parent;
 		setTextLimit(textLimit);
 		setEmptyStringAllowed(false);
-		setErrorMessage(labelText + " " + JFaceResources.getString("Not a valid double")); //$NON-NLS-1$
+		setErrorMessage("Not a valid double"); //$NON-NLS-1$
 		createControl(parent);
 	}
 
