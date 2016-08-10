@@ -35,7 +35,8 @@ public class Chequer {
 	 * metadatos en las responsabilidades; Si devuelve 4 es porque existen
 	 * elementos con nombres duplicados; Si devuleve 5 es porque no existen
 	 * responsabilidades; Si devuelve 6 es porque no existen componentes; Si
-	 * devuelve 7 es porque el dato del start point no esta bien ingresado
+	 * devuelve 7 es porque el dato del start point no esta bien ingresado; Si
+	 * devuelve 8 es porque los datos del or fork no estan bien ingresados
 	 * 
 	 * @return
 	 */
@@ -59,7 +60,11 @@ public class Chequer {
 							if (isInDefinition() == 0) {
 								if (isMetadataInStartPoint() == 0) {
 									if (isMetadataInResponsibilities() == 0) {
-										return 0;
+										if (isMetadataInOrFork() == 0) {
+											return 0;
+										} else {
+											return 8;
+										}
 									} else {
 										return 3;
 									}
@@ -145,6 +150,10 @@ public class Chequer {
 		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
 
 		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
+			isMeanExecutionTime = false;
+			isMeanRecoveryTime = false;
+			isMeanDowntime = false;
+			isMeanTimeBFail = false;
 
 			Node responsibility = responsibilitiesList.item(i);
 
@@ -285,6 +294,86 @@ public class Chequer {
 		}
 
 		return -1;
+	}
+
+	/**
+	 * Chequea si los metadatos del Or fork están ingresador correctamente
+	 * 
+	 * @return
+	 */
+	private int isMetadataInOrFork() {
+
+		NodeList nodesList = doc.getElementsByTagName("nodes");
+
+		for (int i = 0; i < nodesList.getLength(); i++) {
+
+			Node node = nodesList.item(i);
+
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element eNode = (Element) node;
+
+				String typeNode = eNode.getAttribute("xsi:type");
+
+				if (typeNode.equals("ucm.map:OrFork")) {
+					// esta variable cuanta la cantidad de parámetros que tiene
+					// el or fork
+					int parameterCount = 0;
+					// esta variable indica la cantidad de parámetros que
+					// debería tener el or fork
+					int pathParameter = 0;
+					String idOrFork = "";
+
+					idOrFork = eNode.getAttribute("id");
+					NodeList metadataList = eNode.getElementsByTagName("metadata");
+
+					for (int k = 0; k < metadataList.getLength(); k++) {
+						Node metadata = metadataList.item(k);
+						Element eMetadata = (Element) metadata;
+						String nameMetadata = eMetadata.getAttribute("name");
+
+						if (nameMetadata.equals("PathProbability")) {
+							try {
+								String valueMetadata = eMetadata.getAttribute("value");
+								double value = Double.parseDouble(valueMetadata);
+								parameterCount++;
+							} catch (Exception e) {
+								// Si llega acá, es porque el valor ingresado no
+								// se
+								// puede castear a double
+								// por lo tanto, MeanTimeBRequest queda igual a
+								// false
+							}
+						}
+
+					}
+
+					// Obtiene la cantidad de caminos que salen del Or Fork,
+					// y por lo tanto, la cantidad de parámetros necesarios
+					NodeList connectionsList = doc.getElementsByTagName("connections");
+
+					for (int j = 0; j < connectionsList.getLength(); j++) {
+
+						Node connectionNode = connectionsList.item(j);
+
+						if (node.getNodeType() == Node.ELEMENT_NODE) {
+							Element eConnectionNode = (Element) connectionNode;
+
+							String sourceConnectionNode = eConnectionNode.getAttribute("source");
+							if (sourceConnectionNode.equals(idOrFork)) {
+								pathParameter++;
+							}
+						}
+					}
+
+					if (parameterCount != pathParameter) {
+						return -1;
+					}
+
+				}
+			}
+		}
+
+		return 0;
 	}
 
 	/**

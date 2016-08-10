@@ -27,6 +27,9 @@ public class chequerUCMTest {
 		Chequer chequer15 = new Chequer("C:/Users/Usuario-Pc/git/project/Project/src/project/Test/chequerUCMTest/UCM/prueba15.jucm");
 		Chequer chequer16 = new Chequer("C:/Users/Usuario-Pc/git/project/Project/src/project/Test/chequerUCMTest/UCM/prueba16.jucm");
 		Chequer chequer17 = new Chequer("C:/Users/Usuario-Pc/git/project/Project/src/project/Test/chequerUCMTest/UCM/prueba17.jucm");
+		Chequer chequer18 = new Chequer("C:/Users/Usuario-Pc/git/project/Project/src/project/Test/chequerUCMTest/UCM/prueba18.jucm");
+		Chequer chequer19 = new Chequer("C:/Users/Usuario-Pc/git/project/Project/src/project/Test/chequerUCMTest/UCM/prueba19.jucm");
+		Chequer chequer20 = new Chequer("C:/Users/Usuario-Pc/git/project/Project/src/project/Test/chequerUCMTest/UCM/prueba20.jucm");
 		
 		assertEquals(2, chequer1.isValid());
 		assertEquals(2, chequer2.isValid());
@@ -45,6 +48,9 @@ public class chequerUCMTest {
 		assertEquals(0, chequer15.isValid());
 		assertEquals(7, chequer16.isValid());
 		assertEquals(7, chequer17.isValid());
+		assertEquals(0, chequer18.isValid());
+		assertEquals(8, chequer19.isValid());
+		assertEquals(8, chequer20.isValid());
 	}
 
 }
