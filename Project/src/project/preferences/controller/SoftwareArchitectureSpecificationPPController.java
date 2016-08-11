@@ -8,6 +8,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import project.preferences.SoftwareArchitectureSpecificationPreferencePage;
 import software.BusinessLogic.AnalysisManager;
 
+/**
+ * Controller for SoftwareArchitectureEspecificationPreferencePage
+ * @author Eva
+ *
+ */
 public class SoftwareArchitectureSpecificationPPController extends Controller {
 
 	/**
@@ -48,15 +53,6 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	}
 
 	/**
-	 * Open the form
-	 * 
-	 * @param pabm
-	 */
-	public void open() {
-		// TODO
-	}
-
-	/**
 	 * Sets the model of system combo
 	 */
 	public void setModel() {
@@ -72,6 +68,9 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		this.getManager().setSystem(pmodel);
 	}
 
+	/**
+	 * Update the system with the UCM path and prepare the view
+	 */
 	public void save() {
 		int err;
 		err = this.setSystem();
@@ -80,6 +79,10 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		}
 	}
 
+	/**
+	 * Update the system with the UCM path
+	 * @return int (indicates if the UCM path was saved successfully)
+	 */
 	public int setSystem() {
 		if (this.isValidData()) {
 			this.getManager().setPathUCM(this.getForm().getTxtSelectUCM().getText());
@@ -90,7 +93,8 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	}
 
 	/**
-	 * return true if they have completed the required fields
+	 * Validate the necessary data for save the UCM path
+	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {

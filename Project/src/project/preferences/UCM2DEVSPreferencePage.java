@@ -8,6 +8,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+/**
+ * To transform a UCM model in a DEVS model
+ * @author Eva
+ *
+ */
 public class UCM2DEVSPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	public UCM2DEVSPreferencePage() {
@@ -24,6 +29,10 @@ public class UCM2DEVSPreferencePage extends FieldEditorPreferencePage implements
 	public void init(IWorkbench workbench) {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 */
 	protected Control createContents(Composite parent) {
 
 		Label message = new Label(parent, SWT.NONE);
@@ -33,6 +42,10 @@ public class UCM2DEVSPreferencePage extends FieldEditorPreferencePage implements
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 */
 	@Override
 	protected void createFieldEditors() {
 	}
