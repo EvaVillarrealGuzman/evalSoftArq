@@ -92,35 +92,45 @@
                id="Project.menus.sampleMenu"
                label="UCM2DEVS"
                mnemonic="M">
-            <command
-                  commandId="Project.commands.newSystemCommand"
-                  id="Project.menus.newSystemCommand"
-                  label="New System"
-                  mnemonic="S">
-            </command>
-            <command
-                  commandId="Project.commands.editSystemCommand"
-                  id="Project.menus.editSystemCommand"
-                  label="Edit System"
-                  mnemonic="E">
-            </command>
-            <command
-                  commandId="Project.commands.newQualityRequirementCommand"
-                  id="Project.menus.newQualityRequirementCommand"
-                  label="New Quality Requeriment"
-                  mnemonic="Q">
-            </command>
+          	 <menu
+            	  label="System Management">
+           			<command
+           			    commandId="Project.commands.newSystemCommand"
+                	    id="Project.menus.newSystemCommand"
+                	    label="New System"
+               		    mnemonic="S"
+                 		style="push">
+           			</command>
+         		    <command
+            	        commandId="Project.commands.editSystemCommand"
+                	    id="Project.menus.editSystemCommand"
+           		        label="Edit System"
+          	  	        mnemonic="E"
+          	  	        style="push">
+        		    </command>
+     	    </menu>
+     	    <menu
+            	  label="Quality Requirement Management">
+           			<command
+              		    commandId="Project.commands.newQualityRequirementCommand"
+                	    id="Project.menus.newQualityRequirementCommand"
+                  		label="New Quality Requeriment"
+                  		mnemonic="Q"
+                 		style="push">
+           			</command>
+         		    <command
+                  	 	commandId="Project.commands.editQualityRequirementCommand"
+                  		id="Project.menus.editQualityRequirementCommand"
+                  		label="Edit Quality Requirement"
+                  		mnemonic="SQR"
+          	  	        style="push">
+        		    </command>
+     	    </menu>
             <command
                   commandId="Project.commands.softwareArchitectureSpecificationCommand"
                   id="Project.menus.softwareArchitectureSpecificationCommand"
                   label="Software Architecture Specification"
                   mnemonic="SAS">
-            </command>
-            <command
-                  commandId="Project.commands.editQualityRequirementCommand"
-                  id="Project.menus.editQualityRequirementCommand"
-                  label="Edit Quality Requirement"
-                  mnemonic="SQR">
             </command>
             <command
                   commandId="Project.commands.reportsCommand"
