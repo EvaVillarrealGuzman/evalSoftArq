@@ -71,12 +71,13 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	/**
 	 * Update the system with the UCM path and prepare the view
 	 */
-	public void save() {
+	public int save() {
 		int err;
 		err = this.setSystem();
 		if (err == 0) {
 			this.getManager().updateSystem();
 		}
+		return err;
 	}
 
 	/**

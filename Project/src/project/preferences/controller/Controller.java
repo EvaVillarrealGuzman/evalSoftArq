@@ -108,7 +108,7 @@ public class Controller {
 	 * @param error
 	 */
 	public void createErrorDialog(String error) {
-		MessageDialog.openError(null, "Error", "Error occured");
+		MessageDialog.openError(null, "Error", error);
 	}
 
 	/**

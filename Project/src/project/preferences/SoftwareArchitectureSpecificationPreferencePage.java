@@ -13,6 +13,8 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -33,6 +35,7 @@ import project.preferences.controller.SoftwareArchitectureSpecificationPPControl
 
 /**
  * To specify a software architecture by JUCMNav
+ * 
  * @author: Eva
  */
 public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditorPreferencePage
@@ -53,6 +56,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	private Button btnOptionOpenUCM;
 	private Composite cSystemName;
 	private GridData gridData;
+	private boolean isCopyPaste;
 
 	/**
 	 * Contructor
@@ -61,19 +65,25 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SoftwareArchitectureSpecificationPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:48
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+												// 10/06/16 21:48
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
+	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
 		try {
@@ -104,9 +114,9 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					isCopyPaste = true;
 					viewController.setModel(cboSystem);
 					viewController.getView();
-					txtSelectUCM.setToolTipText(txtSelectUCM.getText());
 					prepareView();
 				}
 			});
@@ -142,7 +152,19 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 			txtSelectUCM.setLayoutData(gridData);
 			txtSelectUCM.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent e) {
-					  e.doit = false;
+					e.doit = false;
+				}
+			});
+
+			// avoid copy and paste
+			txtSelectUCM.addVerifyListener(new VerifyListener() {
+				public void verifyText(VerifyEvent event) {
+					if (!isCopyPaste) {
+						if (event.text.length() > 1) {
+							event.doit = false;
+						}
+					}
+					isCopyPaste = false;
 				}
 			});
 
@@ -165,6 +187,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 					chooseFile.setFilterNames(new String[] { "Jucm Files" });
 					chooseFile.setFilterExtensions(new String[] { "*.jucm" });
 					String filePath = chooseFile.open();
+					isCopyPaste = true;
 					txtSelectUCM.setText(filePath);
 					txtSelectUCM.setToolTipText(filePath);
 					prepareView();
@@ -185,17 +208,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 				// Open an existing jucm file
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					File file = new File(txtSelectUCM.getText());
-					IFile ifile = viewController.convert(file);
-					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					try {
-						IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
-								.getDefaultEditor(ifile.getName());
-						parent.getShell().close();
-						page.openEditor(new FileEditorInput(ifile), desc.getId());
-					} catch (Exception e1) {
-						viewController.createErrorDialog("There must be a project in Eclipse to open a file");
-					}
+					openJUCMNavEditor(parent);
 				}
 			});
 
@@ -264,7 +277,9 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.save();
+					if (viewController.save() == 0) {
+						openJUCMNavEditor(parent);
+					}
 				}
 			});
 
@@ -279,7 +294,10 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors
+	 * ()
 	 */
 	@Override
 	protected void createFieldEditors() {
@@ -377,6 +395,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 
 	/**
 	 * prepare the view for the different actions that are possible
+	 * 
 	 * @param pabm
 	 */
 	public void prepareView() {
@@ -396,8 +415,22 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		} else {
 			// Prepate view when button of new ucm is select
 			this.getBtnEditFileUCM().setEnabled(false);
+			this.getTxtSelectUCM().setToolTipText(this.getTxtSelectUCM().getText());
 			this.getBtnFileUCM().setEnabled(false);
 			this.getBtnUCM().setEnabled(true);
+		}
+	}
+
+	public void openJUCMNavEditor(Composite parent) {
+		File file = new File(txtSelectUCM.getText());
+		IFile ifile = viewController.convert(file);
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		try {
+			IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(ifile.getName());
+			parent.getShell().close();
+			page.openEditor(new FileEditorInput(ifile), desc.getId());
+		} catch (Exception e1) {
+			viewController.createErrorDialog("There must be a project in Eclipse to open a file");
 		}
 	}
 
