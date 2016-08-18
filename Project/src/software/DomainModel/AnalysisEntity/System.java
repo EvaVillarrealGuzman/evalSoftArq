@@ -1,5 +1,6 @@
 package software.DomainModel.AnalysisEntity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,7 +50,7 @@ public class System implements Comparable {
 
 	private boolean state;
 
-	private String pathUCM;
+	private ArrayList<String> pathUCMs;
 
 	// Builders
 	public System() {
@@ -115,12 +116,12 @@ public class System implements Comparable {
 		this.qualityRequirements = pqualityRequirements;
 	}
 
-	public String getPathUCM() {
-		return pathUCM;
+	public ArrayList<String> getPathUCMs() {
+		return pathUCMs;
 	}
 
-	public void setPathUCM(String pathUCM) {
-		this.pathUCM = pathUCM;
+	public void setPathUCMs(ArrayList<String> pathUCMs) {
+		this.pathUCMs = pathUCMs;
 	}
 
 	public boolean isState() {

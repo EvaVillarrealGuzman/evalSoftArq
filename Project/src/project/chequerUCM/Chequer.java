@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 public class Chequer {
 
 	String path;
+	String message = "";
 	Document doc;
 
 	public Chequer(String pathName) {
@@ -103,6 +104,10 @@ public class Chequer {
 	private int isOneStartPointEndPoint() {
 		Boolean startPointFirst = false;
 		Boolean endPointFirst = false;
+		
+		//Estás variables son evaluadas al final para saber si hay más de un start point o más de un end point
+		Boolean isMoreStartPoint= false;
+		Boolean isMoreEndPoint= false;
 
 		NodeList nodesList = doc.getElementsByTagName("nodes");
 
@@ -117,7 +122,7 @@ public class Chequer {
 					if (startPointFirst == false) {
 						startPointFirst = true;
 					} else {
-						return -1;
+						isMoreStartPoint= true;
 					}
 				}
 				// chequea si existe más de un end point
@@ -125,10 +130,16 @@ public class Chequer {
 					if (endPointFirst == false) {
 						endPointFirst = true;
 					} else {
-						return -1;
+						isMoreEndPoint= true;
 					}
 				}
 			}
+		}
+		if (isMoreStartPoint){
+			message = message + "there is more than a start point \n";
+		}
+		if (isMoreEndPoint){
+			message = message + "there is more than a end point \n";
 		}
 		// si llega a este punto, es porque existe un solo start point y un end
 		// point
@@ -136,7 +147,7 @@ public class Chequer {
 	}
 
 	/**
-	 * Chequea si los metadatos de cada responsabilidad, están ingresador
+	 * Chequea si los metadatos de cada responsabilidad, están ingresados
 	 * correctamente
 	 * 
 	 * @return
@@ -146,7 +157,7 @@ public class Chequer {
 		Boolean isMeanRecoveryTime = false;
 		Boolean isMeanDowntime = false;
 		Boolean isMeanTimeBFail = false;
-
+		
 		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
 
 		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
@@ -231,12 +242,13 @@ public class Chequer {
 			}
 		}
 
-		if (isMeanTimeBFail && isMeanDowntime && isMeanRecoveryTime && isMeanExecutionTime) {
-			return 0;
+		if (!isMeanTimeBFail && !isMeanDowntime && !isMeanRecoveryTime && !isMeanExecutionTime) {
+			message = message + "responsibilities parameters were not entered correctly \n";
+			return -1;
 		}
 
-		return -1;
-	}
+		return 0;
+		}
 
 	/**
 	 * Chequea si los metadatos del start point, están ingresador correctamente
@@ -290,10 +302,11 @@ public class Chequer {
 		}
 
 		if (isMeanTimeBRequest) {
-			return 0;
+			message = message + "the parameter of the start point were not entered correctly \n";
+			return -1;
 		}
 
-		return -1;
+		return 0;
 	}
 
 	/**
@@ -302,6 +315,7 @@ public class Chequer {
 	 * @return
 	 */
 	private int isMetadataInOrFork() {
+		Boolean isNotOrForkCorrect = false;
 
 		NodeList nodesList = doc.getElementsByTagName("nodes");
 
@@ -342,6 +356,7 @@ public class Chequer {
 								// puede castear a double
 								// por lo tanto, MeanTimeBRequest queda igual a
 								// false
+								 isNotOrForkCorrect = true;
 							}
 						}
 
@@ -366,13 +381,16 @@ public class Chequer {
 					}
 
 					if (parameterCount != pathParameter) {
+						isNotOrForkCorrect = true;
 						return -1;
 					}
 
 				}
 			}
 		}
-
+		if(isNotOrForkCorrect){
+			message = message + "the parameter of the or fork were not entered correctly \n";
+		}
 		return 0;
 	}
 
@@ -383,6 +401,7 @@ public class Chequer {
 	 * @return
 	 */
 	private int isInDefinition() {
+		Boolean IsNotInDefinition = false;
 
 		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
 
@@ -394,6 +413,7 @@ public class Chequer {
 
 				String respRefs = eResponsibility.getAttribute("respRefs");
 				if (respRefs.equals("")) {
+					IsNotInDefinition= true;
 					return -1;
 				}
 
@@ -410,10 +430,14 @@ public class Chequer {
 
 				String contRefs = eComponent.getAttribute("contRefs");
 				if (contRefs.equals("")) {
+					IsNotInDefinition= true;
 					return -1;
 				}
 
 			}
+		}
+		if(IsNotInDefinition){
+			message= message + "there are path elements are in the definition but not in the picture \n";
 		}
 		return 0;
 	}
@@ -425,10 +449,11 @@ public class Chequer {
 	 */
 	private int isResponsibilities() {
 		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
-		if (responsibilitiesList.getLength() > 0) {
-			return 0;
+		if (!(responsibilitiesList.getLength() > 0)) {
+			message= message + "there are no responsabilities \n";
+			return -1;
 		}
-		return -1;
+		return 0;
 	}
 
 	/**
@@ -438,10 +463,11 @@ public class Chequer {
 	 */
 	private int isComponents() {
 		NodeList componentsList = doc.getElementsByTagName("components");
-		if (componentsList.getLength() > 0) {
-			return 0;
+		if (!(componentsList.getLength() > 0)) {
+			message= message + "there are no components \n";
+			return -1;
 		}
-		return -1;
+		return 0;
 	}
 
 	/**
@@ -451,6 +477,8 @@ public class Chequer {
 	 * @return
 	 */
 	private int isDuplicateName() {
+		Boolean isDuplicateName =false;
+		
 		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
 
 		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
@@ -462,6 +490,7 @@ public class Chequer {
 				String respRefs = eResponsibility.getAttribute("respRefs");
 				String[] respRefsList = respRefs.split(" ");
 				if (respRefsList.length > 1) {
+					isDuplicateName =true;
 					return -1;
 				}
 			}
@@ -478,11 +507,17 @@ public class Chequer {
 				String contRefs = eComponent.getAttribute("contRefs");
 				String[] contRefsList = contRefs.split(" ");
 				if (contRefsList.length > 1) {
+					isDuplicateName =true;
 					return -1;
 				}
 
 			}
 		}
+		
+		if (isDuplicateName){
+			message= message + "there are duplicate names path elements \n";
+		}
+		
 		return 0;
 	}
 

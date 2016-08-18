@@ -20,8 +20,18 @@
       </command>
       <command
             categoryId="Project.commands.category"
-            id="Project.commands.SoftwareArchitectureSpecificationCommand"
-            name="SoftwareArchitectureSpecification">
+            id="Project.commands.SoftwareArchitectureSpecificationManagementCommand"
+            name="SoftwareArchitectureSpecificationManagement">
+      </command>
+      <command
+            categoryId="Project.commands.category"
+            id="Project.commands.SoftwareArchitectureSpecificationNewCommand"
+            name="SoftwareArchitectureSpecificationNew">
+      </command>
+      <command
+            categoryId="Project.commands.category"
+            id="Project.commands.SoftwareArchitectureSpecificationOpenCommand"
+            name="SoftwareArchitectureSpecificationOpen">
       </command>
       <command
             categoryId="Project.commands.category"
@@ -55,12 +65,20 @@
             commandId="Project.commands.newQualityRequirementCommand">
       </handler>
       <handler
-            class="project.handlers.SoftwareArchitectureSpecificationHandler"
-            commandId="Project.commands.softwareArchitectureSpecificationCommand">
+            class="project.handlers.EditQualityRequirementHandler"
+            commandId="Project.commands.editQualityRequirementCommand">
       </handler>
       <handler
-            class="project.handlers.SoftwareArchitectureEvaluationHandler"
-            commandId="Project.commands.softwareArchitectureEvaluationCommand">
+            class="project.handlers.SoftwareArchitectureSpecificationOpenHandler"
+            commandId="Project.commands.SoftwareArchitectureSpecificationOpenCommand">
+      </handler>
+      <handler
+            class="project.handlers.SoftwareArchitectureSpecificationManagementHandler"
+            commandId="Project.commands.SoftwareArchitectureSpecificationManagementCommand">
+      </handler>
+      <handler
+            class="project.handlers.SoftwareArchitectureSpecificationNewHandler"
+            commandId="Project.commands.SoftwareArchitectureSpecificationNewCommand">
       </handler>
       <handler
             class="project.handlers.ReportsHandler"
@@ -69,10 +87,7 @@
       <handler
             class="project.handlers.EditSystemHandler"
             commandId="Project.commands.editSystemCommand">
-      </handler>
-      <handler
-            class="project.handlers.EditQualityRequirementHandler"
-            commandId="Project.commands.editQualityRequirementCommand">
+  project.handlers.SoftwareArchitectureSpecificationNewHandlerlers.EditQualityRequiremeProject.commands.softwareArchitectureSpecificationNewCommandyRequirementCommand">
       </handler>
    </extension>
    <extension
@@ -97,14 +112,14 @@
            			<command
            			    commandId="Project.commands.newSystemCommand"
                 	    id="Project.menus.newSystemCommand"
-                	    label="New System"
+                	    label="New "
                		    mnemonic="S"
                  		style="push">
            			</command>
          		    <command
             	        commandId="Project.commands.editSystemCommand"
                 	    id="Project.menus.editSystemCommand"
-           		        label="Edit System"
+           		        label="Edit "
           	  	        mnemonic="E"
           	  	        style="push">
         		    </command>
@@ -114,24 +129,42 @@
            			<command
               		    commandId="Project.commands.newQualityRequirementCommand"
                 	    id="Project.menus.newQualityRequirementCommand"
-                  		label="New Quality Requeriment"
+                  		label="New "
                   		mnemonic="Q"
                  		style="push">
            			</command>
          		    <command
                   	 	commandId="Project.commands.editQualityRequirementCommand"
                   		id="Project.menus.editQualityRequirementCommand"
-                  		label="Edit Quality Requirement"
+                  		label="Edit "
                   		mnemonic="SQR"
           	  	        style="push">
         		    </command>
      	    </menu>
-            <command
-                  commandId="Project.commands.softwareArchitectureSpecificationCommand"
-                  id="Project.menus.softwareArchitectureSpecificationCommand"
-                  label="Software Architecture Specification"
-                  mnemonic="SAS">
-            </command>
+     	    <menu
+            	   label="Software Architecture Specification">
+           			<command
+              		    commandId="Project.commands.SoftwareArchitectureSpecificationNewCommand"
+                	    id="Project.menus.softwareArchitectureSpecificationNewCommand"
+                  		label="New "
+                  		mnemonic="N"
+                 		style="push">
+           			</command>
+              <command
+                    commandId="Project.commands.SoftwareArchitectureSpecificationOpenCommand"
+                    id="Project.menus.softwareArchitectureSpecificationOpenCommand"
+                    label="Open"
+                    mnemonic="O"
+                    style="push">
+              </command>
+         		    <command
+                  	 	commandId="Project.commands.SoftwareArchitectureSpecificationManagementCommand"
+                  		id="Project.menus.softwareArchitectureSpecificationManagementCommand"
+                  		label="Management"
+                  		mnemonic="SASM"
+          	  	        style="push">
+        		    </command>
+     	    </menu>
             <command
                   commandId="Project.commands.reportsCommand"
                   id="Project.menus.reportsCommand"
@@ -155,10 +188,10 @@
             name="New System ">
       </page>
       <page
-			name="Software Architecture Specification"
+			name="Software Architecture Specification Management"
 			category="project.preferences.UCM2DEVS"
-			class="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
-			id="project.preferences.SoftwareArchitectureSpecificationPreferencePage"/>	
+			class="project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage"
+			id="project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage"/>	
 	  <page
       		category="project.preferences.UCM2DEVS"
        		class="project.preferences.NewQualityRequirementPreferencePage"
@@ -176,7 +209,25 @@
        		class="project.preferences.EditSystemPreferencePage"
        		id="project.preferences.EditSystemPreferencePage"
        		name="Edit System">
-	 </page>	
+	 </page>
+  <page
+        category="project.preferences.UCM2DEVS"
+        class="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
+        id="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
+        name="Software Architecture Specification">
+  </page>
+  <page
+        category="project.preferences.UCM2DEVS"
+        class="project.preferences.SoftwareArchitectureSpecificationNewPreferencePage"
+        id="project.preferences.SoftwareArchitectureSpecificationNewPreferencePage"
+        name="Software Architecture Specification New">
+  </page>
+  <page
+        category="project.preferences.UCM2DEVS"
+        class="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
+        id="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
+        name="Software Architecture Specification Open">
+  </page>	
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">

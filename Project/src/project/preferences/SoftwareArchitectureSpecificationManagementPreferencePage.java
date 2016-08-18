@@ -5,9 +5,11 @@ import java.io.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TableLayout;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -21,7 +23,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbench;
@@ -38,30 +44,32 @@ import project.preferences.controller.SoftwareArchitectureSpecificationPPControl
  * 
  * @author: Eva
  */
-public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditorPreferencePage
+public class SoftwareArchitectureSpecificationManagementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
 	/**
 	 * Attributes
 	 */
-	private Button btnUCM;
-	private Button btnFileUCM;
-	private Button btnEditFileUCM;
+	private Button btnBrowseUCM;
 	private Button btnSave;
+	private Button btnAdd;
+	private Button btnConsult;
+	private Button btnDelete;
 	private ComboViewer cboSystem;
 	private SoftwareArchitectureSpecificationPPController viewController;
-	private Text txtSelectUCM;
 	private FileDialog chooseFile;
-	private Button btnOptionNewUCM;
-	private Button btnOptionOpenUCM;
 	private Composite cSystemName;
 	private GridData gridData;
-	private boolean isCopyPaste;
+	private TableViewer tblViewerQualityRequirement;
+	private Table table;
+	private TableColumn colObject;
+	private TableColumn colPath;
+	private TableColumn colName;
 
 	/**
 	 * Contructor
 	 */
-	public SoftwareArchitectureSpecificationPreferencePage() {
+	public SoftwareArchitectureSpecificationManagementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SoftwareArchitectureSpecificationPPController();
@@ -114,59 +122,67 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					isCopyPaste = true;
 					viewController.setModel(cboSystem);
-					viewController.getView();
+					cmbSystemItemStateChanged();
 					prepareView();
 				}
 			});
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 4;
 
 			Label labelEmptyOne = new Label(parent, SWT.NULL);
 			labelEmptyOne.setLayoutData(gridData);
 
 			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.grabExcessHorizontalSpace = true;
+			gridData.horizontalSpan = 4;
 
-			btnOptionOpenUCM = new Button(parent, SWT.RADIO);
-			btnOptionOpenUCM.setText("Select UCM: ");
-			btnOptionOpenUCM.setLayoutData(gridData);
-			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					prepareView();
-				}
-			});
+			Group gQualityRequirement = new Group(parent, SWT.NONE);
+			gQualityRequirement.setLayoutData(gridData);
+			gQualityRequirement.setText("Software Architecture Specification");
+			gQualityRequirement.setLayout(new GridLayout(2, false));
 
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.widthHint = 210;
-			gridData.horizontalAlignment = GridData.FILL_HORIZONTAL;
-			gridData.grabExcessHorizontalSpace = true;
+			// Create column names
+			String[] columnNames = new String[] { "Object", "Name", "Path" };
+			// Create styles
+			int style = SWT.FULL_SELECTION | SWT.BORDER;
+			// create table
+			table = new Table(gQualityRequirement, style);
+			TableLayout tableLayout = new TableLayout();
+			table.setLayout(tableLayout);
+			gridData = new GridData(GridData.FILL_BOTH);
+			gridData.horizontalSpan = 4;
+			table.setLayoutData(gridData);
+			table.setLinesVisible(true);
+			table.setHeaderVisible(true);
+			// Create columns
+			colObject = new TableColumn(table, SWT.NONE);
+			colObject.setWidth(0);
+			colObject.setText("Object");
 
-			txtSelectUCM = new Text(parent, SWT.SINGLE | SWT.BORDER);
-			txtSelectUCM.setText("");
-			txtSelectUCM.setLayoutData(gridData);
-			txtSelectUCM.addKeyListener(new KeyAdapter() {
-				public void keyPressed(KeyEvent e) {
-					e.doit = false;
-				}
-			});
+			colName = new TableColumn(table, SWT.NONE);
+			colName.setWidth(200);
+			colName.setText("Name");
 
-			// avoid copy and paste
-			txtSelectUCM.addVerifyListener(new VerifyListener() {
-				public void verifyText(VerifyEvent event) {
-					if (!isCopyPaste) {
-						if (event.text.length() > 1) {
-							event.doit = false;
-						}
-					}
-					isCopyPaste = false;
-				}
-			});
+			colPath = new TableColumn(table, SWT.NONE);
+			colPath.setWidth(200);
+			colPath.setText("Path");
+
+			for (int i = 0; i < 8; i++) {
+				TableItem item = new TableItem(table, SWT.NONE);
+				item.setText("Item " + i);
+			}
+
+			// Create TableViewer
+			tblViewerQualityRequirement = new TableViewer(table);
+			tblViewerQualityRequirement.setUseHashlookup(true);
+			tblViewerQualityRequirement.setColumnProperties(columnNames);
+
+			// Create the cell editors
+			CellEditor[] editors = new CellEditor[columnNames.length];
+			editors[0] = null;
+			editors[1] = null;
+			editors[2] = null;
+
+			// Assign the cell editors to the viewer
+			tblViewerQualityRequirement.setCellEditors(editors);
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 1;
@@ -174,12 +190,11 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 			gridData.grabExcessHorizontalSpace = true;
 			gridData.widthHint = 75;
 
-			btnFileUCM = new Button(parent, SWT.PUSH);
-			btnFileUCM.setText(" File ");
-			btnFileUCM.setToolTipText("Search UCM file");
-			btnFileUCM.setLayoutData(gridData);
-			;
-			btnFileUCM.addSelectionListener(new SelectionAdapter() {
+			btnAdd = new Button(gQualityRequirement, SWT.PUSH);
+			btnAdd.setText(" Add ");
+			btnAdd.setToolTipText("Add UCM file");
+			btnAdd.setLayoutData(gridData);
+			btnAdd.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// Open a FileDialog that show only jucm file
@@ -187,74 +202,47 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 					chooseFile.setFilterNames(new String[] { "Jucm Files" });
 					chooseFile.setFilterExtensions(new String[] { "*.jucm" });
 					String filePath = chooseFile.open();
-					isCopyPaste = true;
-					txtSelectUCM.setText(filePath);
-					txtSelectUCM.setToolTipText(filePath);
-					prepareView();
+					if (!viewController.isUCMDuplicate(filePath)) {
+						viewController.addToTable(filePath);
+					} else {
+						// TODO poner bien el nombre
+						viewController.createErrorDialog("The UCM already exists");
+					}
 				}
 			});
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 1;
 			gridData.horizontalAlignment = GridData.END;
+			gridData.grabExcessHorizontalSpace = true;
 			gridData.widthHint = 75;
-			gridData.grabExcessHorizontalSpace = true;
 
-			btnEditFileUCM = new Button(parent, SWT.PUSH);
-			btnEditFileUCM.setText(" Edit ");
-			btnEditFileUCM.setToolTipText("Edit UCM file");
-			btnEditFileUCM.setLayoutData(gridData);
-			btnEditFileUCM.addSelectionListener(new SelectionAdapter() {
-				// Open an existing jucm file
+			btnConsult = new Button(gQualityRequirement, SWT.PUSH);
+			btnConsult.setText(" Consult ");
+			btnConsult.setToolTipText("Consult UCM file");
+			btnConsult.setLayoutData(gridData);
+			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					openJUCMNavEditor(parent);
-				}
-			});
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 4;
-
-			Label labelEmptyTwo = new Label(parent, SWT.NULL);
-			labelEmptyTwo.setLayoutData(gridData);
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.grabExcessHorizontalSpace = true;
-
-			btnOptionNewUCM = new Button(parent, SWT.RADIO);
-			btnOptionNewUCM.setText("Create UCM: ");
-			btnOptionNewUCM.setSelection(true);
-			btnOptionNewUCM.setLayoutData(gridData);
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.grabExcessHorizontalSpace = true;
-			btnOptionOpenUCM.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					prepareView();
+					TableItem item = table.getItem(table.getSelectionIndex());
+					viewController.openJUCMNavEditor(parent, item.getText(2) + "\\" + item.getText(1));
 				}
 			});
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 1;
-			gridData.widthHint = 75;
+			gridData.horizontalAlignment = GridData.END;
 			gridData.grabExcessHorizontalSpace = true;
+			gridData.widthHint = 75;
 
-			btnUCM = new Button(parent, SWT.PUSH);
-			btnUCM.setText(" New ");
-			btnUCM.setToolTipText("New UCM file");
-			btnUCM.setLayoutData(gridData);
-			btnUCM.addSelectionListener(new SelectionAdapter() {
-				// Open jUCMNav´s Wizard
+			btnDelete = new Button(gQualityRequirement, SWT.PUSH);
+			btnDelete.setText(" Delete ");
+			btnDelete.setToolTipText("Delete UCM file");
+			btnDelete.setLayoutData(gridData);
+			btnDelete.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					IWizard wizard = new seg.jUCMNav.views.wizards.NewUcmFileWizard();
-					WizardDialog dialog = new WizardDialog(parent.getShell(), wizard);
-					dialog.open();
-					// TODO implementar que solo se cierre si no se cancela
-					parent.getShell().close();
+					viewController.deleteToTable();
 				}
 			});
 
@@ -277,9 +265,7 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.save() == 0) {
-						openJUCMNavEditor(parent);
-					}
+					viewController.save();
 				}
 			});
 
@@ -306,28 +292,12 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	/**
 	 * Getters and Setters
 	 */
-	public Button getBtnUCM() {
-		return btnUCM;
-	}
-
-	public void setBtnUCM(Button btnUCM) {
-		this.btnUCM = btnUCM;
-	}
-
 	public Button getBtnFileUCM() {
-		return btnFileUCM;
+		return btnBrowseUCM;
 	}
 
 	public void setBtnFileUCM(Button btnFileUCM) {
-		this.btnFileUCM = btnFileUCM;
-	}
-
-	public Button getBtnEditFileUCM() {
-		return btnEditFileUCM;
-	}
-
-	public void setBtnEditFileUCM(Button btnEditFileUCM) {
-		this.btnEditFileUCM = btnEditFileUCM;
+		this.btnBrowseUCM = btnFileUCM;
 	}
 
 	public ComboViewer getCboSystem() {
@@ -346,14 +316,6 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		this.viewController = viewController;
 	}
 
-	public Text getTxtSelectUCM() {
-		return txtSelectUCM;
-	}
-
-	public void setTxtSelectUCM(Text txtSelectUCM) {
-		this.txtSelectUCM = txtSelectUCM;
-	}
-
 	public FileDialog getChooseFile() {
 		return chooseFile;
 	}
@@ -362,28 +324,36 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 		this.chooseFile = chooseFile;
 	}
 
-	public Button getBtnOptionNewUCM() {
-		return btnOptionNewUCM;
-	}
-
-	public void setBtnOptionNewUCM(Button btnOptionNewUCM) {
-		this.btnOptionNewUCM = btnOptionNewUCM;
-	}
-
-	public Button getBtnOptionOpenUCM() {
-		return btnOptionOpenUCM;
-	}
-
-	public void setBtnOptionOpenUCM(Button btnOptionOpenUCM) {
-		this.btnOptionOpenUCM = btnOptionOpenUCM;
-	}
-
 	public Button getBtnSave() {
 		return btnSave;
 	}
 
 	public void setBtnSave(Button btnSave) {
 		this.btnSave = btnSave;
+	}
+
+	public Table getTable() {
+		return table;
+	}
+
+	public void setTable(Table table) {
+		this.table = table;
+	}
+
+	public Button getBtnAdd() {
+		return btnAdd;
+	}
+
+	public void setBtnAdd(Button btnAdd) {
+		this.btnAdd = btnAdd;
+	}
+
+	public Button getBtnDelete() {
+		return btnDelete;
+	}
+
+	public void setBtnDelete(Button btnDelete) {
+		this.btnDelete = btnDelete;
 	}
 
 	/**
@@ -399,39 +369,38 @@ public class SoftwareArchitectureSpecificationPreferencePage extends FieldEditor
 	 * @param pabm
 	 */
 	public void prepareView() {
+
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog("No saved systems");
 		}
-		if (this.getBtnOptionOpenUCM().getSelection() == true) {
-			// Prepate view when button of open ucm is select
-			this.getBtnFileUCM().setEnabled(true);
-			this.getTxtSelectUCM().setToolTipText(this.getTxtSelectUCM().getText());
-			if (!this.getTxtSelectUCM().getText().equals("")) {
-				this.getBtnEditFileUCM().setEnabled(true);
-			} else {
-				this.getBtnEditFileUCM().setEnabled(false);
-			}
-			this.getBtnUCM().setEnabled(false);
+		if (((IStructuredSelection) this.getCboSystem().getSelection()).getFirstElement() == null) {
+			btnAdd.setEnabled(false);
+			btnDelete.setEnabled(false);
+			btnConsult.setEnabled(false);
 		} else {
-			// Prepate view when button of new ucm is select
-			this.getBtnEditFileUCM().setEnabled(false);
-			this.getTxtSelectUCM().setToolTipText(this.getTxtSelectUCM().getText());
-			this.getBtnFileUCM().setEnabled(false);
-			this.getBtnUCM().setEnabled(true);
+			btnAdd.setEnabled(true);
+			btnDelete.setEnabled(true);
+			btnConsult.setEnabled(true);
 		}
+
 	}
 
-	public void openJUCMNavEditor(Composite parent) {
-		File file = new File(txtSelectUCM.getText());
-		IFile ifile = viewController.convert(file);
-		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		try {
-			IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(ifile.getName());
-			parent.getShell().close();
-			page.openEditor(new FileEditorInput(ifile), desc.getId());
-		} catch (Exception e1) {
-			viewController.createErrorDialog("There must be a project in Eclipse to open a file");
-		}
+	/**
+	 * When a system is selected, fill table with its quality requirements and
+	 * prepare the view
+	 */
+	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
+		this.fillTable();
+	}
+
+	/**
+	 * Fill table with system's quality requirements (quality attribute,
+	 * description and condition)
+	 */
+	public void fillTable() {
+		this.getViewController().setModelPaths(
+				(software.DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+						.getFirstElement());
 	}
 
 }

@@ -418,8 +418,8 @@ public class AnalysisManager extends HibernateManager {
 		this.getSystem().setProjectFinishDate(pfinishDate);
 	}
 
-	public void setPathUCM(String pathUCM) {
-		this.getSystem().setPathUCM(pathUCM);
+	public void setPathUCMs(ArrayList<String> pathUCMs) {
+		this.getSystem().setPathUCMs(pathUCMs);
 	}
 
 	// Getters of system atribbutes (name, projectName, startDate, finishDate)
@@ -439,8 +439,8 @@ public class AnalysisManager extends HibernateManager {
 		return this.getSystem().getProjectFinishDate();
 	}
 
-	public String getPathUCM() {
-		return this.getSystem().getPathUCM();
+	public ArrayList<String> getPathUCMs() {
+		return this.getSystem().getPathUCMs();
 	}
 
 	public void saveSystem(int popcABM) {
@@ -595,10 +595,12 @@ public class AnalysisManager extends HibernateManager {
 	public void setDescriptionScenario(String pdescription) {
 		this.getQualityRequirement().getQualityScenario().setDescription(pdescription);
 	}
-	
+
 	public void setConditionScenario(Condition pcondition) {
-		this.getQualityRequirement().getQualityScenario().setCondition(pcondition);;
+		this.getQualityRequirement().getQualityScenario().setCondition(pcondition);
+		;
 	}
+
 	// Setters of specificScenario atribbutes (stimulusSource, stimulus,
 	// Enviroment, Artifact, Response, ResponseMeasure)
 	public void setStimulusSource(String pdescription, String pvalue, StimulusSourceType ptype) {

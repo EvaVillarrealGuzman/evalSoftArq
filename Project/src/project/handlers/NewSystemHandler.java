@@ -32,7 +32,6 @@ public class NewSystemHandler extends AbstractHandler {
 				new String[] { "project.preferences.NewSystemPreferencePage" }, null);
 		if (pref != null)
 			pref.open();
-		// this.getQualityRequirementController().openFrmQualityRequirementManagement(3);
 		return null;
 	}
 
