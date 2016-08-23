@@ -120,6 +120,14 @@ public class Controller {
 	}
 	
 	/**
+	 * Created a dialog for system's delete
+	 * @return boolean
+	 */
+	public boolean createSaveChangedDialog() {
+		return MessageDialog.openQuestion(null, "Question", "Do you want to save the changes?");
+	}
+	
+	/**
 	 * Created a dialog for quality requirement's delete
 	 * @return boolean
 	 */
