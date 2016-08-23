@@ -37,7 +37,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	private Button btnSave;
 	private Button btnRemove;
 	private Button btnEdit;
-	private ComboViewer cboSystem;
+	private ComboViewer cmbSystem;
 	private StringFieldEditor projectName;
 	private static EditSystemPreferencePage SystemPP; // NOPMD by Usuario-Pc on 10/06/16 21:50
 	private EditSystemPPController viewController;
@@ -87,13 +87,13 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
 
-			cboSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
-			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
-			cboSystem.getCombo().setLayoutData(gridData);
-			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
+			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
+			cmbSystem.setContentProvider(ArrayContentProvider.getInstance());
+			cmbSystem.getCombo().setLayoutData(gridData);
+			cmbSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.setModel(cboSystem);
+					viewController.setModel(cmbSystem);
 					viewController.getView();
 					prepareView(1);
 				}
@@ -261,11 +261,11 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	}
 
 	public ComboViewer getCboSystem() {
-		return cboSystem;
+		return cmbSystem;
 	}
 
 	public void setCboSystem(ComboViewer cboSystem) {
-		this.cboSystem = cboSystem;
+		this.cmbSystem = cboSystem;
 	}
 
 	public StringFieldEditor getProjectName() {
