@@ -963,6 +963,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		}
 		switch (pabm) {
 		case 0:// Search quality requirement
+			this.clearScenario();
 			this.getCmbSystem().getCombo().setEnabled(true);
 			loadCmbSystem();
 
@@ -993,8 +994,8 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getTxtValueResponse().setEnabled(false, gResponse);
 			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
 
-			this.getBtnSave().setEnabled(true);
-			this.getBtnRemove().setEnabled(true);
+			this.getBtnSave().setEnabled(false);
+			this.getBtnRemove().setEnabled(false);
 
 
 			break;
@@ -1002,10 +1003,13 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
 
 			break;
-		case 2:// With system selected
+		case 2:// With quality requirement selected
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(true);
 			this.getCmbCondition().getCombo().setEnabled(true);
+			
+			this.getBtnSave().setEnabled(true);
+			this.getBtnRemove().setEnabled(true);
 
 			break;
 		case 3:// With quality attribute selected
@@ -1066,6 +1070,9 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getCmbMetric().getCombo().setEnabled(true);
 
 			this.getCmbUnit().getCombo().setEnabled(true);
+			
+			this.getBtnSave().setEnabled(true);
+			this.getBtnRemove().setEnabled(true);
 
 			break;
 			
@@ -1101,9 +1108,8 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getTxtValueResponse().setEnabled(false, gResponse);
 			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
 
-			this.getBtnSave().setEnabled(true);
-			this.getBtnRemove().setEnabled(true);
-
+			this.getBtnRemove().setEnabled(false);
+			this.getBtnSave().setEnabled(false);
 			break;
 
 		}

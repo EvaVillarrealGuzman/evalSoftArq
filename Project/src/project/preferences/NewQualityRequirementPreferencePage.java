@@ -830,13 +830,14 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getTxtValueResponse().setEnabled(false, gResponse);
 			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
 
-			this.getBtnNew().setEnabled(true);
+			this.getBtnNew().setEnabled(false);
 
 			break;
 		case 1:// With system selected
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(true);
 			this.getCmbCondition().getCombo().setEnabled(true);
+			this.getBtnNew().setEnabled(true);
 
 			break;
 		case 2:// With quality attribute selected

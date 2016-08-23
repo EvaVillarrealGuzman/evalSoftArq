@@ -418,11 +418,7 @@ public class AnalysisManager extends HibernateManager {
 		this.getSystem().setProjectFinishDate(pfinishDate);
 	}
 
-	public void setPathUCMs(ArrayList<String> pathUCMs) {
-		this.getSystem().setPathUCMs(pathUCMs);
-	}
-
-	// Getters of system atribbutes (name, projectName, startDate, finishDate)
+	// Getters of system attributes (name, projectName, startDate, finishDate)
 	public String getSystemName() {
 		return this.getSystem().getSystemName();
 	}
@@ -437,10 +433,6 @@ public class AnalysisManager extends HibernateManager {
 
 	public Date getFinishDate() {
 		return this.getSystem().getProjectFinishDate();
-	}
-
-	public ArrayList<String> getPathUCMs() {
-		return this.getSystem().getPathUCMs();
 	}
 
 	public void saveSystem(int popcABM) {

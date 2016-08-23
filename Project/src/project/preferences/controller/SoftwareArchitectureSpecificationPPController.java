@@ -15,7 +15,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage;
-import software.BusinessLogic.AnalysisManager;
+import software.BusinessLogic.SoftwareArchitectureSpecificationManager;
 
 /**
  * Controller for SoftwareArchitectureEspecificationPreferencePage
@@ -29,7 +29,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * Attributes
 	 */
 	private static SoftwareArchitectureSpecificationPPController controller;
-	private AnalysisManager manager;
+	private SoftwareArchitectureSpecificationManager manager;
 	private SoftwareArchitectureSpecificationManagementPreferencePage form;
 
 	/**
@@ -43,14 +43,14 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		SoftwareArchitectureSpecificationPPController.controller = controller;
 	}
 
-	public AnalysisManager getManager() {
+	public SoftwareArchitectureSpecificationManager getManager() {
 		if (manager == null) {
-			manager = new AnalysisManager();
+			manager = new SoftwareArchitectureSpecificationManager();
 		}
 		return manager;
 	}
 
-	public void setManager(AnalysisManager manager) {
+	public void setManager(SoftwareArchitectureSpecificationManager manager) {
 		this.manager = manager;
 	}
 
