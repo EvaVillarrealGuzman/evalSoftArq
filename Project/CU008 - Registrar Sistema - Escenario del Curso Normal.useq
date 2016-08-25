@@ -5,7 +5,7 @@
     type="class" autoSize="true">    
     <position height="-1" width="-1" x="679" y="0"/>    
     <execution id="2">      
-      <position height="821" width="0" x="0" y="78"/>    
+      <position height="1003" width="0" x="0" y="78"/>    
     </execution>    
     <execution id="4">      
       <position height="21" width="0" x="0" y="120"/>    
@@ -23,7 +23,7 @@
       <position height="21" width="0" x="0" y="381"/>    
     </execution>    
     <execution id="17">      
-      <position height="21" width="184" x="5" y="815"/>    
+      <position height="21" width="184" x="5" y="997"/>    
     </execution>  
   </object>  
   <object id="18" language="java" name="project.preferences.controller.NewSystemPPController" project="Project" 
@@ -34,30 +34,47 @@
       <position height="21" width="0" x="0" y="228"/>    
     </execution>    
     <execution id="12">      
-      <position height="447" width="163" x="318" y="431"/>    
+      <position height="629" width="163" x="318" y="431"/>    
     </execution>    
     <execution id="20">      
-      <position height="84" width="7" x="396" y="473"/>    
+      <position height="302" width="7" x="396" y="473"/>    
     </execution>    
     <execution id="28">      
-      <position height="21" width="7" x="399" y="515"/>    
+      <position height="239" width="7" x="399" y="515"/>    
     </execution>    
     <execution id="22">      
-      <position height="21" width="7" x="396" y="577"/>    
+      <position height="21" width="7" x="396" y="782"/>    
     </execution>    
     <execution id="26">      
-      <position height="112" width="7" x="396" y="745"/>    
+      <position height="152" width="7" x="396" y="887"/>    
+    </execution>    
+    <execution id="30">      
+      <position height="176" width="7" x="277" y="557"/>    
     </execution>  
   </object>  
-  <object id="30" language="java" name="software.BusinessLogic.AnalysisManager" project="Project" 
+  <object id="34" language="java" name="software.BusinessLogic.AnalysisManager" project="Project" 
     file="/Project/src/software/BusinessLogic/AnalysisManager.java" binary="false" label="analysisManager" type="class" 
     autoSize="true">    
     <position height="-1" width="-1" x="712" y="0"/>    
     <execution id="24">      
-      <position height="90" width="121" x="193" y="609"/>    
+      <position height="159" width="121" x="193" y="806"/>    
     </execution>    
-    <execution id="32">      
-      <position height="21" width="7" x="250" y="657"/>    
+    <execution id="36">      
+      <position height="21" width="7" x="250" y="923"/>    
+    </execution>    
+    <execution id="33">      
+      <position height="134" width="121" x="360" y="578"/>    
+    </execution>    
+    <execution id="38">      
+      <position height="71" width="7" x="417" y="620"/>    
+    </execution>  
+  </object>  
+  <object id="41" language="java" name="software.DomainModel.AnalysisEntity.System" project="Project" 
+    file="/Project/src/software/DomainModel/AnalysisEntity/System.java" binary="false" label="system" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="628" y="0"/>    
+    <execution id="40">      
+      <position height="21" width="166" x="485" y="649"/>    
     </execution>  
   </object>  
   <message id="3" operation="setViewController(project.preferences.controller.NewSystemPPController):void" 
@@ -112,12 +129,31 @@
     <end type="SOURCE" refId="20"/>    
     <end type="TARGET" refId="28"/>  
   </message>  
-  <message id="29" operation="prepareView(int):void" asynchronous="false">    
+  <message id="29" operation="getManager():software.BusinessLogic.AnalysisManager" asynchronous="false">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="30"/>  
+  </message>  
+  <message id="31" operation="prepareView(int):void" asynchronous="false">    
     <end type="SOURCE" refId="26"/>    
     <end type="TARGET" refId="17"/>  
   </message>  
-  <message id="31" operation="saveObject(java.lang.Object):boolean" asynchronous="false">    
+  <message id="32" 
+    operation="newSystem(java.lang.String,java.lang.String,java.util.Date,java.util.Date,java.lang.Boolean):void" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="33"/>  
+  </message>  
+  <message id="35" operation="saveObject(java.lang.Object):boolean" asynchronous="false">    
     <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="32"/>  
+    <end type="TARGET" refId="36"/>  
+  </message>  
+  <message id="37" operation="setSystem(software.DomainModel.AnalysisEntity.System):void" asynchronous="false">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="38"/>  
+  </message>  
+  <message id="39" operation="System(java.lang.String,java.lang.String,java.util.Date,java.util.Date,boolean)" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="40"/>  
   </message>
 </sequence-diagram>
