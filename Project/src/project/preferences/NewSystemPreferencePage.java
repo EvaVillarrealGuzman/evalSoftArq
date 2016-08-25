@@ -24,7 +24,8 @@ import project.preferences.controller.NewSystemPPController;
 
 /**
  * To create a new system
- * @author: Eva 
+ * 
+ * @author: Eva
  */
 
 public class NewSystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -38,7 +39,6 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	private Button btnNew;
 	private StringFieldEditor systemName;
 	private StringFieldEditor projectName;
-	private static NewSystemPreferencePage SystemPP;
 	private NewSystemPPController viewController;
 	private Composite cProject;
 	private Composite cSystemName;
@@ -51,20 +51,25 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new NewSystemPPController();
-		this.setViewController(viewController); 
+		this.setViewController(viewController);
 		this.getViewController().setForm(this);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
+	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
 		try {
@@ -78,13 +83,14 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			gridData.horizontalAlignment = GridData.FILL;
 			cSystemName.setLayoutData(gridData);
 
-			systemName = new StringFieldEditor("systemName", "System Name: ", cSystemName);
+			systemName = new StringFieldEditor(PreferenceConstants.SystemName_Label,
+					PreferenceConstants.SystemName_Label + ":", cSystemName);
 
 			new Label(parent, SWT.NULL);
 
 			// Group for project properties
 			Group groupProject = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupProject.setText("Project");
+			groupProject.setText(PreferenceConstants.CompositeProject_Label);
 			groupProject.setLayout(layout);
 
 			gridData = new GridData();
@@ -97,17 +103,18 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			gridData.horizontalAlignment = GridData.FILL;
 			cProject.setLayoutData(gridData);
 
-			projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject);
+			projectName = new StringFieldEditor(PreferenceConstants.ProjectName_Label,
+					PreferenceConstants.ProjectName_Label + ":", cProject);
 
 			addField(projectName);
 
 			lblCalendarStarDate = new Label(cProject, SWT.NONE);
-			lblCalendarStarDate.setText("Start Date");
+			lblCalendarStarDate.setText(PreferenceConstants.CalendarStarDate_Label + ":");
 
 			calendarStartDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
 			lblCalendarFinishDate = new Label(cProject, SWT.NONE);
-			lblCalendarFinishDate.setText("Finish Date");
+			lblCalendarFinishDate.setText(PreferenceConstants.CalendarFinishDate_Label + ":");
 
 			calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
@@ -121,7 +128,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnNew = new Button(parent, SWT.PUSH);
-			btnNew.setText("Save");
+			btnNew.setText(PreferenceConstants.ButtomSave_Label);
 			btnNew.setLayoutData(gridData);
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -134,7 +141,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 		} catch (
 
 		JDBCConnectionException e) {
-			viewController.createErrorDialog("Postgres service is not running");
+			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -143,7 +150,10 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors
+	 * ()
 	 */
 	@Override
 	protected void createFieldEditors() {
@@ -208,14 +218,6 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 		this.projectName = projectName;
 	}
 
-	public static NewSystemPreferencePage getSystemPP() {
-		return SystemPP;
-	}
-
-	public static void setSystemPP(NewSystemPreferencePage systemPP) {
-		SystemPP = systemPP;
-	}
-
 	public NewSystemPPController getViewController() {
 		return viewController;
 	}
@@ -234,6 +236,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 
 	/**
 	 * prepare the view for the different actions that are possible
+	 * 
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {

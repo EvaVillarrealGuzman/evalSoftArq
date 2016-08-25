@@ -1,8 +1,5 @@
 package project.preferences;
 
-import java.io.File;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -11,12 +8,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -28,13 +21,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
 import org.hibernate.exception.JDBCConnectionException;
 
 import project.preferences.controller.SoftwareArchitectureSpecificationPPController;
@@ -109,7 +97,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText("System Name: ");
+			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
@@ -136,11 +124,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 
 			Group gQualityRequirement = new Group(parent, SWT.NONE);
 			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText("Software Architecture Specification");
+			gQualityRequirement.setText(PreferenceConstants.SoftwareArchitectureSpecification_Group);
 			gQualityRequirement.setLayout(new GridLayout(2, false));
 
 			// Create column names
-			String[] columnNames = new String[] { "Object", "Name", "Path" };
+			String[] columnNames = new String[] { PreferenceConstants.Object_Column, PreferenceConstants.Name_Column,
+					PreferenceConstants.Path_Column };
 			// Create styles
 			int style = SWT.FULL_SELECTION | SWT.BORDER;
 			// create table
@@ -155,15 +144,15 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			// Create columns
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
-			colObject.setText("Object");
+			colObject.setText(PreferenceConstants.Object_Column);
 
 			colName = new TableColumn(table, SWT.NONE);
 			colName.setWidth(200);
-			colName.setText("Name");
+			colName.setText(PreferenceConstants.Name_Column);
 
 			colPath = new TableColumn(table, SWT.NONE);
 			colPath.setWidth(200);
-			colPath.setText("Path");
+			colPath.setText(PreferenceConstants.Path_Column);
 
 			for (int i = 0; i < 8; i++) {
 				TableItem item = new TableItem(table, SWT.NONE);
@@ -191,22 +180,22 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			gridData.widthHint = 75;
 
 			btnAdd = new Button(gQualityRequirement, SWT.PUSH);
-			btnAdd.setText(" Add ");
-			btnAdd.setToolTipText("Add UCM file");
+			btnAdd.setText(PreferenceConstants.ButtomAdd_Label);
+			btnAdd.setToolTipText(PreferenceConstants.ButtomAdd_ToolTip);
 			btnAdd.setLayoutData(gridData);
 			btnAdd.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// Open a FileDialog that show only jucm file
 					chooseFile = new FileDialog(parent.getShell(), SWT.OPEN);
-					chooseFile.setFilterNames(new String[] { "Jucm Files" });
+					chooseFile.setFilterNames(new String[] { PreferenceConstants.JucmFiles_Label });
 					chooseFile.setFilterExtensions(new String[] { "*.jucm" });
 					String filePath = chooseFile.open();
 					if (!viewController.isUCMDuplicate(filePath)) {
 						viewController.addToTable(filePath);
 					} else {
 						// TODO poner bien el nombre
-						viewController.createErrorDialog("The UCM already exists");
+						viewController.createErrorDialog(PreferenceConstants.UCMExists_ErrorDialog);
 					}
 				}
 			});
@@ -218,8 +207,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			gridData.widthHint = 75;
 
 			btnConsult = new Button(gQualityRequirement, SWT.PUSH);
-			btnConsult.setText(" Consult ");
-			btnConsult.setToolTipText("Consult UCM file");
+			btnConsult.setText(PreferenceConstants.ButtomConsult_Label);
+			btnConsult.setToolTipText(PreferenceConstants.ButtomConsult_ToolTip);
 			btnConsult.setLayoutData(gridData);
 			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -236,8 +225,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			gridData.widthHint = 75;
 
 			btnDelete = new Button(gQualityRequirement, SWT.PUSH);
-			btnDelete.setText(" Delete ");
-			btnDelete.setToolTipText("Delete UCM file");
+			btnDelete.setText(PreferenceConstants.ButtomDelete_Label);
+			btnDelete.setToolTipText(PreferenceConstants.ButtomDelete_ToolTip);
 			btnDelete.setLayoutData(gridData);
 			btnDelete.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -260,7 +249,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnSave = new Button(parent, SWT.PUSH);
-			btnSave.setText(" Save ");
+			btnSave.setText(PreferenceConstants.ButtomSave_Label);
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -273,7 +262,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 
 			this.prepareView();
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog("Postgres service is not running");
+			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -373,7 +362,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	public void prepareView() {
 
 		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController().createErrorDialog("No saved systems");
+			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystem_ErrorDialog);
 		}
 		if (((IStructuredSelection) this.getCboSystem().getSelection()).getFirstElement() == null) {
 			btnAdd.setEnabled(false);

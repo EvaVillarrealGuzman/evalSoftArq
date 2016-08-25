@@ -18,6 +18,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
+import project.preferences.PreferenceConstants;
+
 /**
  * Parent controller with the reusable methods
  */
@@ -25,6 +27,7 @@ public class Controller {
 
 	/**
 	 * Validate whether a StringFieldEditor is empty
+	 * 
 	 * @param ptxt
 	 */
 	public boolean isEmpty(StringFieldEditor ptxt) {
@@ -32,7 +35,8 @@ public class Controller {
 	}
 
 	/**
-	 * Validate whether a Text is empty 
+	 * Validate whether a Text is empty
+	 * 
 	 * @param ptxt
 	 */
 	public boolean isEmpty(Text ptxt) {
@@ -41,6 +45,7 @@ public class Controller {
 
 	/**
 	 * Validate whether a JComboBox is empty
+	 * 
 	 * @param pcmb
 	 */
 	public boolean isEmpty(ComboViewer pcmb) {
@@ -49,6 +54,7 @@ public class Controller {
 
 	/**
 	 * Convert a DateTime to Date
+	 * 
 	 * @param dt
 	 * @return
 	 */
@@ -64,6 +70,7 @@ public class Controller {
 
 	/**
 	 * Methods to get day, month and year of date
+	 * 
 	 * @param pdate
 	 * @return
 	 */
@@ -93,6 +100,7 @@ public class Controller {
 
 	/**
 	 * Valid if a date is before that other
+	 * 
 	 * @param pcs
 	 * @param pcf
 	 * @return boolean (indicates if finish date is before start date)
@@ -105,38 +113,46 @@ public class Controller {
 
 	/**
 	 * Created a dialog for error
+	 * 
 	 * @param error
 	 */
 	public void createErrorDialog(String error) {
-		MessageDialog.openError(null, "Error", error);
+		MessageDialog.openError(null, PreferenceConstants.Error_Label, error);
 	}
 
 	/**
 	 * Created a dialog for system's delete
+	 * 
 	 * @return boolean
 	 */
-	public boolean createDeleteDialog() {
-		return MessageDialog.openQuestion(null, "Question", "Do you want to delete the system?");
+	public boolean createDeleteSystem() {
+		return MessageDialog.openQuestion(null, PreferenceConstants.Question_Label,
+				PreferenceConstants.WantDeleteSystem_QuestionDialog);
 	}
-	
+
 	/**
 	 * Created a dialog for system's delete
+	 * 
 	 * @return boolean
 	 */
 	public boolean createSaveChangedDialog() {
-		return MessageDialog.openQuestion(null, "Question", "Do you want to save the changes?");
+		return MessageDialog.openQuestion(null, PreferenceConstants.Question_Label,
+				PreferenceConstants.WantSaveChanges_QuestionDialog);
 	}
-	
+
 	/**
 	 * Created a dialog for quality requirement's delete
+	 * 
 	 * @return boolean
 	 */
 	public boolean createDeleteRequirementDialog() {
-		return MessageDialog.openQuestion(null, "Question", "Do you want to delete the quality requirement?");
+		return MessageDialog.openQuestion(null, PreferenceConstants.Question_Label,
+				PreferenceConstants.WantDeleteQualityRequirement_QuestionDialog);
 	}
 
 	/**
 	 * Convert a File to IFile
+	 * 
 	 * @param file
 	 * @return IFile
 	 */

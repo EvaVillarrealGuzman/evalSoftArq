@@ -14,6 +14,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+import project.preferences.PreferenceConstants;
 import project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage;
 import software.BusinessLogic.SoftwareArchitectureSpecificationManager;
 
@@ -120,7 +121,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
-			this.createErrorDialog("System name empty");
+			this.createErrorDialog(PreferenceConstants.EmptySystemName_ErrorDialog);
 			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
 		}
@@ -195,10 +196,10 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 				parent.getShell().close();
 				page.openEditor(new FileEditorInput(ifile), desc.getId());
 			} catch (Exception e1) {
-				createErrorDialog("There must be a project in Eclipse to open a file");
+				createErrorDialog(PreferenceConstants.ProjectOpenEclipse_ErrorDialog);
 			}
 		} else {
-			createErrorDialog("The UCM file does not exist");
+			createErrorDialog(PreferenceConstants.UCMNotExists_ErrorDialog);
 		}
 
 	}

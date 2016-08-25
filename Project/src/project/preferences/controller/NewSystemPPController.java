@@ -1,10 +1,12 @@
 package project.preferences.controller;
 
 import project.preferences.NewSystemPreferencePage;
+import project.preferences.PreferenceConstants;
 import software.BusinessLogic.AnalysisManager;
 
 /**
  * Controller for NewSystemPreferencePage
+ * 
  * @author Eva
  *
  */
@@ -61,6 +63,7 @@ public class NewSystemPPController extends Controller {
 
 	/**
 	 * Create a new system
+	 * 
 	 * @return int (indicates if the system was created successfully)
 	 */
 	public int newSystem() {
@@ -76,19 +79,20 @@ public class NewSystemPPController extends Controller {
 	}
 
 	/**
-	 * Validate the necessary data for the creation of the system 
+	 * Validate the necessary data for the creation of the system
+	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getSystemName())) {
-			this.createErrorDialog("System name empty");
+			this.createErrorDialog(PreferenceConstants.EmptySystemName_ErrorDialog);
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
-			this.createErrorDialog("Project name empty");
+			this.createErrorDialog(PreferenceConstants.EmptyProjectName_ErrorDialog);
 			return false;
 		} else if (isAfter(this.getForm().getCalendarStartDate(), this.getForm().getCalendarFinishDate())) {
-			this.createErrorDialog("The finish date is less than the start date");
+			this.createErrorDialog(PreferenceConstants.CompareDate_ErrorDialog);
 			getForm().getCalendarStartDate().setFocus();
 			return false;
 		}

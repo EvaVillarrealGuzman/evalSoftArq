@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Project
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: Project;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: project.Activator
-Bundle-Vendor: FEM
+Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.10.1",
@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.100",
  seg.jUCMNav;bundle-version="6.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/antlr-2.7.6.jar,
  lib/asm-attrs.jar,

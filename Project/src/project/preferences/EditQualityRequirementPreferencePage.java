@@ -37,7 +37,8 @@ import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 
 /**
  * To search, consult, edit or remove a quality requirement
- * @author: Micaela 
+ * 
+ * @author: Micaela
  */
 public class EditQualityRequirementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
@@ -99,14 +100,19 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
+	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
 		try {
@@ -124,7 +130,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText("System Name: ");
+			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
@@ -158,11 +164,13 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			Group gQualityRequirement = new Group(cSystemName, SWT.NONE);
 			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText("Quality Requirements");
+			gQualityRequirement.setText(PreferenceConstants.QualityRequirements_Group);
 			gQualityRequirement.setLayout(new GridLayout(2, false));
 
 			// Create column names
-			String[] columnNames = new String[] { "Object", "Condition", "Quality Attribute", "Description Scenario" };
+			String[] columnNames = new String[] { PreferenceConstants.Object_Column,
+					PreferenceConstants.Condition_Column, PreferenceConstants.QualityAttribute_Column,
+					PreferenceConstants.DescriptionScenario_Column };
 			// Create styles
 			int style = SWT.FULL_SELECTION | SWT.BORDER;
 			// create table
@@ -177,23 +185,23 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			// Create columns
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
-			colObject.setText("Object");
+			colObject.setText(PreferenceConstants.Object_Column);
 
 			colQualityAttribute = new TableColumn(table, SWT.NONE);
 			colQualityAttribute.setWidth(200);
-			colQualityAttribute.setText("Quality Attribute");
-			
+			colQualityAttribute.setText(PreferenceConstants.QualityAttribute_Column);
+
 			colCondition = new TableColumn(table, SWT.NONE);
 			colCondition.setWidth(200);
-			colCondition.setText("Condition");
+			colCondition.setText(PreferenceConstants.Condition_Column);
 
 			colDescriptionScenario = new TableColumn(table, SWT.NONE);
 			colDescriptionScenario.setWidth(200);
-			colDescriptionScenario.setText("Description Scenario");
+			colDescriptionScenario.setText(PreferenceConstants.DescriptionScenario_Column);
 
 			for (int i = 0; i < 8; i++) {
-			      TableItem item = new TableItem(table, SWT.NONE);
-			      item.setText("Item " + i);
+				TableItem item = new TableItem(table, SWT.NONE);
+				item.setText("Item " + i);
 			}
 
 			// Create TableViewer
@@ -215,7 +223,8 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					table.showSelection();
-					getViewController().setModel((QualityRequirement) table.getItem(table.getSelectionIndex()).getData());
+					getViewController()
+							.setModel((QualityRequirement) table.getItem(table.getSelectionIndex()).getData());
 					getViewController().getFormSearch().setView();
 					prepareView(6);
 				}
@@ -227,7 +236,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.horizontalAlignment = GridData.END;
 			gridData.verticalAlignment = SWT.BOTTOM;
 			gridData.grabExcessHorizontalSpace = true;
-			
+
 			GridLayout layout1 = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout1);
@@ -238,11 +247,11 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			Group gScenario = new Group(cSystemName, SWT.NONE);
 			gScenario.setLayoutData(gridData);
-			gScenario.setText("Scenario");
+			gScenario.setText(PreferenceConstants.Scenario_Group);
 			gScenario.setLayout(new GridLayout(2, false));
 
 			Label labelD = new Label(gScenario, SWT.NONE);
-			labelD.setText("Description: ");
+			labelD.setText(PreferenceConstants.Description_Label + ":");
 
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
@@ -252,7 +261,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			txtDescription.setLayoutData(gridData);
 
 			Label labelQA = new Label(gScenario, SWT.NONE);
-			labelQA.setText("Quality Attribute: ");
+			labelQA.setText(PreferenceConstants.QualityAttribute_Label + ":");
 
 			cmbQualityAttribute = new ComboViewer(gScenario, SWT.READ_ONLY);
 			cmbQualityAttribute.setContentProvider(ArrayContentProvider.getInstance());
@@ -269,7 +278,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			});
 
 			Label labelC = new Label(gScenario, SWT.NONE);
-			labelC.setText("Condition: ");
+			labelC.setText(PreferenceConstants.Condition_Label + ":");
 
 			cmbCondition = new ComboViewer(gScenario, SWT.READ_ONLY);
 			cmbCondition.setContentProvider(ArrayContentProvider.getInstance());
@@ -289,7 +298,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabStimulusSource = new TabItem(folder, SWT.NONE);
-			tabStimulusSource.setText("Stimulus Source");
+			tabStimulusSource.setText(PreferenceConstants.StimulusSource_Label);
 
 			gStimulusSource = new Group(folder, SWT.NONE);
 			gStimulusSource.setLayoutData(gridData);
@@ -299,16 +308,17 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelSST = new Label(gStimulusSource, SWT.NONE);
-			labelSST.setText("Type: ");
+			labelSST.setText(PreferenceConstants.Type_Label + ":");
 
 			cmbTypeStimulusSource = new ComboViewer(gStimulusSource, SWT.READ_ONLY);
 			cmbTypeStimulusSource.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueStimulusSource = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Stimulus Source): ", gStimulusSource);
-			
+			txtValueStimulusSource = new StringFieldEditor(PreferenceConstants.ValueStimulusSourceLabel,
+					PreferenceConstants.ValueStimulusSourceLabel + ":", gStimulusSource);
+
 			Label labelDSS = new Label(gStimulusSource, SWT.NONE);
-			labelDSS.setText("Description: ");
-			
+			labelDSS.setText(PreferenceConstants.Description_Label + ":");
+
 			txtDescriptionStimulusSource = new Text(gStimulusSource, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionStimulusSource.setLayoutData(gridData);
 
@@ -320,7 +330,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabStimulus = new TabItem(folder, SWT.NONE);
-			tabStimulus.setText("Stimulus");
+			tabStimulus.setText(PreferenceConstants.Stimulus_Label);
 
 			gStimulus = new Group(folder, SWT.NONE);
 			gStimulus.setLayoutData(gridData);
@@ -330,16 +340,17 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelST = new Label(gStimulus, SWT.NONE);
-			labelST.setText("Type: ");
+			labelST.setText(PreferenceConstants.Type_Label + ":");
 
 			cmbTypeStimulus = new ComboViewer(gStimulus, SWT.READ_ONLY);
 			cmbTypeStimulus.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueStimulus = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Stimulus): ", gStimulus);
+			txtValueStimulus = new StringFieldEditor(PreferenceConstants.ValueStimulus_Label,
+					PreferenceConstants.ValueStimulus_Label + ":", gStimulus);
 
 			Label labelDS = new Label(gStimulus, SWT.NONE);
-			labelDS.setText("Description: ");
-			
+			labelDS.setText(PreferenceConstants.Description_Label + ":");
+
 			txtDescriptionStimulus = new Text(gStimulus, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionStimulus.setLayoutData(gridData);
 
@@ -347,7 +358,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabEnvironment = new TabItem(folder, SWT.NONE);
-			tabEnvironment.setText("Environment");
+			tabEnvironment.setText(PreferenceConstants.Environment_Label);
 
 			gEnvironment = new Group(folder, SWT.NONE);
 			gEnvironment.setLayoutData(gridData);
@@ -357,15 +368,16 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelET = new Label(gEnvironment, SWT.NONE);
-			labelET.setText("Type: ");
+			labelET.setText(PreferenceConstants.Type_Label + ":");
 
 			cmbTypeEnvironment = new ComboViewer(gEnvironment, SWT.READ_ONLY);
 			cmbTypeEnvironment.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueEnvironment = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Environment): ", gEnvironment);
+			txtValueEnvironment = new StringFieldEditor(PreferenceConstants.ValueEnvironment_Label,
+					PreferenceConstants.ValueEnvironment_Label + ":", gEnvironment);
 
 			Label labelDE = new Label(gEnvironment, SWT.NONE);
-			labelDE.setText("Description: ");
+			labelDE.setText(PreferenceConstants.Description_Label + ":");
 
 			txtDescriptionEnvironment = new Text(gEnvironment, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionEnvironment.setLayoutData(gridData);
@@ -374,7 +386,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabArtifact = new TabItem(folder, SWT.NONE);
-			tabArtifact.setText("Artifact");
+			tabArtifact.setText(PreferenceConstants.Artifact_Label);
 
 			gArtifact = new Group(folder, SWT.NONE);
 			gArtifact.setLayoutData(gridData);
@@ -384,26 +396,26 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelAT = new Label(gArtifact, SWT.NONE);
-			labelAT.setText("Type: ");
+			labelAT.setText(PreferenceConstants.Type_Label + ":");
 
 			cmbTypeArtifact = new ComboViewer(gArtifact, SWT.READ_ONLY);
 			cmbTypeArtifact.setContentProvider(ArrayContentProvider.getInstance());
-			
+
 			Label labelDA = new Label(gArtifact, SWT.NONE);
-			labelDA.setText("Description: ");
+			labelDA.setText(PreferenceConstants.Description_Label + ":");
 
 			txtDescriptionArtifact = new Text(gArtifact, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionArtifact.setLayoutData(gridData);
 
-			StringFieldEditor text = new StringFieldEditor(PreferenceConstants.P_STRING, "", gArtifact);
+			StringFieldEditor text = new StringFieldEditor("", "", gArtifact);
 			text.getLabelControl(gArtifact).setVisible(false);
 			text.getTextControl(gArtifact).setVisible(false);
-			
+
 			tabArtifact.setControl(gArtifact);
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabResponse = new TabItem(folder, SWT.NONE);
-			tabResponse.setText("Response");
+			tabResponse.setText(PreferenceConstants.Response_Label);
 
 			gResponse = new Group(folder, SWT.NONE);
 			gResponse.setLayoutData(gridData);
@@ -413,15 +425,16 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelRT = new Label(gResponse, SWT.NONE);
-			labelRT.setText("Type: ");
+			labelRT.setText(PreferenceConstants.Type_Label + ":");
 
 			cmbTypeResponse = new ComboViewer(gResponse, SWT.READ_ONLY);
 			cmbTypeResponse.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueResponse = new StringFieldEditor(PreferenceConstants.P_STRING, "Value (Response): ", gResponse);
+			txtValueResponse = new StringFieldEditor(PreferenceConstants.ValueResponse_Label,
+					PreferenceConstants.ValueResponse_Label + ":", gResponse);
 
 			Label labelDR = new Label(gResponse, SWT.NONE);
-			labelDR.setText("Description: ");
+			labelDR.setText(PreferenceConstants.Description_Label + ":");
 
 			txtDescriptionResponse = new Text(gResponse, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionResponse.setLayoutData(gridData);
@@ -430,7 +443,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			tabResponse.setControl(gResponse);
 
 			TabItem tabResponseMeasure = new TabItem(folder, SWT.NONE);
-			tabResponseMeasure.setText("Response Measure");
+			tabResponseMeasure.setText(PreferenceConstants.ResponseMeasure_Label);
 
 			gResponseMeasure = new Group(folder, SWT.NONE);
 			gResponseMeasure.setLayoutData(gridData);
@@ -439,7 +452,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.horizontalAlignment = GridData.FILL;
 
 			Label labelRMM = new Label(gResponseMeasure, SWT.NONE);
-			labelRMM.setText("Type: ");
+			labelRMM.setText(PreferenceConstants.Type_Label + ":");
 
 			cmbTypeResponseMeasure = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbTypeResponseMeasure.setContentProvider(ArrayContentProvider.getInstance());
@@ -456,7 +469,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			});
 
 			Label labelRMT = new Label(gResponseMeasure, SWT.NONE);
-			labelRMT.setText("Metric: ");
+			labelRMT.setText(PreferenceConstants.Metric + ":");
 
 			cmbMetric = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbMetric.setContentProvider(ArrayContentProvider.getInstance());
@@ -471,20 +484,22 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				}
 			});
 
-			txtValueResponseMeasure = new DoubleFieldEditor("value", "Value (Response Measure): ", gResponseMeasure);
+			txtValueResponseMeasure = new DoubleFieldEditor(PreferenceConstants.ValueResponseMeasure_Label + ":",
+					PreferenceConstants.ValueResponseMeasure_Label + ":", gResponseMeasure);
 			txtValueResponseMeasure.setMinRange(0.0);
 			txtValueResponseMeasure.setPage(this);
 
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
-			labelRMU.setText("Unit: ");
+			labelRMU.setText(PreferenceConstants.Unit_Label + ":");
 
 			cmbUnit = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbUnit.setContentProvider(ArrayContentProvider.getInstance());
-			
-			Label labelDRM = new Label(gResponseMeasure, SWT.NONE);
-			labelDRM.setText("Description: ");
 
-			txtDescriptionResponseMeasure = new Text(gResponseMeasure, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+			Label labelDRM = new Label(gResponseMeasure, SWT.NONE);
+			labelDRM.setText(PreferenceConstants.Description_Label + ":");
+
+			txtDescriptionResponseMeasure = new Text(gResponseMeasure,
+					SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionResponseMeasure.setLayoutData(gridData);
 
 			tabResponseMeasure.setControl(gResponseMeasure);
@@ -504,7 +519,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnSave = new Button(cSystemName, SWT.PUSH);
-			btnSave.setText(" Save ");
+			btnSave.setText(PreferenceConstants.ButtomSave_Label);
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -521,7 +536,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnRemove = new Button(cSystemName, SWT.PUSH);
-			btnRemove.setText("Remove");
+			btnRemove.setText(PreferenceConstants.ButtomRemove_Label);
 			btnRemove.setLayoutData(gridData);
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -535,7 +550,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.prepareView(0);
 
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog("Postgres service is not running");
+			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -544,7 +559,10 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors
+	 * ()
 	 */
 	@Override
 	protected void createFieldEditors() {
@@ -824,16 +842,18 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public void setColDescriptionScenario(TableColumn colDescriptionScenario) {
 		this.colDescriptionScenario = colDescriptionScenario;
 	}
-	
+
 	/**
-	 * Load systems with state=true and requirements with state=true in the combo
+	 * Load systems with state=true and requirements with state=true in the
+	 * combo
 	 */
 	public void loadCmbSystem() {
 		this.getViewController().setModelSystemSearch();
 	}
 
 	/**
-	 * When a system is selected, fill table with its quality requirements and prepare the view
+	 * When a system is selected, fill table with its quality requirements and
+	 * prepare the view
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.fillTable();
@@ -841,7 +861,8 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	}
 
 	/**
-	 * Fill table with system's quality requirements (quality attribute, description and condition)
+	 * Fill table with system's quality requirements (quality attribute,
+	 * description and condition)
 	 */
 	public void fillTable() {
 		this.getViewController().setModelQualityRequirement(
@@ -850,7 +871,8 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	}
 
 	/**
-	 * When a quality attribute is selected, enables the especification and load the generic scenario
+	 * When a quality attribute is selected, enables the especification and load
+	 * the generic scenario
 	 */
 	private void cmbQualityAttributeItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(3);
@@ -858,10 +880,11 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				(QualityAttribute) ((IStructuredSelection) this.getCmbQualityAttribute().getSelection())
 						.getFirstElement());
 	}
-	
+
 	/**
 	 * Load the types of the generic scenario for a specific quality attribute
-	 * @param qualityAtribute 
+	 * 
+	 * @param qualityAtribute
 	 */
 	public void loadGenericScenario(QualityAttribute qualityAttribute) {
 		this.getViewController().setModelStimulusSourceTypes(qualityAttribute);
@@ -871,7 +894,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		this.getViewController().setModelResponseTypes(qualityAttribute);
 		this.getViewController().setModelResponseMeasureTypes(qualityAttribute);
 	}
-	
+
 	/**
 	 * When a response measure type is selected, load the metrics
 	 */
@@ -883,13 +906,13 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	}
 
 	/**
-	 * Load all metrics for a specific response measure type
-	 * param responseMeasureType
+	 * Load all metrics for a specific response measure type param
+	 * responseMeasureType
 	 */
 	public void loadCmbMetric(ResponseMeasureType responseMeasureType) {
 		this.getViewController().setModelMetric(responseMeasureType);
 	}
-	
+
 	/**
 	 * When a metric is selected, load the units
 	 */
@@ -899,15 +922,15 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	}
 
 	/**
-	 * Load all units for a specific metric
-	 * param metric
+	 * Load all units for a specific metric param metric
 	 */
 	public void loadCmbUnit(Metric metric) {
 		this.getViewController().setModelUnit(metric);
 	}
 
 	/**
-	 * Clean the quality scenario (description, quality attribute, condition and parts)
+	 * Clean the quality scenario (description, quality attribute, condition and
+	 * parts)
 	 */
 	public void clearScenario() {
 		txtDescription.setText("");
@@ -942,7 +965,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		txtValueResponse.setStringValue("");
 		txtValueResponseMeasure.setStringValue("0.0");
 	}
-	
+
 	/**
 	 * Clean the system selected and the quality scenario
 	 */
@@ -953,12 +976,13 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 	/**
 	 * prepare the view for the different actions that are possible
+	 * 
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
-			this.getViewController().createErrorDialog("No saved systems with quality requirements");
+			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemQualityRequirement_ErrorDialog);
 			pabm = 0;
 		}
 		switch (pabm) {
@@ -997,7 +1021,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getBtnSave().setEnabled(false);
 			this.getBtnRemove().setEnabled(false);
 
-
 			break;
 		case 1:// With system selected
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
@@ -1007,7 +1030,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(true);
 			this.getCmbCondition().getCombo().setEnabled(true);
-			
+
 			this.getBtnSave().setEnabled(true);
 			this.getBtnRemove().setEnabled(true);
 
@@ -1042,11 +1065,11 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getCmbUnit().getCombo().setEnabled(true);
 
 			break;
-		case 6: //With bottom consult selected
+		case 6: // With bottom consult selected
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
 			this.getCmbCondition().getCombo().setEnabled(true);
-			
+
 			this.getTxtDescriptionStimulusSource().setEnabled(true);
 			this.getTxtDescriptionStimulus().setEnabled(true);
 			this.getTxtDescriptionEnvironment().setEnabled(true);
@@ -1070,15 +1093,15 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getCmbMetric().getCombo().setEnabled(true);
 
 			this.getCmbUnit().getCombo().setEnabled(true);
-			
+
 			this.getBtnSave().setEnabled(true);
 			this.getBtnRemove().setEnabled(true);
 
 			break;
-			
+
 		case 7:// Search quality requirement
 			this.getCmbSystem().getCombo().setEnabled(true);
-			
+
 			this.clearScenario();
 
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
@@ -1128,13 +1151,13 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public void loadCmbCondition() {
 		this.getViewController().setModelCondition();
 	}
-	
+
 	/**
 	 * Load all conditions in the combo
 	 */
 	public void loadCmbQualityAttribute() {
 		this.getViewController().setModelQualityAttribute();
-		
+
 	}
 
 }

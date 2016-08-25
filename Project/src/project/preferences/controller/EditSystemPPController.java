@@ -4,10 +4,12 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 import project.preferences.EditSystemPreferencePage;
+import project.preferences.PreferenceConstants;
 import software.BusinessLogic.AnalysisManager;
 
 /**
  * Controller for EditSystemPreferencePage
+ * 
  * @author Eva
  *
  */
@@ -61,7 +63,7 @@ public class EditSystemPPController extends Controller {
 			this.getForm().prepareView(1);
 		}
 	}
-	
+
 	/**
 	 * Remove a system and prepare the view
 	 */
@@ -72,6 +74,7 @@ public class EditSystemPPController extends Controller {
 
 	/**
 	 * Update a system
+	 * 
 	 * @return int (indicates if the update was successfully)
 	 */
 	public int setSystem() {
@@ -99,23 +102,24 @@ public class EditSystemPPController extends Controller {
 		this.getForm().getCalendarFinishDate().setMonth(getMonth(this.getManager().getFinishDate()));
 		this.getForm().getCalendarFinishDate().setYear(getYear(this.getManager().getFinishDate()));
 	}
-	
+
 	/**
-	 * Validate the necessary data for the update of the system 
+	 * Validate the necessary data for the update of the system
+	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
-			this.createErrorDialog("System name empty");
+			this.createErrorDialog(PreferenceConstants.EmptySystemName_ErrorDialog);
 			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
-			this.createErrorDialog("Empty project name");
+			this.createErrorDialog(PreferenceConstants.EmptyProjectName_ErrorDialog);
 			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		} else if (isAfter(this.getForm().getCalendarStartDate(), this.getForm().getCalendarFinishDate())) {
-			this.createErrorDialog("The finish date is less than the start date");
+			this.createErrorDialog(PreferenceConstants.CompareDate_ErrorDialog);
 			getForm().getCalendarStartDate().setFocus();
 			return false;
 		}

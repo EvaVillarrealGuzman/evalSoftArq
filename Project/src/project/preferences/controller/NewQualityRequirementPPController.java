@@ -3,6 +3,7 @@ package project.preferences.controller;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 import project.preferences.NewQualityRequirementPreferencePage;
+import project.preferences.PreferenceConstants;
 import software.BusinessLogic.AnalysisManager;
 import software.DomainModel.AnalysisEntity.Artifact;
 import software.DomainModel.AnalysisEntity.ArtifactType;
@@ -23,6 +24,7 @@ import software.DomainModel.AnalysisEntity.Unit;
 
 /**
  * Controller for NewQualityRequirementPreferencePage
+ * 
  * @author Micaela
  *
  */
@@ -77,7 +79,9 @@ public class NewQualityRequirementPPController extends Controller {
 	}
 
 	/**
-	 * Sets the model of stimulus source type combo for a specific quality attribute
+	 * Sets the model of stimulus source type combo for a specific quality
+	 * attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelStimulusSourceTypes(QualityAttribute qualityAttribute) {
@@ -87,6 +91,7 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Sets the model of stimulus type combo for a specific quality attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelStimulusTypes(QualityAttribute qualityAttribute) {
@@ -95,6 +100,7 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Sets the model of environment type combo for a specific quality attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelEnvironmentTypes(QualityAttribute qualityAttribute) {
@@ -103,6 +109,7 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Sets the model of artifact type combo for a specific quality attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelArtifactTypes(QualityAttribute qualityAttribute) {
@@ -111,6 +118,7 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Sets the model of response type combo for a specific quality attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelResponseTypes(QualityAttribute qualityAttribute) {
@@ -118,7 +126,9 @@ public class NewQualityRequirementPPController extends Controller {
 	}
 
 	/**
-	 * Sets the model of response measure type combo for a specific quality attribute
+	 * Sets the model of response measure type combo for a specific quality
+	 * attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelResponseMeasureTypes(QualityAttribute qualityAttribute) {
@@ -128,6 +138,7 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Sets the model of metric combo for a specific quality attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelMetric(ResponseMeasureType type) {
@@ -136,6 +147,7 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Sets the model of unit combo for a specific quality attribute
+	 * 
 	 * @param qualityAttribute
 	 */
 	public void setModelUnit(Metric type) {
@@ -156,7 +168,9 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Create a new quality requirement
-	 * @return int (indicates if the quality requirement was created successfully)
+	 * 
+	 * @return int (indicates if the quality requirement was created
+	 *         successfully)
 	 */
 	public int newQualityRequirement() {
 		if (this.isValidData()) {
@@ -206,79 +220,80 @@ public class NewQualityRequirementPPController extends Controller {
 
 	/**
 	 * Validate the necessary data for the creation of the quality requirement
+	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
-			this.createErrorDialog("Select system");
+			this.createErrorDialog(PreferenceConstants.SelectSystem_ErrorDialog);
 			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getTxtDescription())) {
-			this.createErrorDialog("Empty description");
+			this.createErrorDialog(PreferenceConstants.EmptyDescription_ErrorDialog);
 			this.getForm().getTxtDescription().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getCmbQualityAttribute())) {
-			this.createErrorDialog("Select quality attribute");
+			this.createErrorDialog(PreferenceConstants.SelectQualityAttribute_ErrorDialog);
 			this.getForm().getCmbQualityAttribute().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getCmbCondition())) {
-			this.createErrorDialog("Select condition");
+			this.createErrorDialog(PreferenceConstants.SelectCondition_ErrorDialog);
 			this.getForm().getCmbCondition().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulusSource())) {
-			this.createErrorDialog("Empty stimulus source value");
+			this.createErrorDialog(PreferenceConstants.EmptyStimulusSourceValue_ErrorDialog);
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulus())) {
-			this.createErrorDialog("Empty stimulus value");
+			this.createErrorDialog(PreferenceConstants.EmptyStimulusValue_ErrorDialog);
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueEnvironment())) {
-			this.createErrorDialog("Empty environment value");
+			this.createErrorDialog(PreferenceConstants.EmptyEnvironmentValue_ErrorDialog);
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponse())) {
-			this.createErrorDialog("Empty response value");
+			this.createErrorDialog(PreferenceConstants.EmptyResponseValue_ErrorDialog);
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeStimulusSource())) {
-			this.createErrorDialog("Select stimulus source type");
+			this.createErrorDialog(PreferenceConstants.SelectStimulusSourceType_ErrorDialog);
 			this.getForm().getCmbTypeStimulusSource().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeStimulus())) {
-			this.createErrorDialog("Select stimulus type");
+			this.createErrorDialog(PreferenceConstants.SelectStimulusType_ErrorDialog);
 			this.getForm().getCmbTypeStimulus().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeEnvironment())) {
-			this.createErrorDialog("Select environment type");
+			this.createErrorDialog(PreferenceConstants.SelectEnvironmentType_ErrorDialog);
 			this.getForm().getCmbTypeEnvironment().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeArtifact())) {
-			this.createErrorDialog("Select artifact type");
+			this.createErrorDialog(PreferenceConstants.SelectArtifactType_ErrorDialog);
 			this.getForm().getCmbTypeArtifact().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeResponse())) {
-			this.createErrorDialog("Select response type");
+			this.createErrorDialog(PreferenceConstants.SelectResponseType_ErrorDialog);
 			this.getForm().getCmbTypeResponse().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeResponseMeasure())) {
-			this.createErrorDialog("Select response measure type");
+			this.createErrorDialog(PreferenceConstants.SelectResponseMeasureType_ErrorDialog);
 			this.getForm().getCmbTypeResponseMeasure().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbMetric())) {
-			this.createErrorDialog("Select metric");
+			this.createErrorDialog(PreferenceConstants.SelectMetric_ErrorDialog);
 			this.getForm().getCmbMetric().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponseMeasure())) {
-			this.createErrorDialog("Empty response measure value");
+			this.createErrorDialog(PreferenceConstants.EmptyResponseMeasureValue_ErrorDialog);
 			return false;
 		} else if (!this.getForm().getTxtValueResponseMeasure().isValid()) {
-			this.createErrorDialog("Invalid response measure value");
+			this.createErrorDialog(PreferenceConstants.InvalidResponseMeasureValue_ErrorDialog);
 			return false;
 		} else if (this.getForm().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
-			this.createErrorDialog("Invalid response measure value (negative number)");
+			this.createErrorDialog(PreferenceConstants.InvalidResponseMeasureValueNegative_ErrorDialog);
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbUnit())) {
-			this.createErrorDialog("Select unit");
+			this.createErrorDialog(PreferenceConstants.SelectUnit_ErrorDialog);
 			this.getForm().getCmbUnit().getCombo().setFocus();
 			return false;
 		}

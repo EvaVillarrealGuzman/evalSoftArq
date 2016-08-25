@@ -23,7 +23,8 @@ import project.preferences.controller.EditSystemPPController;
 
 /**
  * To search, consult, edit or remove a system
- * @author: Eva 
+ * 
+ * @author: Eva
  */
 
 public class EditSystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -39,7 +40,6 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	private Button btnEdit;
 	private ComboViewer cmbSystem;
 	private StringFieldEditor projectName;
-	private static EditSystemPreferencePage SystemPP; // NOPMD by Usuario-Pc on 10/06/16 21:50
 	private EditSystemPPController viewController;
 	private Composite cProject;
 	private Composite cSystemName;
@@ -52,20 +52,26 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new EditSystemPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on 10/06/16 21:49
+		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+												// 10/06/16 21:49
 		this.getViewController().setForm(this);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org.eclipse.swt.widgets.Composite)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
+	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
 		try {
@@ -81,7 +87,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText("System Name: ");
+			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
@@ -98,7 +104,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 					prepareView(1);
 				}
 			});
-			
+
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
 
@@ -107,7 +113,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 			// Group for project properties
 			Group groupProject = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupProject.setText("Project");
+			groupProject.setText(PreferenceConstants.CompositeProject_Label);
 			groupProject.setLayout(layout);
 
 			gridData = new GridData();
@@ -122,17 +128,18 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			gridData.horizontalAlignment = GridData.FILL;
 			cProject.setLayoutData(gridData);
 
-			projectName = new StringFieldEditor(PreferenceConstants.P_STRING, "Project Name: ", cProject);
+			projectName = new StringFieldEditor(PreferenceConstants.ProjectName_Label,
+					PreferenceConstants.ProjectName_Label + ":", cProject);
 
 			addField(projectName);
 
 			lblCalendarStarDate = new Label(cProject, SWT.NONE);
-			lblCalendarStarDate.setText("Start Date");
+			lblCalendarStarDate.setText(PreferenceConstants.CalendarStarDate_Label + ":");
 
 			calendarStartDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
 			lblCalendarFinishDate = new Label(cProject, SWT.NONE);
-			lblCalendarFinishDate.setText("Finish Date");
+			lblCalendarFinishDate.setText(PreferenceConstants.CalendarFinishDate_Label + ":");
 
 			calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
@@ -141,13 +148,13 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 			Label labelEmptyTwo = new Label(parent, SWT.NULL);
 			labelEmptyTwo.setLayoutData(gridData);
-			
+
 			gridData = new GridData();
 			gridData.horizontalSpan = 2;
 
 			Label labelEmptyTre = new Label(parent, SWT.NULL);
 			labelEmptyTre.setLayoutData(gridData);
-			
+
 			gridData = new GridData();
 			gridData.horizontalSpan = 1;
 			gridData.widthHint = 100;
@@ -156,7 +163,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnSave = new Button(parent, SWT.PUSH);
-			btnSave.setText(" Save ");
+			btnSave.setText(PreferenceConstants.ButtomSave_Label);
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -173,13 +180,13 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnRemove = new Button(parent, SWT.PUSH);
-			btnRemove.setText("Remove");
+			btnRemove.setText(PreferenceConstants.ButtomRemove_Label);
 			btnRemove.setLayoutData(gridData);
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.createDeleteDialog() == true) {
-						viewController.remove();	
+					if (viewController.createDeleteSystem() == true) {
+						viewController.remove();
 					}
 				}
 			});
@@ -187,7 +194,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			this.prepareView(0);
 
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog("Postgres service is not running");
+			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -195,7 +202,10 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors()
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createFieldEditors
+	 * ()
 	 */
 	@Override
 	protected void createFieldEditors() {
@@ -276,14 +286,6 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		this.projectName = projectName;
 	}
 
-	public static EditSystemPreferencePage getSystemPP() {
-		return SystemPP;
-	}
-
-	public static void setSystemPP(EditSystemPreferencePage systemPP) {
-		SystemPP = systemPP;
-	}
-
 	public EditSystemPPController getViewController() {
 		return viewController;
 	}
@@ -300,7 +302,6 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		this.cProject = cProject;
 	}
 
-	// TODO ver
 	public Composite getParent() {
 		return getParent();
 	}
@@ -314,12 +315,13 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 	/**
 	 * prepare the view for the different actions that are possible
+	 * 
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController().createErrorDialog("No saved systems");
+			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystem_ErrorDialog);
 			pabm = 0;
 		}
 		switch (pabm) {
