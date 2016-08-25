@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.10" icons="true">  
+  <object id="1" language="java" name="project.preferences.NewSystemPreferencePage" project="Project" 
+    file="/Project/src/project/preferences/NewSystemPreferencePage.java" binary="false" label="newSystemPreferencePage" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="679" y="0"/>    
+    <execution id="2">      
+      <position height="821" width="0" x="0" y="78"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="21" width="0" x="0" y="120"/>    
+    </execution>    
+    <execution id="6">      
+      <position height="21" width="184" x="5" y="120"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="70" width="0" x="0" y="200"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="95" width="0" x="0" y="328"/>    
+    </execution>    
+    <execution id="16">      
+      <position height="21" width="0" x="0" y="381"/>    
+    </execution>    
+    <execution id="17">      
+      <position height="21" width="184" x="5" y="815"/>    
+    </execution>  
+  </object>  
+  <object id="18" language="java" name="project.preferences.controller.NewSystemPPController" project="Project" 
+    file="/Project/src/project/preferences/controller/NewSystemPPController.java" binary="false" 
+    label="newSystemPPController" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="14">      
+      <position height="21" width="0" x="0" y="228"/>    
+    </execution>    
+    <execution id="12">      
+      <position height="447" width="163" x="318" y="431"/>    
+    </execution>    
+    <execution id="20">      
+      <position height="84" width="7" x="396" y="473"/>    
+    </execution>    
+    <execution id="28">      
+      <position height="21" width="7" x="399" y="515"/>    
+    </execution>    
+    <execution id="22">      
+      <position height="21" width="7" x="396" y="577"/>    
+    </execution>    
+    <execution id="26">      
+      <position height="112" width="7" x="396" y="745"/>    
+    </execution>  
+  </object>  
+  <object id="30" language="java" name="software.BusinessLogic.AnalysisManager" project="Project" 
+    file="/Project/src/software/BusinessLogic/AnalysisManager.java" binary="false" label="analysisManager" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="712" y="0"/>    
+    <execution id="24">      
+      <position height="90" width="121" x="193" y="609"/>    
+    </execution>    
+    <execution id="32">      
+      <position height="21" width="7" x="250" y="657"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="setViewController(project.preferences.controller.NewSystemPPController):void" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" operation="getViewController():project.preferences.controller.NewSystemPPController" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="9" operation="createContents(org.eclipse.swt.widgets.Composite):org.eclipse.swt.widgets.Control" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="11" operation="save():void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13" operation="setForm(project.preferences.NewSystemPreferencePage):void" asynchronous="false" x="114" 
+    y="221">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="15" operation="prepareView(int):void" asynchronous="false">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="19" operation="newSystem():int" asynchronous="false">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>  
+  <message id="21" operation="getManager():software.BusinessLogic.AnalysisManager" asynchronous="false">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="23" operation="saveSystem():void" asynchronous="false">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="24"/>  
+  </message>  
+  <message id="25" operation="getForm():project.preferences.NewSystemPreferencePage" asynchronous="false">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="26"/>  
+  </message>  
+  <message id="27" operation="isValidData():boolean" asynchronous="false">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="28"/>  
+  </message>  
+  <message id="29" operation="prepareView(int):void" asynchronous="false">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="17"/>  
+  </message>  
+  <message id="31" operation="saveObject(java.lang.Object):boolean" asynchronous="false">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="32"/>  
+  </message>
+</sequence-diagram>
