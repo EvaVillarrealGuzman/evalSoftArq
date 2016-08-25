@@ -48,7 +48,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	private Group groupQualityRequirement;
 	private TableViewer tblViewerQualityRequirement;
 	private Table table;
-	GridData gridData;
+	private GridData gridData;
 	private Text txtDescription;
 	private ComboViewer cmbQualityAttribute;
 	private ComboViewer cmbCondition;

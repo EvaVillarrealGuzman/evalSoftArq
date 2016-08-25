@@ -186,7 +186,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 
 	public void openJUCMNavEditor(Composite parent, String pathUCM) {
 		File file = new File(pathUCM);
-		if (!file.exists()) {
+		if (file.exists()) {
 			IFile ifile = convert(file);
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			try {

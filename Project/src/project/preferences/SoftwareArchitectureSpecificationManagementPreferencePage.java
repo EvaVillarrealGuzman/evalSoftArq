@@ -265,7 +265,9 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.save();
+					if (viewController.createDeleteRequirementDialog() == true) {
+						viewController.save();
+					}
 				}
 			});
 
