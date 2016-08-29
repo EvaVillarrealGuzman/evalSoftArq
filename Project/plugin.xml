@@ -87,7 +87,6 @@
       <handler
             class="project.handlers.EditSystemHandler"
             commandId="Project.commands.editSystemCommand">
-  project.handlers.SoftwareArchitectureSpecificationNewHandlerlers.EditQualityRequiremeProject.commands.softwareArchitectureSpecificationNewCommandyRequirementCommand">
       </handler>
    </extension>
    <extension
@@ -108,59 +107,59 @@
                label="UCM2DEVS"
                mnemonic="M">
           	 <menu
-            	  label="System Management">
+            	  label="%SystemManagement">
            			<command
            			    commandId="Project.commands.newSystemCommand"
                 	    id="Project.menus.newSystemCommand"
-                	    label="New"
+                	    label="%New"
                		    mnemonic="S"
                  		style="push">
            			</command>
          		    <command
             	        commandId="Project.commands.editSystemCommand"
                 	    id="Project.menus.editSystemCommand"
-           		        label="Edit "
+           		        label="%Edit "
           	  	        mnemonic="E"
           	  	        style="push">
         		    </command>
      	    </menu>
      	    <menu
-            	  label="Quality Requirement Management">
+            	  label="%QualityRequirementManagement">
            			<command
               		    commandId="Project.commands.newQualityRequirementCommand"
                 	    id="Project.menus.newQualityRequirementCommand"
-                  		label="New "
+                  		label="%New"
                   		mnemonic="Q"
                  		style="push">
            			</command>
          		    <command
                   	 	commandId="Project.commands.editQualityRequirementCommand"
                   		id="Project.menus.editQualityRequirementCommand"
-                  		label="Edit "
+                  		label="%Edit "
                   		mnemonic="SQR"
           	  	        style="push">
         		    </command>
      	    </menu>
      	    <menu
-            	   label="Software Architecture Specification">
+            	   label="%SoftwareArchitectureSpecification">
            			<command
               		    commandId="Project.commands.SoftwareArchitectureSpecificationNewCommand"
                 	    id="Project.menus.softwareArchitectureSpecificationNewCommand"
-                  		label="New "
+                  		label="%New"
                   		mnemonic="N"
                  		style="push">
            			</command>
               <command
                     commandId="Project.commands.SoftwareArchitectureSpecificationOpenCommand"
                     id="Project.menus.softwareArchitectureSpecificationOpenCommand"
-                    label="Open"
+                    label="%Open"
                     mnemonic="O"
                     style="push">
               </command>
          		    <command
                   	 	commandId="Project.commands.SoftwareArchitectureSpecificationManagementCommand"
                   		id="Project.menus.softwareArchitectureSpecificationManagementCommand"
-                  		label="Management"
+                  		label="%Management"
                   		mnemonic="SASM"
           	  	        style="push">
         		    </command>
@@ -168,7 +167,7 @@
             <command
                   commandId="Project.commands.reportsCommand"
                   id="Project.menus.reportsCommand"
-                  label="Report"
+                  label="%Report"
                   mnemonic="R">
             </command>
          </menu>
@@ -185,10 +184,10 @@
       		category="project.preferences.UCM2DEVS"
             class="project.preferences.NewSystemPreferencePage"
             id="project.preferences.NewSystemPreferencePage"
-            name="New System ">
+            name="%NewSystem">
       </page>
       <page
-			name="Software Architecture Specification Management"
+			name="%SoftwareArchitectureSpecificationManagement"
 			category="project.preferences.UCM2DEVS"
 			class="project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage"
 			id="project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage"/>	
@@ -196,37 +195,37 @@
       		category="project.preferences.UCM2DEVS"
        		class="project.preferences.NewQualityRequirementPreferencePage"
        		id="project.preferences.NewQualityRequirementPreferencePage"
-       		name="New Quality Requirement">
+       		name="%NewQualityRequirement">
 	  </page>
 	  <page
        		category="project.preferences.UCM2DEVS"
        		class="project.preferences.EditQualityRequirementPreferencePage"
        		id="project.preferences.EditQualityRequirementPreferencePage"
-       		name="Edit Quality Requirement">
+       		name="%EditQualityRequirement">
 	 </page>	
 	 <page
        		category="project.preferences.UCM2DEVS"
        		class="project.preferences.EditSystemPreferencePage"
        		id="project.preferences.EditSystemPreferencePage"
-       		name="Edit System">
+       		name="%EditSystem">
 	 </page>
   <page
         category="project.preferences.UCM2DEVS"
         class="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
-        name="Software Architecture Specification">
+        name="%SoftwareArchitectureSpecification">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
         class="project.preferences.SoftwareArchitectureSpecificationNewPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationNewPreferencePage"
-        name="Software Architecture Specification New">
+        name="%SoftwareArchitectureSpecificationNew">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
         class="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
-        name="Software Architecture Specification Open">
+        name="%SoftwareArchitectureSpecificationOpen">
   </page>	
    </extension>
    <extension
