@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.10" icons="true">  
+  <object id="1" language="java" name="project.preferences.EditSystemPreferencePage" project="Project" 
+    file="/Project/src/project/preferences/EditSystemPreferencePage.java" binary="false" 
+    label="editSystemPreferencePage" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="95" y="0"/>    
+    <execution id="2">      
+      <position height="121" width="180" x="5" y="79"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="21" width="180" x="5" y="121"/>    
+    </execution>    
+    <execution id="9">      
+      <position height="138" width="180" x="5" y="180"/>    
+    </execution>    
+    <execution id="11">      
+      <position height="75" width="180" x="5" y="222"/>    
+    </execution>    
+    <execution id="14">      
+      <position height="147" width="180" x="5" y="329"/>    
+    </execution>    
+    <execution id="16">      
+      <position height="84" width="180" x="5" y="371"/>    
+    </execution>    
+    <execution id="18">      
+      <position height="21" width="7" x="95" y="413"/>    
+    </execution>    
+    <execution id="19">      
+      <position height="582" width="180" x="5" y="496"/>    
+    </execution>    
+    <execution id="22">      
+      <position height="21" width="180" x="5" y="994"/>    
+    </execution>    
+    <execution id="6">      
+      <position height="21" width="7" x="92" y="158"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="21" width="7" x="92" y="158"/>    
+    </execution>  
+  </object>  
+  <object id="23" language="java" name="project.preferences.controller.EditSystemPPController" project="Project" 
+    file="/Project/src/project/preferences/controller/EditSystemPPController.java" binary="false" 
+    label="editSystemPPController" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="330" y="0"/>    
+    <execution id="13">      
+      <position height="21" width="159" x="189" y="255"/>    
+    </execution>    
+    <execution id="21">      
+      <position height="540" width="159" x="189" y="517"/>    
+    </execution>    
+    <execution id="25">      
+      <position height="346" width="7" x="265" y="559"/>    
+    </execution>    
+    <execution id="27">      
+      <position height="119" width="7" x="265" y="917"/>    
+    </execution>  
+  </object>  
+  <object id="31" language="java" name="software.BusinessLogic.AnalysisManager" project="Project" 
+    file="/Project/src/software/BusinessLogic/AnalysisManager.java" binary="false" label="analysisManager" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="421" y="0"/>    
+    <execution id="29">      
+      <position height="296" width="121" x="352" y="588"/>    
+    </execution>    
+    <execution id="33">      
+      <position height="133" width="7" x="409" y="630"/>    
+    </execution>    
+    <execution id="35">      
+      <position height="84" width="7" x="409" y="779"/>    
+    </execution>    
+    <execution id="39">      
+      <position height="21" width="7" x="412" y="821"/>    
+    </execution>  
+  </object>  
+  <object id="40" language="java" name="software.DomainModel.AnalysisEntity.System" project="Project" 
+    file="/Project/src/software/DomainModel/AnalysisEntity/System.java" binary="false" label="system" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="674" y="0"/>    
+    <execution id="37">      
+      <position height="84" width="166" x="477" y="658"/>    
+    </execution>    
+    <execution id="42">      
+      <position height="21" width="7" x="557" y="700"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="setViewController(project.preferences.controller.EditSystemPPController):void" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="10" operation="getViewController():project.preferences.controller.EditSystemPPController" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>  
+  <message id="12" operation="setForm(project.preferences.EditSystemPreferencePage):void" asynchronous="false">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="15" operation="createContents(org.eclipse.swt.widgets.Composite):org.eclipse.swt.widgets.Control" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="17" operation="prepareView(int):void" asynchronous="false">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="18"/>  
+  </message>  
+  <message id="20" operation="remove():void" asynchronous="false">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="21"/>  
+  </message>  
+  <message id="24" operation="getManager():software.BusinessLogic.AnalysisManager" asynchronous="false">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="25"/>  
+  </message>  
+  <message id="26" operation="getForm():project.preferences.EditSystemPreferencePage" asynchronous="false">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="27"/>  
+  </message>  
+  <message id="28" operation="removeSystem():void" asynchronous="false">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="29"/>  
+  </message>  
+  <message id="30" operation="prepareView(int):void" asynchronous="false">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="32" operation="getSystem():software.DomainModel.AnalysisEntity.System" asynchronous="false">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="33"/>  
+  </message>  
+  <message id="34" operation="updateSystem():void" asynchronous="false">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="35"/>  
+  </message>  
+  <message id="36" operation="remove():void" asynchronous="false">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="37"/>  
+  </message>  
+  <message id="38" operation="updateObject(java.lang.Object):boolean" asynchronous="false">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="39"/>  
+  </message>  
+  <message id="41" operation="setState(boolean):void" asynchronous="false">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="42"/>  
+  </message>
+</sequence-diagram>
