@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %Bundle-Name
+Bundle-Name: Project
 Bundle-SymbolicName: Project;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: project.Activator
-Bundle-Vendor: %Bundle-Vendor
+Bundle-Vendor: FEM
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.10.1",

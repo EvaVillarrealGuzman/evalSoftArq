@@ -112,7 +112,7 @@
            			<command
            			    commandId="Project.commands.newSystemCommand"
                 	    id="Project.menus.newSystemCommand"
-                	    label="New "
+                	    label="New"
                		    mnemonic="S"
                  		style="push">
            			</command>
