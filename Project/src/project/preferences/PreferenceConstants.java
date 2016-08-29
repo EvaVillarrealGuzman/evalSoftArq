@@ -44,6 +44,8 @@ public class PreferenceConstants {
 	public static final String QualityAttribute_Label = Messages.UCM2DEVS_QualityAttribute_Label;
 
 	public static final String Question_Label = Messages.UCM2DEVS_Question_Label;
+	
+	public static final String Delete_Label = Messages.UCM2DEVS_Delete_Label;
 
 	public static final String Response_Label = Messages.UCM2DEVSResponse_Label;
 

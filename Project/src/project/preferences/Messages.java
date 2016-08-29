@@ -52,6 +52,7 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_Consult_Buttom;
 	public static String UCM2DEVS_Consult_ToolTip;
 	public static String UCM2DEVS_Delete_Buttom;
+	public static String UCM2DEVS_Delete_Label;
 	public static String UCM2DEVS_Delete_ToolTip;
 	public static String UCM2DEVS_Description_Label;
 	public static String UCM2DEVS_DescriptionScenario_Column;

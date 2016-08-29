@@ -126,12 +126,14 @@ public class Controller {
 	 * @return boolean
 	 */
 	public boolean createDeleteSystem() {
-		return MessageDialog.openQuestion(null, PreferenceConstants.Question_Label,
+		return MessageDialog.openQuestion(null, PreferenceConstants.Delete_Label,
 				PreferenceConstants.WantDeleteSystem_QuestionDialog);
 	}
+	
+	
 
 	/**
-	 * Created a dialog for system's delete
+	 * Created a dialog for save changed
 	 * 
 	 * @return boolean
 	 */
@@ -146,9 +148,10 @@ public class Controller {
 	 * @return boolean
 	 */
 	public boolean createDeleteRequirementDialog() {
-		return MessageDialog.openQuestion(null, PreferenceConstants.Question_Label,
+		return MessageDialog.openQuestion(null, PreferenceConstants.Delete_Label,
 				PreferenceConstants.WantDeleteQualityRequirement_QuestionDialog);
 	}
+	
 
 	/**
 	 * Convert a File to IFile
