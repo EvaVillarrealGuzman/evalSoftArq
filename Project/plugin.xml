@@ -226,6 +226,12 @@
         class="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
         name="%SoftwareArchitectureSpecificationOpen">
+  </page>
+  <page
+        category="project.preferences.UCM2DEVS"
+        class="project.preferences.ReportsPreferencePage"
+        id="project.preferences.ReportsPreferencePage"
+        name="Reports">
   </page>	
    </extension>
    <extension
