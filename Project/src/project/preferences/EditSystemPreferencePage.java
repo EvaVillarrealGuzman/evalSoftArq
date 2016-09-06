@@ -185,7 +185,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.createDeleteSystem() == true) {
+					if (viewController.createDeleteSystemDialog() == true) {
 						viewController.remove();
 					}
 				}

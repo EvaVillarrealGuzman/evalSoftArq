@@ -13,7 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
-import software.DomainModel.ReportsEntity.Simulator;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+
 
 /**
  * This class defines the system of a project
@@ -45,8 +46,8 @@ public class System implements Comparable {
 	private Set<QualityRequirement> qualityRequirements = new HashSet<QualityRequirement>();
 
 	// VER QUE PUEDE SER CERO
-	@OneToMany(targetEntity = Simulator.class, cascade = CascadeType.ALL)
-	private Set<Simulator> architectures = new HashSet<Simulator>();
+	@OneToMany(targetEntity = Architecture.class, cascade = CascadeType.ALL)
+	private Set<Architecture> architectures = new HashSet<Architecture>();
 
 	private boolean state;
 

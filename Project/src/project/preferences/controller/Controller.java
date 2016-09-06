@@ -125,7 +125,7 @@ public class Controller {
 	 * 
 	 * @return boolean
 	 */
-	public boolean createDeleteSystem() {
+	public boolean createDeleteSystemDialog() {
 		return MessageDialog.openQuestion(null, PreferenceConstants.Delete_Label,
 				PreferenceConstants.WantDeleteSystem_QuestionDialog);
 	}

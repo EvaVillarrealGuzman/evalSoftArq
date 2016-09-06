@@ -63,6 +63,18 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.StimulusType.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.System.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Unit.class);
+			
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.StartPoint.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ORJoin.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ANDJoin.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ORFork.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsability.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Path.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.CompositeComponent.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.SimpleComponent.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture.class);
 
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Indicator.class);
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.IndicatorType.class);
@@ -71,7 +83,7 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.SimulationParameter.class);
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Simulator.class);
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Run.class);
-
+			
 			try {
 				psessionFactory = conf.buildSessionFactory();
 				psession = psessionFactory.openSession();
