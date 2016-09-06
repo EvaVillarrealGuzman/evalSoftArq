@@ -5,13 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsability;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
 
 @Entity
 @Table(name = "RESPONSABILIDADINDICATOR")
 public class ResponsabilityIndicator extends IndicatorType {
 
-	@ManyToOne(targetEntity = Responsability.class, cascade = CascadeType.ALL)
-	private Responsability responsability;
+	@ManyToOne(targetEntity = Responsibility.class, cascade = CascadeType.ALL)
+	private Responsibility responsability;
 
 }

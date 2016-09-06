@@ -51,8 +51,6 @@ public class System implements Comparable {
 
 	private boolean state;
 
-	private ArrayList<String> pathUCMs;
-
 	// Builders
 	public System() {
 
@@ -117,12 +115,12 @@ public class System implements Comparable {
 		this.qualityRequirements = pqualityRequirements;
 	}
 
-	public ArrayList<String> getPathUCMs() {
-		return pathUCMs;
+	public Set<Architecture> getArchitectures() {
+		return architectures;
 	}
 
-	public void setPathUCMs(ArrayList<String> pathUCMs) {
-		this.pathUCMs = pathUCMs;
+	public void setArchitectures(Set<Architecture> architectures) {
+		this.architectures = architectures;
 	}
 
 	public boolean isState() {
@@ -147,8 +145,7 @@ public class System implements Comparable {
 	/**
 	 * Method removes a system logically, by setting their status to false
 	 * 
-	 * @param doesn't
-	 *            apply
+	 * @param doesn't apply
 	 * @return void
 	 */
 	public void remove() {

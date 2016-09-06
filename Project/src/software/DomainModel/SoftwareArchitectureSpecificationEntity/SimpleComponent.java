@@ -9,11 +9,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+/**
+ * This class defines the architecture element: simple component
+ * 
+ * @author: FEM
+ * @version: 06/09/2016
+ */
+
 @Entity
 @Table(name = "SIMPLECOMPONENT")
 @PrimaryKeyJoinColumn(name = "id")
 public class SimpleComponent extends ArchitectureElement {
 
-	@OneToMany(targetEntity = Responsability.class, cascade = CascadeType.ALL)
-	private Set<Responsability> responsabilities = new HashSet<Responsability>();
+	@OneToMany(targetEntity = Responsibility.class, cascade = CascadeType.ALL)
+	private Set<Responsibility> responsabilities = new HashSet<Responsibility>();
 }

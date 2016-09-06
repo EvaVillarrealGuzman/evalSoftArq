@@ -9,6 +9,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+/**
+ * This class defines the architecture element: composite component
+ * 
+ * @author: FEM
+ * @version: 06/09/2016
+ */
+
 @Entity
 @Table(name = "COMPOSITECOMPONENT")
 @PrimaryKeyJoinColumn(name = "id")

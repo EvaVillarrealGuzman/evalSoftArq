@@ -145,12 +145,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * 
 	 * @param ptype
 	 */
-	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) { // NOPMD
-																					// by
-																					// Usuario-Pc
-																					// on
-																					// 10/06/16
-																					// 21:46
+	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) {
 		this.getManager().setSystem(ptype);// TODO
 		// Borra lo que tenía antes la table
 		while (this.getForm().getTable().getItems().length > 0) {

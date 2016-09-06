@@ -10,6 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * This class defines the paths for an specific architecture view
+ *  
+ * @author: FEM
+ * @version: 06/09/2016
+ */
+
 @Entity
 @Table(name = "PATH")
 public class Path {

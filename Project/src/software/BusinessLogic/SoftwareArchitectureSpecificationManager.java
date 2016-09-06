@@ -1,9 +1,15 @@
 package software.BusinessLogic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.TableItem;
+
 import software.DataManager.HibernateManager;
+import software.DomainModel.AnalysisEntity.QualityRequirement;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
  * This class is responsible for the management package: Software Architecture Specification
@@ -75,10 +81,23 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager{
 	}
 	
 	public ArrayList<String> getPathUCMs() {
-		return this.getSystem().getPathUCMs();
+		Iterator it = this.getSystem().getArchitectures().iterator();
+		if (it.hasNext()){
+			Architecture a = (Architecture) it.next();
+			return a.getPathUCMs();
+		} else {
+			return null;
+		}
 	}
 	
 	public void setPathUCMs(ArrayList<String> pathUCMs) {
-		this.getSystem().setPathUCMs(pathUCMs);
+		Iterator it = this.getSystem().getArchitectures().iterator();
+		if (it.hasNext()){
+			Architecture a = (Architecture) it.next();
+			a.setPathUCMs(pathUCMs);
+		} else {
+			Architecture pa = new Architecture(pathUCMs);
+			this.getSystem().getArchitectures().add(pa);
+		}
 	}
 }

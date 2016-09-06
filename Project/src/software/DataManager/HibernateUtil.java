@@ -70,7 +70,7 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ORFork.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter.class);
-			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsability.class);
+			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Path.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.CompositeComponent.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.SimpleComponent.class);
