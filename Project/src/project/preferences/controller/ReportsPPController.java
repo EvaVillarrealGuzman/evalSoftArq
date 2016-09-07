@@ -17,12 +17,14 @@ import org.eclipse.ui.part.FileEditorInput;
 import project.preferences.PreferenceConstants;
 import project.preferences.ReportsPreferencePage;
 import project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage;
+import software.BusinessLogic.ReportManager;
 import software.BusinessLogic.SoftwareArchitectureSpecificationManager;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
- * Controller for SoftwareArchitectureEspecificationPreferencePage
+ * Controller for ReportPreferencePage
  * 
- * @author Eva
+ * @author Flor
  *
  */
 public class ReportsPPController extends Controller {
@@ -31,7 +33,7 @@ public class ReportsPPController extends Controller {
 	 * Attributes
 	 */
 	private static ReportsPPController controller;
-	private SoftwareArchitectureSpecificationManager manager;
+	private ReportManager manager;
 	private ReportsPreferencePage form;
 
 	/**
@@ -45,14 +47,14 @@ public class ReportsPPController extends Controller {
 		ReportsPPController.controller = controller;
 	}
 
-	public SoftwareArchitectureSpecificationManager getManager() {
+	public ReportManager getManager() {
 		if (manager == null) {
-			manager = new SoftwareArchitectureSpecificationManager();
+			manager = new ReportManager();
 		}
 		return manager;
 	}
 
-	public void setManager(SoftwareArchitectureSpecificationManager manager) {
+	public void setManager(ReportManager manager) {
 		this.manager = manager;
 	}
 
@@ -146,22 +148,16 @@ public class ReportsPPController extends Controller {
 	 * 
 	 * @param ptype
 	 */
-	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) { // NOPMD
-																					// by
-																					// Usuario-Pc
-																					// on
-																					// 10/06/16
-																					// 21:46
-		this.getManager().setSystem(ptype);// TODO
-		// Borra lo que tenía antes la table
+	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) { 
+		this.getManager().setSystem(ptype);
 		while (this.getForm().getTable().getItems().length > 0) {
 			this.getForm().getTable().remove(0);
 		}
-		if (this.getManager().getPathUCMs() != null) {
-			for (String namePath : this.getManager().getPathUCMs()) {
-				addToTable(namePath);
+		if (!this.getManager().getArchitectures().isEmpty()){
+			for (Architecture dp : this.getManager().getArchitectures()) {
+				addToTable(dp.getPathUCMs().get(0));
 			}
-		}
+		}	
 	}
 
 	public void addToTable(String namePath) {

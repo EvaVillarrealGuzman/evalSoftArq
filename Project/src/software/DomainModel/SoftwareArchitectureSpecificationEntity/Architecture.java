@@ -41,6 +41,10 @@ public class Architecture {
 
 	private ArrayList<String> pathUCMs;
 
+	public Architecture() {
+		
+	}
+	
 	public Architecture(ArrayList<String> ppathUCMs) {
 		this.pathUCMs = ppathUCMs;
 	}

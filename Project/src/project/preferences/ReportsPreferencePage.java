@@ -1,12 +1,19 @@
 package project.preferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -21,17 +28,21 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
 import project.preferences.controller.ReportsPPController;
 import project.preferences.controller.SoftwareArchitectureSpecificationPPController;
+import software.DomainModel.AnalysisEntity.QualityAttribute;
+import software.DomainModel.AnalysisEntity.QualityRequirement;
 
 /**
- * To specify a software architecture by JUCMNav
+ * To view a report for a specific architecture and a specific quality requirement
  * 
- * @author: Eva
+ * @author: Flor
  */
 public class ReportsPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
@@ -46,11 +57,13 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 	private FileDialog chooseFile;
 	private Composite cSystemName;
 	private GridData gridData;
-	private TableViewer tblViewerQualityRequirement;
+	private TableViewer tblViewerSoftArchSpecification;
 	private Table table;
 	private TableColumn colObject;
 	private TableColumn colPath;
 	private TableColumn colName;
+	private Composite treeViewerComposite;
+	private TreeViewer	treeViewerQualRequirement;
 
 	/**
 	 * Contructor
@@ -158,9 +171,16 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 			}
 
 			// Create TableViewer
-			tblViewerQualityRequirement = new TableViewer(table);
-			tblViewerQualityRequirement.setUseHashlookup(true);
-			tblViewerQualityRequirement.setColumnProperties(columnNames);
+			tblViewerSoftArchSpecification = new TableViewer(table);
+			tblViewerSoftArchSpecification.setUseHashlookup(true);
+			tblViewerSoftArchSpecification.setColumnProperties(columnNames);
+			table.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					table.showSelection();
+					//TODO implementar
+				}
+			});
 
 			// Create the cell editors
 			CellEditor[] editors = new CellEditor[columnNames.length];
@@ -169,7 +189,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 			editors[2] = null;
 
 			// Assign the cell editors to the viewer
-			tblViewerQualityRequirement.setCellEditors(editors);
+			tblViewerSoftArchSpecification.setCellEditors(editors);
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 2;
@@ -184,6 +204,36 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 			gridData.verticalAlignment = SWT.BOTTOM;
 			gridData.grabExcessHorizontalSpace = true;
 
+			//TODO lo que agregué para el tree
+			treeViewerComposite = new Composite(parent, SWT.NONE);
+		      
+			Tree tree = new Tree(treeViewerComposite, SWT.BORDER | SWT.MULTI);
+			tree.setHeaderVisible(true);
+			TreeColumnLayout columnLayout = new TreeColumnLayout();
+			treeViewerComposite.setLayout(columnLayout);
+
+			TreeColumn column = new TreeColumn(tree, SWT.NONE);
+			column.setText("Attribute/Requirement");
+			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
+
+			column = new TreeColumn(tree, SWT.NONE);
+			column.setText("Condition");
+			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
+			      
+			column = new TreeColumn(tree, SWT.NONE);
+			column.setText("");
+			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
+			              
+			      
+			GridDataFactory.fillDefaults().grab(true, true).hint(10, 10).applyTo(treeViewerComposite);
+
+			TreeViewer treeViewer = new TreeViewer(tree);
+			treeViewer.setContentProvider(new MyTreeContentProvider());
+			treeViewer.setLabelProvider(new MyTreeLabelProvider());
+			treeViewer.getTree().setHeaderVisible(true);
+			//tree.addKeyListener(new TestListener());
+			//TODO hasta aca agregué del tree
+			
 			btnReport = new Button(parent, SWT.PUSH);
 			//TODO internacionalizar
 			btnReport.setText("Report");

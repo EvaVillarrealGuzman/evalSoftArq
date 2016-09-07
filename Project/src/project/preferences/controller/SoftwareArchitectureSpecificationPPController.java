@@ -17,6 +17,8 @@ import org.eclipse.ui.part.FileEditorInput;
 import project.preferences.PreferenceConstants;
 import project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage;
 import software.BusinessLogic.SoftwareArchitectureSpecificationManager;
+import software.DomainModel.AnalysisEntity.QualityRequirement;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
  * Controller for SoftwareArchitectureEspecificationPreferencePage
@@ -145,15 +147,14 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * 
 	 * @param ptype
 	 */
-	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) {
-		this.getManager().setSystem(ptype);// TODO
-		// Borra lo que tenía antes la table
+	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) {		
+		this.getManager().setSystem(ptype);
 		while (this.getForm().getTable().getItems().length > 0) {
 			this.getForm().getTable().remove(0);
 		}
-		if (this.getManager().getPathUCMs() != null) {
-			for (String namePath : this.getManager().getPathUCMs()) {
-				addToTable(namePath);
+		if (!this.getManager().getArchitectures().isEmpty()){
+			for (Architecture dp : this.getManager().getArchitectures()) {
+				addToTable(dp.getPathUCMs().get(0));
 			}
 		}
 	}

@@ -6,17 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import software.DataManager.HibernateManager;
-import software.DomainModel.AnalysisEntity.QualityRequirement;
+import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
- * This class is responsible for the management package: Software Architecture Specification
+ * This class is responsible for the management package: Report
  * 
- * @author: FEM
- * @version: 23/08/2016
+ * @author: MICA
+ * @version: 07/09/2016
  */
-public class SoftwareArchitectureSpecificationManager extends HibernateManager{
-
+public class ReportManager extends HibernateManager {
 	/**
 	 * Attributes
 	 */
@@ -98,8 +97,13 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager{
 			this.getSystem().getArchitectures().add(pa);
 		}
 	}
+
+	public List<QualityAttribute> listQualityAttribute() {
+		return this.listClass(QualityAttribute.class, "name");
+	}
 	
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
 	}
+
 }
