@@ -23,20 +23,20 @@ public class HibernateUtil {
 	public static SessionFactory psessionFactory;
 	public static Session psession;
 
-	public static void initialize() {
+	public static void initialize(DatabaseConnection db) {
 		try {
 			AnnotationConfiguration conf = new AnnotationConfiguration();
 			try {
 				conf.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
 				conf.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 				conf.setProperty("hibernate.connection.url",
-						"jdbc:postgresql://localhost:" + DatabaseConnection.PortName + "/ProyectoFinal");
+						"jdbc:postgresql://localhost:" + db.getPortName() + "/ProyectoFinal");
 			} catch (Exception pe) {
 				JOptionPane.showMessageDialog(null, "Database error Nº 2001");
 			}
 
-			conf.setProperty("hibernate.connection.username", DatabaseConnection.UserName);
-			conf.setProperty("hibernate.connection.password", DatabaseConnection.Password);
+			conf.setProperty("hibernate.connection.username", db.getUserName());
+			conf.setProperty("hibernate.connection.password", db.getPassword());
 			conf.setProperty("hibernate.connection.pool_size", "10");
 			conf.setProperty("hibernate.hbm2ddl.auto", "update");
 

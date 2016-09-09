@@ -162,7 +162,7 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-
+					viewController.updateConnectionData();
 				}
 			});
 

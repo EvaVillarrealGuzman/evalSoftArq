@@ -11,6 +11,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import software.DataManager.Data;
+import software.DataManager.DatabaseConnection;
 import software.DataManager.HibernateUtil;
 
 /**
@@ -19,7 +20,8 @@ import software.DataManager.HibernateUtil;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "Project"; // NOPMD by Usuario-Pc on 11/06/16 12:41
+	public static final String PLUGIN_ID = "Project"; // NOPMD by Usuario-Pc on
+														// 11/06/16 12:41
 
 	// The shared instance
 	private static Activator plugin; // NOPMD by Usuario-Pc on 11/06/16 12:39
@@ -30,22 +32,40 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.
 	 * BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception { // NOPMD by Usuario-Pc on 11/06/16 12:38
+	public void start(BundleContext context) throws Exception { // NOPMD by
+																// Usuario-Pc on
+																// 11/06/16
+																// 12:38
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (InstantiationException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD by Usuario-Pc on 11/06/16 12:36
+			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD
+																						// by
+																						// Usuario-Pc
+																						// on
+																						// 11/06/16
+																						// 12:36
 		} catch (IllegalAccessException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD by Usuario-Pc on 11/06/16 12:36
+			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD
+																						// by
+																						// Usuario-Pc
+																						// on
+																						// 11/06/16
+																						// 12:36
 		} catch (UnsupportedLookAndFeelException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD by Usuario-Pc on 11/06/16 12:38
+			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD
+																						// by
+																						// Usuario-Pc
+																						// on
+																						// 11/06/16
+																						// 12:38
 		}
 
 		/**
 		 * Initialize Hibernate
 		 */
-		HibernateUtil.initialize();
-		//Data.initialize();
+		HibernateUtil.initialize(new DatabaseConnection());
+		// Data.initialize();
 		super.start(context);
 		plugin = this;
 	}
@@ -56,7 +76,10 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.
 	 * BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception { // NOPMD by Usuario-Pc on 11/06/16 12:38
+	public void stop(BundleContext context) throws Exception { // NOPMD by
+																// Usuario-Pc on
+																// 11/06/16
+																// 12:38
 		plugin = null; // NOPMD by Usuario-Pc on 11/06/16 12:40
 		super.stop(context);
 	}
@@ -78,7 +101,11 @@ public class Activator extends AbstractUIPlugin {
 	 *            the path
 	 * @return the image descriptor
 	 */
-	public static ImageDescriptor getImageDescriptor(String path) { // NOPMD by Usuario-Pc on 11/06/16 12:39
+	public static ImageDescriptor getImageDescriptor(String path) { // NOPMD by
+																	// Usuario-Pc
+																	// on
+																	// 11/06/16
+																	// 12:39
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 }

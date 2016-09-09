@@ -21,54 +21,33 @@ import org.xml.sax.SAXException;
 
 public class DOM {
 
-	private String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/software/DataManager/DatabaseConnection.xml";
+	private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/software/DataManager/DatabaseConnection.xml";
 
-	public String readPassword() {
-		File fXmlFile = new File(PATH);
-
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder;
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc;
-			try {
-				doc = dBuilder.parse(fXmlFile);
-				doc.getDocumentElement().normalize();
-
-				NodeList nList = doc.getElementsByTagName("databaseconfiguration");
-
-				for (int i = 0; i < nList.getLength(); i++) {
-					Node nNode = nList.item(i);
-					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-						Element eElement = (Element) nNode;
-						return eElement.getElementsByTagName("password").item(0).getTextContent();
-					}
-				}
-
-			} catch (SAXException | IOException e) {
-				e.printStackTrace();
-			}
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-
-		return "";
-
+	public static String readPassword() {
+		return internalStructureRead("password");
 	}
 
-	public void writePassword() {
-		internalStructure("password", "hola");
+	public static String readUserName() {
+		return internalStructureRead("username");
 	}
 
-	public void writeUserName(String value) {
-		internalStructure("username", value);
+	public static String readPortNumber() {
+		return internalStructureRead("portnumber");
 	}
 
-	public void writePortNumber() {
-		internalStructure("portnumber", "hola");
+	public void writePassword(String password) {
+		internalStructureWrite("password", password);
 	}
 
-	private void internalStructure(String attribute, String value) {
+	public void writeUserName(String username) {
+		internalStructureWrite("username", username);
+	}
+
+	public void writePortNumber(String portnumber) {
+		internalStructureWrite("portnumber", portnumber);
+	}
+
+	private void internalStructureWrite(String attribute, String value) {
 		File fXmlFile = new File(PATH);
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -95,8 +74,7 @@ public class DOM {
 				try {
 					transformer = transformerFactory.newTransformer();
 					DOMSource source = new DOMSource(doc);
-					StreamResult result = new StreamResult(new File(
-							"C:/Users/Usuario-Pc/git/project/Project/src/software/DataManager/DatabaseConnection.xml"));
+					StreamResult result = new StreamResult(new File(PATH));
 					try {
 						transformer.transform(source, result);
 					} catch (TransformerException e) {
@@ -112,6 +90,38 @@ public class DOM {
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static String internalStructureRead(String attribute) {
+		File fXmlFile = new File(PATH);
+
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+			Document doc;
+			try {
+				doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+
+				NodeList nList = doc.getElementsByTagName("databaseconfiguration");
+
+				for (int i = 0; i < nList.getLength(); i++) {
+					Node nNode = nList.item(i);
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+						Element eElement = (Element) nNode;
+						return eElement.getElementsByTagName(attribute).item(0).getTextContent();
+					}
+				}
+
+			} catch (SAXException | IOException e) {
+				e.printStackTrace();
+			}
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 
 }

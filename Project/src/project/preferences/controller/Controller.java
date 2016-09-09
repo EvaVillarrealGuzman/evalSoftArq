@@ -114,10 +114,26 @@ public class Controller {
 	/**
 	 * Created a dialog for error
 	 * 
-	 * @param error
+	 * @param message
 	 */
-	public void createErrorDialog(String error) {
-		MessageDialog.openError(null, PreferenceConstants.Error_Label, error);
+	public void createErrorDialog(String message) {
+		MessageDialog.openError(null, PreferenceConstants.Error_Label, message);
+	}
+
+	/**
+	 * Created a dialog for error for saved to object
+	 * 
+	 */
+	public void createObjectDontSaveErrorDialog() {
+		MessageDialog.openError(null, "Error", "The object can not be saved");
+	}
+
+	/**
+	 * Created a dialog for error for update to object
+	 * 
+	 */
+	public void createObjectDontUpdateErrorDialog() {
+		MessageDialog.openError(null, "Error", "The object can not be updated");
 	}
 
 	/**
@@ -129,8 +145,22 @@ public class Controller {
 		return MessageDialog.openQuestion(null, PreferenceConstants.Delete_Label,
 				PreferenceConstants.WantDeleteSystem_QuestionDialog);
 	}
-	
-	
+
+	/**
+	 * Created a dialog for information about success
+	 * 
+	 */
+	public void createObjectSuccessDialog() {
+		MessageDialog.openInformation(null, "Info", "Done successfully!");
+	}
+
+	/**
+	 * Created a dialog for information
+	 * 
+	 */
+	public void createSuccessDialog(String message) {
+		MessageDialog.openInformation(null, "Info", message);
+	}
 
 	/**
 	 * Created a dialog for save changed
@@ -151,7 +181,6 @@ public class Controller {
 		return MessageDialog.openQuestion(null, PreferenceConstants.Delete_Label,
 				PreferenceConstants.WantDeleteQualityRequirement_QuestionDialog);
 	}
-	
 
 	/**
 	 * Convert a File to IFile

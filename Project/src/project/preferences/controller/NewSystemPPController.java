@@ -52,13 +52,14 @@ public class NewSystemPPController extends Controller {
 	/**
 	 * Create the system and prepare the view
 	 */
-	public void save() {
+	public Boolean save() {
 		int err;
 		err = this.newSystem();
 		if (err == 0) {
-			this.getManager().saveSystem();
 			this.getForm().prepareView(1);
+			return this.getManager().saveSystem();
 		}
+		return null;
 	}
 
 	/**

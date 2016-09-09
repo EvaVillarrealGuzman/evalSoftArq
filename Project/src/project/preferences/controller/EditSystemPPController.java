@@ -55,13 +55,14 @@ public class EditSystemPPController extends Controller {
 	/**
 	 * Update the system and prepare the view
 	 */
-	public void save() {
+	public Boolean save() {
 		int err;
 		err = this.setSystem();
 		if (err == 0) {
-			this.getManager().updateSystem();
 			this.getForm().prepareView(1);
+			return this.getManager().updateSystem();
 		}
+		return null;
 	}
 
 	/**

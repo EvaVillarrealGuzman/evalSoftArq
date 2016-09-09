@@ -435,60 +435,56 @@ public class AnalysisManager extends HibernateManager {
 		return this.getSystem().getProjectFinishDate();
 	}
 
-	public void saveSystem(int popcABM) {
+	// Saves and updates
+	public Boolean saveSystem(int popcABM) {
 		switch (popcABM) {
 		case 0:
-			this.saveSystem();
-			break;
+			return this.saveSystem();
 		case 1:
-			this.updateSystem();
-			break;
+			return this.updateSystem();
 		case 2:
-			this.saveSystem();
-			break;
-
+			return this.saveSystem();
 		}
+		return null;
 	}
 
-	public void saveQualityRequirement(int popcABM) {
+	public Boolean saveQualityRequirement(int popcABM) {
 		switch (popcABM) {
 		case 0:
-			this.saveQualityRequirement();
-			break;
+			return this.saveQualityRequirement();
 		case 1:
-			this.updateQualityRequirement();
-			break;
+			return this.updateQualityRequirement();
 		case 2:
-			this.saveQualityRequirement();
-			break;
+			return this.saveQualityRequirement();
 		}
+		return null;
 	}
 
-	public void saveSystem() {
-		this.saveObject(this.getSystem());
+	public Boolean saveSystem() {
+		return this.saveObject(this.getSystem());
 
 	}
 
-	public void updateSystem() {
-		this.updateObject(this.getSystem());
+	public Boolean updateSystem() {
+		return this.updateObject(this.getSystem());
 	}
 
-	public void saveQualityRequirement() {
-		this.updateSystem();
+	public Boolean saveQualityRequirement() {
+		return this.updateSystem();
 	}
 
-	public void updateQualityRequirement() {
-		this.updateSystem();
+	public Boolean updateQualityRequirement() {
+		return this.updateSystem();
 	}
 
-	public void removeSystem() {
+	public Boolean removeSystem() {
 		this.getSystem().remove();
-		this.updateSystem();
+		return this.updateSystem();
 	}
 
-	public void removeQualityRequirement() {
+	public Boolean removeQualityRequirement() {
 		this.getQualityRequirement().remove();
-		this.updateQualityRequirement();
+		return this.updateQualityRequirement();
 	}
 
 	public Set<QualityRequirement> getQualityRequirements() {

@@ -10,18 +10,19 @@ import software.DomainModel.AnalysisEntity.QualityRequirement;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
- * This class is responsible for the management package: Software Architecture Specification
+ * This class is responsible for the management package: Software Architecture
+ * Specification
  * 
  * @author: FEM
  * @version: 23/08/2016
  */
-public class SoftwareArchitectureSpecificationManager extends HibernateManager{
+public class SoftwareArchitectureSpecificationManager extends HibernateManager {
 
 	/**
 	 * Attributes
 	 */
 	private software.DomainModel.AnalysisEntity.System system;
-	
+
 	/**
 	 * Getters and Setters
 	 */
@@ -32,7 +33,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager{
 	public software.DomainModel.AnalysisEntity.System getSystem() {
 		return this.system;
 	}
-	
+
 	/**
 	 * 
 	 * @return True if there are systems whose state==true, else return false
@@ -45,7 +46,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager{
 			return true;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return ComboBoxModel with system names whose state==true
@@ -73,24 +74,24 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager{
 	public List<software.DomainModel.AnalysisEntity.System> listSystem() {
 		return this.listClass(software.DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
-	
-	public void updateSystem() {
-		this.updateObject(this.getSystem());
+
+	public Boolean updateSystem() {
+		return this.updateObject(this.getSystem());
 	}
-	
+
 	public ArrayList<String> getPathUCMs() {
 		Iterator it = this.getSystem().getArchitectures().iterator();
-		if (it.hasNext()){
+		if (it.hasNext()) {
 			Architecture a = (Architecture) it.next();
 			return a.getPathUCMs();
 		} else {
 			return null;
 		}
 	}
-	
+
 	public void setPathUCMs(ArrayList<String> pathUCMs) {
 		Iterator it = this.getSystem().getArchitectures().iterator();
-		if (it.hasNext()){
+		if (it.hasNext()) {
 			Architecture a = (Architecture) it.next();
 			a.setPathUCMs(pathUCMs);
 		} else {
@@ -98,7 +99,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager{
 			this.getSystem().getArchitectures().add(pa);
 		}
 	}
-	
+
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
 	}

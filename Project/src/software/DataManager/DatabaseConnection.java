@@ -5,8 +5,32 @@ package software.DataManager;
  */
 public class DatabaseConnection {
 
-	public static String UserName = "postgres";
-	public static String PortName = "5432";
-	public static String Password = "postgres";
+	private String UserName = DOM.readUserName();
+	private String PortName = DOM.readPortNumber();
+	private String Password = DOM.readPassword();
+
+	public String getUserName() {
+		return UserName;
+	}
+
+	public void setUserName(String userName) {
+		UserName = userName;
+	}
+
+	public String getPortName() {
+		return PortName;
+	}
+
+	public void setPortName(String portName) {
+		PortName = portName;
+	}
+
+	public String getPassword() {
+		return Password;
+	}
+
+	public void setPassword(String password) {
+		Password = password;
+	}
 
 }
