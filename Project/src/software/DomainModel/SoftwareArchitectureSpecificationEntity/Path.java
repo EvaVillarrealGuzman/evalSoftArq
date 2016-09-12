@@ -26,4 +26,14 @@ public class Path {
 
 	@OneToMany(targetEntity = PathElement.class, cascade = CascadeType.ALL)
 	private Set<PathElement> pathElements = new HashSet<PathElement>();
+
+	public Set<PathElement> getPathElements() {
+		return pathElements;
+	}
+
+	public void setPathElements(Set<PathElement> pathElements) {
+		this.pathElements = pathElements;
+	}
+	
+	
 }

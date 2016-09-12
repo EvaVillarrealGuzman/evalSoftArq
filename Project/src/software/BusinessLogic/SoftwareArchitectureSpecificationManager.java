@@ -29,6 +29,8 @@ import software.DomainModel.SoftwareArchitectureSpecificationEntity.CompositeCom
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.EndPoint;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.ORFork;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.ORJoin;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.Path;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.PathElement;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.SimpleComponent;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
@@ -49,9 +51,11 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private software.DomainModel.AnalysisEntity.System system;
 	Document doc;
 	private DefaultTreeModel model;
+	private Architecture arch;
 	private JTree tree;
 	private StartPoint startPoint;
 	private Set<ArchitectureElement> archElements = new HashSet<ArchitectureElement>();
+	private Set<PathElement> pathElements = new HashSet<PathElement>();
 	private Set<Responsibility> responsibilities = new HashSet<Responsibility>();
 	private CompositeComponent child;
 	
@@ -138,10 +142,18 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
 	}
-	
+
+	public Architecture getArch() {
+		return arch;
+	}
+
+	public void setArch(Architecture arch) {
+		this.arch = arch;
+	}
 
 	public void createArchitecture(Architecture parch) {
 		try {
+			this.setArch(parch);
 			// lee el archivo xml que se convertirá en árbol
 			File fXmlFile = new File(parch.getPathUCMs().get(0));
 
@@ -176,7 +188,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 					}
 				}
 			}
-
+			archElements.add(rootNode);
 			// Definimos el modelo donde se agregaran los nodos
 			model = new DefaultTreeModel(parentN);
 
@@ -191,6 +203,15 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			creationComponent(parentN, isRootNodeASimpleComponent);
 
 			creationStartPoint();
+			
+			Set<Path> paths = new HashSet<Path>();
+			Path path = new Path();
+			path.setPathElements(pathElements);
+			paths.add(path);
+			this.getArch().setPaths(paths);
+			this.getArch().setArchitectureElements(archElements);
+			
+			updateObject(parch);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -295,7 +316,8 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							}else{
 								child = new CompositeComponent(this.translateNameComponent(id));
 								isRootNodeASimpleComponent = false;
-							}							
+							}
+							archElements.add(child);
 							DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 							model.insertNodeInto(hijoN, parentN, index);
 							index++;
@@ -327,6 +349,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		NodeList nodesList = doc.getElementsByTagName("nodes");
 
 		Element eNode = this.getNodeOfResponsability(idNode, doc);
+		responsibilities.clear();
 
 		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
 			Node respNode = responsibilitiesList.item(i);
@@ -357,7 +380,8 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setMeanTimeBFail(Double.parseDouble(metadata.getAttribute("value")));
 						}
 						
-						child.setSpecificationParameter(sp);
+						child.setSpecificationParameter(sp);						
+						responsibilities.add(child);
 
 					}
 
@@ -370,8 +394,11 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 				}
 			}
+			
 		}
-
+		SimpleComponent dataParent = (SimpleComponent) parentNode.getUserObject();
+		dataParent.setResponsabilities(responsibilities);
+		
 		for (int i = 0; i < nodesList.getLength(); i++) {
 			Node node = nodesList.item(i);
 
@@ -381,6 +408,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				if (eCurrentNode.getAttribute("id").equals(idNode) && !nodeType.equals("ucm.map:StartPoint")){
 					if (nodeType.equals("ucm.map:EndPoint")){
 						EndPoint child = new EndPoint(this.translateNameSimpleElement(idNode));
+						pathElements.add(child);
 					} else if (nodeType.equals("ucm.map:OrFork")){
 						ORFork child = new ORFork(this.translateNameSimpleElement(idNode)); 
 						ArrayList<Double> pathProbabilities = new ArrayList<Double>();
@@ -394,28 +422,32 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							pathProbabilities.add(Double.parseDouble(metadata.getAttribute("value")));
 						}
 						child.setPathProbabilities(pathProbabilities);
-
+						pathElements.add(child);
+						
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
 						index++;
 					}else if (nodeType.equals("ucm.map:OrJoin")){
 						ORJoin child = new ORJoin(this.translateNameSimpleElement(idNode));
-
+						pathElements.add(child);
+						
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
 						index++;
 					}else if (nodeType.equals("ucm.map:AndFork")){
 						ANDFork child = new ANDFork(this.translateNameSimpleElement(idNode));
-
+						pathElements.add(child);
+						
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
 						index++;
 					}else if (nodeType.equals("ucm.map:AndJoin")){
 						ANDJoin child = new ANDJoin(this.translateNameSimpleElement(idNode));
-
+						pathElements.add(child);
+						
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
@@ -447,10 +479,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				Element metadata = (Element) currentNode;
 
 				startPoint = new StartPoint("start point", Double.parseDouble(metadata.getAttribute("value")));
+				
 			}
 
 		}
-
+		
+		pathElements.add(startPoint);
 	}
 
 	@Override
