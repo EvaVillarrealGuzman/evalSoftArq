@@ -16,4 +16,10 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class StartPoint extends PathElement {
 
+	private double meanTimeBRequest;
+	
+	public StartPoint(String name, double meanTimeBRequest) {
+		super(name);
+		this.meanTimeBRequest = meanTimeBRequest;
+	}
 }

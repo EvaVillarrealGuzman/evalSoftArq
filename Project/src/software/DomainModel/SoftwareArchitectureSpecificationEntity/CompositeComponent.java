@@ -23,5 +23,10 @@ public class CompositeComponent extends ArchitectureElement {
 	
 	@OneToMany(targetEntity = ArchitectureElement.class, cascade = CascadeType.ALL)
 	private Set<ArchitectureElement> internalComponent = new HashSet<ArchitectureElement>();
-	
+
+	public CompositeComponent(String name) {
+		super(name);
+	}
+
 }
+

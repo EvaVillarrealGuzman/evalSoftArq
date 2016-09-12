@@ -20,6 +20,18 @@ public class ArchitectureElement {
 	protected int id;
 	
 	private String name;
-	
+
+	public ArchitectureElement(String name) {
+		super();
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }

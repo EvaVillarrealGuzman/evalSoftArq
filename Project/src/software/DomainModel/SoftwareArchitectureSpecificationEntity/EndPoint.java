@@ -16,4 +16,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class EndPoint extends PathElement {
 
+	public EndPoint(String name) {
+		super(name);
+	}
 }

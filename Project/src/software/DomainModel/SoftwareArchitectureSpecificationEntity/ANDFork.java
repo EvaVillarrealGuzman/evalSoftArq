@@ -16,4 +16,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class ANDFork extends Fork {
 
+	public ANDFork(String name) {
+		super(name);
+	}
 }

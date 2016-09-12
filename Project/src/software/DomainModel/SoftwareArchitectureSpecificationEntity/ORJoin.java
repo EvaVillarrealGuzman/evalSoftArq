@@ -15,4 +15,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class ORJoin extends Join {
 
+	public ORJoin(String name) {
+		super(name);
+	}
 }

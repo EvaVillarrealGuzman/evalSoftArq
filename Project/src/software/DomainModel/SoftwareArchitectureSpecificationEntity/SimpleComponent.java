@@ -23,4 +23,18 @@ public class SimpleComponent extends ArchitectureElement {
 
 	@OneToMany(targetEntity = Responsibility.class, cascade = CascadeType.ALL)
 	private Set<Responsibility> responsabilities = new HashSet<Responsibility>();
+
+	public SimpleComponent(String name) {
+		super(name);
+	}
+
+	public Set<Responsibility> getResponsabilities() {
+		return responsabilities;
+	}
+
+	public void setResponsabilities(Set<Responsibility> responsabilities) {
+		this.responsabilities = responsabilities;
+	}
+	
+	
 }

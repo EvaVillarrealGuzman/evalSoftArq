@@ -1,5 +1,7 @@
 package software.DomainModel.SoftwareArchitectureSpecificationEntity;
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -16,4 +18,19 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class ORFork extends Fork {
 
+	ArrayList<Double> pathProbabilities = new ArrayList<Double>();
+			
+	public ORFork(String name) {
+		super(name);
+	}
+
+	public ArrayList<Double> getPathProbabilities() {
+		return pathProbabilities;
+	}
+
+	public void setPathProbabilities(ArrayList<Double> pathProbabilities) {
+		this.pathProbabilities = pathProbabilities;
+	}
+	
+	
 }

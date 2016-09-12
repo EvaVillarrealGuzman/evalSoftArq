@@ -16,4 +16,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class ANDJoin extends Join {
 
+	public ANDJoin(String name) {
+		super(name);
+	}
 }

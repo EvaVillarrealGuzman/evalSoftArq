@@ -9,4 +9,7 @@ package software.DomainModel.SoftwareArchitectureSpecificationEntity;
 
 public class Join extends PathElement {
 
+	public Join(String name) {
+		super(name);
+	}
 }

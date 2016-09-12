@@ -1,8 +1,5 @@
 package project.preferences;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -36,10 +33,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
 import project.preferences.controller.ReportsPPController;
-import project.preferences.controller.SoftwareArchitectureSpecificationPPController;
-import software.DomainModel.AnalysisEntity.QualityAttribute;
-import software.DomainModel.AnalysisEntity.QualityRequirement;
-import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
  * To view a report for a specific architecture and a specific quality requirement

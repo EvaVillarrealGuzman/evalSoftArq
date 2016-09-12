@@ -20,4 +20,18 @@ public class Responsibility extends PathElement {
 	
 	@OneToOne(targetEntity = Architecture.class, cascade = CascadeType.ALL)
 	private SpecificationParameter specificationParameter;
+	
+	public Responsibility(String name) {
+		super(name);
+	}
+	
+	public SpecificationParameter getSpecificationParameter() {
+		return specificationParameter;
+	}
+
+	public void setSpecificationParameter(SpecificationParameter specificationParameter) {
+		this.specificationParameter = specificationParameter;
+	}
+	
+	
 }
