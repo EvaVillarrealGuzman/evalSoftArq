@@ -1,7 +1,13 @@
 package project.preferences;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+
+import software.DomainModel.AnalysisEntity.QualityAttribute;
+import software.DomainModel.AnalysisEntity.QualityRequirement;
 
 
 /**
@@ -11,15 +17,45 @@ import org.eclipse.jface.viewers.Viewer;
  * @version: 07/09/2016
  */
 public class MyTreeContentProvider implements ITreeContentProvider {
+	
+	software.DomainModel.AnalysisEntity.System system;
+	
+	public software.DomainModel.AnalysisEntity.System getSystem() {
+		return system;
+	}
+
+	public void setSystem(software.DomainModel.AnalysisEntity.System system) {
+		this.system = system;
+	}
 
 	public Object[] getChildren(Object parentElement){
-		//TODO implementar
-		return new Object[0];
+		QualityAttribute qualityAttribute = (QualityAttribute) parentElement;
+		Set<Object> childrens = new HashSet<Object>();
+		int i = 0;
+		for (QualityRequirement dp: system.getQualityRequirements()){
+			if (dp.getQualityScenario().getQualityAttribute()==qualityAttribute){
+				childrens.add(dp);
+				i++;
+			}
+		}
+		return childrens.toArray();
      }
 
-     public boolean hasChildren(Object element){
-        //TODO implementar
-          return false;
+     public boolean hasChildren(Object parentElement){
+    	QualityAttribute qualityAttribute = (QualityAttribute) parentElement;
+ 		Set<Object> childrens = new HashSet<Object>();
+ 		int i = 0;
+ 		for (QualityRequirement dp: system.getQualityRequirements()){
+ 			if (dp.getQualityScenario().getQualityAttribute()==qualityAttribute){
+ 				childrens.add(dp);
+ 				i++;
+ 			}
+ 		}
+ 		if (childrens.isEmpty()){
+ 			return false;
+ 		}else {
+ 			return true;
+ 		}
      }
 
      public Object[] getElements(Object pobject){
@@ -33,9 +69,9 @@ public class MyTreeContentProvider implements ITreeContentProvider {
      }
 
 	@Override
-	public Object getParent(Object arg0) {
-		// TODO implementar
-		return null;
+	public Object getParent(Object childrenElement) {
+		QualityRequirement qualityRequirement = (QualityRequirement) childrenElement;
+		return qualityRequirement.getQualityScenario().getQualityAttribute();
 	}
 
 }

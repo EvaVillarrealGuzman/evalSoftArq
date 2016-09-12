@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
@@ -38,6 +39,7 @@ import project.preferences.controller.ReportsPPController;
 import project.preferences.controller.SoftwareArchitectureSpecificationPPController;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.AnalysisEntity.QualityRequirement;
+import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
  * To view a report for a specific architecture and a specific quality requirement
@@ -178,6 +180,9 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					table.showSelection();
+					//viewController.setModel((Architecture) table.getItem(table.getSelectionIndex()).getData());
+					//tableItemStateChanged();
+					//prepareView();
 					//TODO implementar
 				}
 			});
@@ -211,6 +216,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 			tree.setHeaderVisible(true);
 			TreeColumnLayout columnLayout = new TreeColumnLayout();
 			treeViewerComposite.setLayout(columnLayout);
+			
 
 			TreeColumn column = new TreeColumn(tree, SWT.NONE);
 			column.setText("Attribute/Requirement");
@@ -233,6 +239,18 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 			treeViewer.getTree().setHeaderVisible(true);
 			//tree.addKeyListener(new TestListener());
 			//TODO hasta aca agregué del tree
+			
+			tree.addSelectionListener(new SelectionAdapter() {
+				  @Override
+				  public void widgetSelected(SelectionEvent e) {
+				    TreeItem item = (TreeItem) e.item;
+				      if (item.getItemCount() > 0) {
+				        item.setExpanded(!item.getExpanded());
+				        // update the viewer
+				        treeViewer.refresh();
+				      }
+				    }
+			}); 
 			
 			btnReport = new Button(parent, SWT.PUSH);
 			//TODO internacionalizar
@@ -284,6 +302,14 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 
 	public void setCboSystem(ComboViewer cboSystem) {
 		this.cboSystem = cboSystem;
+	}
+
+	public TreeViewer getTreeViewerQualRequirement() {
+		return treeViewerQualRequirement;
+	}
+
+	public void setTreeViewerQualRequirement(TreeViewer treeViewerQualRequirement) {
+		this.treeViewerQualRequirement = treeViewerQualRequirement;
 	}
 
 	public ReportsPPController getViewController() {
@@ -355,4 +381,11 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 						.getFirstElement());
 	}
 
+	private void tableItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
+		this.fillTree();
+	}
+	
+	public void fillTree() {
+		this.getViewController().setModelQualityRequirements();
+	}
 }

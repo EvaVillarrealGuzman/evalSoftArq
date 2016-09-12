@@ -20,6 +20,7 @@ public class ReportManager extends HibernateManager {
 	 * Attributes
 	 */
 	private software.DomainModel.AnalysisEntity.System system;
+	private Architecture architecture;
 	
 	/**
 	 * Getters and Setters
@@ -32,6 +33,14 @@ public class ReportManager extends HibernateManager {
 		return this.system;
 	}
 	
+	public Architecture getArchitecture() {
+		return architecture;
+	}
+
+	public void setArchitecture(Architecture architecture) {
+		this.architecture = architecture;
+	}
+
 	/**
 	 * 
 	 * @return True if there are systems whose state==true, else return false
@@ -104,6 +113,16 @@ public class ReportManager extends HibernateManager {
 	
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
+	}
+	
+	public QualityAttribute[] getQualityAttributes() {
+		ArrayList<QualityAttribute> qualityAttributes = new ArrayList<QualityAttribute>();
+		for (QualityAttribute auxTipo : this.listQualityAttribute()) {
+			qualityAttributes.add(auxTipo);
+		}
+		QualityAttribute[] arrayQualityAttribute = new QualityAttribute[qualityAttributes.size()];
+		qualityAttributes.toArray(arrayQualityAttribute);
+		return arrayQualityAttribute;
 	}
 
 }

@@ -8,17 +8,20 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+import project.preferences.MyTreeContentProvider;
 import project.preferences.PreferenceConstants;
 import project.preferences.ReportsPreferencePage;
 import project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage;
 import software.BusinessLogic.ReportManager;
 import software.BusinessLogic.SoftwareArchitectureSpecificationManager;
+import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
@@ -82,6 +85,15 @@ public class ReportsPPController extends Controller {
 		this.getManager().setSystem(pmodel);
 	}
 
+	/**
+	 * Setes the model of software architecture specification table
+	 * 
+	 */
+	public void setModel(Architecture pmodel) {
+		this.getManager().setArchitecture(pmodel);
+	}
+
+	
 	/**
 	 * Update the system with the UCM path and prepare the view
 	 */
@@ -155,17 +167,16 @@ public class ReportsPPController extends Controller {
 		}
 		if (!this.getManager().getArchitectures().isEmpty()){
 			for (Architecture dp : this.getManager().getArchitectures()) {
-				addToTable(dp.getPathUCMs().get(0));
+				addToTable(dp);
 			}
 		}	
 	}
 
-	public void addToTable(String namePath) {
+	public void addToTable(Architecture namePath) {
 		TableItem item = new TableItem(this.getForm().getTable(), SWT.NONE);
 		item.setData(namePath);
-
-		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
-				namePath.substring(0, namePath.lastIndexOf("\\")), });
+		item.setText(new String[] { namePath.toString(), namePath.getPathUCMs().get(0).substring(namePath.getPathUCMs().get(0).lastIndexOf("\\") + 1),
+				namePath.getPathUCMs().get(0).substring(0, namePath.getPathUCMs().get(0).lastIndexOf("\\")), });
 	}
 
 	public void deleteToTable() {
@@ -199,6 +210,26 @@ public class ReportsPPController extends Controller {
 			createErrorDialog(PreferenceConstants.UCMNotExists_ErrorDialog);
 		}
 
+	}
+
+	public void setModelQualityRequirements() {
+		//while (this.getForm().getTreeViewerQualRequirement().getTree().getItems().length>0){
+		//	this.getForm().getTreeViewerQualRequirement().getTree().removeAll();
+		//}
+		MyTreeContentProvider cp = (MyTreeContentProvider) this.getForm().getTreeViewerQualRequirement().getContentProvider();
+		cp.setSystem(this.getManager().getSystem());
+		for (QualityAttribute dp : this.getManager().getQualityAttributes()){
+			this.getForm().getTreeViewerQualRequirement().setInput(dp);
+			this.getForm().getTreeViewerQualRequirement().expandAll();
+		}
+//		while (this.getForm().getTable().getItems().length > 0) {
+//			this.getForm().getTable().remove(0);
+//		}
+//		if (!this.getManager().getArchitectures().isEmpty()){
+//			for (Architecture dp : this.getManager().getArchitectures()) {
+//				addToTable(dp.getPathUCMs().get(0));
+//			}
+//		}	
 	}
 
 }
