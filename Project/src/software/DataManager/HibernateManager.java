@@ -2,18 +2,14 @@ package software.DataManager;
 
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-
-import project.preferences.NewSystemPreferencePage;
 
 /**
  * This class management Hibernate (list class, save and update objects)
@@ -50,15 +46,19 @@ public class HibernateManager extends HibernateUtil {
 			Transaction tx = s.beginTransaction();
 			s.save(pobjet);
 			tx.commit();
-			System.out.println(" saveObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD by Usuario-Pc on 10/06/16 22:02
-			MessageDialog.openInformation(null, "Info", "Done successfully!");
+			System.out.println(" saveObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD
+																								// by
+																								// Usuario-Pc
+																								// on
+																								// 10/06/16
+																								// 22:02
 			return true;
 		} catch (Exception pex) {
-			System.out.println("error " + pex); // NOPMD by Usuario-Pc on 10/06/16 22:02
+			System.out.println("error " + pex); // NOPMD by Usuario-Pc on
+												// 10/06/16 22:02
 			System.out.println( // NOPMD by Usuario-Pc on 10/06/16 22:02
 					"Repository.saveObjet(Object objetj)" + pobjet.getClass() + ": " + pobjet.toString() + pex);
 			pex.printStackTrace();
-			MessageDialog.openError(null, "Error", "The object can not be saved");
 			getTx().rollback();
 			return false;
 		}
@@ -70,14 +70,16 @@ public class HibernateManager extends HibernateUtil {
 		try {
 			s.update(pobjet);
 			tx.commit();
-			System.out.println(" updateObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD by Usuario-Pc on 10/06/16 22:02
-			MessageDialog.openInformation(null, "Info", "Done successfully!");
+			System.out.println(" updateObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD
+																									// by
+																									// Usuario-Pc
+																									// on
+																									// 10/06/16
+																									// 22:02
 			return true;
 		} catch (HibernateException pe) {
 			JOptionPane.showMessageDialog(null, pe);
 			tx.rollback();
-			MessageDialog.openError(null, "Error", "You can not save data \nThese have been modified by someone else.");
-			MessageDialog.openError(null, "Error", "The object can not be updated" + pe.getMessage());
 			return false;
 		}
 	}

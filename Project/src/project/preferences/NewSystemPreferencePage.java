@@ -133,7 +133,11 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.save();
+					if (viewController.save()) {
+						viewController.createObjectSuccessDialog();
+					} else {
+						viewController.createObjectDontSaveErrorDialog();
+					}
 				}
 			});
 

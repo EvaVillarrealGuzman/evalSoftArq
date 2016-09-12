@@ -1,6 +1,7 @@
 package software.DataManager;
 
 import java.awt.HeadlessException;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -22,19 +23,20 @@ public class HibernateUtil {
 	public static SessionFactory psessionFactory;
 	public static Session psession;
 
-	public static void initialize() {
+	public static void initialize(DatabaseConnection db) {
 		try {
 			AnnotationConfiguration conf = new AnnotationConfiguration();
 			try {
 				conf.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
 				conf.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-				conf.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/ProyectoFinal");
+				conf.setProperty("hibernate.connection.url",
+						"jdbc:postgresql://localhost:" + db.getPortName() + "/ProyectoFinal");
 			} catch (Exception pe) {
 				JOptionPane.showMessageDialog(null, "Database error Nº 2001");
 			}
 
-			conf.setProperty("hibernate.connection.username", "postgres");
-			conf.setProperty("hibernate.connection.password", "postgres");
+			conf.setProperty("hibernate.connection.username", db.getUserName());
+			conf.setProperty("hibernate.connection.password", db.getPassword());
 			conf.setProperty("hibernate.connection.pool_size", "10");
 			conf.setProperty("hibernate.hbm2ddl.auto", "update");
 
@@ -63,16 +65,18 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.StimulusType.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.System.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Unit.class);
-			
+
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.StartPoint.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ORJoin.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ANDJoin.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ORFork.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork.class);
-			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter.class);
+			conf.addAnnotatedClass(
+					software.DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Path.class);
-			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.CompositeComponent.class);
+			conf.addAnnotatedClass(
+					software.DomainModel.SoftwareArchitectureSpecificationEntity.CompositeComponent.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.SimpleComponent.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture.class);
 
@@ -83,7 +87,7 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.SimulationParameter.class);
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Simulator.class);
 			conf.addAnnotatedClass(software.DomainModel.ReportsEntity.Run.class);
-			
+
 			try {
 				psessionFactory = conf.buildSessionFactory();
 				psession = psessionFactory.openSession();
@@ -94,6 +98,19 @@ public class HibernateUtil {
 			throw new ExceptionInInitializerError(pex);
 		} catch (MappingException pex) {
 			throw new ExceptionInInitializerError(pex);
+		}
+	}
+
+	public Boolean isConnection() {
+		try {
+			try {
+				getSession().connection().isClosed();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return true;
+		} catch (HibernateException pe) {
+			return false;
 		}
 	}
 

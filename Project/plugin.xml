@@ -20,17 +20,17 @@
       </command>
       <command
             categoryId="Project.commands.category"
-            id="Project.commands.SoftwareArchitectureSpecificationManagementCommand"
+            id="Project.commands.softwareArchitectureSpecificationManagementCommand"
             name="SoftwareArchitectureSpecificationManagement">
       </command>
       <command
             categoryId="Project.commands.category"
-            id="Project.commands.SoftwareArchitectureSpecificationNewCommand"
+            id="Project.commands.softwareArchitectureSpecificationNewCommand"
             name="SoftwareArchitectureSpecificationNew">
       </command>
       <command
             categoryId="Project.commands.category"
-            id="Project.commands.SoftwareArchitectureSpecificationOpenCommand"
+            id="Project.commands.softwareArchitectureSpecificationOpenCommand"
             name="SoftwareArchitectureSpecificationOpen">
       </command>
       <command
@@ -53,6 +53,11 @@
             id="Project.commands.editQualityRequirementCommand"
             name="EditQualityRequirement">
       </command>
+      <command
+            categoryId="Project.commands.category"
+            id="Project.commands.systemConfigurationCommand"
+            name="SystemConfiguration">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -70,15 +75,15 @@
       </handler>
       <handler
             class="project.handlers.SoftwareArchitectureSpecificationOpenHandler"
-            commandId="Project.commands.SoftwareArchitectureSpecificationOpenCommand">
+            commandId="Project.commands.softwareArchitectureSpecificationOpenCommand">
       </handler>
       <handler
             class="project.handlers.SoftwareArchitectureSpecificationManagementHandler"
-            commandId="Project.commands.SoftwareArchitectureSpecificationManagementCommand">
+            commandId="Project.commands.softwareArchitectureSpecificationManagementCommand">
       </handler>
       <handler
             class="project.handlers.SoftwareArchitectureSpecificationNewHandler"
-            commandId="Project.commands.SoftwareArchitectureSpecificationNewCommand">
+            commandId="Project.commands.softwareArchitectureSpecificationNewCommand">
       </handler>
       <handler
             class="project.handlers.ReportsHandler"
@@ -87,6 +92,10 @@
       <handler
             class="project.handlers.EditSystemHandler"
             commandId="Project.commands.editSystemCommand">
+      </handler>
+      <handler
+            class="project.handlers.SystemConfigurationHandler"
+            commandId="Project.commands.systemConfigurationCommand">
       </handler>
    </extension>
    <extension
@@ -106,6 +115,13 @@
                id="Project.menus.sampleMenu"
                label="UCM2DEVS"
                mnemonic="M">
+            <command
+                  commandId="Project.commands.systemConfigurationCommand"
+                  id="Project.menus.systemConfigurationCommand"
+                  label="%SystemConfiguration"
+                  mnemonic="E"
+                  style="push">
+            </command>
           	 <menu
             	  label="%SystemManagement">
            			<command
@@ -143,21 +159,21 @@
      	    <menu
             	   label="%SoftwareArchitectureSpecification">
            			<command
-              		    commandId="Project.commands.SoftwareArchitectureSpecificationNewCommand"
+              		    commandId="Project.commands.softwareArchitectureSpecificationNewCommand"
                 	    id="Project.menus.softwareArchitectureSpecificationNewCommand"
                   		label="%New"
                   		mnemonic="N"
                  		style="push">
            			</command>
               <command
-                    commandId="Project.commands.SoftwareArchitectureSpecificationOpenCommand"
+                    commandId="Project.commands.softwareArchitectureSpecificationOpenCommand"
                     id="Project.menus.softwareArchitectureSpecificationOpenCommand"
                     label="%Open"
                     mnemonic="O"
                     style="push">
               </command>
          		    <command
-                  	 	commandId="Project.commands.SoftwareArchitectureSpecificationManagementCommand"
+                  	 	commandId="Project.commands.softwareArchitectureSpecificationManagementCommand"
                   		id="Project.menus.softwareArchitectureSpecificationManagementCommand"
                   		label="%Management"
                   		mnemonic="SASM"
@@ -169,6 +185,10 @@
                   id="Project.menus.reportsCommand"
                   label="%Report"
                   mnemonic="R">
+               <handler
+                     class="project.handlers.SoftwareArchitectureSpecificationNewHandler"
+                     commandId="Project.commands.SoftwareArchitectureSpecificationNewCommand">
+               </handler>
             </command>
          </menu>
       </menuContribution>
@@ -232,6 +252,12 @@
         class="project.preferences.ReportsPreferencePage"
         id="project.preferences.ReportsPreferencePage"
         name="Reports">
+  </page>
+  <page
+        category="project.preferences.UCM2DEVS"
+        class="project.preferences.SystemConfigurationPreferencePage"
+        id="project.preferences.SystemConfigurationPreferencePage"
+        name="%SystemConfiguration">
   </page>	
    </extension>
    <extension

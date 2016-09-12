@@ -17,7 +17,6 @@ import org.eclipse.ui.part.FileEditorInput;
 import project.preferences.PreferenceConstants;
 import project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage;
 import software.BusinessLogic.SoftwareArchitectureSpecificationManager;
-import software.DomainModel.AnalysisEntity.QualityRequirement;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
@@ -84,12 +83,13 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	/**
 	 * Update the system with the UCM path and prepare the view
 	 */
-	public void save() {
+	public Boolean save() {
 		int err;
 		err = this.setSystem();
 		if (err == 0) {
-			this.getManager().updateSystem();
+			return this.getManager().updateSystem();
 		}
+		return null;
 	}
 
 	/**
@@ -147,12 +147,12 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * 
 	 * @param ptype
 	 */
-	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) {		
+	public void setModelPaths(software.DomainModel.AnalysisEntity.System ptype) {
 		this.getManager().setSystem(ptype);
 		while (this.getForm().getTable().getItems().length > 0) {
 			this.getForm().getTable().remove(0);
 		}
-		if (!this.getManager().getArchitectures().isEmpty()){
+		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture dp : this.getManager().getArchitectures()) {
 				addToTable(dp.getPathUCMs().get(0));
 			}
