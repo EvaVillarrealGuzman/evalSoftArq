@@ -19,12 +19,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import software.Security.CryptoUtils;
+
 public class DOM {
 
-	private static String PATH =  "C:/Users/Micaela/git/project/Project/src/software/DataManager/DatabaseConnection.xml";
+	private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/software/DataManager/DatabaseConnection.xml";
 
 	public static String readPassword() {
-		return internalStructureRead("password");
+		return CryptoUtils.decrypt(internalStructureRead("password"));
 	}
 
 	public static String readUserName() {
@@ -35,19 +37,20 @@ public class DOM {
 		return internalStructureRead("portnumber");
 	}
 
-	public void writePassword(String password) {
-		internalStructureWrite("password", password);
+	public static void writePassword(String password) {
+		String encryptorPassword = CryptoUtils.encrypt(password);
+		internalStructureWrite("password", encryptorPassword);
 	}
 
-	public void writeUserName(String username) {
+	public static void writeUserName(String username) {
 		internalStructureWrite("username", username);
 	}
 
-	public void writePortNumber(String portnumber) {
+	public static void writePortNumber(String portnumber) {
 		internalStructureWrite("portnumber", portnumber);
 	}
 
-	private void internalStructureWrite(String attribute, String value) {
+	private static void internalStructureWrite(String attribute, String value) {
 		File fXmlFile = new File(PATH);
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
