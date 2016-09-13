@@ -15,10 +15,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "RESPONSABILITY")
-@PrimaryKeyJoinColumn(name = "id")
+//@PrimaryKeyJoinColumn(name = "id")
 public class Responsibility extends PathElement {
 	
-	@OneToOne(targetEntity = Architecture.class)
+	@OneToOne
+	//@PrimaryKeyJoinColumn
 	private SpecificationParameter specificationParameter;
 	
 	public Responsibility(String name) {

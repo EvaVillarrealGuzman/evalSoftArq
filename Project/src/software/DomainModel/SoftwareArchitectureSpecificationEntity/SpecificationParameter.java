@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "SEPECIFICATIONPARAMETER")
+@Table(name = "SPECIFICATIONPARAMETER")
 public class SpecificationParameter {
 	@Id
 	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
@@ -26,9 +26,6 @@ public class SpecificationParameter {
 	private double meanDownTime;
 	
 	private double meanTimeBFail;
-	
-	private double meanTimeBRequest;
-
 	
 	public SpecificationParameter() {
 		super();
@@ -72,14 +69,6 @@ public class SpecificationParameter {
 
 	public void setMeanTimeBFail(double meanTimeBFail) {
 		this.meanTimeBFail = meanTimeBFail;
-	}
-
-	public double getMeanTimeBRequest() {
-		return meanTimeBRequest;
-	}
-
-	public void setMeanTimeBRequest(double meanTimeBRequest) {
-		this.meanTimeBRequest = meanTimeBRequest;
 	}
 	
 }
