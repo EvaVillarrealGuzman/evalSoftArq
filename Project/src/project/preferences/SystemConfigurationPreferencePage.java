@@ -1,9 +1,13 @@
 package project.preferences;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -90,10 +94,18 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 			cmbLenguajeSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
 			cmbLenguajeSystem.setContentProvider(ArrayContentProvider.getInstance());
 			cmbLenguajeSystem.getCombo().setLayoutData(gridData);
+			loadCombo();
 			cmbLenguajeSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-
+					if (((IStructuredSelection) cmbLenguajeSystem.getSelection()).getFirstElement().toString()
+							.equals("English")) {
+						ResourceBundle bundle1 = ResourceBundle.getBundle("messages");
+					} else if (((IStructuredSelection) cmbLenguajeSystem.getSelection()).getFirstElement().toString()
+							.equals("Spanish")) {
+						Locale spanishLocale = new Locale("es", "AR");
+						ResourceBundle bundle3 = ResourceBundle.getBundle("messages", spanishLocale);
+					}
 				}
 			});
 
@@ -253,6 +265,14 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 
 	public void setCmbLenguajeSystem(ComboViewer cmbLenguajeSystem) {
 		this.cmbLenguajeSystem = cmbLenguajeSystem;
+	}
+
+	/**
+	 * load combo with system whit state=true
+	 */
+	public void loadCombo() {
+		String[] lenguages = { "English", "Spanish" };
+		cmbLenguajeSystem.setInput(lenguages);
 	}
 
 	/**

@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
 
 public class DOM {
 
-	private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/software/DataManager/DatabaseConnection.xml";
+	private static String PATH =  "C:/Users/Micaela/git/project/Project/src/software/DataManager/DatabaseConnection.xml";
 
 	public static String readPassword() {
 		return internalStructureRead("password");
@@ -93,6 +93,15 @@ public class DOM {
 	}
 
 	private static String internalStructureRead(String attribute) {
+		File currentDirFile = new File(".");
+		String helper = currentDirFile.getAbsolutePath();
+		try {
+			String currentDir = helper.substring(0, helper.length() - currentDirFile.getCanonicalPath().length());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		File fXmlFile = new File(PATH);
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
