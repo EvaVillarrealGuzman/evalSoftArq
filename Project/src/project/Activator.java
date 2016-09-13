@@ -36,36 +36,11 @@ public class Activator extends AbstractUIPlugin {
 																// Usuario-Pc on
 																// 11/06/16
 																// 12:38
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (InstantiationException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD
-																						// by
-																						// Usuario-Pc
-																						// on
-																						// 11/06/16
-																						// 12:36
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD
-																						// by
-																						// Usuario-Pc
-																						// on
-																						// 11/06/16
-																						// 12:36
-		} catch (UnsupportedLookAndFeelException ex) {
-			Logger.getLogger(Activator.class.getName()).log(Level.SEVERE, null, ex); // NOPMD
-																						// by
-																						// Usuario-Pc
-																						// on
-																						// 11/06/16
-																						// 12:38
-		}
 
 		/**
 		 * Initialize Hibernate
 		 */
 		HibernateUtil.initialize(new DatabaseConnection());
-		Data.initialize();
 		super.start(context);
 		plugin = this;
 	}

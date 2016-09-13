@@ -1,9 +1,14 @@
 package software.BusinessLogic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import software.DataManager.DOM;
+import software.DataManager.Data;
 import software.DataManager.DatabaseConnection;
 import software.DataManager.HibernateManager;
 import software.DataManager.HibernateUtil;
+import software.DomainModel.AnalysisEntity.QualityAttribute;
 
 /**
  * This class is responsible for the management package: Analysis
@@ -81,17 +86,36 @@ public class SystemConfigurationManager extends HibernateManager {
 			this.getDb().setPassword(password);
 			this.getDb().setUserName(username);
 			this.getDb().setPortName(portnumber);
-			DOM dom = new DOM();
-			dom.writePassword(password);
-			dom.writePortNumber(portnumber);
-			dom.writeUserName(username);
+			DOM.writePassword(password);
+			DOM.writePortNumber(portnumber);
+			DOM.writeUserName(username);
 			if (HibernateUtil.getSession().isOpen()) {
 				HibernateUtil.getSession().close();
 			}
 			HibernateUtil.initialize(this.getDb());
+			this.dataInitialization();
 			return true;
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	private void dataInitialization() {
+		if (this.listQualityAttribute().size() == 0) {
+			Data.initialize();
+		}
+	}
+
+	/**
+	 * 
+	 * @return List<QualityAttribute> with the names of the quality attributes
+	 */
+	private List<QualityAttribute> listQualityAttribute() {
+		try {
+			return this.listClass(QualityAttribute.class, "name");
+		} catch (Exception e) {
+			List<QualityAttribute> emptyList = new ArrayList();
+			return emptyList;
 		}
 	}
 
