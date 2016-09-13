@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class Responsibility extends PathElement {
 	
-	@OneToOne(targetEntity = Architecture.class, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = Architecture.class)
 	private SpecificationParameter specificationParameter;
 	
 	public Responsibility(String name) {

@@ -51,7 +51,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private software.DomainModel.AnalysisEntity.System system;
 	Document doc;
 	private DefaultTreeModel model;
-	private Architecture arch;
+	//private Architecture arch;
 	private JTree tree;
 	private StartPoint startPoint;
 	private Set<ArchitectureElement> archElements = new HashSet<ArchitectureElement>();
@@ -143,17 +143,17 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return this.getSystem().getArchitectures();
 	}
 
-	public Architecture getArch() {
-		return arch;
-	}
-
-	public void setArch(Architecture arch) {
-		this.arch = arch;
-	}
+//	public Architecture getArch() {
+//		return arch;
+//	}
+//
+//	public void setArch(Architecture arch) {
+//		this.arch = arch;
+//	}
 
 	public void createArchitecture(Architecture parch) {
 		try {
-			this.setArch(parch);
+			//this.setArch(parch);
 			// lee el archivo xml que se convertirá en árbol
 			File fXmlFile = new File(parch.getPathUCMs().get(0));
 
@@ -203,15 +203,23 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			creationComponent(parentN, isRootNodeASimpleComponent);
 
 			creationStartPoint();
-			
+			for (PathElement dp : pathElements){
+				saveObject(dp);
+			}
 			Set<Path> paths = new HashSet<Path>();
 			Path path = new Path();
 			path.setPathElements(pathElements);
+			saveObject(path);
 			paths.add(path);
-			this.getArch().setPaths(paths);
-			this.getArch().setArchitectureElements(archElements);
+			parch.setPaths(paths);
+			for (ArchitectureElement dp : archElements){
+				saveObject(dp);
+			}
+			parch.setArchitectureElements(archElements);
+			this.getSystem().getArchitectures().clear();
+			this.getSystem().getArchitectures().add(parch);
 			
-			updateObject(parch);
+			updateObject(this.getSystem());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -349,7 +357,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		NodeList nodesList = doc.getElementsByTagName("nodes");
 
 		Element eNode = this.getNodeOfResponsability(idNode, doc);
-		responsibilities.clear();
+		//responsibilities.clear();
 
 		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
 			Node respNode = responsibilitiesList.item(i);
@@ -360,6 +368,8 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				if (eResponsability.getAttribute("respRefs").equals(idNode)) {
 
 					Responsibility child = new Responsibility(this.translateNameSimpleElement(idNode));
+					saveObject(child);
+					SpecificationParameter sp = new SpecificationParameter();
 
 					NodeList metadatasList = eResponsability.getElementsByTagName("metadata");
 
@@ -369,7 +379,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 						Element metadata = (Element) node;
 						String metadataName = metadata.getAttribute("name");
 
-						SpecificationParameter sp = new SpecificationParameter();
 						if (metadataName.equals("MeanExecutionTime")) {
 							sp.setMeanExecutionTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanDowntime")) {
@@ -380,10 +389,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setMeanTimeBFail(Double.parseDouble(metadata.getAttribute("value")));
 						}
 						
-						child.setSpecificationParameter(sp);						
-						responsibilities.add(child);
-
 					}
+					saveObject(sp);
+					child.setSpecificationParameter(sp);
+					updateObject(child);
+					//responsibilities.add(child);
+					pathElements.add(child);
 
 					DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
@@ -396,8 +407,8 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			}
 			
 		}
-		SimpleComponent dataParent = (SimpleComponent) parentNode.getUserObject();
-		dataParent.setResponsabilities(responsibilities);
+		//SimpleComponent dataParent = (SimpleComponent) parentNode.getUserObject();
+		//dataParent.setResponsabilities(responsibilities);
 		
 		for (int i = 0; i < nodesList.getLength(); i++) {
 			Node node = nodesList.item(i);

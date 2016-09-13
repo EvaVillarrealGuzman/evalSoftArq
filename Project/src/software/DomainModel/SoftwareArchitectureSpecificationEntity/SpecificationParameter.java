@@ -29,6 +29,11 @@ public class SpecificationParameter {
 	
 	private double meanTimeBRequest;
 
+	
+	public SpecificationParameter() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}

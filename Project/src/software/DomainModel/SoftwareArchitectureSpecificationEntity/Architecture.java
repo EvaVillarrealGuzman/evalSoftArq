@@ -30,13 +30,13 @@ public class Architecture {
 	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	protected int id;
 
-	@OneToMany(targetEntity = Path.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Path.class)
 	private Set<Path> paths = new HashSet<Path>();
 	
-	@OneToMany(targetEntity = ArchitectureElement.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = ArchitectureElement.class)
 	private Set<ArchitectureElement> architectureElements = new HashSet<ArchitectureElement>();
 	
-	@OneToOne(targetEntity = Simulator.class, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = Simulator.class)
 	private Simulator simulator;
 
 	private ArrayList<String> pathUCMs;

@@ -24,7 +24,7 @@ public class Path {
 	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
 
-	@OneToMany(targetEntity = PathElement.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = PathElement.class)
 	private Set<PathElement> pathElements = new HashSet<PathElement>();
 
 	public Set<PathElement> getPathElements() {
