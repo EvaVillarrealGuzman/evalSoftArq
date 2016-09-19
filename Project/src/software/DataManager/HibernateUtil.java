@@ -65,6 +65,8 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.StimulusType.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.System.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Unit.class);
+			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.TacticType.class);
+			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Tactic.class);
 
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.StartPoint.class);
 			conf.addAnnotatedClass(software.DomainModel.SoftwareArchitectureSpecificationEntity.ORJoin.class);

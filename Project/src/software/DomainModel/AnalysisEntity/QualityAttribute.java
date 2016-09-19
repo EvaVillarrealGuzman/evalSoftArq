@@ -1,9 +1,13 @@
 package software.DomainModel.AnalysisEntity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -25,6 +29,9 @@ public class QualityAttribute implements Comparable {
 	private int id;
 
 	private String name;
+	
+	@ManyToMany(targetEntity = Tactic.class)
+	private Set<Tactic> tactics = new HashSet<Tactic>();
 
 	@OneToOne(targetEntity = GenericScenario.class, cascade = CascadeType.ALL)
 	private GenericScenario genericScenario;
@@ -34,10 +41,11 @@ public class QualityAttribute implements Comparable {
 
 	}
 
-	public QualityAttribute(String pname, GenericScenario pgenericScenario) {
+	public QualityAttribute(String pname, GenericScenario pgenericScenario, Set<Tactic> ptactics) {
 		super();
 		this.genericScenario = pgenericScenario;
 		this.name = pname;
+		this.tactics = ptactics;
 	}
 
 	// Getters and Setters
@@ -55,6 +63,16 @@ public class QualityAttribute implements Comparable {
 
 	public void setName(String pname) {
 		this.name = pname;
+	}
+	
+	
+
+	public Set<Tactic> getTactics() {
+		return tactics;
+	}
+
+	public void setTactics(Set<Tactic> tactics) {
+		this.tactics = tactics;
 	}
 
 	public GenericScenario getGenericScenario() {
