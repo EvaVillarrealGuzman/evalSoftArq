@@ -1,5 +1,7 @@
 package software.DataManager;
 
+import software.Security.CryptoUtils;
+
 /**
  * Constant definitions for plug-in preferences
  */

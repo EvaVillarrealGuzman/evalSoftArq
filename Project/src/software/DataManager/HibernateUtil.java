@@ -119,4 +119,5 @@ public class HibernateUtil {
 	public static Session getSession() throws HibernateException {
 		return psession;
 	}
+
 }
