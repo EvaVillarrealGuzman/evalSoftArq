@@ -38,7 +38,7 @@ import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 /**
  * To search, consult, edit or remove a quality requirement
  * 
- * @author: Micaela
+ * @author: FEM
  */
 public class EditQualityRequirementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
@@ -133,7 +133,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
-			gridData.horizontalAlignment = GridData.FILL;
+			gridData.widthHint= 200;
 			gridData.grabExcessHorizontalSpace = true;
 
 			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
@@ -151,6 +151,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 					}
 				}
 			});
+			cmbSystem.getCombo().setLayoutData(gridData);
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
@@ -511,14 +512,19 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			Label labelEmptyFour = new Label(cSystemName, SWT.NULL);
 			labelEmptyFour.setLayoutData(gridData);
 
+			Composite cButtoms = new Composite(cSystemName, SWT.RIGHT);
+			cButtoms.setLayout(layout);
 			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.widthHint = 100;
+			gridData.horizontalSpan = 4;
 			gridData.horizontalAlignment = GridData.END;
-			gridData.verticalAlignment = SWT.BOTTOM;
-			gridData.grabExcessHorizontalSpace = true;
+			cButtoms.setLayoutData(gridData);
 
-			btnSave = new Button(cSystemName, SWT.PUSH);
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.END;
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.widthHint = 100;
+
+			btnSave = new Button(cButtoms, SWT.PUSH);
 			btnSave.setText(PreferenceConstants.ButtomSave_Label);
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
@@ -532,14 +538,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				}
 			});
 
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.widthHint = 100;
-			gridData.horizontalAlignment = GridData.END;
-			gridData.verticalAlignment = SWT.BOTTOM;
-			gridData.grabExcessHorizontalSpace = true;
-
-			btnRemove = new Button(cSystemName, SWT.PUSH);
+			btnRemove = new Button(cButtoms, SWT.PUSH);
 			btnRemove.setText(PreferenceConstants.ButtomRemove_Label);
 			btnRemove.setLayoutData(gridData);
 			btnRemove.addSelectionListener(new SelectionAdapter() {

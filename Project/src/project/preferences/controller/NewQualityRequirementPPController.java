@@ -25,7 +25,7 @@ import software.DomainModel.AnalysisEntity.Unit;
 /**
  * Controller for NewQualityRequirementPreferencePage
  * 
- * @author Micaela
+ * @author FEM
  *
  */
 public class NewQualityRequirementPPController extends Controller {

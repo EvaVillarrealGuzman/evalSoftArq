@@ -24,7 +24,7 @@ import project.preferences.controller.EditSystemPPController;
 /**
  * To search, consult, edit or remove a system
  * 
- * @author: Eva
+ * @author: FEM
  */
 
 public class EditSystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -90,7 +90,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
-			gridData.horizontalAlignment = GridData.FILL;
+			gridData.widthHint= 200;
 			gridData.grabExcessHorizontalSpace = true;
 
 			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
@@ -149,20 +149,19 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			Label labelEmptyTwo = new Label(parent, SWT.NULL);
 			labelEmptyTwo.setLayoutData(gridData);
 
+			Composite cButtoms = new Composite(parent, SWT.RIGHT);
+			cButtoms.setLayout(layout);
 			gridData = new GridData();
-			gridData.horizontalSpan = 2;
-
-			Label labelEmptyTre = new Label(parent, SWT.NULL);
-			labelEmptyTre.setLayoutData(gridData);
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.widthHint = 100;
+			gridData.horizontalSpan = 4;
 			gridData.horizontalAlignment = GridData.END;
-			gridData.verticalAlignment = SWT.BOTTOM;
-			gridData.grabExcessHorizontalSpace = true;
+			cButtoms.setLayoutData(gridData);
 
-			btnSave = new Button(parent, SWT.PUSH);
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.END;
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.widthHint = 100;
+
+			btnSave = new Button(cButtoms, SWT.PUSH);
 			btnSave.setText(PreferenceConstants.ButtomSave_Label);
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
@@ -176,14 +175,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 				}
 			});
 
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.widthHint = 100;
-			gridData.horizontalAlignment = GridData.END;
-			gridData.verticalAlignment = SWT.BOTTOM;
-			gridData.grabExcessHorizontalSpace = true;
-
-			btnRemove = new Button(parent, SWT.PUSH);
+			btnRemove = new Button(cButtoms, SWT.PUSH);
 			btnRemove.setText(PreferenceConstants.ButtomRemove_Label);
 			btnRemove.setLayoutData(gridData);
 			btnRemove.addSelectionListener(new SelectionAdapter() {

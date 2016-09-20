@@ -125,7 +125,7 @@ public class Controller {
 	 * 
 	 */
 	public void createObjectDontSaveErrorDialog() {
-		MessageDialog.openError(null, "Error", "The object can not be saved");
+		MessageDialog.openError(null, PreferenceConstants.Error_Label, PreferenceConstants.SaveObject_ErrorDialog);
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Controller {
 	 * 
 	 */
 	public void createObjectDontUpdateErrorDialog() {
-		MessageDialog.openError(null, "Error", "The object can not be updated");
+		MessageDialog.openError(null, PreferenceConstants.Error_Label, PreferenceConstants.UpdateObject_ErrorDialog);
 	}
 
 	/**
@@ -151,7 +151,8 @@ public class Controller {
 	 * 
 	 */
 	public void createObjectSuccessDialog() {
-		MessageDialog.openInformation(null, "Info", "Done successfully!");
+		MessageDialog.openInformation(null, PreferenceConstants.Info_Label,
+				PreferenceConstants.SuccessObject_InfoDialog);
 	}
 
 	/**
@@ -159,7 +160,7 @@ public class Controller {
 	 * 
 	 */
 	public void createSuccessDialog(String message) {
-		MessageDialog.openInformation(null, "Info", message);
+		MessageDialog.openInformation(null, PreferenceConstants.Info_Label, message);
 	}
 
 	/**

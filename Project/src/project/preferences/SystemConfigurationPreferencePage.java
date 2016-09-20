@@ -1,13 +1,7 @@
 package project.preferences;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -25,9 +19,9 @@ import org.hibernate.exception.JDBCConnectionException;
 import project.preferences.controller.SystemConfigurationPPController;
 
 /**
- * To create a new system
+ * To system configuration
  * 
- * @author: Eva
+ * @author: FEM
  */
 
 public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -42,8 +36,6 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 	private StringFieldEditor databasePassword;
 	private SystemConfigurationPPController viewController;
 	private Composite cDatabaseConfiguration;
-	private Composite cSystemName;
-	private ComboViewer cmbLenguajeSystem;
 	private GridData gridData;
 
 	/**
@@ -79,42 +71,9 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 			layout.numColumns = 1;
 			parent.setLayout(layout);
 
-			cSystemName = new Composite(parent, SWT.NULL);
-			cSystemName.setLayout(layout);
-			gridData = new GridData();
-			gridData.horizontalAlignment = GridData.FILL;
-			cSystemName.setLayoutData(gridData);
-
-			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText("Language" + ":");
-
-			gridData = new GridData();
-			gridData.horizontalAlignment = GridData.FILL;
-			gridData.grabExcessHorizontalSpace = true;
-
-			cmbLenguajeSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
-			cmbLenguajeSystem.setContentProvider(ArrayContentProvider.getInstance());
-			cmbLenguajeSystem.getCombo().setLayoutData(gridData);
-			loadCombo();
-			cmbLenguajeSystem.getCombo().addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					if (((IStructuredSelection) cmbLenguajeSystem.getSelection()).getFirstElement().toString()
-							.equals("English")) {
-						ResourceBundle bundle1 = ResourceBundle.getBundle("messages");
-					} else if (((IStructuredSelection) cmbLenguajeSystem.getSelection()).getFirstElement().toString()
-							.equals("Spanish")) {
-						Locale spanishLocale = new Locale("es", "AR");
-						ResourceBundle bundle3 = ResourceBundle.getBundle("messages", spanishLocale);
-					}
-				}
-			});
-
-			new Label(parent, SWT.NULL);
-
 			// Group for project properties
 			Group groupDatabaseConfiguration = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupDatabaseConfiguration.setText("Database Configuration");
+			groupDatabaseConfiguration.setText(PreferenceConstants.DatabaseConfiguration_Label);
 			groupDatabaseConfiguration.setLayout(layout);
 
 			gridData = new GridData();
@@ -127,16 +86,20 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 			gridData.horizontalAlignment = GridData.FILL;
 			cDatabaseConfiguration.setLayoutData(gridData);
 
-			databasePortNumber = new StringFieldEditor("Port Number", "Port Number" + ":", cDatabaseConfiguration);
+			databasePortNumber = new StringFieldEditor(PreferenceConstants.PortNumber_Label,
+					PreferenceConstants.PortNumber_Label + ":", cDatabaseConfiguration);
 			addField(databasePortNumber);
 
-			databaseUserName = new StringFieldEditor("User name", "User name" + ":", cDatabaseConfiguration);
+			databaseUserName = new StringFieldEditor(PreferenceConstants.UserName_Label,
+					PreferenceConstants.UserName_Label + ":", cDatabaseConfiguration);
 			addField(databaseUserName);
 
-			databaseName = new StringFieldEditor("Database name", "Database name" + ":", cDatabaseConfiguration);
+			databaseName = new StringFieldEditor(PreferenceConstants.DatabaseName_Label,
+					PreferenceConstants.DatabaseName_Label + ":", cDatabaseConfiguration);
 			addField(databaseName);
 
-			databasePassword = new StringFieldEditor("Password", "Password" + ":", cDatabaseConfiguration) {
+			databasePassword = new StringFieldEditor(PreferenceConstants.Password_Label,
+					PreferenceConstants.Password_Label + ":", cDatabaseConfiguration) {
 				@Override
 				protected void doFillIntoGrid(Composite parent, int numColumns) {
 					super.doFillIntoGrid(parent, numColumns);
@@ -144,17 +107,17 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 					getTextControl().setEchoChar('*');
 				}
 			};
-
 			addField(databasePassword);
 
+			new Label(cDatabaseConfiguration, SWT.LEFT);
+
 			gridData = new GridData();
-			gridData.horizontalSpan = 1;
 			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
 			gridData.grabExcessHorizontalSpace = true;
-			gridData.widthHint = 75;
 
 			btnTestConnection = new Button(cDatabaseConfiguration, SWT.PUSH);
-			btnTestConnection.setText("Test Connection");
+			btnTestConnection.setText(PreferenceConstants.ButtomTestConnection_Label);
 			btnTestConnection.setLayoutData(gridData);
 			btnTestConnection.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -182,7 +145,7 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 				}
 			});
 
-			this.prepareView(0);
+			this.prepareView();
 		} catch (
 
 		JDBCConnectionException e) {
@@ -263,14 +226,6 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 		this.databasePassword = databasePassword;
 	}
 
-	public ComboViewer getCmbLenguajeSystem() {
-		return cmbLenguajeSystem;
-	}
-
-	public void setCmbLenguajeSystem(ComboViewer cmbLenguajeSystem) {
-		this.cmbLenguajeSystem = cmbLenguajeSystem;
-	}
-
 	public StringFieldEditor getDatabaseName() {
 		return databaseName;
 	}
@@ -280,27 +235,10 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 	}
 
 	/**
-	 * load combo with system whit state=true
-	 */
-	public void loadCombo() {
-		String[] lenguages = { "English", "Spanish" };
-		cmbLenguajeSystem.setInput(lenguages);
-	}
-
-	/**
-	 * prepare the view for the different actions that are possible
+	 * prepare the view
 	 * 
-	 * @param pabm
 	 */
-	public void prepareView(int pabm) {
-		switch (pabm) {
-		case 1:
-			this.getViewController().getView();
-			break;
-		case 0:
-			this.getViewController().getView();
-			break;
-		}
-
+	public void prepareView() {
+		this.getViewController().getView();
 	}
 }

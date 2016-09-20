@@ -11,10 +11,10 @@ import software.DataManager.HibernateUtil;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
 
 /**
- * This class is responsible for the management package: Analysis
+ * This class is responsible for the management package: system configuration
  * 
  * @author: FEM
- * @version: 06/11/2015
+ * @version: 08/08/2016
  */
 
 public class SystemConfigurationManager extends HibernateManager {
@@ -53,6 +53,9 @@ public class SystemConfigurationManager extends HibernateManager {
 		return db;
 	}
 
+	/**
+	 * Getters and Setters
+	 */
 	public void setDb(DatabaseConnection db) {
 		this.db = db;
 	}
@@ -73,6 +76,15 @@ public class SystemConfigurationManager extends HibernateManager {
 		return this.getDb().getDatabaseName();
 	}
 
+	/**
+	 * Return if connection with database is success
+	 * 
+	 * @param password
+	 * @param username
+	 * @param portnumber
+	 * @param databaseName
+	 * @return
+	 */
 	public Boolean isConnection(String password, String username, String portnumber, String databaseName) {
 		this.getDb().setPassword(password);
 		this.getDb().setUserName(username);
@@ -86,6 +98,15 @@ public class SystemConfigurationManager extends HibernateManager {
 		return hu.isConnection();
 	}
 
+	/**
+	 * Updata database data to connection
+	 * 
+	 * @param password
+	 * @param username
+	 * @param portnumber
+	 * @param databaseName
+	 * @return
+	 */
 	public Boolean updateConnectionData(String password, String username, String portnumber, String databaseName) {
 		try {
 			this.getDb().setPassword(password);
@@ -107,6 +128,9 @@ public class SystemConfigurationManager extends HibernateManager {
 		}
 	}
 
+	/**
+	 * Initialize data if database is empty
+	 */
 	private void dataInitialization() {
 		if (this.listQualityAttribute().size() == 0) {
 			Data.initialize();

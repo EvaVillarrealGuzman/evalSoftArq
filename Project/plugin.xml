@@ -251,7 +251,7 @@
         category="project.preferences.UCM2DEVS"
         class="project.preferences.ReportsPreferencePage"
         id="project.preferences.ReportsPreferencePage"
-        name="Reports">
+        name="%Report">
   </page>
   <page
         category="project.preferences.UCM2DEVS"

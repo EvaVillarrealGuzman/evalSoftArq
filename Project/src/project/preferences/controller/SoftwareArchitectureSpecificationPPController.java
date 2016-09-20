@@ -22,7 +22,7 @@ import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture
 /**
  * Controller for SoftwareArchitectureEspecificationPreferencePage
  * 
- * @author Eva
+ * @author FEM
  *
  */
 public class SoftwareArchitectureSpecificationPPController extends Controller {

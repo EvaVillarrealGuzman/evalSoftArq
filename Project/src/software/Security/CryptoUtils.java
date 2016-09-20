@@ -10,10 +10,9 @@ public class CryptoUtils {
 
 	public static final String AES = "AES";
 
-	// http://www.rgagnon.com/javadetails/java-0400.html
+	// Source: http://www.rgagnon.com/javadetails/java-0400.html
 	/**
-	 * encrypt a value and generate a keyfile if the keyfile is not found then a
-	 * new one is created
+	 * encrypt a value and generate a keyfile
 	 * 
 	 */
 	public static String encrypt(String value) {

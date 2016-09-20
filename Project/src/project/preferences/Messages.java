@@ -14,6 +14,7 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_EmptyStimulusValue_ErrorDialog;
 	public static String UCM2DEVS_EmptySystemName_ErrorDialog;
 	public static String UCM2DEVS_Error_Label;
+	public static String UCM2DEVS_Info_Label;
 	public static String UCM2DEVS_InvalidResponseMeasureValue_ErrorDialog;
 	public static String UCM2DEVS_InvalidResponseMeasureValueNegative_ErrorDialog;
 	public static String UCM2DEVS_ProjectOpenEclipse_ErrorDialog;
@@ -36,11 +37,14 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_Edit_Buttom;
 	public static String UCM2DEVS_FinishDate_Label;
 	public static String UCM2DEVS_NoSavedSystems_ErrorDialog;
+	public static String UCM2DEVS_PortNumber_Label;
 	public static String UCM2DEVS_Postgres_ErrorDialog;
 	public static String UCM2DEVS_Project_Composite;
 	public static String UCM2DEVS_ProjectName_Label;
 	public static String UCM2DEVS_Remove_Buttom;
 	public static String UCM2DEVS_Save_Buttom;
+	public static String UCM2DEVS_SaveData_ErrorDialog;
+	public static String UCM2DEVS_SaveObject_ErrorDialog;
 	public static String UCM2DEVS_StartDate_Label;
 	public static String UCM2DEVS_System_Composite;
 	public static String UCM2DEVS_SystemName_Label;
@@ -49,8 +53,11 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_Artifact_Label;
 	public static String UCM2DEVS_Condition_Column;
 	public static String UCM2DEVS_Condition_Label;
+	public static String UCM2DEVS_ConnectionDatabase_ErrorDialog;
 	public static String UCM2DEVS_Consult_Buttom;
 	public static String UCM2DEVS_Consult_ToolTip;
+	public static String UCM2DEVS_DatabaseConfiguration_Label;
+	public static String UCM2DEVS_DatabaseName_Label;
 	public static String UCM2DEVS_Delete_Buttom;
 	public static String UCM2DEVS_Delete_Label;
 	public static String UCM2DEVS_Delete_ToolTip;
@@ -60,6 +67,7 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_JucmFiles_Label;
 	public static String UCM2DEVS_Name_Column;
 	public static String UCM2DEVS_Object_Column;
+	public static String UCM2DEVS_Password_Label;
 	public static String UCM2DEVS_Path_Column;
 	public static String UCM2DEVS_QualityAttribute_Column;
 	public static String UCM2DEVS_QualityAttribute_Label;
@@ -67,8 +75,12 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_Scenario_Group;
 	public static String UCM2DEVS_SoftArcSpec_Group;
 	public static String UCM2DEVS_StimulusSource_Label;
+	public static String UCM2DEVS_SuccessObject_InfoDialog;
+	public static String UCM2DEVS_TestConnection_Label;
 	public static String UCM2DEVS_Type_Label;
 	public static String UCM2DEVS_UCMExists_ErrorDialog;
+	public static String UCM2DEVS_UpdateObject_ErrorDialog;
+	public static String UCM2DEVS_UserName_Label;
 	public static String UCM2DEVS_ValueEnvironment_Label;
 	public static String UCM2DEVS_ValueStimulus_Label;
 	public static String UCM2DEVSMetric_Label;

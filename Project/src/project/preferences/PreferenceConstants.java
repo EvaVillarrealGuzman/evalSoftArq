@@ -19,6 +19,8 @@ public class PreferenceConstants {
 
 	public static final String ButtomSave_Label = Messages.UCM2DEVS_Save_Buttom;
 
+	public static final String ButtomTestConnection_Label = Messages.UCM2DEVS_TestConnection_Label;
+
 	public static final String CalendarFinishDate_Label = Messages.UCM2DEVS_FinishDate_Label;
 
 	public static final String CalendarStarDate_Label = Messages.UCM2DEVS_StartDate_Label;
@@ -29,22 +31,32 @@ public class PreferenceConstants {
 
 	public static final String Condition_Label = Messages.UCM2DEVS_Condition_Label;
 
+	public static final String DatabaseConfiguration_Label = Messages.UCM2DEVS_DatabaseConfiguration_Label;
+
+	public static final String DatabaseName_Label = Messages.UCM2DEVS_DatabaseName_Label;
+
 	public static final String Description_Label = Messages.UCM2DEVS_Description_Label;
 
 	public static final String Environment_Label = Messages.UCM2DEVS_Environment_Label;
 
 	public static final String Error_Label = Messages.UCM2DEVS_Error_Label;
 
+	public static final String Info_Label = Messages.UCM2DEVS_Info_Label;
+
 	public static final String JucmFiles_Label = Messages.UCM2DEVS_JucmFiles_Label;
 
 	public static final String Metric = Messages.UCM2DEVSMetric_Label;
+
+	public static final String Password_Label = Messages.UCM2DEVS_Password_Label;
+
+	public static final String PortNumber_Label = Messages.UCM2DEVS_PortNumber_Label;
 
 	public static final String ProjectName_Label = Messages.UCM2DEVS_ProjectName_Label;
 
 	public static final String QualityAttribute_Label = Messages.UCM2DEVS_QualityAttribute_Label;
 
 	public static final String Question_Label = Messages.UCM2DEVS_Question_Label;
-	
+
 	public static final String Delete_Label = Messages.UCM2DEVS_Delete_Label;
 
 	public static final String Response_Label = Messages.UCM2DEVSResponse_Label;
@@ -60,6 +72,8 @@ public class PreferenceConstants {
 	public static final String Type_Label = Messages.UCM2DEVS_Type_Label;
 
 	public static final String Unit_Label = Messages.UCM2DEVSUnit_Label;
+
+	public static final String UserName_Label = Messages.UCM2DEVS_UserName_Label;
 
 	public static final String ValueStimulus_Label = Messages.UCM2DEVS_ValueStimulus_Label;
 
@@ -97,6 +111,8 @@ public class PreferenceConstants {
 
 	public static final String CompareDate_ErrorDialog = Messages.UCM2DEVS_CompareDate_ErrorDialog;
 
+	public static final String ConnectionDatabase_ErrorDialog = Messages.UCM2DEVS_ConnectionDatabase_ErrorDialog;
+
 	public static final String EmptyDescription_ErrorDialog = Messages.UCM2DEVS_EmptyDescription_ErrorDialog;
 
 	public static final String EmptyStimulusSourceValue_ErrorDialog = Messages.UCM2DEVS_EmptyStimulusSourceValue_ErrorDialog;
@@ -121,6 +137,10 @@ public class PreferenceConstants {
 
 	public static final String NoSavedSystemQualityRequirement_ErrorDialog = Messages.UCM2DEVSNoSavedSystemQR_ErrorDialog;
 
+	public static final String SaveData_ErrorDialog = Messages.UCM2DEVS_SaveData_ErrorDialog;
+
+	public static final String SaveObject_ErrorDialog = Messages.UCM2DEVS_SaveObject_ErrorDialog;
+
 	public static final String SelectArtifactType_ErrorDialog = Messages.UCM2DEVS_SelectArtifactType_ErrorDialog;
 
 	public static final String SelectCondition_ErrorDialog = Messages.UCM2DEVS_SelectCondition_ErrorDialog;
@@ -143,6 +163,8 @@ public class PreferenceConstants {
 
 	public static final String SelectUnit_ErrorDialog = Messages.UCM2DEVS_SelectUnit_ErrorDialog;
 
+	public static final String UpdateObject_ErrorDialog = Messages.UCM2DEVS_UpdateObject_ErrorDialog;
+
 	public static final String Postgres_ErrorDialog = Messages.UCM2DEVS_Postgres_ErrorDialog;
 
 	public static final String ProjectOpenEclipse_ErrorDialog = Messages.UCM2DEVS_ProjectOpenEclipse_ErrorDialog;
@@ -150,6 +172,8 @@ public class PreferenceConstants {
 	public static final String UCMExists_ErrorDialog = Messages.UCM2DEVS_UCMExists_ErrorDialog;
 
 	public static final String UCMNotExists_ErrorDialog = Messages.UCM2DEVS_UCMNotExists_ErrorDialog;
+
+	public static final String SuccessObject_InfoDialog = Messages.UCM2DEVS_SuccessObject_InfoDialog;
 
 	public static final String WantDeleteQualityRequirement_QuestionDialog = Messages.UCM2DEVS_WantDeleteQualityRequirement_QuestionDialog;
 

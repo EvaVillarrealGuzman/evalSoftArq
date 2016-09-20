@@ -8,20 +8,14 @@ import org.eclipse.swt.widgets.TableItem;
 import project.preferences.EditQualityRequirementPreferencePage;
 import project.preferences.PreferenceConstants;
 import software.BusinessLogic.AnalysisManager;
-import software.DomainModel.AnalysisEntity.Artifact;
 import software.DomainModel.AnalysisEntity.ArtifactType;
 import software.DomainModel.AnalysisEntity.Condition;
-import software.DomainModel.AnalysisEntity.Environment;
 import software.DomainModel.AnalysisEntity.EnvironmentType;
 import software.DomainModel.AnalysisEntity.Metric;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
 import software.DomainModel.AnalysisEntity.QualityRequirement;
-import software.DomainModel.AnalysisEntity.Response;
-import software.DomainModel.AnalysisEntity.ResponseMeasure;
 import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 import software.DomainModel.AnalysisEntity.ResponseType;
-import software.DomainModel.AnalysisEntity.Stimulus;
-import software.DomainModel.AnalysisEntity.StimulusSource;
 import software.DomainModel.AnalysisEntity.StimulusSourceType;
 import software.DomainModel.AnalysisEntity.StimulusType;
 import software.DomainModel.AnalysisEntity.Unit;
@@ -29,7 +23,7 @@ import software.DomainModel.AnalysisEntity.Unit;
 /**
  * Controller for EditQualityRequirementPreferencePage
  * 
- * @author Micaela
+ * @author FEM
  *
  */
 public class EditQualityRequirementPPController extends Controller {

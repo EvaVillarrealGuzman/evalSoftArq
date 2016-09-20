@@ -31,7 +31,7 @@ import software.DomainModel.AnalysisEntity.ResponseMeasureType;
 /**
  * To create a new quality requirement
  * 
- * @author: Micaela
+ * @author: FEM
  */
 public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	/**
@@ -117,7 +117,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
-			gridData.horizontalAlignment = GridData.FILL;
+			gridData.widthHint= 200;
 			gridData.grabExcessHorizontalSpace = true;
 
 			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);

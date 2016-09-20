@@ -1,12 +1,13 @@
 package project.preferences.controller;
 
+import project.preferences.PreferenceConstants;
 import project.preferences.SystemConfigurationPreferencePage;
 import software.BusinessLogic.SystemConfigurationManager;
 
 /**
- * Controller for NewSystemPreferencePage
+ * Controller for SystemConfigurationPreferencePage
  * 
- * @author Eva
+ * @author FEM
  *
  */
 public class SystemConfigurationPPController extends Controller {
@@ -51,7 +52,7 @@ public class SystemConfigurationPPController extends Controller {
 				this.getForm().getDatabaseName().getStringValue())) {
 			this.createSuccessDialog("The connection is established to the database");
 		} else {
-			this.createErrorDialog("The connection is not established to the database");
+			this.createErrorDialog(PreferenceConstants.ConnectionDatabase_ErrorDialog);
 		}
 	}
 
@@ -70,10 +71,9 @@ public class SystemConfigurationPPController extends Controller {
 				this.getForm().getDatabaseUserName().getStringValue(),
 				this.getForm().getDatabasePortNumber().getStringValue(),
 				this.getForm().getDatabaseName().getStringValue())) {
-			// TODO cambiar
 			this.createObjectSuccessDialog();
 		} else {
-			this.createErrorDialog("could not be saved data");
+			this.createErrorDialog(PreferenceConstants.SaveData_ErrorDialog);
 		}
 	}
 

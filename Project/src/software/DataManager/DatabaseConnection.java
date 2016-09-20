@@ -1,7 +1,9 @@
 package software.DataManager;
 
 /**
- * Constant definitions for plug-in preferences
+ * Contain data to database connection
+ * 
+ * @author: FEM
  */
 public class DatabaseConnection {
 

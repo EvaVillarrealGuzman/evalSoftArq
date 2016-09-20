@@ -21,6 +21,11 @@ import org.xml.sax.SAXException;
 
 import software.Security.CryptoUtils;
 
+/**
+ * This class performs file operations xml
+ *  
+ * @author: FEM
+ */
 public class DOM {
 
 	private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/software/DataManager/DatabaseConnection.xml";
@@ -33,11 +38,10 @@ public class DOM {
 		return internalStructureRead("username");
 	}
 
-
 	public static String readDatabaseName() {
 		return internalStructureRead("database");
 	}
-	
+
 	public static String readPortNumber() {
 		return internalStructureRead("portnumber");
 	}
@@ -51,11 +55,10 @@ public class DOM {
 		internalStructureWrite("username", username);
 	}
 
-
 	public static void writeDatabaseName(String database) {
 		internalStructureWrite("database", database);
 	}
-	
+
 	public static void writePortNumber(String portnumber) {
 		internalStructureWrite("portnumber", portnumber);
 	}

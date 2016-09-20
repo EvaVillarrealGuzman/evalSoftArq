@@ -10,7 +10,7 @@ import software.BusinessLogic.AnalysisManager;
 /**
  * Controller for EditSystemPreferencePage
  * 
- * @author Eva
+ * @author FEM
  *
  */
 public class EditSystemPPController extends Controller {

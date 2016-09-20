@@ -30,7 +30,7 @@ import project.preferences.controller.SoftwareArchitectureSpecificationPPControl
 /**
  * To specify a software architecture by JUCMNav
  * 
- * @author: Eva
+ * @author: FEM
  */
 public class SoftwareArchitectureSpecificationManagementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
@@ -43,7 +43,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	private Button btnAdd;
 	private Button btnConsult;
 	private Button btnDelete;
-	private ComboViewer cboSystem;
+	private ComboViewer cmbSystem;
 	private SoftwareArchitectureSpecificationPPController viewController;
 	private FileDialog chooseFile;
 	private Composite cSystemName;
@@ -100,21 +100,24 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
-			gridData.horizontalAlignment = GridData.FILL;
+			gridData.widthHint = 200;
 			gridData.grabExcessHorizontalSpace = true;
 
-			cboSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
-			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
-			cboSystem.getCombo().setLayoutData(gridData);
+			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
+			cmbSystem.setContentProvider(ArrayContentProvider.getInstance());
+			cmbSystem.getCombo().setLayoutData(gridData);
 			loadCombo();
-			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
+			cmbSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.setModel(cboSystem);
+					viewController.setModel(cmbSystem);
 					cmbSystemItemStateChanged();
 					prepareView();
 				}
 			});
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
 
 			Label labelEmptyOne = new Label(parent, SWT.NULL);
 			labelEmptyOne.setLayoutData(gridData);
@@ -125,7 +128,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			Group gQualityRequirement = new Group(parent, SWT.NONE);
 			gQualityRequirement.setLayoutData(gridData);
 			gQualityRequirement.setText(PreferenceConstants.SoftwareArchitectureSpecification_Group);
-			gQualityRequirement.setLayout(new GridLayout(2, false));
+			gQualityRequirement.setLayout(layout);
 
 			// Create column names
 			String[] columnNames = new String[] { PreferenceConstants.Object_Column, PreferenceConstants.Name_Column,
@@ -147,11 +150,11 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			colObject.setText(PreferenceConstants.Object_Column);
 
 			colName = new TableColumn(table, SWT.NONE);
-			colName.setWidth(200);
+			colName.setWidth(100);
 			colName.setText(PreferenceConstants.Name_Column);
 
 			colPath = new TableColumn(table, SWT.NONE);
-			colPath.setWidth(200);
+			colPath.setWidth(300);
 			colPath.setText(PreferenceConstants.Path_Column);
 
 			for (int i = 0; i < 8; i++) {
@@ -173,13 +176,19 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			// Assign the cell editors to the viewer
 			tblViewerQualityRequirement.setCellEditors(editors);
 
+			Composite cButtoms = new Composite(gQualityRequirement, SWT.RIGHT);
+			cButtoms.setLayout(layout);
 			gridData = new GridData();
-			gridData.horizontalSpan = 1;
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.END;
+			cButtoms.setLayoutData(gridData);
+
+			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.END;
 			gridData.grabExcessHorizontalSpace = true;
 			gridData.widthHint = 75;
 
-			btnAdd = new Button(gQualityRequirement, SWT.PUSH);
+			btnAdd = new Button(cButtoms, SWT.PUSH);
 			btnAdd.setText(PreferenceConstants.ButtomAdd_Label);
 			btnAdd.setToolTipText(PreferenceConstants.ButtomAdd_ToolTip);
 			btnAdd.setLayoutData(gridData);
@@ -200,13 +209,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				}
 			});
 
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.horizontalAlignment = GridData.END;
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.widthHint = 75;
-
-			btnConsult = new Button(gQualityRequirement, SWT.PUSH);
+			btnConsult = new Button(cButtoms, SWT.PUSH);
 			btnConsult.setText(PreferenceConstants.ButtomConsult_Label);
 			btnConsult.setToolTipText(PreferenceConstants.ButtomConsult_ToolTip);
 			btnConsult.setLayoutData(gridData);
@@ -218,13 +221,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				}
 			});
 
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.horizontalAlignment = GridData.END;
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.widthHint = 75;
-
-			btnDelete = new Button(gQualityRequirement, SWT.PUSH);
+			btnDelete = new Button(cButtoms, SWT.PUSH);
 			btnDelete.setText(PreferenceConstants.ButtomDelete_Label);
 			btnDelete.setToolTipText(PreferenceConstants.ButtomDelete_ToolTip);
 			btnDelete.setLayoutData(gridData);
@@ -294,11 +291,11 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	}
 
 	public ComboViewer getCboSystem() {
-		return cboSystem;
+		return cmbSystem;
 	}
 
 	public void setCboSystem(ComboViewer cboSystem) {
-		this.cboSystem = cboSystem;
+		this.cmbSystem = cboSystem;
 	}
 
 	public SoftwareArchitectureSpecificationPPController getViewController() {

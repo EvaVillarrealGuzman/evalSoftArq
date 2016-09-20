@@ -25,7 +25,7 @@ import project.preferences.controller.NewSystemPPController;
 /**
  * To create a new system
  * 
- * @author: Eva
+ * @author: FEM
  */
 
 public class NewSystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {

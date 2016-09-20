@@ -7,7 +7,7 @@ import software.BusinessLogic.AnalysisManager;
 /**
  * Controller for NewSystemPreferencePage
  * 
- * @author Eva
+ * @author FEM
  *
  */
 public class NewSystemPPController extends Controller {
