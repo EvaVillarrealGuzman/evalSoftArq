@@ -33,6 +33,11 @@ public class DOM {
 		return internalStructureRead("username");
 	}
 
+
+	public static String readDatabaseName() {
+		return internalStructureRead("database");
+	}
+	
 	public static String readPortNumber() {
 		return internalStructureRead("portnumber");
 	}
@@ -46,6 +51,11 @@ public class DOM {
 		internalStructureWrite("username", username);
 	}
 
+
+	public static void writeDatabaseName(String database) {
+		internalStructureWrite("database", database);
+	}
+	
 	public static void writePortNumber(String portnumber) {
 		internalStructureWrite("portnumber", portnumber);
 	}

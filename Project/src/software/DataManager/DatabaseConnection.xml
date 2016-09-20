@@ -2,4 +2,4 @@
 	<username>postgres</username>
 	<password>3325230E8CFE8DA79488EE7BE3CE4AE8</password>
 	<portnumber>5432</portnumber>
-</databaseconfiguration>
+	<database>ProyectoFinal</database></databaseconfiguration>

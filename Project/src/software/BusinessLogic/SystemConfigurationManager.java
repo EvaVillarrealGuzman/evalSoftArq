@@ -69,10 +69,15 @@ public class SystemConfigurationManager extends HibernateManager {
 		return this.getDb().getPassword();
 	}
 
-	public Boolean isConnection(String password, String username, String portnumber) {
+	public String getDatabaseName() {
+		return this.getDb().getDatabaseName();
+	}
+
+	public Boolean isConnection(String password, String username, String portnumber, String databaseName) {
 		this.getDb().setPassword(password);
 		this.getDb().setUserName(username);
 		this.getDb().setPortName(portnumber);
+		this.getDb().setDatabaseName(databaseName);
 		if (HibernateUtil.getSession().isOpen()) {
 			HibernateUtil.getSession().close();
 		}
@@ -81,14 +86,16 @@ public class SystemConfigurationManager extends HibernateManager {
 		return hu.isConnection();
 	}
 
-	public Boolean updateConnectionData(String password, String username, String portnumber) {
+	public Boolean updateConnectionData(String password, String username, String portnumber, String databaseName) {
 		try {
 			this.getDb().setPassword(password);
 			this.getDb().setUserName(username);
 			this.getDb().setPortName(portnumber);
+			this.getDb().setDatabaseName(databaseName);
 			DOM.writePassword(password);
 			DOM.writePortNumber(portnumber);
 			DOM.writeUserName(username);
+			DOM.writeDatabaseName(databaseName);
 			if (HibernateUtil.getSession().isOpen()) {
 				HibernateUtil.getSession().close();
 			}

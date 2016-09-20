@@ -38,6 +38,7 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 	private Button btnTestConnection;
 	private StringFieldEditor databasePortNumber;
 	private StringFieldEditor databaseUserName;
+	private StringFieldEditor databaseName;
 	private StringFieldEditor databasePassword;
 	private SystemConfigurationPPController viewController;
 	private Composite cDatabaseConfiguration;
@@ -131,6 +132,9 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 
 			databaseUserName = new StringFieldEditor("User name", "User name" + ":", cDatabaseConfiguration);
 			addField(databaseUserName);
+
+			databaseName = new StringFieldEditor("Database name", "Database name" + ":", cDatabaseConfiguration);
+			addField(databaseName);
 
 			databasePassword = new StringFieldEditor("Password", "Password" + ":", cDatabaseConfiguration) {
 				@Override
@@ -265,6 +269,14 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 
 	public void setCmbLenguajeSystem(ComboViewer cmbLenguajeSystem) {
 		this.cmbLenguajeSystem = cmbLenguajeSystem;
+	}
+
+	public StringFieldEditor getDatabaseName() {
+		return databaseName;
+	}
+
+	public void setDatabaseName(StringFieldEditor databaseName) {
+		this.databaseName = databaseName;
 	}
 
 	/**

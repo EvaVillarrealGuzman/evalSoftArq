@@ -47,7 +47,8 @@ public class SystemConfigurationPPController extends Controller {
 	public void testConnection() {
 		if (this.getManager().isConnection(this.getForm().getDatabasePassword().getStringValue(),
 				this.getForm().getDatabaseUserName().getStringValue(),
-				this.getForm().getDatabasePortNumber().getStringValue())) {
+				this.getForm().getDatabasePortNumber().getStringValue(),
+				this.getForm().getDatabaseName().getStringValue())) {
 			this.createSuccessDialog("The connection is established to the database");
 		} else {
 			this.createErrorDialog("The connection is not established to the database");
@@ -61,12 +62,14 @@ public class SystemConfigurationPPController extends Controller {
 		this.getForm().getDatabasePassword().setStringValue(this.getManager().getPassword());
 		this.getForm().getDatabasePortNumber().setStringValue(this.getManager().getPortNumber());
 		this.getForm().getDatabaseUserName().setStringValue(this.getManager().getUserName());
+		this.getForm().getDatabaseName().setStringValue(this.getManager().getDatabaseName());
 	}
 
 	public void updateConnectionData() {
 		if (this.getManager().updateConnectionData(this.getForm().getDatabasePassword().getStringValue(),
 				this.getForm().getDatabaseUserName().getStringValue(),
-				this.getForm().getDatabasePortNumber().getStringValue())) {
+				this.getForm().getDatabasePortNumber().getStringValue(),
+				this.getForm().getDatabaseName().getStringValue())) {
 			// TODO cambiar
 			this.createObjectSuccessDialog();
 		} else {
