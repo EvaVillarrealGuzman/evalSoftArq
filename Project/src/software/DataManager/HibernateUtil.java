@@ -30,7 +30,7 @@ public class HibernateUtil {
 				conf.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
 				conf.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 				conf.setProperty("hibernate.connection.url",
-						"jdbc:postgresql://localhost:" + db.getPortName() + "/ProyectoFinal");
+						"jdbc:postgresql://localhost:" + db.getPortName() + "/" + db.getDatabaseName());
 			} catch (Exception pe) {
 				JOptionPane.showMessageDialog(null, "Database error Nº 2001");
 			}
