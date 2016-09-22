@@ -14,6 +14,7 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_EmptyStimulusValue_ErrorDialog;
 	public static String UCM2DEVS_EmptySystemName_ErrorDialog;
 	public static String UCM2DEVS_Error_Label;
+	public static String UCM2DEVS_SimulationTime_Label;
 	public static String UCM2DEVS_Info_Label;
 	public static String UCM2DEVS_InvalidResponseMeasureValue_ErrorDialog;
 	public static String UCM2DEVS_InvalidResponseMeasureValueNegative_ErrorDialog;
@@ -43,6 +44,7 @@ public class Messages extends NLS {
 	public static String UCM2DEVS_ProjectName_Label;
 	public static String UCM2DEVS_Remove_Buttom;
 	public static String UCM2DEVS_Save_Buttom;
+	public static String UCM2DEVS_Evaluate_Buttom;
 	public static String UCM2DEVS_SaveData_ErrorDialog;
 	public static String UCM2DEVS_SaveObject_ErrorDialog;
 	public static String UCM2DEVS_StartDate_Label;

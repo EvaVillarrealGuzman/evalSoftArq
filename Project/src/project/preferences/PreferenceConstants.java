@@ -18,6 +18,8 @@ public class PreferenceConstants {
 	public static final String ButtomRemove_Label = Messages.UCM2DEVS_Remove_Buttom;
 
 	public static final String ButtomSave_Label = Messages.UCM2DEVS_Save_Buttom;
+	
+	public static final String ButtomEvaluate_Label = Messages.UCM2DEVS_Evaluate_Buttom;
 
 	public static final String ButtomTestConnection_Label = Messages.UCM2DEVS_TestConnection_Label;
 
@@ -52,6 +54,8 @@ public class PreferenceConstants {
 	public static final String PortNumber_Label = Messages.UCM2DEVS_PortNumber_Label;
 
 	public static final String ProjectName_Label = Messages.UCM2DEVS_ProjectName_Label;
+	
+	public static final String SimulationTime_Label=Messages.UCM2DEVS_SimulationTime_Label;
 
 	public static final String QualityAttribute_Label = Messages.UCM2DEVS_QualityAttribute_Label;
 

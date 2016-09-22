@@ -86,6 +86,10 @@
             commandId="Project.commands.softwareArchitectureSpecificationNewCommand">
       </handler>
       <handler
+            class="project.handlers.SoftwareArchitectureEvaluationHandler"
+            commandId="Project.commands.softwareArchitectureEvaluationCommand">
+      </handler>
+      <handler
             class="project.handlers.ReportsHandler"
             commandId="Project.commands.reportsCommand">
       </handler>
@@ -181,6 +185,16 @@
         		    </command>
      	    </menu>
             <command
+                  commandId="Project.commands.softwareArchitectureEvaluationCommand"
+                  id="Project.menus.evaluationCommand"
+                  label="%Evaluation"
+                  mnemonic="E">
+               <handler
+                     class="project.handlers.SoftwareArchitectureEvaluationHandler"
+                     commandId="Project.commands.SoftwareArchitectureEvaluationCommand">
+               </handler>
+            </command>
+            <command
                   commandId="Project.commands.reportsCommand"
                   id="Project.menus.reportsCommand"
                   label="%Report"
@@ -246,6 +260,12 @@
         class="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
         name="%SoftwareArchitectureSpecificationOpen">
+  </page>
+  <page
+        category="project.preferences.UCM2DEVS"
+        class="project.preferences.SoftwareArchitectureEvaluationPreferencePage"
+        id="project.preferences.SoftwareArchitectureEvaluationPreferencePage"
+        name="%Evaluation">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
