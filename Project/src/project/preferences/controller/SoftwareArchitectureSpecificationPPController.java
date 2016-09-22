@@ -87,6 +87,8 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		int err;
 		err = this.setSystem();
 		if (err == 0) {
+			this.getForm().clearView();
+			this.getForm().prepareView();
 			return this.getManager().updateSystem();
 		}
 		return null;

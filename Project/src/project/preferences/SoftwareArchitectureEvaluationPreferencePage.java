@@ -28,6 +28,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
 import project.preferences.controller.SoftwareArchitectureEvaluationPPController;
+import software.DomainModel.AnalysisEntity.QualityRequirement;
 
 /**
  * To specify a software architecture by JUCMNav
@@ -175,6 +176,14 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			// Assign the cell editors to the viewer
 			tblViewerQualityRequirement.setCellEditors(editors);
 
+			table.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					table.showSelection();
+					prepareView(3);
+				}
+			});
+			
 			gridData = new GridData();
 			gridData.horizontalSpan = 2;
 
@@ -322,7 +331,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
 			//TODO CAMBIAR MENSAJE
-			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemQualityRequirement_ErrorDialog);
+			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemArchitecture_ErrorDialog);
 			pabm = 0;
 		}
 		switch (pabm) {

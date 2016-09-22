@@ -34,6 +34,8 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		manager.saveObject(unit1);
 		Unit unit2 = new Unit("Minutes");
 		manager.saveObject(unit2);
+		Unit unit3 = new Unit("Hour");
+		manager.saveObject(unit3);
 		
 		TacticType tacticType1 = new TacticType("Fault detection");
 		manager.saveObject(tacticType1);
@@ -86,13 +88,13 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		tactics.add(tactic32);
 		tactics.add(tactic33);
 
-		createQualityAttributeAvailability(manager, unit1, unit2, tactics);
-		createQualityAttributeReliability(manager, unit1, unit2, tactics);
-		createQualityAttributePerformance(manager, unit1, unit2);
+		createQualityAttributeAvailability(manager, unit1, unit2, unit3, tactics);
+		createQualityAttributeReliability(manager, unit1, unit2, unit3, tactics);
+		createQualityAttributePerformance(manager, unit1, unit2, unit3);
 
 	}
 
-	private static void createQualityAttributeAvailability(HibernateManager pmanager, Unit punit1, Unit punit2, Set<Tactic> ptactics) {
+	private static void createQualityAttributeAvailability(HibernateManager pmanager, Unit punit1, Unit punit2, Unit unit3, Set<Tactic> ptactics) {
 		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
 		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -140,6 +142,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		Set<Unit> units = new HashSet<Unit>();
 		units.add(punit1);
 		units.add(punit2);
+		units.add(unit3);
 
 		Metric metric1 = new Metric("Availability average time", units);
 		Metric metric2 = new Metric("Availability half time", units);
@@ -168,7 +171,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 
 	}
 
-	private static void createQualityAttributeReliability(HibernateManager pmanager, Unit punit1, Unit punit2, Set<Tactic> ptactics) {
+	private static void createQualityAttributeReliability(HibernateManager pmanager, Unit punit1, Unit punit2, Unit unit3, Set<Tactic> ptactics) {
 		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
 		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -216,6 +219,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		Set<Unit> units = new HashSet<Unit>();
 		units.add(punit1);
 		units.add(punit2);
+		units.add(unit3);
 
 		Metric metric1 = new Metric("Reliability average time", units);
 		Metric metric2 = new Metric("Reliability half time", units);
@@ -244,7 +248,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 
 	}
 
-	private static void createQualityAttributePerformance(HibernateManager pmanager, Unit punit1, Unit punit2) {
+	private static void createQualityAttributePerformance(HibernateManager pmanager, Unit punit1, Unit punit2, Unit unit3) {
 		StimulusSourceType ss1 = new StimulusSourceType("Stimulus from internal source");
 		StimulusSourceType ss2 = new StimulusSourceType("Stimulus from external source");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -280,7 +284,8 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		Set<Unit> units = new HashSet<Unit>();
 		units.add(punit1);
 		units.add(punit2);
-
+		units.add(unit3);
+		
 		Metric metric1 = new Metric("Performance average time", units);
 		Metric metric2 = new Metric("Performance half time", units);
 		pmanager.saveObject(metric1);

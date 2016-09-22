@@ -5,6 +5,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -391,6 +392,11 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 		this.getViewController().setModelPaths(
 				(software.DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
 						.getFirstElement());
+	}
+	
+	public void clearView(){
+		this.getCboSystem().setSelection(StructuredSelection.EMPTY);
+		this.getTable().clearAll();
 	}
 
 }
