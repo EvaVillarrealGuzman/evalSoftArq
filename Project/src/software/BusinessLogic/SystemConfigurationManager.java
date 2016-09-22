@@ -132,7 +132,8 @@ public class SystemConfigurationManager extends HibernateManager {
 	 * Initialize data if database is empty
 	 */
 	private void dataInitialization() {
-		if (this.listQualityAttribute().size() == 0) {
+		List<QualityAttribute> list = this.listQualityAttribute();
+		if (list!= null && list.size() == 0) {
 			Data.initialize();
 		}
 	}
@@ -145,8 +146,7 @@ public class SystemConfigurationManager extends HibernateManager {
 		try {
 			return this.listClass(QualityAttribute.class, "name");
 		} catch (Exception e) {
-			List<QualityAttribute> emptyList = new ArrayList();
-			return emptyList;
+			return null;
 		}
 	}
 
