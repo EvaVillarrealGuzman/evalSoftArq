@@ -43,7 +43,6 @@ public class HibernateUtil {
 			conf.addPackage("software.DomainModel.AnalysisEntity");
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Artifact.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.ArtifactType.class);
-			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Condition.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Environment.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.EnvironmentType.class);
 			conf.addAnnotatedClass(software.DomainModel.AnalysisEntity.Formula.class);

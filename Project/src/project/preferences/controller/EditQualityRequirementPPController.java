@@ -9,7 +9,6 @@ import project.preferences.EditQualityRequirementPreferencePage;
 import project.preferences.PreferenceConstants;
 import software.BusinessLogic.AnalysisManager;
 import software.DomainModel.AnalysisEntity.ArtifactType;
-import software.DomainModel.AnalysisEntity.Condition;
 import software.DomainModel.AnalysisEntity.EnvironmentType;
 import software.DomainModel.AnalysisEntity.Metric;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
@@ -76,13 +75,6 @@ public class EditQualityRequirementPPController extends Controller {
 	 */
 	public void setModelQualityAttribute() {
 		this.getFormSearch().getCmbQualityAttribute().setInput(getManager().getComboModelQualityAttribute());
-	}
-
-	/**
-	 * Sets the model of condition combo
-	 */
-	public void setModelCondition() {
-		this.getFormSearch().getCmbCondition().setInput(getManager().getComboModelCondition());
 	}
 
 	/**
@@ -194,9 +186,6 @@ public class EditQualityRequirementPPController extends Controller {
 	public int setQualityRequirement() {
 		if (this.isValidData()) {
 			this.getManager().setDescriptionScenario(this.getFormSearch().getTxtDescription().getText());
-			this.getManager().setConditionScenario(
-					(Condition) ((IStructuredSelection) this.getFormSearch().getCmbCondition().getSelection())
-							.getFirstElement());
 			this.getManager().setStimulusSource(this.getFormSearch().getTxtDescriptionStimulusSource().getText(),
 					this.getFormSearch().getTxtValueStimulusSource().getStringValue(),
 					(StimulusSourceType) ((IStructuredSelection) this.getFormSearch().getCmbTypeStimulusSource()
@@ -248,11 +237,6 @@ public class EditQualityRequirementPPController extends Controller {
 		if (this.isEmpty(this.getFormSearch().getCmbQualityAttribute())) {
 			this.createErrorDialog(PreferenceConstants.SelectQualityAttribute_ErrorDialog);
 			this.getFormSearch().getCmbQualityAttribute().getCombo().setFocus();
-			return false;
-		}
-		if (this.isEmpty(this.getFormSearch().getCmbCondition())) {
-			this.createErrorDialog(PreferenceConstants.SelectCondition_ErrorDialog);
-			this.getFormSearch().getCmbCondition().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getTxtValueStimulusSource())) {
 			this.createErrorDialog(PreferenceConstants.EmptyStimulusSourceValue_ErrorDialog);
@@ -332,7 +316,6 @@ public class EditQualityRequirementPPController extends Controller {
 				TableItem item = new TableItem(this.getFormSearch().getTable(), SWT.NONE);
 				item.setData(dp);
 				item.setText(new String[] { dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
-						dp.getQualityScenario().getCondition().toString(),
 						dp.getQualityScenario().getDescription().toString() });
 			}
 		}
@@ -352,7 +335,6 @@ public class EditQualityRequirementPPController extends Controller {
 	 */
 	public void getView() {
 		this.getFormSearch().loadCmbQualityAttribute();
-		this.getFormSearch().loadCmbCondition();
 
 		this.getFormSearch().loadGenericScenario(this.getManager().getQualityAttribute());
 		this.getFormSearch().loadCmbMetric(this.getManager().getTypeResponseMeasure());
@@ -361,8 +343,6 @@ public class EditQualityRequirementPPController extends Controller {
 		this.getFormSearch().getTxtDescription().setText(this.getManager().getDescriptionScenario());
 		this.getFormSearch().getCmbQualityAttribute()
 				.setSelection(new StructuredSelection(this.getManager().getQualityAttribute()));
-		this.getFormSearch().getCmbCondition()
-				.setSelection(new StructuredSelection(this.getManager().getConditionScenario()));
 
 		this.getFormSearch().getTxtDescriptionStimulusSource()
 				.setText(this.getManager().getDescriptionStimulusSource());

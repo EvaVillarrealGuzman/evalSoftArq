@@ -5,7 +5,6 @@ import java.util.Set;
 
 import software.BusinessLogic.AnalysisManager;
 import software.DomainModel.AnalysisEntity.ArtifactType;
-import software.DomainModel.AnalysisEntity.Condition;
 import software.DomainModel.AnalysisEntity.EnvironmentType;
 import software.DomainModel.AnalysisEntity.GenericScenario;
 import software.DomainModel.AnalysisEntity.Metric;
@@ -87,18 +86,10 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		tactics.add(tactic32);
 		tactics.add(tactic33);
 
-		createConditions(manager);
 		createQualityAttributeAvailability(manager, unit1, unit2, tactics);
 		createQualityAttributeReliability(manager, unit1, unit2, tactics);
 		createQualityAttributePerformance(manager, unit1, unit2);
 
-	}
-
-	private static void createConditions(AnalysisManager pmanager) {
-		Condition c1 = new Condition("Normal");
-		Condition c2 = new Condition("Overload");
-		pmanager.saveObject(c1);
-		pmanager.saveObject(c2);
 	}
 
 	private static void createQualityAttributeAvailability(HibernateManager pmanager, Unit punit1, Unit punit2, Set<Tactic> ptactics) {

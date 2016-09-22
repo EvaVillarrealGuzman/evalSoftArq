@@ -41,6 +41,7 @@ public class Activator extends AbstractUIPlugin {
 		 * Initialize Hibernate
 		 */
 		HibernateUtil.initialize(new DatabaseConnection());
+		//Data.initialize();
 		super.start(context);
 		plugin = this;
 	}

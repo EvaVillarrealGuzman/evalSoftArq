@@ -216,10 +216,6 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
 
 			column = new TreeColumn(tree, SWT.NONE);
-			column.setText("Condition");
-			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
-			      
-			column = new TreeColumn(tree, SWT.NONE);
 			column.setText("");
 			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
 			              

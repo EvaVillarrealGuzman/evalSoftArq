@@ -52,7 +52,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	private GridData gridData;
 	private Text txtDescription;
 	private ComboViewer cmbQualityAttribute;
-	private ComboViewer cmbCondition;
 	private Text txtDescriptionStimulusSource;
 	private Text txtDescriptionStimulus;
 	private Text txtDescriptionEnvironment;
@@ -81,7 +80,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	private Button btnSave;
 	private Button btnRemove;
 	private TableColumn colObject;
-	private TableColumn colCondition;
 	private TableColumn colQualityAttribute;
 	private TableColumn colDescriptionScenario;
 	private static EditQualityRequirementPreferencePage qualityRequirementPP;
@@ -169,8 +167,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gQualityRequirement.setLayout(new GridLayout(2, false));
 
 			// Create column names
-			String[] columnNames = new String[] { PreferenceConstants.Object_Column,
-					PreferenceConstants.Condition_Column, PreferenceConstants.QualityAttribute_Column,
+			String[] columnNames = new String[] { PreferenceConstants.Object_Column, PreferenceConstants.QualityAttribute_Column,
 					PreferenceConstants.DescriptionScenario_Column };
 			// Create styles
 			int style = SWT.FULL_SELECTION | SWT.BORDER;
@@ -191,10 +188,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			colQualityAttribute = new TableColumn(table, SWT.NONE);
 			colQualityAttribute.setWidth(200);
 			colQualityAttribute.setText(PreferenceConstants.QualityAttribute_Column);
-
-			colCondition = new TableColumn(table, SWT.NONE);
-			colCondition.setWidth(200);
-			colCondition.setText(PreferenceConstants.Condition_Column);
 
 			colDescriptionScenario = new TableColumn(table, SWT.NONE);
 			colDescriptionScenario.setWidth(200);
@@ -277,12 +270,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 					}
 				}
 			});
-
-			Label labelC = new Label(gScenario, SWT.NONE);
-			labelC.setText(PreferenceConstants.Condition_Label + ":");
-
-			cmbCondition = new ComboViewer(gScenario, SWT.READ_ONLY);
-			cmbCondition.setContentProvider(ArrayContentProvider.getInstance());
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
@@ -590,14 +577,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		this.cmbQualityAttribute = cmbQualityAttribute;
 	}
 
-	public ComboViewer getCmbCondition() {
-		return cmbCondition;
-	}
-
-	public void setCmbCondition(ComboViewer cmbCondition) {
-		this.cmbCondition = cmbCondition;
-	}
-
 	public Text getTxtDescriptionStimulusSource() {
 		return txtDescriptionStimulusSource;
 	}
@@ -822,14 +801,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		this.colObject = colObject;
 	}
 
-	public TableColumn getColCondition() {
-		return colCondition;
-	}
-
-	public void setColCondition(TableColumn colCondition) {
-		this.colCondition = colCondition;
-	}
-
 	public TableColumn getColQualityAttribute() {
 		return colQualityAttribute;
 	}
@@ -938,7 +909,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public void clearScenario() {
 		txtDescription.setText("");
 		cmbQualityAttribute.setSelection(StructuredSelection.EMPTY);
-		cmbCondition.setSelection(StructuredSelection.EMPTY);
 		this.clearParts();
 	}
 
@@ -997,7 +967,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getTxtDescription().setEnabled(false);
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
-			this.getCmbCondition().getCombo().setEnabled(false);
 
 			this.getTxtDescriptionStimulusSource().setEnabled(false);
 			this.getTxtDescriptionStimulus().setEnabled(false);
@@ -1032,7 +1001,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		case 2:// With quality requirement selected
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(true);
-			this.getCmbCondition().getCombo().setEnabled(true);
 
 			this.getBtnSave().setEnabled(true);
 			this.getBtnRemove().setEnabled(true);
@@ -1071,8 +1039,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		case 6: // With bottom consult selected
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
-			this.getCmbCondition().getCombo().setEnabled(true);
-
+			
 			this.getTxtDescriptionStimulusSource().setEnabled(true);
 			this.getTxtDescriptionStimulus().setEnabled(true);
 			this.getTxtDescriptionEnvironment().setEnabled(true);
@@ -1110,7 +1077,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
 			this.getTxtDescription().setEnabled(false);
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
-			this.getCmbCondition().getCombo().setEnabled(false);
 
 			this.getTxtDescriptionStimulusSource().setEnabled(false);
 			this.getTxtDescriptionStimulus().setEnabled(false);
@@ -1150,13 +1116,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 	/**
 	 * Load all quality attributes in the combo
-	 */
-	public void loadCmbCondition() {
-		this.getViewController().setModelCondition();
-	}
-
-	/**
-	 * Load all conditions in the combo
 	 */
 	public void loadCmbQualityAttribute() {
 		this.getViewController().setModelQualityAttribute();

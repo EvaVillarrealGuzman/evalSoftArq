@@ -40,7 +40,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private ComboViewer cmbSystem;
 	private Text txtDescription;
 	private ComboViewer cmbQualityAttribute;
-	private ComboViewer cmbCondition;
 	private Text txtDescriptionStimulusSource;
 	private Text txtDescriptionStimulus;
 	private Text txtDescriptionEnvironment;
@@ -181,12 +180,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 					}
 				}
 			});
-
-			Label labelC = new Label(gScenario, SWT.NONE);
-			labelC.setText(PreferenceConstants.Condition_Label + ":");
-
-			cmbCondition = new ComboViewer(gScenario, SWT.READ_ONLY);
-			cmbCondition.setContentProvider(ArrayContentProvider.getInstance());
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
@@ -516,14 +509,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.cmbQualityAttribute = cmbQualityAttribute;
 	}
 
-	public ComboViewer getCmbCondition() {
-		return cmbCondition;
-	}
-
-	public void setCmbCondition(ComboViewer cmbCondition) {
-		this.cmbCondition = cmbCondition;
-	}
-
 	public Text getTxtDescriptionStimulusSource() {
 		return txtDescriptionStimulusSource;
 	}
@@ -691,20 +676,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	}
 
 	/**
-	 * Load all conditions in the combo
-	 */
-	public void loadCmbCondition() {
-		this.getViewController().setModelCondition();
-	}
-
-	/**
 	 * When a system is selected, prepare the view and load quality attributes
 	 * and conditions
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.prepareView(1);
 		this.loadCmbQualityAttribute();
-		this.loadCmbCondition();
 	}
 
 	/**
@@ -799,7 +776,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	public void clearScenario() {
 		txtDescription.setText("");
 		cmbQualityAttribute.setSelection(StructuredSelection.EMPTY);
-		cmbCondition.setSelection(StructuredSelection.EMPTY);
 		this.clearParts();
 	}
 
@@ -829,7 +805,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			this.getTxtDescription().setEnabled(false);
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
-			this.getCmbCondition().getCombo().setEnabled(false);
 
 			this.getTxtDescriptionStimulusSource().setEnabled(false);
 			this.getTxtDescriptionStimulus().setEnabled(false);
@@ -859,7 +834,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		case 1:// With system selected
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(true);
-			this.getCmbCondition().getCombo().setEnabled(true);
 			this.getBtnNew().setEnabled(true);
 
 			break;
@@ -897,7 +871,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(true);
-			this.getCmbCondition().getCombo().setEnabled(true);
 
 			this.getTxtDescriptionStimulusSource().setEnabled(false);
 			this.getTxtDescriptionStimulus().setEnabled(false);

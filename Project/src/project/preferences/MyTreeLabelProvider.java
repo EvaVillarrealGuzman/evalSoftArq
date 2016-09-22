@@ -26,9 +26,6 @@ public class MyTreeLabelProvider extends LabelProvider implements ITableLabelPro
               if (element instanceof QualityRequirement)
                  return ((QualityRequirement)element).getQualityScenario().getDescription();
            case 1: 
-              if (element instanceof QualityRequirement)
-                  return ((QualityRequirement)element).getQualityScenario().getCondition().toString();
-           case 2: 
                if (element instanceof QualityRequirement)
                    return "View Report";
         }

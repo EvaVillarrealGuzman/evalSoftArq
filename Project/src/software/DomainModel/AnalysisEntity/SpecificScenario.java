@@ -39,9 +39,6 @@ public class SpecificScenario implements Comparable {
 	@ManyToOne(targetEntity = ResponseMeasure.class, cascade = CascadeType.ALL)
 	private ResponseMeasure responseMeasure;
 
-	@ManyToOne(targetEntity = Condition.class, cascade = CascadeType.ALL)
-	private Condition condition;
-
 	// Builders
 	public SpecificScenario() {
 
@@ -49,7 +46,7 @@ public class SpecificScenario implements Comparable {
 
 	public SpecificScenario(String pdescription, QualityAttribute pqualityAttribute, StimulusSource pstimulusSource,
 			Stimulus pstimulus, Artifact partifact, Environment penviroment, Response presponse,
-			ResponseMeasure presponseMeasure, Condition pcondition) {
+			ResponseMeasure presponseMeasure) {
 		super();
 		this.description = pdescription;
 		this.qualityAttribute = pqualityAttribute;
@@ -59,7 +56,6 @@ public class SpecificScenario implements Comparable {
 		this.enviroment = penviroment;
 		this.response = presponse;
 		this.responseMeasure = presponseMeasure;
-		this.condition = pcondition;
 	}
 
 	// Getters and Setters
@@ -133,14 +129,6 @@ public class SpecificScenario implements Comparable {
 
 	public void setResponseMeasure(ResponseMeasure presponseMeasure) {
 		this.responseMeasure = presponseMeasure;
-	}
-
-	public Condition getCondition() {
-		return condition;
-	}
-
-	public void setCondition(Condition pcondition) {
-		this.condition = pcondition;
 	}
 
 	// CompareTo

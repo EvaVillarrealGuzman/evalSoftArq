@@ -9,7 +9,6 @@ import java.util.Set;
 import software.DataManager.HibernateManager;
 import software.DomainModel.AnalysisEntity.Artifact;
 import software.DomainModel.AnalysisEntity.ArtifactType;
-import software.DomainModel.AnalysisEntity.Condition;
 import software.DomainModel.AnalysisEntity.Environment;
 import software.DomainModel.AnalysisEntity.EnvironmentType;
 import software.DomainModel.AnalysisEntity.Metric;
@@ -202,29 +201,6 @@ public class AnalysisManager extends HibernateManager {
 	}
 
 	/**
-	 * 
-	 * @return ComboBoxModel with condition names
-	 * 
-	 */
-	public Condition[] getComboModelCondition() {
-		ArrayList<Condition> conditions = new ArrayList<Condition>();
-		for (Condition auxTipo : this.listCondition()) {
-			conditions.add(auxTipo);
-		}
-		Condition[] arrayCondition = new Condition[conditions.size()];
-		conditions.toArray(arrayCondition);
-		return arrayCondition;
-	}
-
-	/**
-	 * 
-	 * @return List<Condition> with the condition names
-	 */
-	public List<Condition> listCondition() {
-		return this.listClass(Condition.class, "name");
-	}
-
-	/**
 	 * @param QualityAttribute
 	 * @return ComboBoxModel with stimulusSourceType names for an specific
 	 *         attribute of quality
@@ -393,11 +369,10 @@ public class AnalysisManager extends HibernateManager {
 	 */
 	public void newQualityRequirement(software.DomainModel.AnalysisEntity.System psystem, String pdescription,
 			boolean pstate, QualityAttribute pqualityAttribute, StimulusSource pstimulusSource, Stimulus pstimulus,
-			Artifact partifact, Environment penvironment, Response presponse, ResponseMeasure presponseMeasure,
-			Condition pcondition) {
+			Artifact partifact, Environment penvironment, Response presponse, ResponseMeasure presponseMeasure) {
 		psystem.getQualityRequirements()
 				.add(new QualityRequirement(pstate, new SpecificScenario(pdescription, pqualityAttribute,
-						pstimulusSource, pstimulus, partifact, penvironment, presponse, presponseMeasure, pcondition)));
+						pstimulusSource, pstimulus, partifact, penvironment, presponse, presponseMeasure)));
 		this.setSystem(psystem);
 	}
 
@@ -500,10 +475,6 @@ public class AnalysisManager extends HibernateManager {
 		return this.getQualityRequirement().getQualityScenario().getQualityAttribute();
 	}
 
-	public Condition getConditionScenario() {
-		return this.getQualityRequirement().getQualityScenario().getCondition();
-	}
-
 	public String getDescriptionStimulusSource() {
 		return this.getQualityRequirement().getQualityScenario().getStimulusSource().getDescription();
 	}
@@ -582,11 +553,6 @@ public class AnalysisManager extends HibernateManager {
 
 	public void setDescriptionScenario(String pdescription) {
 		this.getQualityRequirement().getQualityScenario().setDescription(pdescription);
-	}
-
-	public void setConditionScenario(Condition pcondition) {
-		this.getQualityRequirement().getQualityScenario().setCondition(pcondition);
-		;
 	}
 
 	// Setters of specificScenario atribbutes (stimulusSource, stimulus,

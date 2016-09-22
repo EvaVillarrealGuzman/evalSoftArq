@@ -7,7 +7,6 @@ import project.preferences.PreferenceConstants;
 import software.BusinessLogic.AnalysisManager;
 import software.DomainModel.AnalysisEntity.Artifact;
 import software.DomainModel.AnalysisEntity.ArtifactType;
-import software.DomainModel.AnalysisEntity.Condition;
 import software.DomainModel.AnalysisEntity.Environment;
 import software.DomainModel.AnalysisEntity.EnvironmentType;
 import software.DomainModel.AnalysisEntity.Metric;
@@ -72,10 +71,6 @@ public class NewQualityRequirementPPController extends Controller {
 
 	public void setModelQualityAttribute() {
 		this.getForm().getCmbQualityAttribute().setInput(getManager().getComboModelQualityAttribute());
-	}
-
-	public void setModelCondition() {
-		this.getForm().getCmbCondition().setInput(getManager().getComboModelCondition());
 	}
 
 	/**
@@ -210,9 +205,7 @@ public class NewQualityRequirementPPController extends Controller {
 							this.getForm().getTxtDescription().getText(), true,
 							(QualityAttribute) ((IStructuredSelection) this.getForm().getCmbQualityAttribute()
 									.getSelection()).getFirstElement(),
-							stimulusSource, stimulus, artifact, environment, response, responseMeasure,
-							(Condition) ((IStructuredSelection) this.getForm().getCmbCondition().getSelection())
-									.getFirstElement());
+							stimulusSource, stimulus, artifact, environment, response, responseMeasure);
 			return 0;
 		} else {
 			return 1;
@@ -238,11 +231,6 @@ public class NewQualityRequirementPPController extends Controller {
 		if (this.isEmpty(this.getForm().getCmbQualityAttribute())) {
 			this.createErrorDialog(PreferenceConstants.SelectQualityAttribute_ErrorDialog);
 			this.getForm().getCmbQualityAttribute().getCombo().setFocus();
-			return false;
-		}
-		if (this.isEmpty(this.getForm().getCmbCondition())) {
-			this.createErrorDialog(PreferenceConstants.SelectCondition_ErrorDialog);
-			this.getForm().getCmbCondition().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulusSource())) {
 			this.createErrorDialog(PreferenceConstants.EmptyStimulusSourceValue_ErrorDialog);
