@@ -208,7 +208,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			editors[0] = null;
 			editors[1] = null;
 			editors[2] = null;
-			editors[3] = null;
 
 			// Assign the cell editors to the viewer
 			tblViewerQualityRequirement.setCellEditors(editors);

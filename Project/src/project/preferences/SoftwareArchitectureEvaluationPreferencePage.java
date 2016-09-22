@@ -190,6 +190,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 
 			simulationTime = new DoubleFieldEditor(PreferenceConstants.SimulationTime_Label,
 					PreferenceConstants.SimulationTime_Label + ":", parent);
+			simulationTime.setMinRange(0.0);
+			simulationTime.setPage(this);
 
 			addField(simulationTime);
 			
@@ -342,11 +344,13 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			break;
 		case 2: // With system selected	
 			this.getTable().setEnabled(true);
-			this.getSimulationTime().setEnabled(true);
-			this.getCmbUnit().getCombo().setEnabled(true);
+			this.getSimulationTime().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(false);
 			
 			break;
 		case 3:// With architecture selected
+			this.getSimulationTime().setEnabled(true);
+			this.getCmbUnit().getCombo().setEnabled(true);
 			this.getBtnEvaluate().setEnabled(true);
 			
 			break;
