@@ -12,12 +12,12 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class SystemConfigurationHandler extends AbstractHandler {
+public class DatabaseConfigurationHandler extends AbstractHandler {
 
 	/**
 	 * The constructor.
 	 */
-	public SystemConfigurationHandler() {
+	public DatabaseConfigurationHandler() {
 
 	}
 
@@ -28,8 +28,8 @@ public class SystemConfigurationHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 		PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				"project.preferences.SystemConfigurationPreferencePage",
-				new String[] { "project.preferences.SystemConfigurationPreferencePage" }, null);
+				"project.preferences.DatabaseConfigurationPreferencePage",
+				new String[] { "project.preferences.DatabaseConfigurationPreferencePage" }, null);
 		if (pref != null)
 			pref.open();
 		return null;

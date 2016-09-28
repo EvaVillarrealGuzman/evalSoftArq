@@ -24,7 +24,7 @@ import project.preferences.controller.SystemConfigurationPPController;
  * @author: FEM
  */
 
-public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	/**
 	 * Attributes
 	 */
@@ -41,7 +41,7 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 	/**
 	 * Constructor
 	 */
-	public SystemConfigurationPreferencePage() {
+	public DatabaseConfigurationPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 		viewController = new SystemConfigurationPPController();
@@ -90,13 +90,13 @@ public class SystemConfigurationPreferencePage extends FieldEditorPreferencePage
 					PreferenceConstants.PortNumber_Label + ":", cDatabaseConfiguration);
 			addField(databasePortNumber);
 
-			databaseUserName = new StringFieldEditor(PreferenceConstants.UserName_Label,
-					PreferenceConstants.UserName_Label + ":", cDatabaseConfiguration);
-			addField(databaseUserName);
-
 			databaseName = new StringFieldEditor(PreferenceConstants.DatabaseName_Label,
 					PreferenceConstants.DatabaseName_Label + ":", cDatabaseConfiguration);
 			addField(databaseName);
+
+			databaseUserName = new StringFieldEditor(PreferenceConstants.UserName_Label,
+					PreferenceConstants.UserName_Label + ":", cDatabaseConfiguration);
+			addField(databaseUserName);
 
 			databasePassword = new StringFieldEditor(PreferenceConstants.Password_Label,
 					PreferenceConstants.Password_Label + ":", cDatabaseConfiguration) {

@@ -55,8 +55,8 @@
       </command>
       <command
             categoryId="Project.commands.category"
-            id="Project.commands.systemConfigurationCommand"
-            name="SystemConfiguration">
+            id="Project.commands.databaseConfigurationCommand"
+            name="DatabaseConfiguration">
       </command>
    </extension>
    <extension
@@ -98,8 +98,8 @@
             commandId="Project.commands.editSystemCommand">
       </handler>
       <handler
-            class="project.handlers.SystemConfigurationHandler"
-            commandId="Project.commands.systemConfigurationCommand">
+            class="project.handlers.DatabaseConfigurationHandler"
+            commandId="Project.commands.databaseConfigurationCommand">
       </handler>
    </extension>
    <extension
@@ -120,9 +120,9 @@
                label="UCM2DEVS"
                mnemonic="M">
             <command
-                  commandId="Project.commands.systemConfigurationCommand"
-                  id="Project.menus.systemConfigurationCommand"
-                  label="%SystemConfiguration"
+                  commandId="Project.commands.databaseConfigurationCommand"
+                  id="Project.menus.databaseConfigurationCommand"
+                  label="%DatabaseConfiguration"
                   mnemonic="E"
                   style="push">
             </command>
@@ -275,9 +275,9 @@
   </page>
   <page
         category="project.preferences.UCM2DEVS"
-        class="project.preferences.SystemConfigurationPreferencePage"
-        id="project.preferences.SystemConfigurationPreferencePage"
-        name="%SystemConfiguration">
+        class="project.preferences.DatabaseConfigurationPreferencePage"
+        id="project.preferences.DatabaseConfigurationPreferencePage"
+        name="%DatabaseConfiguration">
   </page>	
    </extension>
    <extension

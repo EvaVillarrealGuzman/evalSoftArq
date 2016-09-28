@@ -1,7 +1,7 @@
 package project.preferences.controller;
 
 import project.preferences.PreferenceConstants;
-import project.preferences.SystemConfigurationPreferencePage;
+import project.preferences.DatabaseConfigurationPreferencePage;
 import software.BusinessLogic.SystemConfigurationManager;
 
 /**
@@ -15,14 +15,14 @@ public class SystemConfigurationPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static SystemConfigurationPreferencePage controller;
+	private static DatabaseConfigurationPreferencePage controller;
 	private SystemConfigurationManager manager;
-	private SystemConfigurationPreferencePage form;
+	private DatabaseConfigurationPreferencePage form;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static SystemConfigurationPreferencePage getController() {
+	public static DatabaseConfigurationPreferencePage getController() {
 		return controller;
 	}
 
@@ -37,11 +37,11 @@ public class SystemConfigurationPPController extends Controller {
 		this.manager = manager;
 	}
 
-	public SystemConfigurationPreferencePage getForm() {
+	public DatabaseConfigurationPreferencePage getForm() {
 		return form;
 	}
 
-	public void setForm(SystemConfigurationPreferencePage form) {
+	public void setForm(DatabaseConfigurationPreferencePage form) {
 		this.form = form;
 	}
 
