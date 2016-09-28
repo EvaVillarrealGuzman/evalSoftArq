@@ -87,7 +87,7 @@ public class Controller {
 		String dateFormat = sdf.format(pdate); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:36
 		dateFormat = dateFormat.substring(3, 5);
-		return Integer.parseInt(dateFormat);
+		return Integer.parseInt(dateFormat)-1;
 	}
 
 	public int getYear(Date pdate) {
