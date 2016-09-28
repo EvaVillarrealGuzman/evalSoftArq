@@ -3,6 +3,8 @@ package project.preferences;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -89,14 +91,29 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			databasePortNumber = new StringFieldEditor(PreferenceConstants.PortNumber_Label,
 					PreferenceConstants.PortNumber_Label + ":", cDatabaseConfiguration);
 			addField(databasePortNumber);
+			databasePortNumber.getTextControl(cDatabaseConfiguration).addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					getBtnSave().setEnabled(false);
+				}
+			});
 
 			databaseName = new StringFieldEditor(PreferenceConstants.DatabaseName_Label,
 					PreferenceConstants.DatabaseName_Label + ":", cDatabaseConfiguration);
 			addField(databaseName);
+			databaseName.getTextControl(cDatabaseConfiguration).addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					getBtnSave().setEnabled(false);
+				}
+			});
 
 			databaseUserName = new StringFieldEditor(PreferenceConstants.UserName_Label,
 					PreferenceConstants.UserName_Label + ":", cDatabaseConfiguration);
 			addField(databaseUserName);
+			databaseUserName.getTextControl(cDatabaseConfiguration).addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					getBtnSave().setEnabled(false);
+				}
+			});
 
 			databasePassword = new StringFieldEditor(PreferenceConstants.Password_Label,
 					PreferenceConstants.Password_Label + ":", cDatabaseConfiguration) {
@@ -108,6 +125,11 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 				}
 			};
 			addField(databasePassword);
+			databasePassword.getTextControl(cDatabaseConfiguration).addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					getBtnSave().setEnabled(false);
+				}
+			});
 
 			new Label(cDatabaseConfiguration, SWT.LEFT);
 
@@ -240,5 +262,6 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 	 */
 	public void prepareView() {
 		this.getViewController().getView();
+		this.getBtnSave().setEnabled(false);
 	}
 }

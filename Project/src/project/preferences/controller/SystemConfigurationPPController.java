@@ -50,8 +50,10 @@ public class SystemConfigurationPPController extends Controller {
 				this.getForm().getDatabaseUserName().getStringValue(),
 				this.getForm().getDatabasePortNumber().getStringValue(),
 				this.getForm().getDatabaseName().getStringValue())) {
+			this.getForm().getBtnSave().setEnabled(true);
 			this.createSuccessDialog("The connection is established to the database");
 		} else {
+			this.getForm().getBtnSave().setEnabled(false);
 			this.createErrorDialog(PreferenceConstants.ConnectionDatabase_ErrorDialog);
 		}
 	}
