@@ -1,5 +1,8 @@
 package project.preferences;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -45,21 +48,12 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 	/**
 	 * Attributes
 	 */
-	private Button btnBrowseUCM;
-	private Button btnReport;
+	private Button btnViewReport;
 	private ComboViewer cboSystem;
 	private ReportsPPController viewController;
-	private FileDialog chooseFile;
 	private Composite cSystemName;
 	private GridData gridData;
-	private TableViewer tblViewerSoftArchSpecification;
-	private Table table;
-	private TableColumn colObject;
-	private TableColumn colPath;
-	private TableColumn colName;
-	private Composite treeViewerComposite;
-	private TreeViewer	treeViewerQualRequirement;
-
+	
 	/**
 	 * Contructor
 	 */
@@ -112,149 +106,29 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 			cboSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
 			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
 			cboSystem.getCombo().setLayoutData(gridData);
-			loadCombo();
 			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.setModel(cboSystem);
-					cmbSystemItemStateChanged();
-					prepareView();
-				}
-			});
-
-			Label labelEmptyOne = new Label(parent, SWT.NULL);
-			labelEmptyOne.setLayoutData(gridData);
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 4;
-
-			Group gQualityRequirement = new Group(parent, SWT.NONE);
-			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText(PreferenceConstants.SoftwareArchitectureSpecification_Group);
-			gQualityRequirement.setLayout(new GridLayout(2, false));
-
-			// Create column names
-			String[] columnNames = new String[] { PreferenceConstants.Object_Column, PreferenceConstants.Name_Column,
-					PreferenceConstants.Path_Column };
-			// Create styles
-			int style = SWT.FULL_SELECTION | SWT.BORDER;
-			// create table
-			table = new Table(gQualityRequirement, style);
-			TableLayout tableLayout = new TableLayout();
-			table.setLayout(tableLayout);
-			gridData = new GridData(GridData.FILL_BOTH);
-			gridData.horizontalSpan = 4;
-			table.setLayoutData(gridData);
-			table.setLinesVisible(true);
-			table.setHeaderVisible(true);
-			// Create columns
-			colObject = new TableColumn(table, SWT.NONE);
-			colObject.setWidth(0);
-			colObject.setText(PreferenceConstants.Object_Column);
-
-			colName = new TableColumn(table, SWT.NONE);
-			colName.setWidth(200);
-			colName.setText(PreferenceConstants.Name_Column);
-
-			colPath = new TableColumn(table, SWT.NONE);
-			colPath.setWidth(200);
-			colPath.setText(PreferenceConstants.Path_Column);
-
-			for (int i = 0; i < 8; i++) {
-				TableItem item = new TableItem(table, SWT.NONE);
-				item.setText("Item " + i);
-			}
-
-			// Create TableViewer
-			tblViewerSoftArchSpecification = new TableViewer(table);
-			tblViewerSoftArchSpecification.setUseHashlookup(true);
-			tblViewerSoftArchSpecification.setColumnProperties(columnNames);
-			table.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					table.showSelection();
-					//viewController.setModel((Architecture) table.getItem(table.getSelectionIndex()).getData());
-					//tableItemStateChanged();
-					//prepareView();
-					//TODO implementar
-				}
-			});
-
-			// Create the cell editors
-			CellEditor[] editors = new CellEditor[columnNames.length];
-			editors[0] = null;
-			editors[1] = null;
-			editors[2] = null;
-
-			// Assign the cell editors to the viewer
-			tblViewerSoftArchSpecification.setCellEditors(editors);
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 2;
-
-			Label labelEmptyTree = new Label(parent, SWT.NULL);
-			labelEmptyTree.setLayoutData(gridData);
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 4;
-			gridData.widthHint = 100;
-			gridData.horizontalAlignment = GridData.END;
-			gridData.verticalAlignment = SWT.BOTTOM;
-			gridData.grabExcessHorizontalSpace = true;
-
-			//TODO lo que agregué para el tree
-			treeViewerComposite = new Composite(parent, SWT.NONE);
-		      
-			Tree tree = new Tree(treeViewerComposite, SWT.BORDER | SWT.MULTI);
-			tree.setHeaderVisible(true);
-			TreeColumnLayout columnLayout = new TreeColumnLayout();
-			treeViewerComposite.setLayout(columnLayout);
-			
-
-			TreeColumn column = new TreeColumn(tree, SWT.NONE);
-			column.setText("Attribute/Requirement");
-			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
-
-			column = new TreeColumn(tree, SWT.NONE);
-			column.setText("");
-			columnLayout.setColumnData(column, new ColumnWeightData(3,0));
-			              
-			      
-			GridDataFactory.fillDefaults().grab(true, true).hint(10, 10).applyTo(treeViewerComposite);
-
-			TreeViewer treeViewer = new TreeViewer(tree);
-			treeViewer.setContentProvider(new MyTreeContentProvider());
-			treeViewer.setLabelProvider(new MyTreeLabelProvider());
-			treeViewer.getTree().setHeaderVisible(true);
-			//tree.addKeyListener(new TestListener());
-			//TODO hasta aca agregué del tree
-			
-			tree.addSelectionListener(new SelectionAdapter() {
-				  @Override
-				  public void widgetSelected(SelectionEvent e) {
-				    TreeItem item = (TreeItem) e.item;
-				      if (item.getItemCount() > 0) {
-				        item.setExpanded(!item.getExpanded());
-				        // update the viewer
-				        treeViewer.refresh();
-				      }
-				    }
-			}); 
-			
-			btnReport = new Button(parent, SWT.PUSH);
-			//TODO internacionalizar
-			btnReport.setText("Report");
-			btnReport.setLayoutData(gridData);
-			btnReport.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					if (viewController.createSaveChangedDialog() == true) {
-						viewController.save();
+					if (((IStructuredSelection) cboSystem.getSelection()).getFirstElement() != "") {
+						cmbSystemItemStateChanged();
 					}
 				}
 			});
 
-			this.prepareView();
+						
+			btnViewReport = new Button(parent, SWT.PUSH);
+			//TODO internacionalizar
+			btnViewReport.setText("Report");
+			btnViewReport.setLayoutData(gridData);
+			btnViewReport.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+						viewController.setModel(cboSystem);
+						//TODO implementar
+				}
+			});
+
+			this.prepareView(0);
 		} catch (JDBCConnectionException e) {
 			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
 		}
@@ -277,28 +151,13 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 	/**
 	 * Getters and Setters
 	 */
-	public Button getBtnFileUCM() {
-		return btnBrowseUCM;
-	}
-
-	public void setBtnFileUCM(Button btnFileUCM) {
-		this.btnBrowseUCM = btnFileUCM;
-	}
-
+	
 	public ComboViewer getCboSystem() {
 		return cboSystem;
 	}
 
 	public void setCboSystem(ComboViewer cboSystem) {
 		this.cboSystem = cboSystem;
-	}
-
-	public TreeViewer getTreeViewerQualRequirement() {
-		return treeViewerQualRequirement;
-	}
-
-	public void setTreeViewerQualRequirement(TreeViewer treeViewerQualRequirement) {
-		this.treeViewerQualRequirement = treeViewerQualRequirement;
 	}
 
 	public ReportsPPController getViewController() {
@@ -309,28 +168,12 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 		this.viewController = viewController;
 	}
 
-	public FileDialog getChooseFile() {
-		return chooseFile;
+	public Button getBtnViewReport() {
+		return btnViewReport;
 	}
 
-	public void setChooseFile(FileDialog chooseFile) {
-		this.chooseFile = chooseFile;
-	}
-
-	public Button getBtnSave() {
-		return btnReport;
-	}
-
-	public void setBtnSave(Button btnSave) {
-		this.btnReport = btnSave;
-	}
-
-	public Table getTable() {
-		return table;
-	}
-
-	public void setTable(Table table) {
-		this.table = table;
+	public void setBtnViewReport(Button btnViewReport) {
+		this.btnViewReport = btnViewReport;
 	}
 
 	/**
@@ -345,10 +188,23 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 	 * 
 	 * @param pabm
 	 */
-	public void prepareView() {
-
+	public void prepareView(int pabm) {
 		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystem_ErrorDialog);
+			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemWithSimulations_ErrorDialog);
+		}
+		switch (pabm) {
+		case 0:// System with simulations and yet no system selected
+			this.getCboSystem().getCombo().setEnabled(true);
+			loadCombo();
+			this.getBtnViewReport().setEnabled(false);
+			break;
+		case 1:// With system selected
+			this.getBtnViewReport().setEnabled(true);
+			break;
+		case 2:// No system with simulations
+			this.getCboSystem().getCombo().setEnabled(false);
+			this.getBtnViewReport().setEnabled(false);
+			break;	
 		}
 	}
 
@@ -357,24 +213,8 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage
 	 * prepare the view
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
-		this.fillTable();
+		this.prepareView(1);
 	}
 
-	/**
-	 * Fill table with system's quality requirements (quality attribute,
-	 * description and condition)
-	 */
-	public void fillTable() {
-		this.getViewController().setModelPaths(
-				(software.DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
-						.getFirstElement());
-	}
 
-	private void tableItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
-		this.fillTree();
-	}
-	
-	public void fillTree() {
-		this.getViewController().setModelQualityRequirements();
-	}
 }

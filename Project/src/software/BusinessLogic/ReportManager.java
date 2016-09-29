@@ -7,6 +7,7 @@ import java.util.Set;
 
 import software.DataManager.HibernateManager;
 import software.DomainModel.AnalysisEntity.QualityAttribute;
+import software.DomainModel.AnalysisEntity.QualityRequirement;
 import software.DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
@@ -47,26 +48,32 @@ public class ReportManager extends HibernateManager {
 	 * 
 	 */
 	public boolean existSystemTrue() {
-		if (listSystem().isEmpty()) {
-			return false;
-		} else {
-			return true;
+		for (software.DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			Iterator it = auxTipo.getArchitectures().iterator();
+			if(it.hasNext()){
+				Architecture q = (Architecture) it.next();
+				if (q.getSimulator()!=null){
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 	
 	/**
 	 * 
 	 * @return ComboBoxModel with system names whose state==true
 	 */
-	public software.DomainModel.AnalysisEntity.System[] getComboModelSystem() { // NOPMD
-																				// by
-																				// Usuario-Pc
-																				// on
-																				// 10/06/16
-																				// 21:42
+	public software.DomainModel.AnalysisEntity.System[] getComboModelSystemWithSimulations() { 
 		ArrayList<software.DomainModel.AnalysisEntity.System> systems = new ArrayList<software.DomainModel.AnalysisEntity.System>();
 		for (software.DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			systems.add(auxTipo);
+			Iterator it = auxTipo.getArchitectures().iterator();
+			if(it.hasNext()){
+				Architecture q = (Architecture) it.next();
+				if (q.getSimulator()!=null){
+					systems.add(auxTipo);
+				}
+			}
 		}
 		software.DomainModel.AnalysisEntity.System[] arraySystem = new software.DomainModel.AnalysisEntity.System[systems
 				.size()];

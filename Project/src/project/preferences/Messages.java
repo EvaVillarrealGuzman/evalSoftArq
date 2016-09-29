@@ -4,7 +4,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "project.preferences.messages"; //$NON-NLS-1$
-	public static String UCM2DEVSNoSavedSystemArch_ErrorDialog = null;
+	public static String UCM2DEVS_NoSavedSystemsWithSimulations_ErrorDialog;
+	public static String UCM2DEVSNoSavedSystemArch_ErrorDialog;
 	public static String UCM2DEVS_CompareDate_ErrorDialog;
 	public static String UCM2DEVS_EmptyDescription_ErrorDialog;
 	public static String UCM2DEVS_EmptyEnvironmentValue_ErrorDialog;

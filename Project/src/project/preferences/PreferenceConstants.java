@@ -139,6 +139,8 @@ public class PreferenceConstants {
 
 	public static final String NoSavedSystem_ErrorDialog = Messages.UCM2DEVS_NoSavedSystems_ErrorDialog;
 
+	public static final String NoSavedSystemWithSimulations_ErrorDialog = Messages.UCM2DEVS_NoSavedSystemsWithSimulations_ErrorDialog;
+
 	public static final String NoSavedSystemQualityRequirement_ErrorDialog = Messages.UCM2DEVSNoSavedSystemQR_ErrorDialog;
 
 	public static final String NoSavedSystemArchitecture_ErrorDialog = Messages.UCM2DEVSNoSavedSystemArch_ErrorDialog;
