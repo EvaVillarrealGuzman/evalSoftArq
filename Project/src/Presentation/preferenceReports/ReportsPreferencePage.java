@@ -118,7 +118,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 
 			btnViewReport = new Button(parent, SWT.PUSH);
 			// TODO internacionalizar
-			btnViewReport.setText("Report");
+			btnViewReport.setText("View Report");
 			btnViewReport.setLayoutData(gridData);
 			btnViewReport.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -191,6 +191,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	public void prepareView(int pabm) {
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemWithSimulations_ErrorDialog);
+			pabm=2;
 		}
 		switch (pabm) {
 		case 0:// System with simulations and yet no system selected

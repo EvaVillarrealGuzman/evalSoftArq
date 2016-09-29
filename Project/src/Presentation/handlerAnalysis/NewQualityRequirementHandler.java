@@ -27,8 +27,8 @@ public class NewQualityRequirementHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) {
 		PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				"Presentation.preferences.UCM2DEVSPreferencePage",
-				new String[] { "Presentation.preferences.UCM2DEVSPreferencePage" }, null);
+				"Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage",
+				new String[] { "Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage" }, null);
 		if (pref != null)
 			pref.open();
 		return null;

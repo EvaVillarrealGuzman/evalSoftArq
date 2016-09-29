@@ -190,7 +190,7 @@
                   label="%Evaluation"
                   mnemonic="E">
                <handler
-                     class="project.handlers.SoftwareArchitectureEvaluationHandler"
+                     class="Presentation.handlerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationHandler"
                      commandId="Project.commands.SoftwareArchitectureEvaluationCommand">
                </handler>
             </command>
@@ -200,7 +200,7 @@
                   label="%Report"
                   mnemonic="R">
                <handler
-                     class="project.handlers.SoftwareArchitectureSpecificationNewHandler"
+                     class="Presentation.handlerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewHandler"
                      commandId="Project.commands.SoftwareArchitectureSpecificationNewCommand">
                </handler>
             </command>
@@ -211,72 +211,72 @@
          point="org.eclipse.ui.preferencePages">
       <page
             class="Presentation.preferences.UCM2DEVSPreferencePage"
-            id="project.preferences.UCM2DEVS"
+            id="Presentation.preferences.UCM2DEVS"
             name="UCM2DEVS">
       </page>
       <page
-      		category="project.preferences.UCM2DEVS"
+      		category="Presentation.preferences.UCM2DEVS"
             class="Presentation.preferenceAnalysis.NewSystemPreferencePage"
-            id="project.preferences.NewSystemPreferencePage"
+            id="Presentation.preferenceAnalysis.NewSystemPreferencePage"
             name="%NewSystem">
       </page>
       <page
 			name="%SoftwareArchitectureSpecificationManagement"
-			category="project.preferences.UCM2DEVS"
+			category="Presentation.preferences.UCM2DEVS"
 			class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
-			id="project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage"/>	
+			id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"/>	
 	  <page
-      		category="project.preferences.UCM2DEVS"
+      		category="Presentation.preferences.UCM2DEVS"
        		class="Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage"
-       		id="project.preferences.NewQualityRequirementPreferencePage"
+       		id="Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage"
        		name="%NewQualityRequirement">
 	  </page>
 	  <page
-       		category="project.preferences.UCM2DEVS"
+       		category="Presentation.preferences.UCM2DEVS"
        		class="Presentation.preferenceAnalysis.EditQualityRequirementPreferencePage"
-       		id="project.preferences.EditQualityRequirementPreferencePage"
+       		id="Presentation.preferenceAnalysis.EditQualityRequirementPreferencePage"
        		name="%EditQualityRequirement">
 	 </page>	
 	 <page
-       		category="project.preferences.UCM2DEVS"
+       		category="Presentation.preferences.UCM2DEVS"
        		class="Presentation.preferenceAnalysis.EditSystemPreferencePage"
-       		id="project.preferences.EditSystemPreferencePage"
+       		id="Presentation.preferenceAnalysis.EditSystemPreferencePage"
        		name="%EditSystem">
 	 </page>
   <page
-        category="project.preferences.UCM2DEVS"
+        category="Presentation.preferences.UCM2DEVS"
         class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPreferencePage"
-        id="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
+        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPreferencePage"
         name="%SoftwareArchitectureSpecification">
   </page>
   <page
-        category="project.preferences.UCM2DEVS"
+        category="Presentation.preferences.UCM2DEVS"
         class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewPreferencePage"
-        id="project.preferences.SoftwareArchitectureSpecificationNewPreferencePage"
+        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewPreferencePage"
         name="%SoftwareArchitectureSpecificationNew">
   </page>
   <page
-        category="project.preferences.UCM2DEVS"
+        category="Presentation.preferences.UCM2DEVS"
         class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationOpenPreferencePage"
-        id="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
+        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationOpenPreferencePage"
         name="%SoftwareArchitectureSpecificationOpen">
   </page>
   <page
-        category="project.preferences.UCM2DEVS"
+        category="Presentation.preferences.UCM2DEVS"
         class="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
-        id="project.preferences.SoftwareArchitectureEvaluationPreferencePage"
+        id="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
         name="%Evaluation">
   </page>
   <page
-        category="project.preferences.UCM2DEVS"
-        class="Presentation.preferenceReport.ReportsPreferencePage"
-        id="project.preferences.ReportsPreferencePage"
+        category="Presentation.preferences.UCM2DEVS"
+        class="Presentation.preferenceReports.ReportsPreferencePage"
+        id="Presentation.preferenceReports.ReportsPreferencePage"
         name="%Report">
   </page>
   <page
-        category="project.preferences.UCM2DEVS"
+        category="Presentation.preferences.UCM2DEVS"
         class="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
-        id="project.preferences.DatabaseConfigurationPreferencePage"
+        id="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
         name="%DatabaseConfiguration">
   </page>	
    </extension>
