@@ -62,43 +62,43 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="project.handlers.NewSystemHandler"
+            class="Presentation.handlerAnalysis.NewSystemHandler"
             commandId="Project.commands.newSystemCommand">
       </handler>
       <handler
-            class="project.handlers.NewQualityRequirementHandler"
+            class="Presentation.handlerAnalysis.NewQualityRequirementHandler"
             commandId="Project.commands.newQualityRequirementCommand">
       </handler>
       <handler
-            class="project.handlers.EditQualityRequirementHandler"
+            class="Presentation.handlerAnalysis.EditQualityRequirementHandler"
             commandId="Project.commands.editQualityRequirementCommand">
       </handler>
       <handler
-            class="project.handlers.SoftwareArchitectureSpecificationOpenHandler"
+            class="Presentation.handlerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationOpenHandler"
             commandId="Project.commands.softwareArchitectureSpecificationOpenCommand">
       </handler>
       <handler
-            class="project.handlers.SoftwareArchitectureSpecificationManagementHandler"
+            class="Presentation.handlerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementHandler"
             commandId="Project.commands.softwareArchitectureSpecificationManagementCommand">
       </handler>
       <handler
-            class="project.handlers.SoftwareArchitectureSpecificationNewHandler"
+            class="Presentation.handlerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewHandler"
             commandId="Project.commands.softwareArchitectureSpecificationNewCommand">
       </handler>
       <handler
-            class="project.handlers.SoftwareArchitectureEvaluationHandler"
+            class="Presentation.handlerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationHandler"
             commandId="Project.commands.softwareArchitectureEvaluationCommand">
       </handler>
       <handler
-            class="project.handlers.ReportsHandler"
+            class="Presentation.handlerReports.ReportsHandler"
             commandId="Project.commands.reportsCommand">
       </handler>
       <handler
-            class="project.handlers.EditSystemHandler"
+            class="Presentation.handlerAnalysis.EditSystemHandler"
             commandId="Project.commands.editSystemCommand">
       </handler>
       <handler
-            class="project.handlers.DatabaseConfigurationHandler"
+            class="Presentation.handlerConfiguration.DatabaseConfigurationHandler"
             commandId="Project.commands.databaseConfigurationCommand">
       </handler>
    </extension>
@@ -210,72 +210,72 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="project.preferences.UCM2DEVSPreferencePage"
+            class="Presentation.preferences.UCM2DEVSPreferencePage"
             id="project.preferences.UCM2DEVS"
             name="UCM2DEVS">
       </page>
       <page
       		category="project.preferences.UCM2DEVS"
-            class="project.preferences.NewSystemPreferencePage"
+            class="Presentation.preferenceAnalysis.NewSystemPreferencePage"
             id="project.preferences.NewSystemPreferencePage"
             name="%NewSystem">
       </page>
       <page
 			name="%SoftwareArchitectureSpecificationManagement"
 			category="project.preferences.UCM2DEVS"
-			class="project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage"
+			class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
 			id="project.preferences.SoftwareArchitectureSpecificationManagementPreferencePage"/>	
 	  <page
       		category="project.preferences.UCM2DEVS"
-       		class="project.preferences.NewQualityRequirementPreferencePage"
+       		class="Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage"
        		id="project.preferences.NewQualityRequirementPreferencePage"
        		name="%NewQualityRequirement">
 	  </page>
 	  <page
        		category="project.preferences.UCM2DEVS"
-       		class="project.preferences.EditQualityRequirementPreferencePage"
+       		class="Presentation.preferenceAnalysis.EditQualityRequirementPreferencePage"
        		id="project.preferences.EditQualityRequirementPreferencePage"
        		name="%EditQualityRequirement">
 	 </page>	
 	 <page
        		category="project.preferences.UCM2DEVS"
-       		class="project.preferences.EditSystemPreferencePage"
+       		class="Presentation.preferenceAnalysis.EditSystemPreferencePage"
        		id="project.preferences.EditSystemPreferencePage"
        		name="%EditSystem">
 	 </page>
   <page
         category="project.preferences.UCM2DEVS"
-        class="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
+        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationPreferencePage"
         name="%SoftwareArchitectureSpecification">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
-        class="project.preferences.SoftwareArchitectureSpecificationNewPreferencePage"
+        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationNewPreferencePage"
         name="%SoftwareArchitectureSpecificationNew">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
-        class="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
+        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationOpenPreferencePage"
         id="project.preferences.SoftwareArchitectureSpecificationOpenPreferencePage"
         name="%SoftwareArchitectureSpecificationOpen">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
-        class="project.preferences.SoftwareArchitectureEvaluationPreferencePage"
+        class="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
         id="project.preferences.SoftwareArchitectureEvaluationPreferencePage"
         name="%Evaluation">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
-        class="project.preferences.ReportsPreferencePage"
+        class="Presentation.preferenceReport.ReportsPreferencePage"
         id="project.preferences.ReportsPreferencePage"
         name="%Report">
   </page>
   <page
         category="project.preferences.UCM2DEVS"
-        class="project.preferences.DatabaseConfigurationPreferencePage"
+        class="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
         id="project.preferences.DatabaseConfigurationPreferencePage"
         name="%DatabaseConfiguration">
   </page>	
@@ -283,7 +283,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="project.preferences.PreferenceInitializer">
+            class="Presentation.preferences.PreferenceInitializer">
       </initializer>
    </extension>
 </plugin>

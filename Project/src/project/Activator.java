@@ -1,18 +1,11 @@
 package project;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import software.DataManager.Data;
-import software.DataManager.DatabaseConnection;
-import software.DataManager.HibernateUtil;
+import Configuration.DatabaseConnection;
+import DataManager.HibernateUtil;
 
 /**
  * The activator class controls the plug-in life cycle
