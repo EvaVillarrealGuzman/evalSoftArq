@@ -215,16 +215,23 @@
             name="UCM2DEVS">
       </page>
       <page
-      		category="Presentation.preferences.UCM2DEVS"
+            category="Presentation.preferences.UCM2DEVS"
+            class="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
+            id="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
+            name="%DatabaseConfiguration">
+      </page>
+      <page
+            category="Presentation.preferences.UCM2DEVS"
             class="Presentation.preferenceAnalysis.NewSystemPreferencePage"
             id="Presentation.preferenceAnalysis.NewSystemPreferencePage"
             name="%NewSystem">
       </page>
       <page
-			name="%SoftwareArchitectureSpecificationManagement"
-			category="Presentation.preferences.UCM2DEVS"
-			class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
-			id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"/>	
+            category="Presentation.preferences.UCM2DEVS"
+            class="Presentation.preferenceAnalysis.EditSystemPreferencePage"
+            id="Presentation.preferenceAnalysis.EditSystemPreferencePage"
+            name="%EditSystem">
+      </page>
 	  <page
       		category="Presentation.preferences.UCM2DEVS"
        		class="Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage"
@@ -237,30 +244,6 @@
        		id="Presentation.preferenceAnalysis.EditQualityRequirementPreferencePage"
        		name="%EditQualityRequirement">
 	 </page>	
-	 <page
-       		category="Presentation.preferences.UCM2DEVS"
-       		class="Presentation.preferenceAnalysis.EditSystemPreferencePage"
-       		id="Presentation.preferenceAnalysis.EditSystemPreferencePage"
-       		name="%EditSystem">
-	 </page>
-  <page
-        category="Presentation.preferences.UCM2DEVS"
-        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPreferencePage"
-        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPreferencePage"
-        name="%SoftwareArchitectureSpecification">
-  </page>
-  <page
-        category="Presentation.preferences.UCM2DEVS"
-        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewPreferencePage"
-        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewPreferencePage"
-        name="%SoftwareArchitectureSpecificationNew">
-  </page>
-  <page
-        category="Presentation.preferences.UCM2DEVS"
-        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationOpenPreferencePage"
-        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationOpenPreferencePage"
-        name="%SoftwareArchitectureSpecificationOpen">
-  </page>
   <page
         category="Presentation.preferences.UCM2DEVS"
         class="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
@@ -273,12 +256,6 @@
         id="Presentation.preferenceReports.ReportsPreferencePage"
         name="%Report">
   </page>
-  <page
-        category="Presentation.preferences.UCM2DEVS"
-        class="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
-        id="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
-        name="%DatabaseConfiguration">
-  </page>	
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
