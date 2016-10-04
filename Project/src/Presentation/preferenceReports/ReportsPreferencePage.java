@@ -116,6 +116,15 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				}
 			});
 
+			new Label(parent, SWT.LEFT);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 1;
+			gridData.widthHint = 100;
+			gridData.horizontalAlignment = GridData.END;
+			gridData.verticalAlignment = SWT.BOTTOM;
+			gridData.grabExcessHorizontalSpace = true;
+
 			btnViewReport = new Button(parent, SWT.PUSH);
 			// TODO internacionalizar
 			btnViewReport.setText("View Report");
