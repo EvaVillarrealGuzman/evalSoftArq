@@ -1,4 +1,4 @@
-package Presentation.handlerSoftwareArchitectureSpecification;
+package project.handlers;
 
 import java.io.File;
 
@@ -10,11 +10,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -43,20 +45,17 @@ public class SoftwareArchitectureSpecificationOpenHandler extends AbstractHandle
 		chooseFile.setFilterNames(new String[] { "Jucm Files" });
 		chooseFile.setFilterExtensions(new String[] { "*.jucm" });
 		String filePath = chooseFile.open();
-		if (filePath != null) {
-			// With de path get, open jUCMNav
-			File file = new File(filePath);
-			IFile ifile = convert(file);
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			try {
-				IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
-						.getDefaultEditor(ifile.getName());
-				page.openEditor(new FileEditorInput(ifile), desc.getId());
-			} catch (Exception e1) {
-				MessageDialog.openError(null, "Error", "There must be a project in Eclipse to open a file");
-			}
+		// With de path get, open jUCMNav
+		File file = new File(filePath);
+		IFile ifile = convert(file);
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		try {
+			IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(ifile.getName());
+			page.openEditor(new FileEditorInput(ifile), desc.getId());
+		} catch (Exception e1) {
+			MessageDialog.openError(null, "Error", "There must be a project in Eclipse to open a file");
 		}
-		return null;
+		return null; 
 	}
 
 	private IFile convert(File file) {
