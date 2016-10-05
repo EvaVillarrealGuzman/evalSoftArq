@@ -60,7 +60,7 @@ public class EditSystemPPController extends Controller {
 		int err;
 		err = this.setSystem();
 		if (err == 0) {
-			this.getForm().prepareView(1);
+			this.getForm().prepareView(2);
 			return this.getManager().updateSystem();
 		}
 		return null;

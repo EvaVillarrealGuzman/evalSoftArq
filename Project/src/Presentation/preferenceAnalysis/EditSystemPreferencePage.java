@@ -1,5 +1,8 @@
 package Presentation.preferenceAnalysis;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -91,7 +94,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
 
 			gridData = new GridData();
-			gridData.widthHint= 200;
+			gridData.widthHint = 200;
 			gridData.grabExcessHorizontalSpace = true;
 
 			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
@@ -319,26 +322,49 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystem_ErrorDialog);
-			pabm = 0;
+			pabm = 3;
 		}
 		switch (pabm) {
-		case 0:// Without system
+		case 0:// Open form with system
+			clearView();
 			this.getCalendarStartDate().setEnabled(false);
 			this.getCalendarFinishDate().setEnabled(false);
 			this.getProjectName().getTextControl(this.getcProject()).setEnabled(false);
 			this.getBtnRemove().setEnabled(false);
 			this.getBtnSave().setEnabled(false);
-			projectName.getTextControl(cProject).setText("");
 			loadCombo();
 			break;
-		case 1:// With system
+		case 1:// With system selected
 			this.getCalendarStartDate().setEnabled(true);
 			this.getCalendarFinishDate().setEnabled(true);
 			this.getProjectName().getTextControl(this.getcProject()).setEnabled(true);
 			this.getBtnRemove().setEnabled(true);
 			this.getBtnSave().setEnabled(true);
 			break;
+		case 2:// When system is modified
+			clearView();
+			prepareView(0);
+			break;
+		case 3://Open form without system
+			clearView();
+			cmbSystem.getCombo().setEnabled(false);
+			this.getCalendarStartDate().setEnabled(false);
+			this.getCalendarFinishDate().setEnabled(false);
+			this.getProjectName().getTextControl(this.getcProject()).setEnabled(false);
+			this.getBtnRemove().setEnabled(false);
+			this.getBtnSave().setEnabled(false);
+			loadCombo();
 		}
 
+	}
+	
+	public void clearView(){
+		projectName.getTextControl(cProject).setText("");
+		Calendar currentDate = GregorianCalendar.getInstance();
+		this.getCalendarStartDate().setDate(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
+				currentDate.get(Calendar.DAY_OF_MONTH));
+		this.getCalendarFinishDate().setDate(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
+				currentDate.get(Calendar.DAY_OF_MONTH));
+		
 	}
 }
