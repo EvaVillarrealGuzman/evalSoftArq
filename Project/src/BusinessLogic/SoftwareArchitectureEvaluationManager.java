@@ -1,9 +1,18 @@
 package BusinessLogic;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import javax.swing.text.Document;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.hibernate.lucene.DocumentBuilder;
 
 import DataManager.HibernateManager;
 import DomainModel.AnalysisEntity.Unit;
@@ -22,6 +31,8 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	 * Attributes
 	 */
 	private DomainModel.AnalysisEntity.System system;
+	public static final String SEPARATOR=";";
+	public static final String QUOTE="\"";
 
 	/**
 	 * Getters and Setters
@@ -110,4 +121,29 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 		return false;
 	}
+	
+	public void convertCSVToTable(String ppath) throws IOException {
+		BufferedReader br = null;
+	      try {
+	         br =new BufferedReader(new FileReader(ppath));
+	         String line = br.readLine();
+	         while (null!=line) {
+	            String [] fields = line.split(SEPARATOR);
+	            
+	            line = br.readLine();
+	         }
+	         
+	      } catch (Exception e) {
+	    	  System.err.println("Error! "+e.getMessage());
+	      } finally {
+	    	  if (null!=br){
+	              try {
+	                 br.close();
+	              } catch (IOException e) {
+	                 System.err.println("Error closing file !! "+e.getMessage());
+	              }
+	           }
+	      }
+	}
+
 }

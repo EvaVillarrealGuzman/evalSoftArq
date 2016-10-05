@@ -1,5 +1,7 @@
 package Presentation.controllerSoftwareArchitectureEvaluation;
 
+import java.io.IOException;
+
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -80,8 +82,10 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 
 	/**
 	 * Update the system with the UCM path and prepare the view
+	 * @throws IOException 
 	 */
-	public Boolean evaluate() {
+	public Boolean evaluate() throws IOException {
+		manager.convertCSVToTable("C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
 		//TODO implementar
 		return null;
 	}

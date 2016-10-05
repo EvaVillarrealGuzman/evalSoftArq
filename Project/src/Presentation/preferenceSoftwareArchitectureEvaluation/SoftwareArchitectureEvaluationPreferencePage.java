@@ -1,5 +1,7 @@
 package Presentation.preferenceSoftwareArchitectureEvaluation;
 
+import java.io.IOException;
+
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -226,10 +228,15 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			btnEvaluate.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.evaluate()) {
-						viewController.createObjectSuccessDialog();
-					} else {
-						viewController.createObjectDontUpdateErrorDialog();
+					try {
+						if (viewController.evaluate()) {
+							viewController.createObjectSuccessDialog();
+						} else {
+							viewController.createObjectDontUpdateErrorDialog();
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			});
