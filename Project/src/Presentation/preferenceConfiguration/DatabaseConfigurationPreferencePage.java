@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerConfiguration.DatabaseConfigurationPPController;
@@ -177,7 +178,7 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 
 		return new Composite(parent, SWT.NULL);
 
-	}
+	}	
 
 	/*
 	 * (non-Javadoc)

@@ -246,6 +246,12 @@
 	 </page>	
   <page
         category="Presentation.preferences.UCM2DEVS"
+        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
+        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
+        name="%SpecificationManagement">
+  </page>
+  <page
+        category="Presentation.preferences.UCM2DEVS"
         class="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
         id="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
         name="%Evaluation">
