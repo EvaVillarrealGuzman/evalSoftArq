@@ -3,7 +3,7 @@ package Presentation.controllerAnalysis;
 import BusinessLogic.AnalysisManager;
 import Presentation.Controller;
 import Presentation.preferenceAnalysis.NewSystemPreferencePage;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * Controller for NewSystemPreferencePage
@@ -87,14 +87,14 @@ public class NewSystemPPController extends Controller {
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getSystemName())) {
-			this.createErrorDialog(PreferenceConstants.EmptySystemName_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
-			this.createErrorDialog(PreferenceConstants.EmptyProjectName_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyProjectName_ErrorDialog"));
 			return false;
 		} else if (isAfter(this.getForm().getCalendarStartDate(), this.getForm().getCalendarFinishDate())) {
-			this.createErrorDialog(PreferenceConstants.CompareDate_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_CompareDate_ErrorDialog"));
 			getForm().getCalendarStartDate().setFocus();
 			return false;
 		}

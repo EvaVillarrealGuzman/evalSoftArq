@@ -35,7 +35,7 @@ import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.ResponseMeasureType;
 import Presentation.controllerAnalysis.EditQualityRequirementPPController;
 import Presentation.preferences.DoubleFieldEditor;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * To search, consult, edit or remove a quality requirement
@@ -130,10 +130,10 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
+			labelSn.setText(Messages.getString("UCM2DEVS_SystemName_Label") + ":");
 
 			gridData = new GridData();
-			gridData.widthHint= 200;
+			gridData.widthHint = 200;
 			gridData.grabExcessHorizontalSpace = true;
 
 			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
@@ -165,12 +165,13 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			Group gQualityRequirement = new Group(cSystemName, SWT.NONE);
 			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText(PreferenceConstants.QualityRequirements_Group);
+			gQualityRequirement.setText(Messages.getString("UCM2DEVS_QualityRequirements_Group"));
 			gQualityRequirement.setLayout(new GridLayout(2, false));
 
 			// Create column names
-			String[] columnNames = new String[] { PreferenceConstants.Object_Column, PreferenceConstants.QualityAttribute_Column,
-					PreferenceConstants.DescriptionScenario_Column };
+			String[] columnNames = new String[] { Messages.getString("UCM2DEVS_DescriptionObject_Column"),
+					Messages.getString("UCM2DEVS_QualityAttribute_Column"),
+					Messages.getString("UCM2DEVS_DescriptionScenario_Column") };
 			// Create styles
 			int style = SWT.FULL_SELECTION | SWT.BORDER;
 			// create table
@@ -185,15 +186,15 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			// Create columns
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
-			colObject.setText(PreferenceConstants.Object_Column);
+			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));
 
 			colQualityAttribute = new TableColumn(table, SWT.NONE);
 			colQualityAttribute.setWidth(200);
-			colQualityAttribute.setText(PreferenceConstants.QualityAttribute_Column);
+			colQualityAttribute.setText(Messages.getString("UCM2DEVS_QualityAttribute_Column"));
 
 			colDescriptionScenario = new TableColumn(table, SWT.NONE);
 			colDescriptionScenario.setWidth(200);
-			colDescriptionScenario.setText(PreferenceConstants.DescriptionScenario_Column);
+			colDescriptionScenario.setText(Messages.getString("UCM2DEVS_DescriptionScenario_Column"));
 
 			for (int i = 0; i < 8; i++) {
 				TableItem item = new TableItem(table, SWT.NONE);
@@ -242,11 +243,11 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			Group gScenario = new Group(cSystemName, SWT.NONE);
 			gScenario.setLayoutData(gridData);
-			gScenario.setText(PreferenceConstants.Scenario_Group);
+			gScenario.setText(Messages.getString("UCM2DEVS_Scenario_Group"));
 			gScenario.setLayout(new GridLayout(2, false));
 
 			Label labelD = new Label(gScenario, SWT.NONE);
-			labelD.setText(PreferenceConstants.Description_Label + ":");
+			labelD.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");
 
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
@@ -256,7 +257,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			txtDescription.setLayoutData(gridData);
 
 			Label labelQA = new Label(gScenario, SWT.NONE);
-			labelQA.setText(PreferenceConstants.QualityAttribute_Label + ":");
+			labelQA.setText(Messages.getString("UCM2DEVS_QualityAttribute_Label") + ":");
 
 			cmbQualityAttribute = new ComboViewer(gScenario, SWT.READ_ONLY);
 			cmbQualityAttribute.setContentProvider(ArrayContentProvider.getInstance());
@@ -287,7 +288,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabStimulusSource = new TabItem(folder, SWT.NONE);
-			tabStimulusSource.setText(PreferenceConstants.StimulusSource_Label);
+			tabStimulusSource.setText(Messages.getString("UCM2DEVS_StimulusSource_Label"));
 
 			gStimulusSource = new Group(folder, SWT.NONE);
 			gStimulusSource.setLayoutData(gridData);
@@ -297,16 +298,16 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelSST = new Label(gStimulusSource, SWT.NONE);
-			labelSST.setText(PreferenceConstants.Type_Label + ":");
+			labelSST.setText(Messages.getString("UCM2DEVS_Type_Label") + ":");
 
 			cmbTypeStimulusSource = new ComboViewer(gStimulusSource, SWT.READ_ONLY);
 			cmbTypeStimulusSource.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueStimulusSource = new StringFieldEditor(PreferenceConstants.ValueStimulusSourceLabel,
-					PreferenceConstants.ValueStimulusSourceLabel + ":", gStimulusSource);
+			txtValueStimulusSource = new StringFieldEditor(Messages.getString("UCM2DEVS_ValueStimulusSource_Label"),
+					Messages.getString("UCM2DEVS_ValueStimulusSourceLabel") + ":", gStimulusSource);
 
 			Label labelDSS = new Label(gStimulusSource, SWT.NONE);
-			labelDSS.setText(PreferenceConstants.Description_Label + ":");
+			labelDSS.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");
 
 			txtDescriptionStimulusSource = new Text(gStimulusSource, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionStimulusSource.setLayoutData(gridData);
@@ -319,7 +320,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabStimulus = new TabItem(folder, SWT.NONE);
-			tabStimulus.setText(PreferenceConstants.Stimulus_Label);
+			tabStimulus.setText(Messages.getString("UCM2DEVS_Stimulus_Label"));
 
 			gStimulus = new Group(folder, SWT.NONE);
 			gStimulus.setLayoutData(gridData);
@@ -329,16 +330,16 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelST = new Label(gStimulus, SWT.NONE);
-			labelST.setText(PreferenceConstants.Type_Label + ":");
+			labelST.setText(Messages.getString("UCM2DEVS_Type_Label") + ":");
 
 			cmbTypeStimulus = new ComboViewer(gStimulus, SWT.READ_ONLY);
 			cmbTypeStimulus.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueStimulus = new StringFieldEditor(PreferenceConstants.ValueStimulus_Label,
-					PreferenceConstants.ValueStimulus_Label + ":", gStimulus);
+			txtValueStimulus = new StringFieldEditor(Messages.getString("UCM2DEVS_ValueStimulus_Label"),
+					Messages.getString("UCM2DEVS_ValueStimulus_Label") + ":", gStimulus);
 
 			Label labelDS = new Label(gStimulus, SWT.NONE);
-			labelDS.setText(PreferenceConstants.Description_Label + ":");
+			labelDS.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");
 
 			txtDescriptionStimulus = new Text(gStimulus, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionStimulus.setLayoutData(gridData);
@@ -347,7 +348,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabEnvironment = new TabItem(folder, SWT.NONE);
-			tabEnvironment.setText(PreferenceConstants.Environment_Label);
+			tabEnvironment.setText(Messages.getString("UCM2DEVS_Environment_Label"));
 
 			gEnvironment = new Group(folder, SWT.NONE);
 			gEnvironment.setLayoutData(gridData);
@@ -357,16 +358,16 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelET = new Label(gEnvironment, SWT.NONE);
-			labelET.setText(PreferenceConstants.Type_Label + ":");
+			labelET.setText(Messages.getString("UCM2DEVS_Type_Label") + ":");
 
 			cmbTypeEnvironment = new ComboViewer(gEnvironment, SWT.READ_ONLY);
 			cmbTypeEnvironment.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueEnvironment = new StringFieldEditor(PreferenceConstants.ValueEnvironment_Label,
-					PreferenceConstants.ValueEnvironment_Label + ":", gEnvironment);
+			txtValueEnvironment = new StringFieldEditor(Messages.getString("UCM2DEVS_ValueEnvironment_Label"),
+					Messages.getString("UCM2DEVS_ValueEnvironment_Label") + ":", gEnvironment);
 
 			Label labelDE = new Label(gEnvironment, SWT.NONE);
-			labelDE.setText(PreferenceConstants.Description_Label + ":");
+			labelDE.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");
 
 			txtDescriptionEnvironment = new Text(gEnvironment, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionEnvironment.setLayoutData(gridData);
@@ -375,7 +376,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabArtifact = new TabItem(folder, SWT.NONE);
-			tabArtifact.setText(PreferenceConstants.Artifact_Label);
+			tabArtifact.setText(Messages.getString("UCM2DEVS_Artifact_Label"));
 
 			gArtifact = new Group(folder, SWT.NONE);
 			gArtifact.setLayoutData(gridData);
@@ -385,13 +386,13 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelAT = new Label(gArtifact, SWT.NONE);
-			labelAT.setText(PreferenceConstants.Type_Label + ":");
+			labelAT.setText(Messages.getString("UCM2DEVS_Type_Label") + ":");
 
 			cmbTypeArtifact = new ComboViewer(gArtifact, SWT.READ_ONLY);
 			cmbTypeArtifact.setContentProvider(ArrayContentProvider.getInstance());
 
 			Label labelDA = new Label(gArtifact, SWT.NONE);
-			labelDA.setText(PreferenceConstants.Description_Label + ":");
+			labelDA.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");
 
 			txtDescriptionArtifact = new Text(gArtifact, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionArtifact.setLayoutData(gridData);
@@ -404,7 +405,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			/*---------------------------------------------------------------------------*/
 			TabItem tabResponse = new TabItem(folder, SWT.NONE);
-			tabResponse.setText(PreferenceConstants.Response_Label);
+			tabResponse.setText(Messages.getString("UCM2DEVS_Response_Label"));
 
 			gResponse = new Group(folder, SWT.NONE);
 			gResponse.setLayoutData(gridData);
@@ -414,16 +415,16 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.grabExcessHorizontalSpace = true;
 
 			Label labelRT = new Label(gResponse, SWT.NONE);
-			labelRT.setText(PreferenceConstants.Type_Label + ":");
+			labelRT.setText(Messages.getString("UCM2DEVS_Type_Label") + ":");
 
 			cmbTypeResponse = new ComboViewer(gResponse, SWT.READ_ONLY);
 			cmbTypeResponse.setContentProvider(ArrayContentProvider.getInstance());
 
-			txtValueResponse = new StringFieldEditor(PreferenceConstants.ValueResponse_Label,
-					PreferenceConstants.ValueResponse_Label + ":", gResponse);
+			txtValueResponse = new StringFieldEditor(Messages.getString("UCM2DEVS_ValueResponse_Label"),
+					Messages.getString("UCM2DEVS_ValueResponse_Label") + ":", gResponse);
 
 			Label labelDR = new Label(gResponse, SWT.NONE);
-			labelDR.setText(PreferenceConstants.Description_Label + ":");
+			labelDR.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");
 
 			txtDescriptionResponse = new Text(gResponse, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 			txtDescriptionResponse.setLayoutData(gridData);
@@ -432,7 +433,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			tabResponse.setControl(gResponse);
 
 			TabItem tabResponseMeasure = new TabItem(folder, SWT.NONE);
-			tabResponseMeasure.setText(PreferenceConstants.ResponseMeasure_Label);
+			tabResponseMeasure.setText(Messages.getString("UCM2DEVS_ResponseMeasure_Label"));
 
 			gResponseMeasure = new Group(folder, SWT.NONE);
 			gResponseMeasure.setLayoutData(gridData);
@@ -441,7 +442,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.horizontalAlignment = GridData.FILL;
 
 			Label labelRMM = new Label(gResponseMeasure, SWT.NONE);
-			labelRMM.setText(PreferenceConstants.Type_Label + ":");
+			labelRMM.setText(Messages.getString("UCM2DEVS_Type_Label") + ":");
 
 			cmbTypeResponseMeasure = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbTypeResponseMeasure.setContentProvider(ArrayContentProvider.getInstance());
@@ -458,7 +459,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			});
 
 			Label labelRMT = new Label(gResponseMeasure, SWT.NONE);
-			labelRMT.setText(PreferenceConstants.Metric + ":");
+			labelRMT.setText(Messages.getString("UCM2DEVS_Metric_Label") + ":");
 
 			cmbMetric = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbMetric.setContentProvider(ArrayContentProvider.getInstance());
@@ -473,19 +474,20 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				}
 			});
 
-			txtValueResponseMeasure = new DoubleFieldEditor(PreferenceConstants.ValueResponseMeasure_Label + ":",
-					PreferenceConstants.ValueResponseMeasure_Label + ":", gResponseMeasure);
+			txtValueResponseMeasure = new DoubleFieldEditor(
+					Messages.getString("UCM2DEVS_ValueResponseMeasure_Label") + ":",
+					Messages.getString("UCM2DEVS_ValueResponseMeasure_Label") + ":", gResponseMeasure);
 			txtValueResponseMeasure.setMinRange(0.0);
 			txtValueResponseMeasure.setPage(this);
 
 			Label labelRMU = new Label(gResponseMeasure, SWT.NONE);
-			labelRMU.setText(PreferenceConstants.Unit_Label + ":");
+			labelRMU.setText(Messages.getString("UCM2DEVS_Unit_Label") + ":");
 
 			cmbUnit = new ComboViewer(gResponseMeasure, SWT.READ_ONLY);
 			cmbUnit.setContentProvider(ArrayContentProvider.getInstance());
 
 			Label labelDRM = new Label(gResponseMeasure, SWT.NONE);
-			labelDRM.setText(PreferenceConstants.Description_Label + ":");
+			labelDRM.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");
 
 			txtDescriptionResponseMeasure = new Text(gResponseMeasure,
 					SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
@@ -513,7 +515,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			gridData.widthHint = 100;
 
 			btnSave = new Button(cButtoms, SWT.PUSH);
-			btnSave.setText(PreferenceConstants.ButtomSave_Label);
+			btnSave.setText(Messages.getString("UCM2DEVS_Save_Buttom"));
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -527,7 +529,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			});
 
 			btnRemove = new Button(cButtoms, SWT.PUSH);
-			btnRemove.setText(PreferenceConstants.ButtomRemove_Label);
+			btnRemove.setText(Messages.getString("UCM2DEVS_Remove_Buttom"));
 			btnRemove.setLayoutData(gridData);
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -541,7 +543,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.prepareView(0);
 
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -956,7 +958,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
-			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemQualityRequirement_ErrorDialog);
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
 			pabm = 0;
 		}
 		switch (pabm) {
@@ -1040,7 +1042,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		case 6: // With bottom consult selected
 			this.getTxtDescription().setEnabled(true);
 			this.getCmbQualityAttribute().getCombo().setEnabled(false);
-			
+
 			this.getTxtDescriptionStimulusSource().setEnabled(true);
 			this.getTxtDescriptionStimulus().setEnabled(true);
 			this.getTxtDescriptionEnvironment().setEnabled(true);

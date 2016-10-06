@@ -1,19 +1,9 @@
 package Presentation.preferenceReports;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TableLayout;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -22,27 +12,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeColumn;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerReports.ReportsPPController;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * To view a report for a specific architecture and a specific quality
  * requirement
  * 
- * @author: Flor
+ * @author: FEM
  */
 public class ReportsPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
@@ -98,7 +80,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
+			labelSn.setText(Messages.getString("UCM2DEVS_SystemName_Label") + ":");
 
 			gridData = new GridData();
 			gridData.horizontalAlignment = GridData.FILL;
@@ -140,7 +122,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 
 			this.prepareView(0);
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -200,8 +182,9 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	public void prepareView(int pabm) {
 		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemWithSimulations_ErrorDialog);
-			pabm=2;
+			this.getViewController()
+					.createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemsWithSimulations_ErrorDialog"));
+			pabm = 2;
 		}
 		switch (pabm) {
 		case 0:// System with simulations and yet no system selected

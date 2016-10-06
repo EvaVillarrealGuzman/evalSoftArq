@@ -28,7 +28,7 @@ import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPPController;
 import Presentation.preferences.DoubleFieldEditor;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * To specify a software architecture by JUCMNav
@@ -97,7 +97,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
+			labelSn.setText(Messages.getString("UCM2DEVS_SystemName_Label") + ":");
 
 			gridData = new GridData();
 			gridData.widthHint = 200;
@@ -127,12 +127,12 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 
 			Group gQualityRequirement = new Group(parent, SWT.NONE);
 			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText(PreferenceConstants.SoftwareArchitectureSpecification_Group);
+			gQualityRequirement.setText(Messages.getString("UCM2DEVS_SoftArcSpec_Group"));
 			gQualityRequirement.setLayout(layout);
 
 			// Create column names
-			String[] columnNames = new String[] { PreferenceConstants.Object_Column, PreferenceConstants.Name_Column,
-					PreferenceConstants.Path_Column };
+			String[] columnNames = new String[] { Messages.getString("UCM2DEVS_Object_Column"),
+					Messages.getString("UCM2DEVS_Name_Column"), Messages.getString("UCM2DEVS_Path_Column") };
 			// Create styles
 			int style = SWT.FULL_SELECTION | SWT.BORDER;
 			// create table
@@ -147,15 +147,15 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			// Create columns
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
-			colObject.setText(PreferenceConstants.Object_Column);
+			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));
 
 			colName = new TableColumn(table, SWT.NONE);
 			colName.setWidth(100);
-			colName.setText(PreferenceConstants.Name_Column);
+			colName.setText(Messages.getString("UCM2DEVS_Name_Column"));
 
 			colPath = new TableColumn(table, SWT.NONE);
 			colPath.setWidth(300);
-			colPath.setText(PreferenceConstants.Path_Column);
+			colPath.setText(Messages.getString("UCM2DEVS_Path_Column"));
 
 			for (int i = 0; i < 8; i++) {
 				TableItem item = new TableItem(table, SWT.NONE);
@@ -183,7 +183,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 					prepareView(3);
 				}
 			});
-			
+
 			gridData = new GridData();
 			gridData.horizontalSpan = 2;
 
@@ -197,13 +197,13 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			gridData.verticalAlignment = SWT.BOTTOM;
 			gridData.grabExcessHorizontalSpace = true;
 
-			simulationTime = new DoubleFieldEditor(PreferenceConstants.SimulationTime_Label,
-					PreferenceConstants.SimulationTime_Label + ":", parent);
+			simulationTime = new DoubleFieldEditor(Messages.getString("UCM2DEVS_SimulationTime_Label"),
+					Messages.getString("UCM2DEVS_SimulationTime_Label") + ":", parent);
 			simulationTime.setMinRange(0.0);
 			simulationTime.setPage(this);
 
 			addField(simulationTime);
-			
+
 			cmbUnit = new ComboViewer(parent, SWT.READ_ONLY);
 			cmbUnit.setContentProvider(ArrayContentProvider.getInstance());
 			cmbUnit.getCombo().setLayoutData(gridData);
@@ -223,7 +223,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnEvaluate = new Button(parent, SWT.PUSH);
-			btnEvaluate.setText(PreferenceConstants.ButtomEvaluate_Label);
+			btnEvaluate.setText(Messages.getString("UCM2DEVS_Evaluate_Buttom"));
 			btnEvaluate.setLayoutData(gridData);
 			btnEvaluate.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -243,7 +243,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 
 			this.prepareView(1);
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -264,7 +264,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	/**
 	 * Getters and Setters
 	 */
-	
+
 	public ComboViewer getCboSystem() {
 		return cmbSystem;
 	}
@@ -272,7 +272,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	public void setCboSystem(ComboViewer cboSystem) {
 		this.cmbSystem = cboSystem;
 	}
-	
+
 	public DoubleFieldEditor getSimulationTime() {
 		return simulationTime;
 	}
@@ -319,7 +319,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	public void loadCombo() {
 		this.getViewController().setModel();
 	}
-	
+
 	/**
 	 * load combo with units
 	 */
@@ -335,8 +335,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	public void prepareView(int pabm) {
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
-			//TODO CAMBIAR MENSAJE
-			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystemArchitecture_ErrorDialog);
+			// TODO CAMBIAR MENSAJE
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
 		}
 		switch (pabm) {
@@ -348,25 +348,25 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getBtnEvaluate().setEnabled(false);
 
 			break;
-		case 1: //There are systems with architecture
+		case 1: // There are systems with architecture
 			this.getCboSystem().getCombo().setEnabled(true);
 			this.getTable().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
-			
+
 			break;
-		case 2: // With system selected	
+		case 2: // With system selected
 			this.getTable().setEnabled(true);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
-			
+
 			break;
 		case 3:// With architecture selected
 			this.getSimulationTime().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
 			this.getBtnEvaluate().setEnabled(true);
-			
+
 			break;
 		}
 	}

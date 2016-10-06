@@ -21,7 +21,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerAnalysis.NewSystemPPController;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * To create a new system
@@ -84,14 +84,14 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			gridData.horizontalAlignment = GridData.FILL;
 			cSystemName.setLayoutData(gridData);
 
-			systemName = new StringFieldEditor(PreferenceConstants.SystemName_Label,
-					PreferenceConstants.SystemName_Label + ":", cSystemName);
+			systemName = new StringFieldEditor(Messages.getString("UCM2DEVS_SystemName_Label") ,
+					Messages.getString("UCM2DEVS_SystemName_Label")  + ":", cSystemName);
 
 			new Label(parent, SWT.NULL);
 
 			// Group for project properties
 			Group groupProject = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupProject.setText(PreferenceConstants.CompositeProject_Label);
+			groupProject.setText(Messages.getString("UCM2DEVS_Project_Composite"));
 			groupProject.setLayout(layout);
 
 			gridData = new GridData();
@@ -104,18 +104,18 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			gridData.horizontalAlignment = GridData.FILL;
 			cProject.setLayoutData(gridData);
 
-			projectName = new StringFieldEditor(PreferenceConstants.ProjectName_Label,
-					PreferenceConstants.ProjectName_Label + ":", cProject);
+			projectName = new StringFieldEditor(Messages.getString("UCM2DEVS_ProjectName_Label"),
+					Messages.getString("UCM2DEVS_ProjectName_Label") + ":", cProject);
 
 			addField(projectName);
 
 			lblCalendarStarDate = new Label(cProject, SWT.NONE);
-			lblCalendarStarDate.setText(PreferenceConstants.CalendarStarDate_Label + ":");
+			lblCalendarStarDate.setText(Messages.getString("UCM2DEVS_StartDate_Label")+ ":");
 
 			calendarStartDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
 			lblCalendarFinishDate = new Label(cProject, SWT.NONE);
-			lblCalendarFinishDate.setText(PreferenceConstants.CalendarFinishDate_Label + ":");
+			lblCalendarFinishDate.setText(Messages.getString("UCM2DEVS_FinishDate_Label")+ ":");
 
 			calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
@@ -129,7 +129,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnNew = new Button(parent, SWT.PUSH);
-			btnNew.setText(PreferenceConstants.ButtomSave_Label);
+			btnNew.setText(Messages.getString("UCM2DEVS_Save_Buttom"));
 			btnNew.setLayoutData(gridData);
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -146,7 +146,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 		} catch (
 
 		JDBCConnectionException e) {
-			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
 		}
 
 		return new Composite(parent, SWT.NULL);

@@ -5,11 +5,11 @@ import java.util.List;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
-import Presentation.preferences.PreferenceConstants;
-import Presentation.preferenceReports.ReportsPreferencePage;
 import BusinessLogic.ReportManager;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
+import Presentation.preferenceReports.ReportsPreferencePage;
+import Presentation.preferences.Messages;
 
 /**
  * Controller for ReportPreferencePage
@@ -88,46 +88,46 @@ public class ReportsPPController extends Controller {
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
-			this.createErrorDialog(PreferenceConstants.EmptySystemName_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
 			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
 		}
 		return true;
 	}
-	
-	public void printFailPerResponsibility(){
+
+	public void printFailPerResponsibility() {
 		this.openReport(this.pathReport + "FailsPerResponsibility.jasper");
-        this.addParameterToReport("Fails per Responsability", "Project");
-        //this.addDataToReport(this.getGestorClientesPorLocalidad().listar());
-        this.printReport();
+		this.addParameterToReport("Fails per Responsability", "Project");
+		// this.addDataToReport(this.getGestorClientesPorLocalidad().listar());
+		this.printReport();
 	}
-	
+
 	public void addParameterToReport(String pname, Object pobject) {
-        manager.addParameter(pname, pobject);
-    }
-	
+		manager.addParameter(pname, pobject);
+	}
+
 	public void openReport(String archive) {
-        try {
-            this.getManager().setArchive(archive);
-            manager.addParameter("tituloMembrete", "Reportes");
-            manager.addParameter("tituloMembrete2", "ttt");
-            manager.addParameter("frase", "");
-            manager.addParameter("pieMembrete", "");
-        } catch (Exception e) {
-            this.createErrorDialog(e.getLocalizedMessage());
-        }
-    }
-	
+		try {
+			this.getManager().setArchive(archive);
+			manager.addParameter("tituloMembrete", "Reportes");
+			manager.addParameter("tituloMembrete2", "ttt");
+			manager.addParameter("frase", "");
+			manager.addParameter("pieMembrete", "");
+		} catch (Exception e) {
+			this.createErrorDialog(e.getLocalizedMessage());
+		}
+	}
+
 	public void addDataToReport(List plistData) {
-        this.getManager().setColeccionDeDatos(plistData);
-    }
-	
+		this.getManager().setColeccionDeDatos(plistData);
+	}
+
 	public void printReport() {
-        try {
-            this.getManager().print();
-        } catch (Exception e) {
-            this.createErrorDialog(e.getLocalizedMessage());
-        }
-    }
+		try {
+			this.getManager().print();
+		} catch (Exception e) {
+			this.createErrorDialog(e.getLocalizedMessage());
+		}
+	}
 
 }

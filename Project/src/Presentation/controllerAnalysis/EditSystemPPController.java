@@ -6,7 +6,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import BusinessLogic.AnalysisManager;
 import Presentation.Controller;
 import Presentation.preferenceAnalysis.EditSystemPreferencePage;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * Controller for EditSystemPreferencePage
@@ -112,16 +112,16 @@ public class EditSystemPPController extends Controller {
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
-			this.createErrorDialog(PreferenceConstants.EmptySystemName_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
 			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getProjectName())) {
-			this.createErrorDialog(PreferenceConstants.EmptyProjectName_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyProjectName_ErrorDialog"));
 			this.getForm().getProjectName().getTextControl(this.getForm().getParent()).setFocus();
 			return false;
 		} else if (isAfter(this.getForm().getCalendarStartDate(), this.getForm().getCalendarFinishDate())) {
-			this.createErrorDialog(PreferenceConstants.CompareDate_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_CompareDate_ErrorDialog"));
 			getForm().getCalendarStartDate().setFocus();
 			return false;
 		}
@@ -137,8 +137,8 @@ public class EditSystemPPController extends Controller {
 	}
 
 	public void setModel(ComboViewer pcmb) {
-		this.setModel((DomainModel.AnalysisEntity.System) ((IStructuredSelection) pcmb.getSelection())
-				.getFirstElement());
+		this.setModel(
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) pcmb.getSelection()).getFirstElement());
 	}
 
 	private void setModel(DomainModel.AnalysisEntity.System pmodel) {

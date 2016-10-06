@@ -18,7 +18,7 @@ import BusinessLogic.SoftwareArchitectureSpecificationManager;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
 import Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * Controller for SoftwareArchitectureEspecificationPreferencePage
@@ -126,7 +126,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
-			this.createErrorDialog(PreferenceConstants.EmptySystemName_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
 			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
 		}
@@ -183,10 +183,10 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 				parent.getShell().close();
 				page.openEditor(new FileEditorInput(ifile), desc.getId());
 			} catch (Exception e1) {
-				createErrorDialog(PreferenceConstants.ProjectOpenEclipse_ErrorDialog);
+				createErrorDialog(Messages.getString("UCM2DEVS_ProjectOpenEclipse_ErrorDialog"));
 			}
 		} else {
-			createErrorDialog(PreferenceConstants.UCMNotExists_ErrorDialog);
+			createErrorDialog(Messages.getString("UCM2DEVS_UCMNotExists_ErrorDialog"));
 		}
 
 	}

@@ -24,6 +24,7 @@ import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerAnalysis.EditSystemPPController;
 import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * To search, consult, edit or remove a system
@@ -91,7 +92,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
+			labelSn.setText(Messages.getString("UCM2DEVS_SystemName_Label") + ":");
 
 			gridData = new GridData();
 			gridData.widthHint = 200;
@@ -117,7 +118,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 
 			// Group for project properties
 			Group groupProject = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupProject.setText(PreferenceConstants.CompositeProject_Label);
+			groupProject.setText(Messages.getString("UCM2DEVS_Project_Composite"));
 			groupProject.setLayout(layout);
 
 			gridData = new GridData();
@@ -132,18 +133,18 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			gridData.horizontalAlignment = GridData.FILL;
 			cProject.setLayoutData(gridData);
 
-			projectName = new StringFieldEditor(PreferenceConstants.ProjectName_Label,
-					PreferenceConstants.ProjectName_Label + ":", cProject);
+			projectName = new StringFieldEditor(Messages.getString("UCM2DEVS_ProjectName_Label"),
+					Messages.getString("UCM2DEVS_ProjectName_Label") + ":", cProject);
 
 			addField(projectName);
 
 			lblCalendarStarDate = new Label(cProject, SWT.NONE);
-			lblCalendarStarDate.setText(PreferenceConstants.CalendarStarDate_Label + ":");
+			lblCalendarStarDate.setText(Messages.getString("UCM2DEVS_StartDate_Label") + ":");
 
 			calendarStartDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
 			lblCalendarFinishDate = new Label(cProject, SWT.NONE);
-			lblCalendarFinishDate.setText(PreferenceConstants.CalendarFinishDate_Label + ":");
+			lblCalendarFinishDate.setText(Messages.getString("UCM2DEVS_FinishDate_Label") + ":");
 
 			calendarFinishDate = new DateTime(cProject, SWT.DATE | SWT.DROP_DOWN);
 
@@ -166,7 +167,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			gridData.widthHint = 100;
 
 			btnSave = new Button(cButtoms, SWT.PUSH);
-			btnSave.setText(PreferenceConstants.ButtomSave_Label);
+			btnSave.setText(Messages.getString("UCM2DEVS_Save_Buttom"));
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -180,7 +181,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			});
 
 			btnRemove = new Button(cButtoms, SWT.PUSH);
-			btnRemove.setText(PreferenceConstants.ButtomRemove_Label);
+			btnRemove.setText(Messages.getString("UCM2DEVS_Remove_Buttom"));
 			btnRemove.setLayoutData(gridData);
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -194,7 +195,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			this.prepareView(0);
 
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -321,7 +322,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystem_ErrorDialog);
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog") );
 			pabm = 3;
 		}
 		switch (pabm) {
@@ -345,7 +346,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			clearView();
 			prepareView(0);
 			break;
-		case 3://Open form without system
+		case 3:// Open form without system
 			clearView();
 			cmbSystem.getCombo().setEnabled(false);
 			this.getCalendarStartDate().setEnabled(false);
@@ -357,14 +358,14 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 		}
 
 	}
-	
-	public void clearView(){
+
+	public void clearView() {
 		projectName.getTextControl(cProject).setText("");
 		Calendar currentDate = GregorianCalendar.getInstance();
 		this.getCalendarStartDate().setDate(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
 				currentDate.get(Calendar.DAY_OF_MONTH));
 		this.getCalendarFinishDate().setDate(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
 				currentDate.get(Calendar.DAY_OF_MONTH));
-		
+
 	}
 }

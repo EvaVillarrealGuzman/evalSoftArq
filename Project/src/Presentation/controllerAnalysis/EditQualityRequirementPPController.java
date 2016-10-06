@@ -18,7 +18,7 @@ import DomainModel.AnalysisEntity.StimulusType;
 import DomainModel.AnalysisEntity.Unit;
 import Presentation.Controller;
 import Presentation.preferenceAnalysis.EditQualityRequirementPreferencePage;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * Controller for EditQualityRequirementPreferencePage
@@ -226,70 +226,70 @@ public class EditQualityRequirementPPController extends Controller {
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getFormSearch().getCmbSystem())) {
-			this.createErrorDialog(PreferenceConstants.SelectSystem_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
 			this.getFormSearch().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getFormSearch().getTxtDescription())) {
-			this.createErrorDialog(PreferenceConstants.EmptyDescription_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyDescription_ErrorDialog"));
 			this.getFormSearch().getTxtDescription().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getFormSearch().getCmbQualityAttribute())) {
-			this.createErrorDialog(PreferenceConstants.SelectQualityAttribute_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectQualityAttribute_ErrorDialog"));
 			this.getFormSearch().getCmbQualityAttribute().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getTxtValueStimulusSource())) {
-			this.createErrorDialog(PreferenceConstants.EmptyStimulusSourceValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyStimulusSourceValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getTxtValueStimulus())) {
-			this.createErrorDialog(PreferenceConstants.EmptyStimulusValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyStimulusValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getTxtValueEnvironment())) {
-			this.createErrorDialog(PreferenceConstants.EmptyEnvironmentValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyEnvironmentValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getTxtValueResponse())) {
-			this.createErrorDialog(PreferenceConstants.EmptyResponseValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyResponseValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbTypeStimulusSource())) {
-			this.createErrorDialog(PreferenceConstants.SelectStimulusSourceType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectStimulusSourceType_ErrorDialog"));
 			this.getFormSearch().getCmbTypeStimulusSource().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbTypeStimulus())) {
-			this.createErrorDialog(PreferenceConstants.SelectStimulusType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectStimulusType_ErrorDialog"));
 			this.getFormSearch().getCmbTypeStimulus().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbTypeEnvironment())) {
-			this.createErrorDialog(PreferenceConstants.SelectEnvironmentType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectEnvironmentType_ErrorDialog"));
 			this.getFormSearch().getCmbTypeEnvironment().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbTypeArtifact())) {
-			this.createErrorDialog(PreferenceConstants.SelectArtifactType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArtifactType_ErrorDialog"));
 			this.getFormSearch().getCmbTypeArtifact().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbTypeResponse())) {
-			this.createErrorDialog(PreferenceConstants.SelectResponseType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectResponseType_ErrorDialog"));
 			this.getFormSearch().getCmbTypeResponse().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbTypeResponseMeasure())) {
-			this.createErrorDialog(PreferenceConstants.SelectResponseMeasureType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectResponseMeasureType_ErrorDialog"));
 			this.getFormSearch().getCmbTypeResponseMeasure().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbMetric())) {
-			this.createErrorDialog(PreferenceConstants.SelectMetric_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectMetric_ErrorDialog"));
 			this.getFormSearch().getCmbMetric().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getTxtValueResponseMeasure())) {
-			this.createErrorDialog(PreferenceConstants.EmptyResponseMeasureValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyResponseMeasureValue_ErrorDialog"));
 			return false;
 		} else if (!this.getFormSearch().getTxtValueResponseMeasure().isValid()) {
-			this.createErrorDialog(PreferenceConstants.InvalidResponseMeasureValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_InvalidResponseMeasureValue_ErrorDialog"));
 			return false;
 		} else if (this.getFormSearch().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
-			this.createErrorDialog(PreferenceConstants.InvalidResponseMeasureValueNegative_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_InvalidResponseMeasureValueNegative_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getFormSearch().getCmbUnit())) {
-			this.createErrorDialog(PreferenceConstants.SelectUnit_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
 			this.getFormSearch().getCmbUnit().getCombo().setFocus();
 			return false;
 		}
