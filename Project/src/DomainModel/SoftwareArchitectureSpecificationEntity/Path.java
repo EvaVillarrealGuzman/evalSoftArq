@@ -33,5 +33,5 @@ public class Path {
 	public void setPathElements(Set<PathElement> pathElements) {
 		this.pathElements = pathElements;
 	}
-	
+
 }

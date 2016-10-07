@@ -19,4 +19,7 @@ public class ANDFork extends Fork {
 	public ANDFork(String name) {
 		super(name);
 	}
+	
+	public ANDFork() {
+	}
 }

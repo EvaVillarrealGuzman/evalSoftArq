@@ -32,5 +32,7 @@ public class ORFork extends Fork {
 		this.pathProbabilities = pathProbabilities;
 	}
 	
+	public ORFork() {
+	}
 	
 }

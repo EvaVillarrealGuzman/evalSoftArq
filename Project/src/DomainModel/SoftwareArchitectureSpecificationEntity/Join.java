@@ -12,4 +12,7 @@ public class Join extends PathElement {
 	public Join(String name) {
 		super(name);
 	}
+	
+	public Join() {
+	}
 }

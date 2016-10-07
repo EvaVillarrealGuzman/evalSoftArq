@@ -18,4 +18,7 @@ public class ORJoin extends Join {
 	public ORJoin(String name) {
 		super(name);
 	}
+	
+	public ORJoin() {
+	}
 }

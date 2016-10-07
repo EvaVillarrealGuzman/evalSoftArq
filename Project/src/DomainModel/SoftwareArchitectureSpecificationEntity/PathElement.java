@@ -26,6 +26,9 @@ public class PathElement {
 		super();
 		this.name = name;
 	}
+	
+	public PathElement() {
+	}
 
 	public String getName() {
 		return name;
@@ -33,6 +36,14 @@ public class PathElement {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public boolean isResponsibility(PathElement pelement){
+		if (pelement.getClass()== Responsibility.class){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 }

@@ -26,8 +26,8 @@ import org.xml.sax.SAXException;
  */
 public class DOM {
 
-	private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/Configuration/DatabaseConnection.xml";
-	//private static String PATH = "C:/Users/Micaela/git/project/Project/src/Configuration/DatabaseConnection.xml";
+	//private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/Configuration/DatabaseConnection.xml";
+	private static String PATH = "C:/Users/Micaela/git/project/Project/src/Configuration/DatabaseConnection.xml";
 
 	public static String readPassword() {
 		return CryptoUtils.decrypt(internalStructureRead("password"));

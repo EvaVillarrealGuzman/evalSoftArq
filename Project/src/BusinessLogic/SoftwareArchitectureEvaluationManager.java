@@ -205,9 +205,8 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		while (it3.hasNext()) {
 			DomainModel.SoftwareArchitectureSpecificationEntity.PathElement element = (DomainModel.SoftwareArchitectureSpecificationEntity.PathElement) it3
 					.next();
-
-			if (element instanceof Responsibility) {
-				Responsibility auxTipo = (Responsibility) it3.next();
+			if (element.isResponsibility(element)) {
+				Responsibility auxTipo = (Responsibility) element;
 				responsibilities.add(auxTipo);
 			}
 		}
@@ -245,6 +244,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Indicator ind = new Indicator();
 		ResponsabilityIndicator type = new ResponsabilityIndicator(pfields[0]);
 		type.setResponsibility(this.getResponsability(pfields[0]));
+		this.saveObject(type);
 		ind.setType(type);
 		ind.setValue(Double.parseDouble(pfields[3]));
 		switch (pfields[2]) {
@@ -272,7 +272,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	
 	public Responsibility getResponsability(String pname){
 		for (Responsibility dp : this.getResponsibilities()) {
-			if (dp.getName().equals(pname)) {
+			if (dp.getName().equals("r"+pname)) {
 				return dp;
 			}
 		}

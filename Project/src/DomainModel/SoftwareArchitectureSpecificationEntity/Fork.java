@@ -12,4 +12,7 @@ public class Fork extends PathElement {
 	public Fork(String name) {
 		super(name);
 	}
+	
+	public Fork() {
+	}
 }

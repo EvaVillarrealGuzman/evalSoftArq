@@ -19,4 +19,7 @@ public class EndPoint extends PathElement {
 	public EndPoint(String name) {
 		super(name);
 	}
+	
+	public EndPoint() {
+	}
 }

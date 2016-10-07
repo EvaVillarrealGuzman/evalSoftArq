@@ -19,4 +19,7 @@ public class ANDJoin extends Join {
 	public ANDJoin(String name) {
 		super(name);
 	}
+	
+	public ANDJoin() {
+	}
 }

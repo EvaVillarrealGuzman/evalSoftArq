@@ -26,6 +26,9 @@ public class Responsibility extends PathElement {
 		super(name);
 	}
 	
+	public Responsibility() {
+	}
+	
 	public SpecificationParameter getSpecificationParameter() {
 		return specificationParameter;
 	}
@@ -33,6 +36,7 @@ public class Responsibility extends PathElement {
 	public void setSpecificationParameter(SpecificationParameter specificationParameter) {
 		this.specificationParameter = specificationParameter;
 	}
+	
 	
 	
 }

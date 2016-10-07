@@ -22,4 +22,7 @@ public class StartPoint extends PathElement {
 		super(name);
 		this.meanTimeBRequest = meanTimeBRequest;
 	}
+	
+	public StartPoint() {
+	}
 }
