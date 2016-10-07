@@ -26,12 +26,14 @@ public class Run implements Comparable { // NOPMD by Usuario-Pc on 10/06/16 21:5
 	private Double simulationHorizon;
 	private Double seed;
 
-	@ManyToOne(targetEntity = IndicatorType.class)
-	private IndicatorType type;
-
 	//VER QUE TAMBIÉN PUEDE SER CERO
 	@OneToMany(targetEntity = Indicator.class, cascade = CascadeType.ALL)
 	private Set<Indicator> indicators = new HashSet<Indicator>();
+
+	public Run(java.util.Date pdate, double psimulationHorizon) {
+		this.date = new java.sql.Date(pdate.getTime());
+		this.simulationHorizon = psimulationHorizon;
+	}
 
 	// CompareTo
 	@Override
@@ -39,4 +41,14 @@ public class Run implements Comparable { // NOPMD by Usuario-Pc on 10/06/16 21:5
 		Indicator t = (Indicator) p;
 		return this.toString().compareTo(t.toString());
 	}
+
+	public Set<Indicator> getIndicators() {
+		return indicators;
+	}
+
+	public void setIndicators(Set<Indicator> indicators) {
+		this.indicators = indicators;
+	}
+	
+	
 }

@@ -37,6 +37,25 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		Unit unit3 = new Unit("Hour");
 		manager.saveObject(unit3);
 		
+		Metric m1 = new Metric("Responsibility Downtime");
+		Metric m2 = new Metric("Responsibility Recovery Time");
+		Metric m3 = new Metric("Responsibility Turnaround Time");
+		Metric m4 = new Metric("Responsibility Failures");
+		Metric m5 = new Metric("System Availability");
+		Metric m6 = new Metric("System No-Availability");
+		Metric m7 = new Metric("System Throughput");
+		Metric m8 = new Metric("System Turnaraound Time");
+		Metric m9 = new Metric("System Failures");
+		manager.saveObject(m1);
+		manager.saveObject(m2);
+		manager.saveObject(m3);
+		manager.saveObject(m4);
+		manager.saveObject(m5);
+		manager.saveObject(m6);
+		manager.saveObject(m7);
+		manager.saveObject(m8);
+		manager.saveObject(m9);
+		
 		TacticType tacticType1 = new TacticType("Fault detection");
 		manager.saveObject(tacticType1);
 		Tactic tactic11 = new Tactic("Ping/echo", tacticType1);

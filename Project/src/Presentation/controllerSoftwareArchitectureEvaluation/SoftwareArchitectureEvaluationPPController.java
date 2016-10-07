@@ -85,9 +85,11 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	 * @throws IOException 
 	 */
 	public Boolean evaluate() throws IOException {
+		manager.setSystem((DomainModel.AnalysisEntity.System)((IStructuredSelection) form.getCboSystem().getSelection()).getFirstElement());
+		manager.createSimulator(form.getSimulationTime().getStringValue());
 		manager.convertCSVToTable("C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
 		//TODO implementar
-		return null;
+		return true;
 	}
 
 	/**

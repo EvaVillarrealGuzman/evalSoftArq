@@ -34,5 +34,4 @@ public class Path {
 		this.pathElements = pathElements;
 	}
 	
-	
 }

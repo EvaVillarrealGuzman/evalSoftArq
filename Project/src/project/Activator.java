@@ -5,6 +5,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import Configuration.DatabaseConnection;
+import DataManager.Data;
 import DataManager.HibernateUtil;
 
 /**

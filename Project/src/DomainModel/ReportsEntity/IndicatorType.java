@@ -17,6 +17,10 @@ public class IndicatorType implements Comparable{
 		
 		private String name;
 		
+		public IndicatorType(String pname) {
+			this.name = pname;
+		}
+
 		//CompareTo
 		@Override
 	    public int compareTo(Object p) {

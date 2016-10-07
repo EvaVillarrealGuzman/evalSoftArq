@@ -23,11 +23,6 @@ public class Simulator implements Comparable{
 	@OneToOne(targetEntity = SimulationParameter.class)
 	private SimulationParameter simulationParameter;
 	
-	//VER QUE TAMBIEN PUEDE SER NULO
-	@OneToMany(targetEntity = Indicator.class, cascade = CascadeType.ALL)
-	private Set<Indicator> indicators = new HashSet<Indicator>();
-	
-	
 	@OneToMany(targetEntity = Run.class, cascade = CascadeType.ALL)
 	private Set<Run> runs = new HashSet<Run>();
 	
@@ -38,6 +33,30 @@ public class Simulator implements Comparable{
         return this.toString().compareTo(t.toString());
     }
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public SimulationParameter getSimulationParameter() {
+		return simulationParameter;
+	}
+
+	public void setSimulationParameter(SimulationParameter simulationParameter) {
+		this.simulationParameter = simulationParameter;
+	}
+
+	public Set<Run> getRuns() {
+		return runs;
+	}
+
+	public void setRuns(Set<Run> runs) {
+		this.runs = runs;
+	}
+
 	public Double calculateAverageIndicator(){
 		Double averageIndicator=0.2;
 		return averageIndicator;

@@ -7,4 +7,8 @@ import javax.persistence.Table;
 @Table(name = "SYSTEMINDICATOR")
 public class SystemIndicator extends IndicatorType {
 
+	public SystemIndicator(String pname) {
+		super(pname);
+	}
+
 }

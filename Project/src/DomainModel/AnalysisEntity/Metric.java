@@ -46,6 +46,10 @@ public class Metric implements Comparable {
 		this.units = punits;
 	}
 
+	public Metric(String pname) {
+		this.name = pname;
+	}
+
 	// Getters and Setters
 	public int getId() {
 		return id;
