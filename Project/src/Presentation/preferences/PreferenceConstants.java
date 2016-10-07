@@ -4,7 +4,7 @@ package Presentation.preferences;
  * Constant definitions for plug-in preferences
  */
 public class PreferenceConstants {
-
+/*
 	public static final String Artifact_Label = Messages.UCM2DEVS_Artifact_Label;
 
 	public static final String ButtomAdd_Label = Messages.UCM2DEVS_Add_Buttom;
@@ -188,5 +188,5 @@ public class PreferenceConstants {
 	public static final String WantDeleteSystem_QuestionDialog = Messages.UCM2DEVS_WantDeleteSystem_QuestionDialog;
 
 	public static final String WantSaveChanges_QuestionDialog = Messages.UCM2DEVS_WantSaveChanges_QuestionDialog;
-
+*/
 }

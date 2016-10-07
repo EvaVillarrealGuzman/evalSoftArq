@@ -20,7 +20,7 @@ import DomainModel.AnalysisEntity.StimulusType;
 import DomainModel.AnalysisEntity.Unit;
 import Presentation.Controller;
 import Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * Controller for NewQualityRequirementPreferencePage
@@ -201,8 +201,8 @@ public class NewQualityRequirementPPController extends Controller {
 
 			this.getManager()
 					.newQualityRequirement(
-							(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getForm()
-									.getCmbSystem().getSelection()).getFirstElement(),
+							(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getForm().getCmbSystem()
+									.getSelection()).getFirstElement(),
 							this.getForm().getTxtDescription().getText(), true,
 							(QualityAttribute) ((IStructuredSelection) this.getForm().getCmbQualityAttribute()
 									.getSelection()).getFirstElement(),
@@ -220,70 +220,70 @@ public class NewQualityRequirementPPController extends Controller {
 	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
-			this.createErrorDialog(PreferenceConstants.SelectSystem_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
 			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getTxtDescription())) {
-			this.createErrorDialog(PreferenceConstants.EmptyDescription_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyDescription_ErrorDialog"));
 			this.getForm().getTxtDescription().setFocus();
 			return false;
 		}
 		if (this.isEmpty(this.getForm().getCmbQualityAttribute())) {
-			this.createErrorDialog(PreferenceConstants.SelectQualityAttribute_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectQualityAttribute_ErrorDialog"));
 			this.getForm().getCmbQualityAttribute().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulusSource())) {
-			this.createErrorDialog(PreferenceConstants.EmptyStimulusSourceValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyStimulusSourceValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueStimulus())) {
-			this.createErrorDialog(PreferenceConstants.EmptyStimulusValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyStimulusValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueEnvironment())) {
-			this.createErrorDialog(PreferenceConstants.EmptyEnvironmentValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyEnvironmentValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponse())) {
-			this.createErrorDialog(PreferenceConstants.EmptyResponseValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyResponseValue_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeStimulusSource())) {
-			this.createErrorDialog(PreferenceConstants.SelectStimulusSourceType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectStimulusSourceType_ErrorDialog"));
 			this.getForm().getCmbTypeStimulusSource().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeStimulus())) {
-			this.createErrorDialog(PreferenceConstants.SelectStimulusType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectStimulusType_ErrorDialog"));
 			this.getForm().getCmbTypeStimulus().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeEnvironment())) {
-			this.createErrorDialog(PreferenceConstants.SelectEnvironmentType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectEnvironmentType_ErrorDialog"));
 			this.getForm().getCmbTypeEnvironment().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeArtifact())) {
-			this.createErrorDialog(PreferenceConstants.SelectArtifactType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArtifactType_ErrorDialog"));
 			this.getForm().getCmbTypeArtifact().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeResponse())) {
-			this.createErrorDialog(PreferenceConstants.SelectResponseType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectResponseType_ErrorDialog"));
 			this.getForm().getCmbTypeResponse().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbTypeResponseMeasure())) {
-			this.createErrorDialog(PreferenceConstants.SelectResponseMeasureType_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectResponseMeasureType_ErrorDialog"));
 			this.getForm().getCmbTypeResponseMeasure().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbMetric())) {
-			this.createErrorDialog(PreferenceConstants.SelectMetric_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectMetric_ErrorDialog"));
 			this.getForm().getCmbMetric().getCombo().setFocus();
 			return false;
 		} else if (this.isEmpty(this.getForm().getTxtValueResponseMeasure())) {
-			this.createErrorDialog(PreferenceConstants.EmptyResponseMeasureValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptyResponseMeasureValue_ErrorDialog"));
 			return false;
 		} else if (!this.getForm().getTxtValueResponseMeasure().isValid()) {
-			this.createErrorDialog(PreferenceConstants.InvalidResponseMeasureValue_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_InvalidResponseMeasureValue_ErrorDialog"));
 			return false;
 		} else if (this.getForm().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
-			this.createErrorDialog(PreferenceConstants.InvalidResponseMeasureValueNegative_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_InvalidResponseMeasureValueNegative_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getForm().getCmbUnit())) {
-			this.createErrorDialog(PreferenceConstants.SelectUnit_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
 			this.getForm().getCmbUnit().getCombo().setFocus();
 			return false;
 		}

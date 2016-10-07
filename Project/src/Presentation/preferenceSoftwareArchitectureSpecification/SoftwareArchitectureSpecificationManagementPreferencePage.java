@@ -27,7 +27,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPPController;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * To specify a software architecture by JUCMNav
@@ -99,7 +99,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			cSystemName.setLayoutData(gridData);
 
 			Label labelSn = new Label(cSystemName, SWT.NONE);
-			labelSn.setText(PreferenceConstants.SystemName_Label + ":");
+			labelSn.setText(Messages.getString("UCM2DEVS_SystemName_Label") + ":");
 
 			gridData = new GridData();
 			gridData.widthHint = 200;
@@ -129,12 +129,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 
 			Group gQualityRequirement = new Group(parent, SWT.NONE);
 			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText(PreferenceConstants.SoftwareArchitectureSpecification_Group);
+			gQualityRequirement.setText(Messages.getString("UCM2DEVS_SoftArcSpec_Group"));
 			gQualityRequirement.setLayout(layout);
 
 			// Create column names
-			String[] columnNames = new String[] { PreferenceConstants.Object_Column, PreferenceConstants.Name_Column,
-					PreferenceConstants.Path_Column };
+			String[] columnNames = new String[] { Messages.getString("UCM2DEVS_Object_Column"),
+					Messages.getString("UCM2DEVS_Name_Column"), Messages.getString("UCM2DEVS_Path_Column") };
 			// Create styles
 			int style = SWT.FULL_SELECTION | SWT.BORDER;
 			// create table
@@ -149,15 +149,15 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			// Create columns
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
-			colObject.setText(PreferenceConstants.Object_Column);
+			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));
 
 			colName = new TableColumn(table, SWT.NONE);
 			colName.setWidth(100);
-			colName.setText(PreferenceConstants.Name_Column);
+			colName.setText(Messages.getString("UCM2DEVS_Name_Column"));
 
 			colPath = new TableColumn(table, SWT.NONE);
 			colPath.setWidth(300);
-			colPath.setText(PreferenceConstants.Path_Column);
+			colPath.setText(Messages.getString("UCM2DEVS_Path_Column"));
 
 			for (int i = 0; i < 8; i++) {
 				TableItem item = new TableItem(table, SWT.NONE);
@@ -191,29 +191,29 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			gridData.widthHint = 75;
 
 			btnAdd = new Button(cButtoms, SWT.PUSH);
-			btnAdd.setText(PreferenceConstants.ButtomAdd_Label);
-			btnAdd.setToolTipText(PreferenceConstants.ButtomAdd_ToolTip);
+			btnAdd.setText(Messages.getString("UCM2DEVS_Add_Buttom"));
+			btnAdd.setToolTipText(Messages.getString("UCM2DEVS_Add_ToolTip"));
 			btnAdd.setLayoutData(gridData);
 			btnAdd.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					// Open a FileDialog that show only jucm file
 					chooseFile = new FileDialog(parent.getShell(), SWT.OPEN);
-					chooseFile.setFilterNames(new String[] { PreferenceConstants.JucmFiles_Label });
+					chooseFile.setFilterNames(new String[] { Messages.getString("UCM2DEVS_JucmFiles_Label") });
 					chooseFile.setFilterExtensions(new String[] { "*.jucm" });
 					String filePath = chooseFile.open();
 					if (!viewController.isUCMDuplicate(filePath)) {
 						viewController.addToTable(filePath);
 					} else {
 						// TODO poner bien el nombre
-						viewController.createErrorDialog(PreferenceConstants.UCMExists_ErrorDialog);
+						viewController.createErrorDialog(Messages.getString("UCM2DEVS_UCMExists_ErrorDialog"));
 					}
 				}
 			});
 
 			btnConsult = new Button(cButtoms, SWT.PUSH);
-			btnConsult.setText(PreferenceConstants.ButtomConsult_Label);
-			btnConsult.setToolTipText(PreferenceConstants.ButtomConsult_ToolTip);
+			btnConsult.setText(Messages.getString("UCM2DEVS_Consult_Buttom"));
+			btnConsult.setToolTipText(Messages.getString("UCM2DEVS_Consult_ToolTip"));
 			btnConsult.setLayoutData(gridData);
 			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -224,8 +224,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			});
 
 			btnDelete = new Button(cButtoms, SWT.PUSH);
-			btnDelete.setText(PreferenceConstants.ButtomDelete_Label);
-			btnDelete.setToolTipText(PreferenceConstants.ButtomDelete_ToolTip);
+			btnDelete.setText(Messages.getString("UCM2DEVS_Delete_Buttom"));
+			btnDelete.setToolTipText(Messages.getString("UCM2DEVS_Delete_ToolTip"));
 			btnDelete.setLayoutData(gridData);
 			btnDelete.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -248,7 +248,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnSave = new Button(parent, SWT.PUSH);
-			btnSave.setText(PreferenceConstants.ButtomSave_Label);
+			btnSave.setText(Messages.getString("UCM2DEVS_Save_Buttom"));
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -263,7 +263,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 
 			this.prepareView();
 		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
 		}
 
 		return new Composite(parent, SWT.NULL);
@@ -363,7 +363,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	public void prepareView() {
 
 		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController().createErrorDialog(PreferenceConstants.NoSavedSystem_ErrorDialog);
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
 		}
 		if (((IStructuredSelection) this.getCboSystem().getSelection()).getFirstElement() == null) {
 			btnAdd.setEnabled(false);
@@ -394,8 +394,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
 						.getFirstElement());
 	}
-	
-	public void clearView(){
+
+	public void clearView() {
 		this.getCboSystem().setSelection(StructuredSelection.EMPTY);
 		this.getTable().clearAll();
 	}

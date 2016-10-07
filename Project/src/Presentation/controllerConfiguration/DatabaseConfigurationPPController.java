@@ -3,6 +3,7 @@ package Presentation.controllerConfiguration;
 import BusinessLogic.SystemConfigurationManager;
 import Presentation.Controller;
 import Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage;
+import Presentation.preferences.Messages;
 import Presentation.preferences.PreferenceConstants;
 
 /**
@@ -55,7 +56,7 @@ public class DatabaseConfigurationPPController extends Controller {
 			this.createSuccessDialog("The connection is established to the database");
 		} else {
 			this.getForm().getBtnSave().setEnabled(false);
-			this.createErrorDialog(PreferenceConstants.ConnectionDatabase_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog") );
 		}
 	}
 
@@ -76,7 +77,7 @@ public class DatabaseConfigurationPPController extends Controller {
 				this.getForm().getDatabaseName().getStringValue())) {
 			this.createObjectSuccessDialog();
 		} else {
-			this.createErrorDialog(PreferenceConstants.SaveData_ErrorDialog);
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SaveData_ErrorDialog") );
 		}
 	}
 

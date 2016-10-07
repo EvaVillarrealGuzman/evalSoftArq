@@ -18,7 +18,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * Parent controller with the reusable methods
@@ -87,7 +87,7 @@ public class Controller {
 		String dateFormat = sdf.format(pdate); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:36
 		dateFormat = dateFormat.substring(3, 5);
-		return Integer.parseInt(dateFormat)-1;
+		return Integer.parseInt(dateFormat) - 1;
 	}
 
 	public int getYear(Date pdate) {
@@ -117,7 +117,7 @@ public class Controller {
 	 * @param message
 	 */
 	public void createErrorDialog(String message) {
-		MessageDialog.openError(null, PreferenceConstants.Error_Label, message);
+		MessageDialog.openError(null, Messages.getString("UCM2DEVS_Error_Label"), message);
 	}
 
 	/**
@@ -125,7 +125,8 @@ public class Controller {
 	 * 
 	 */
 	public void createObjectDontSaveErrorDialog() {
-		MessageDialog.openError(null, PreferenceConstants.Error_Label, PreferenceConstants.SaveObject_ErrorDialog);
+		MessageDialog.openError(null, Messages.getString("UCM2DEVS_Error_Label"),
+				Messages.getString("UCM2DEVS_SaveObject_ErrorDialog"));
 	}
 
 	/**
@@ -133,7 +134,8 @@ public class Controller {
 	 * 
 	 */
 	public void createObjectDontUpdateErrorDialog() {
-		MessageDialog.openError(null, PreferenceConstants.Error_Label, PreferenceConstants.UpdateObject_ErrorDialog);
+		MessageDialog.openError(null, Messages.getString("UCM2DEVS_Error_Label"),
+				Messages.getString("UCM2DEVS_UpdateObject_ErrorDialog"));
 	}
 
 	/**
@@ -142,8 +144,8 @@ public class Controller {
 	 * @return boolean
 	 */
 	public boolean createDeleteSystemDialog() {
-		return MessageDialog.openQuestion(null, PreferenceConstants.Delete_Label,
-				PreferenceConstants.WantDeleteSystem_QuestionDialog);
+		return MessageDialog.openQuestion(null, Messages.getString("UCM2DEVS_Delete_Label"),
+				Messages.getString("UCM2DEVS_WantDeleteSystem_QuestionDialog"));
 	}
 
 	/**
@@ -151,8 +153,8 @@ public class Controller {
 	 * 
 	 */
 	public void createObjectSuccessDialog() {
-		MessageDialog.openInformation(null, PreferenceConstants.Info_Label,
-				PreferenceConstants.SuccessObject_InfoDialog);
+		MessageDialog.openInformation(null, Messages.getString("UCM2DEVS_Info_Label"),
+				Messages.getString("UCM2DEVS_SuccessObject_InfoDialog"));
 	}
 
 	/**
@@ -160,7 +162,7 @@ public class Controller {
 	 * 
 	 */
 	public void createSuccessDialog(String message) {
-		MessageDialog.openInformation(null, PreferenceConstants.Info_Label, message);
+		MessageDialog.openInformation(null, Messages.getString("UCM2DEVS_Info_Label"), message);
 	}
 
 	/**
@@ -169,8 +171,8 @@ public class Controller {
 	 * @return boolean
 	 */
 	public boolean createSaveChangedDialog() {
-		return MessageDialog.openQuestion(null, PreferenceConstants.Question_Label,
-				PreferenceConstants.WantSaveChanges_QuestionDialog);
+		return MessageDialog.openQuestion(null, Messages.getString("UCM2DEVS_Question_Label"),
+				Messages.getString("UCM2DEVS_WantSaveChanges_QuestionDialog"));
 	}
 
 	/**
@@ -179,8 +181,8 @@ public class Controller {
 	 * @return boolean
 	 */
 	public boolean createDeleteRequirementDialog() {
-		return MessageDialog.openQuestion(null, PreferenceConstants.Delete_Label,
-				PreferenceConstants.WantDeleteQualityRequirement_QuestionDialog);
+		return MessageDialog.openQuestion(null, Messages.getString("UCM2DEVS_Delete_Label"),
+				Messages.getString("UCM2DEVS_WantDeleteQualityRequirement_QuestionDialog"));
 	}
 
 	/**

@@ -16,11 +16,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerConfiguration.DatabaseConfigurationPPController;
-import Presentation.preferences.PreferenceConstants;
+import Presentation.preferences.Messages;
 
 /**
  * To system configuration
@@ -77,7 +76,7 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 
 			// Group for project properties
 			Group groupDatabaseConfiguration = new Group(parent, SWT.SHADOW_ETCHED_IN);
-			groupDatabaseConfiguration.setText(PreferenceConstants.DatabaseConfiguration_Label);
+			groupDatabaseConfiguration.setText(Messages.getString("UCM2DEVS_DatabaseConfiguration_Label"));
 			groupDatabaseConfiguration.setLayout(layout);
 
 			gridData = new GridData();
@@ -90,8 +89,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			gridData.horizontalAlignment = GridData.FILL;
 			cDatabaseConfiguration.setLayoutData(gridData);
 
-			databasePortNumber = new StringFieldEditor(PreferenceConstants.PortNumber_Label,
-					PreferenceConstants.PortNumber_Label + ":", cDatabaseConfiguration);
+			databasePortNumber = new StringFieldEditor(Messages.getString("UCM2DEVS_PortNumber_Label"),
+					Messages.getString("UCM2DEVS_PortNumber_Label") + ":", cDatabaseConfiguration);
 			addField(databasePortNumber);
 			databasePortNumber.getTextControl(cDatabaseConfiguration).addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent e) {
@@ -99,8 +98,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			databaseName = new StringFieldEditor(PreferenceConstants.DatabaseName_Label,
-					PreferenceConstants.DatabaseName_Label + ":", cDatabaseConfiguration);
+			databaseName = new StringFieldEditor(Messages.getString("UCM2DEVS_DatabaseName_Label"),
+					Messages.getString("UCM2DEVS_DatabaseName_Label") + ":", cDatabaseConfiguration);
 			addField(databaseName);
 			databaseName.getTextControl(cDatabaseConfiguration).addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent e) {
@@ -108,8 +107,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			databaseUserName = new StringFieldEditor(PreferenceConstants.UserName_Label,
-					PreferenceConstants.UserName_Label + ":", cDatabaseConfiguration);
+			databaseUserName = new StringFieldEditor(Messages.getString("UCM2DEVS_UserName_Label"),
+					Messages.getString("UCM2DEVS_UserName_Label") + ":", cDatabaseConfiguration);
 			addField(databaseUserName);
 			databaseUserName.getTextControl(cDatabaseConfiguration).addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent e) {
@@ -117,8 +116,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 				}
 			});
 
-			databasePassword = new StringFieldEditor(PreferenceConstants.Password_Label,
-					PreferenceConstants.Password_Label + ":", cDatabaseConfiguration) {
+			databasePassword = new StringFieldEditor(Messages.getString("UCM2DEVS_Password_Label"),
+					Messages.getString("UCM2DEVS_Password_Label") + ":", cDatabaseConfiguration) {
 				@Override
 				protected void doFillIntoGrid(Composite parent, int numColumns) {
 					super.doFillIntoGrid(parent, numColumns);
@@ -141,7 +140,7 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnTestConnection = new Button(cDatabaseConfiguration, SWT.PUSH);
-			btnTestConnection.setText(PreferenceConstants.ButtomTestConnection_Label);
+			btnTestConnection.setText(Messages.getString("UCM2DEVS_TestConnection_Buttom"));
 			btnTestConnection.setLayoutData(gridData);
 			btnTestConnection.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -160,7 +159,7 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			gridData.grabExcessHorizontalSpace = true;
 
 			btnSave = new Button(parent, SWT.PUSH);
-			btnSave.setText(PreferenceConstants.ButtomSave_Label);
+			btnSave.setText(Messages.getString("UCM2DEVS_Save_Buttom"));
 			btnSave.setLayoutData(gridData);
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -173,12 +172,12 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 		} catch (
 
 		JDBCConnectionException e) {
-			viewController.createErrorDialog(PreferenceConstants.Postgres_ErrorDialog);
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
 		}
 
 		return new Composite(parent, SWT.NULL);
 
-	}	
+	}
 
 	/*
 	 * (non-Javadoc)
