@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.SoftwareArchitectureEvaluationManager;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+import Main.TransformerSimulator;
 import Presentation.Controller;
 import Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage;
 
@@ -70,10 +71,10 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	public void setModelUnit() {
 		this.getForm().getCmbUnit().setInput(getManager().getComboModelUnit());
 	}
-	
+
 	public void setModel(ComboViewer pcmb) {
-		this.setModel((DomainModel.AnalysisEntity.System) ((IStructuredSelection) pcmb.getSelection())
-				.getFirstElement());
+		this.setModel(
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) pcmb.getSelection()).getFirstElement());
 	}
 
 	private void setModel(DomainModel.AnalysisEntity.System pmodel) {
@@ -81,15 +82,36 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	}
 
 	/**
-	 * Update the system with the UCM path and prepare the view
-	 * @throws IOException 
+	 * Evaluate a architecture
+	 * 
+	 * @throws IOException
 	 */
-	public Boolean evaluate() throws IOException {
-		manager.setSystem((DomainModel.AnalysisEntity.System)((IStructuredSelection) form.getCboSystem().getSelection()).getFirstElement());
-		manager.createSimulator(form.getSimulationTime().getStringValue());
-		manager.convertCSVToTable("C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
-		//TODO implementar
-		return true;
+	public void evaluate() {
+		try {
+			TransformerSimulator pluginTS = new TransformerSimulator();
+			String chequerUCMResult = manager
+					.chequerUCM("C:/Users/Usuario-Pc/git/transformador/src/Test/chequerUCMTest/UCM/prueba8.jucm");
+			if (chequerUCMResult.equals("")) {
+				if (manager.transformer("C:/Users/Usuario-Pc/git/DEVS-TS/DEVS-TS/src/Test/cs-pf.jucm")) {
+					if (manager.simulator()) {
+						this.createSuccessDialog("The simulation is successful");
+						manager.setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) form
+								.getCboSystem().getSelection()).getFirstElement());
+						manager.createSimulator(form.getSimulationTime().getStringValue());
+						manager.convertCSVToTable(
+								"C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
+					} else {
+						this.createErrorDialog("The simulator is not successful");
+					}
+				} else {
+					this.createErrorDialog("The transformer is not successful");
+				}
+			} else {
+				this.createErrorDialog(chequerUCMResult);
+			}
+		} catch (IOException e) {
+		}
+
 	}
 
 	/**

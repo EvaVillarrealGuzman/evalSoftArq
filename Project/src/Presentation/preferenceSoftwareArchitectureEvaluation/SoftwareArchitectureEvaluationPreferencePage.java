@@ -1,7 +1,5 @@
 package Presentation.preferenceSoftwareArchitectureEvaluation;
 
-import java.io.IOException;
-
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -228,16 +226,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			btnEvaluate.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					try {
-						if (viewController.evaluate()) {
-							viewController.createObjectSuccessDialog();
-						} else {
-							viewController.createObjectDontUpdateErrorDialog();
-						}
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					viewController.evaluate();
 				}
 			});
 
@@ -345,6 +334,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getTable().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
+			// TODO
 			this.getBtnEvaluate().setEnabled(false);
 
 			break;

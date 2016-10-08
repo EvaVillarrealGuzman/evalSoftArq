@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources;bundle-version="3.10.1",
  org.eclipse.ui.ide;bundle-version="3.11.0",
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.100",
- seg.jUCMNav;bundle-version="6.0.0"
+ seg.jUCMNav;bundle-version="6.0.0",
+ DEVS-TS;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/antlr-2.7.6.jar,

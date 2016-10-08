@@ -14,6 +14,7 @@ import java.util.Set;
 import javax.swing.text.Document;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.Criteria;
@@ -33,6 +34,7 @@ import DomainModel.ReportsEntity.Simulator;
 import DomainModel.ReportsEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
+import Main.TransformerSimulator;
 
 /**
  * This class is responsible for the management package: Software Architecture
@@ -50,6 +52,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	public static final String SEPARATOR = ";";
 	public static final String QUOTE = "\"";
 	private Simulator simulator;
+	TransformerSimulator pluginTS;
 
 	/**
 	 * Getters and Setters
@@ -60,6 +63,17 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public DomainModel.AnalysisEntity.System getSystem() {
 		return this.system;
+	}
+
+	public TransformerSimulator getPluginTS() {
+		if (pluginTS == null) {
+			pluginTS = new TransformerSimulator();
+		}
+		return pluginTS;
+	}
+
+	public void setPluginTS(TransformerSimulator pluginTS) {
+		this.pluginTS = pluginTS;
 	}
 
 	/**
@@ -239,7 +253,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.getRun().getIndicators().add(ind);
 		this.updateObject(this.getSystem());
 	}
-	
+
 	public void loadResponsabilityIndicator(String[] pfields) {
 		Indicator ind = new Indicator();
 		ResponsabilityIndicator type = new ResponsabilityIndicator(pfields[0]);
@@ -269,10 +283,10 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
 		return crit.list();
 	}
-	
-	public Responsibility getResponsability(String pname){
+
+	public Responsibility getResponsability(String pname) {
 		for (Responsibility dp : this.getResponsibilities()) {
-			if (dp.getName().equals("r"+pname)) {
+			if (dp.getName().equals("r" + pname)) {
 				return dp;
 			}
 		}
@@ -283,4 +297,24 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Iterator it = this.getArchitecture().getSimulator().getRuns().iterator();
 		return (Run) it.next();
 	}
+
+	public String chequerUCM(String path) {
+		return this.getPluginTS().callChequerUCM(path);
+	}
+
+	public Boolean transformer(String inputPath) {
+		String outputPath = Platform.getInstallLocation().getURL().getPath()+"plugins/UCM2DEVS";
+		return this.getPluginTS().callTransformer(inputPath, outputPath.substring(1, outputPath.length()));
+	}
+
+	public Boolean simulator() {
+		convertUnit();
+
+		return this.getPluginTS().callSimulator();
+	}
+
+	private void convertUnit() {
+
+	}
+
 }
