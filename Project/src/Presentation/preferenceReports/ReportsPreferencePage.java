@@ -117,7 +117,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.setModel(cboSystem);
-					viewController.printFailPerResponsibility();
+					viewController.printPrueba();
 					// TODO implementar
 				}
 			});
@@ -193,14 +193,16 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 		case 0:// System with simulations and yet no system selected
 			this.getCboSystem().getCombo().setEnabled(true);
 			loadCombo();
-			this.getBtnViewReport().setEnabled(false);
+			//TODO poner en false
+			this.getBtnViewReport().setEnabled(true);
 			break;
 		case 1:// With system selected
 			this.getBtnViewReport().setEnabled(true);
 			break;
 		case 2:// No system with simulations
 			this.getCboSystem().getCombo().setEnabled(false);
-			this.getBtnViewReport().setEnabled(false);
+			//TODO poner en false
+			this.getBtnViewReport().setEnabled(true);
 			break;
 		}
 	}

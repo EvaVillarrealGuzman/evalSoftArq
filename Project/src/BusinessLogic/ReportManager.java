@@ -12,7 +12,15 @@ import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
+import DomainModel.ReportsEntity.ClientesPorLocalidad;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+import Presentation.controllerReports.DataSourceCollection;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * This class is responsible for the management package: Report
@@ -26,7 +34,10 @@ public class ReportManager extends HibernateManager {
 	 */
 	private DomainModel.AnalysisEntity.System system;
 	private Architecture architecture;
-	private Map parameters = new HashMap();
+	private DataSourceCollection dataSource;
+	private JasperReport masterReport;
+	private JasperPrint jasperPrint;
+	private Map parameters;
 	private String archive;
 	private DatabaseConnection db;
 
@@ -45,7 +56,7 @@ public class ReportManager extends HibernateManager {
 	public void setDb(DatabaseConnection db) {
 		this.db = db;
 	}
-	
+
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -63,6 +74,9 @@ public class ReportManager extends HibernateManager {
 	}
 
 	public Map getParameters() {
+		if (parameters == null) {
+			parameters = new HashMap();
+		}
 		return parameters;
 	}
 
@@ -76,6 +90,33 @@ public class ReportManager extends HibernateManager {
 
 	public void setArchive(String archive) {
 		this.archive = archive;
+	}
+
+	public JasperReport getMasterReport() {
+		return masterReport;
+	}
+
+	public void setMasterReport(JasperReport masterReport) {
+		this.masterReport = masterReport;
+	}
+
+	public JasperPrint getJasperPrint() {
+		return jasperPrint;
+	}
+
+	public void setJasperPrint(JasperPrint jasperPrint) {
+		this.jasperPrint = jasperPrint;
+	}
+
+	public DataSourceCollection getDataSource() {
+		if (dataSource == null) {
+			dataSource = new DataSourceCollection();
+		}
+		return dataSource;
+	}
+
+	public void setDataSource(DataSourceCollection dataSource) {
+		this.dataSource = dataSource;
 	}
 
 	/**
@@ -180,7 +221,7 @@ public class ReportManager extends HibernateManager {
 		HibernateUtil hu = new HibernateUtil();
 		return hu.isConnection();
 	}
-	
+
 	/**
 	 * Agrega un parametro al reporte, este parametro debe coincidir con los
 	 * parametros previamente creados en el reporte
@@ -201,8 +242,8 @@ public class ReportManager extends HibernateManager {
 	 * 
 	 * @param datos
 	 */
-	public void setColeccionDeDatos(Collection pdata) {
-		// FuenteDeDatosCollection.setColeccionDeDatos(pdata);
+	public void setDataCollection(Collection pdata) {
+		DataSourceCollection.setColeccionDeDatos(pdata);
 	}
 
 	/**
@@ -213,39 +254,40 @@ public class ReportManager extends HibernateManager {
 	 */
 	public void print() {
 		try {
-			this.run();
+			JRDataSource jrd = null;
+			if (this.getJasperPrint() == null) {
+				setMasterReport((JasperReport) JRLoader.loadObject(this.archive));
+				try {
+					jrd = this.getDataSource().createBeanCollectionDatasource();
+				} catch (Exception ek) {
+					System.out.println("error 1");
+					ek.printStackTrace();
+				}
+				System.out.println("parametros=" + this.getParameters().toString());
+				System.out.println("fuenteDeDatos: cantidad=" + DataSourceCollection.getColeccionDeDatos().size() + " "
+						+ DataSourceCollection.getColeccionDeDatos().toString());
+				jasperPrint = JasperFillManager.fillReport(this.getMasterReport(), this.getParameters(), jrd);
+			}
+			JasperViewer jviewer = new JasperViewer(this.getJasperPrint(), false);
+			jviewer.setTitle("Reporte");
+			jviewer.setVisible(true);
 		} catch (Exception e) {
 			System.out.println(" " + e);
 		}
+
 	}
 
-	public void run() {
+	public List<ClientesPorLocalidad> listClientesPorLocalidad() {
+		List<ClientesPorLocalidad> lista = new ArrayList<ClientesPorLocalidad>();
 
-		//try {
-		//	JRDataSource jrd = null;
-		//	if (jasperPrint == null) {
-		//		// URL
-		//		// url=this.getClass().getClassLoader().getResource(this.archivo);
-		//		setMasterReport((JasperReport) JRLoader.loadObject(this.archivo));
-		//		try {
-		//			jrd = fuenteDeDatos.createBeanCollectionDatasource();
-		//		} catch (Exception ek) {
-		//			System.out.println("Error");
-		//			ek.printStackTrace();
-		//		}
-		//		System.out.println("parametros=" + this.getParametros().toString());
-		//		System.out.println("fuenteDeDatos: cantidad=" + FuenteDeDatosCollection.getColeccionDeDatos().size()
-		//				+ " " + FuenteDeDatosCollection.getColeccionDeDatos().toString());
-		//		jasperPrint = JasperFillManager.fillReport(masterReport, this.getParametros(), jrd);
-		//	}
-		//	JasperViewer jviewer = new JasperViewer(jasperPrint, false);
-		//	jviewer.setTitle("Reporte");
-		//	jviewer.setVisible(true);
-		//} catch (Exception ek) {
-		//	System.out.println("Error");
-		//	ek.printStackTrace();
-		//}
+		for (int i = 0; i < 10; i++) {
+			ClientesPorLocalidad item = new ClientesPorLocalidad();
+			item.setLocalidad("hola");
+			item.setCantidadClientes(5);
+			lista.add(item);
+		}
 
+		return lista;
 	}
 
 }

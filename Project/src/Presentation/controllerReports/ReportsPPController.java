@@ -1,7 +1,5 @@
 package Presentation.controllerReports;
 
-import java.util.List;
-
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -25,7 +23,7 @@ public class ReportsPPController extends Controller {
 	private static ReportsPPController controller;
 	private ReportManager manager;
 	private ReportsPreferencePage form;
-	public static final String pathReport = "C:\\PP\\Report\\";
+	public static final String pathReport = "C:\\PP\\Reportes\\";
 
 	/**
 	 * Getters and Setters
@@ -99,32 +97,35 @@ public class ReportsPPController extends Controller {
 		this.openReport(this.pathReport + "FailsPerResponsibility.jasper");
 		this.addParameterToReport("Fails per Responsability", "Project");
 		// this.addDataToReport(this.getGestorClientesPorLocalidad().listar());
-		this.printReport();
+		// this.printReport();
 	}
 
-	public void addParameterToReport(String pname, Object pobject) {
-		manager.addParameter(pname, pobject);
-	}
-
-	public void openReport(String archive) {
+	// TODO borrar
+	public Boolean printPrueba() {
 		try {
-			this.getManager().setArchive(archive);
-			manager.addParameter("tituloMembrete", "Reportes");
-			manager.addParameter("tituloMembrete2", "ttt");
-			manager.addParameter("frase", "");
-			manager.addParameter("pieMembrete", "");
+			this.openReport(this.pathReport + "ListadoClientesPorLocalidad.jasper");
+			this.addParameterToReport("titulo", "TDH Viajes");
+			// Agrega los datos al reporte
+			this.getManager().setDataCollection(this.getManager().listClientesPorLocalidad());
+			// imprime el reporte
+			this.getManager().print();
+			return true;
 		} catch (Exception e) {
-			this.createErrorDialog(e.getLocalizedMessage());
+			return false;
 		}
 	}
 
-	public void addDataToReport(List plistData) {
-		this.getManager().setColeccionDeDatos(plistData);
+	private void addParameterToReport(String pname, Object pobject) {
+		this.getManager().addParameter(pname, pobject);
 	}
 
-	public void printReport() {
+	private void openReport(String archive) {
 		try {
-			this.getManager().print();
+			this.getManager().setArchive(archive);
+			this.getManager().addParameter("tituloMembrete", "Reportes");
+			this.getManager().addParameter("tituloMembrete2", "ttt");
+			this.getManager().addParameter("frase", "");
+			this.getManager().addParameter("pieMembrete", "");
 		} catch (Exception e) {
 			this.createErrorDialog(e.getLocalizedMessage());
 		}
