@@ -130,4 +130,8 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
+	public Boolean isConnection() {
+		return this.getManager().isConnection();
+	}
+
 }

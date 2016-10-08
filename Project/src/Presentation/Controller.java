@@ -199,4 +199,31 @@ public class Controller {
 
 	}
 
+	/*
+	 * Methods to convert time
+	 */
+	private Double convertSecondtoHour(Double time) {
+		return time / 3600;
+	}
+
+	private Double convertSecondtoMinute(Double time) {
+		return time / 60;
+	}
+
+	private Double convertMinutetoHour(Double time) {
+		return time / 60;
+	}
+
+	private Double convertMinutetoSecond(Double time) {
+		return time * 60;
+	}
+
+	private Double convertHourtoSecond(Double time) {
+		return time * 3600;
+	}
+
+	private Double convertHourtoMinute(Double time) {
+		return time * 60;
+	}
+
 }

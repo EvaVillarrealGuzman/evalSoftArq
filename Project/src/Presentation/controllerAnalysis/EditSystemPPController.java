@@ -144,5 +144,9 @@ public class EditSystemPPController extends Controller {
 	private void setModel(DomainModel.AnalysisEntity.System pmodel) {
 		this.getManager().setSystem(pmodel);
 	}
+	
+	public Boolean isConnection(){
+		return this.getManager().isConnection();
+	}
 
 }

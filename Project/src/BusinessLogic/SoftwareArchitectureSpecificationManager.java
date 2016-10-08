@@ -20,7 +20,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
+import DataManager.HibernateUtil;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDJoin;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
@@ -58,11 +60,25 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private Set<PathElement> pathElements = new HashSet<PathElement>();
 	private Set<Responsibility> responsibilities = new HashSet<Responsibility>();
 	private CompositeComponent child;
+	private DatabaseConnection db;
 	
 
 	/**
 	 * Getters and Setters
 	 */
+	public DatabaseConnection getDb() {
+		if (db == null) {
+			synchronized (DatabaseConnection.class) {
+				db = new DatabaseConnection();
+			}
+		}
+		return db;
+	}
+
+	public void setDb(DatabaseConnection db) {
+		this.db = db;
+	}
+	
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -633,6 +649,20 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		}else{
 			return false;
 		}
+	}
+	
+	/**
+	 * Return if connection with database is success
+	 * 
+	 * @return
+	 */
+	public Boolean isConnection() {
+		if (HibernateUtil.getSession().isOpen()) {
+			HibernateUtil.getSession().close();
+		}
+		HibernateUtil.initialize(this.getDb());
+		HibernateUtil hu = new HibernateUtil();
+		return hu.isConnection();
 	}
 	
 }

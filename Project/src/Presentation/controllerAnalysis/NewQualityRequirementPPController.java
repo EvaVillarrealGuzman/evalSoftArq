@@ -3,6 +3,7 @@ package Presentation.controllerAnalysis;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 import BusinessLogic.AnalysisManager;
+import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Artifact;
 import DomainModel.AnalysisEntity.ArtifactType;
 import DomainModel.AnalysisEntity.Environment;
@@ -289,6 +290,10 @@ public class NewQualityRequirementPPController extends Controller {
 		}
 
 		return true;
+	}
+	
+	public Boolean isConnection(){
+		return this.getManager().isConnection();
 	}
 
 }

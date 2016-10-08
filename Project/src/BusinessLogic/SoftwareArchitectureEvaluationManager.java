@@ -1,31 +1,22 @@
 package BusinessLogic;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.text.Document;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.lucene.DocumentBuilder;
 
+import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
+import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Metric;
-import DomainModel.AnalysisEntity.QualityAttribute;
-import DomainModel.AnalysisEntity.QualityRequirement;
-import DomainModel.AnalysisEntity.StimulusSourceType;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.ReportsEntity.Indicator;
 import DomainModel.ReportsEntity.ResponsabilityIndicator;
@@ -51,12 +42,25 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	private DomainModel.AnalysisEntity.System system;
 	public static final String SEPARATOR = ";";
 	public static final String QUOTE = "\"";
-	private Simulator simulator;
-	TransformerSimulator pluginTS;
+	private DatabaseConnection db;
+	private TransformerSimulator pluginTS;
 
 	/**
 	 * Getters and Setters
 	 */
+	public DatabaseConnection getDb() {
+		if (db == null) {
+			synchronized (DatabaseConnection.class) {
+				db = new DatabaseConnection();
+			}
+		}
+		return db;
+	}
+
+	public void setDb(DatabaseConnection db) {
+		this.db = db;
+	}
+
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -303,18 +307,26 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	}
 
 	public Boolean transformer(String inputPath) {
-		String outputPath = Platform.getInstallLocation().getURL().getPath()+"plugins/UCM2DEVS";
+		String outputPath = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
 		return this.getPluginTS().callTransformer(inputPath, outputPath.substring(1, outputPath.length()));
 	}
 
 	public Boolean simulator() {
-		convertUnit();
-
 		return this.getPluginTS().callSimulator();
 	}
 
-	private void convertUnit() {
-
+	/**
+	 * Return if connection with database is success
+	 * 
+	 * @return
+	 */
+	public Boolean isConnection() {
+		if (HibernateUtil.getSession().isOpen()) {
+			HibernateUtil.getSession().close();
+		}
+		HibernateUtil.initialize(this.getDb());
+		HibernateUtil hu = new HibernateUtil();
+		return hu.isConnection();
 	}
 
 }

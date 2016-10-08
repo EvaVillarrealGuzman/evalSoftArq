@@ -1,6 +1,7 @@
 package Presentation.controllerAnalysis;
 
 import BusinessLogic.AnalysisManager;
+import DataManager.HibernateUtil;
 import Presentation.Controller;
 import Presentation.preferenceAnalysis.NewSystemPreferencePage;
 import Presentation.preferences.Messages;
@@ -102,4 +103,8 @@ public class NewSystemPPController extends Controller {
 		return true;
 	}
 
+	public Boolean isConnection(){
+		return this.getManager().isConnection();
+	}
+	
 }

@@ -20,10 +20,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerAnalysis.EditSystemPPController;
-import Presentation.preferences.PreferenceConstants;
 import Presentation.preferences.Messages;
 
 /**
@@ -79,7 +77,11 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
-		try {
+		if (viewController.isConnection()) {
+			if (!viewController.isConnection()) {
+				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
+			}
+
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -193,12 +195,12 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			});
 
 			this.prepareView(0);
-
-		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
+			return new Composite(parent, SWT.NULL);
+		} else {
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
 
-		return new Composite(parent, SWT.NULL);
+		return null;
 	}
 
 	/*
@@ -322,7 +324,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog") );
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
 			pabm = 3;
 		}
 		switch (pabm) {

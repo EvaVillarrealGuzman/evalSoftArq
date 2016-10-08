@@ -61,6 +61,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		viewController = new SoftwareArchitectureEvaluationPPController();
 		this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:48
+		this.getViewController().setForm(this);
 	}
 
 	/*
@@ -80,8 +81,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
-		try {
-			this.getViewController().setForm(this);
+		if (viewController.isConnection()) {
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
@@ -231,11 +231,12 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			});
 
 			this.prepareView(1);
-		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
+			return new Composite(parent, SWT.NULL);
+		} else {
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
 
-		return new Composite(parent, SWT.NULL);
+		return null;
 
 	}
 

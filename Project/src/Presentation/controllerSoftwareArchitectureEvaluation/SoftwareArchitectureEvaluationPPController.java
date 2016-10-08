@@ -89,16 +89,20 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	public void evaluate() {
 		try {
 			TransformerSimulator pluginTS = new TransformerSimulator();
-			String chequerUCMResult = manager
-					.chequerUCM("C:/Users/Usuario-Pc/git/transformador/src/Test/chequerUCMTest/UCM/prueba8.jucm");
+
+			TableItem item = this.getForm().getTable().getItem(this.getForm().getTable().getSelectionIndex());
+			String UCMpath = item.getText(2) + "\\" + item.getText(1);
+
+			String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
+
 			if (chequerUCMResult.equals("")) {
-				if (manager.transformer("C:/Users/Usuario-Pc/git/DEVS-TS/DEVS-TS/src/Test/cs-pf.jucm")) {
-					if (manager.simulator()) {
+				if (this.getManager().transformer(UCMpath)) {
+					if (this.getManager().simulator()) {
 						this.createSuccessDialog("The simulation is successful");
-						manager.setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) form
-								.getCboSystem().getSelection()).getFirstElement());
-						manager.createSimulator(form.getSimulationTime().getStringValue());
-						manager.convertCSVToTable(
+						this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
+								.getForm().getCboSystem().getSelection()).getFirstElement());
+						this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue());
+						this.getManager().convertCSVToTable(
 								"C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
 					} else {
 						this.createErrorDialog("The simulator is not successful");
@@ -111,7 +115,6 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			}
 		} catch (IOException e) {
 		}
-
 	}
 
 	/**
@@ -137,6 +140,10 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 
 		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
 				namePath.substring(0, namePath.lastIndexOf("\\")), });
+	}
+
+	public Boolean isConnection() {
+		return this.getManager().isConnection();
 	}
 
 }

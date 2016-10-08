@@ -188,7 +188,9 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		} else {
 			createErrorDialog(Messages.getString("UCM2DEVS_UCMNotExists_ErrorDialog"));
 		}
-
 	}
 
+	public Boolean isConnection() {
+		return this.getManager().isConnection();
+	}
 }

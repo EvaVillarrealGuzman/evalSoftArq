@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.hibernate.exception.JDBCConnectionException;
 
 import DomainModel.AnalysisEntity.Metric;
 import DomainModel.AnalysisEntity.QualityAttribute;
@@ -81,6 +80,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		noDefaultAndApplyButton();
 		viewController = new NewQualityRequirementPPController();
 		this.setViewController(viewController);
+		this.getViewController().setForm(this);
 	}
 
 	/*
@@ -100,8 +100,10 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
-		try {
-			this.getViewController().setForm(this);
+		if (viewController.isConnection()) {
+			if (!viewController.isConnection()) {
+				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
+			}
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
@@ -434,11 +436,12 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			});
 
 			this.prepareView(0);
-
-		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
+			return new Composite(parent, SWT.NULL);
+		} else {
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
-		return new Composite(parent, SWT.NULL);
+
+		return null;
 	}
 
 	/*

@@ -24,7 +24,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPPController;
 import Presentation.preferences.Messages;
@@ -65,6 +64,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 		viewController = new SoftwareArchitectureSpecificationPPController();
 		this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:48
+		this.getViewController().setForm(this);
 	}
 
 	/*
@@ -84,8 +84,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	 * .eclipse.swt.widgets.Composite)
 	 */
 	protected Control createContents(Composite parent) {
-		try {
-			this.getViewController().setForm(this);
+
+		if (viewController.isConnection()) {
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
@@ -262,12 +262,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			});
 
 			this.prepareView();
-		} catch (JDBCConnectionException e) {
-			viewController.createErrorDialog(Messages.getString("UCM2DEVS_Postgres_ErrorDialog"));
+			return new Composite(parent, SWT.NULL);
+		} else {
+			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
-
-		return new Composite(parent, SWT.NULL);
-
+	
+		return null;
 	}
 
 	/*

@@ -378,5 +378,9 @@ public class EditQualityRequirementPPController extends Controller {
 		this.getFormSearch().getTxtValueResponseMeasure().setStringValue(this.getManager().getValueResponseMeasure());
 		this.getFormSearch().getCmbUnit().setSelection(new StructuredSelection(this.getManager().getUnit()));
 	}
+	
+	public Boolean isConnection(){
+		return this.getManager().isConnection();
+	}
 
 }

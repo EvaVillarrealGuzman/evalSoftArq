@@ -6,7 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
+import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Artifact;
 import DomainModel.AnalysisEntity.ArtifactType;
 import DomainModel.AnalysisEntity.Environment;
@@ -40,6 +42,7 @@ public class AnalysisManager extends HibernateManager {
 	private DomainModel.AnalysisEntity.System system;
 	private QualityRequirement qualityRequirement;
 	private static AnalysisManager manager;
+	private DatabaseConnection db;
 
 	/**
 	 * Builder
@@ -63,6 +66,19 @@ public class AnalysisManager extends HibernateManager {
 	/**
 	 * Getters and Setters
 	 */
+	public DatabaseConnection getDb() {
+		if (db == null) {
+			synchronized (DatabaseConnection.class) {
+				db = new DatabaseConnection();
+			}
+		}
+		return db;
+	}
+
+	public void setDb(DatabaseConnection db) {
+		this.db = db;
+	}
+	
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -594,4 +610,18 @@ public class AnalysisManager extends HibernateManager {
 
 	}
 
+	/**
+	 * Return if connection with database is success
+	 * 
+	 * @return
+	 */
+	public Boolean isConnection() {
+		if (HibernateUtil.getSession().isOpen()) {
+			HibernateUtil.getSession().close();
+		}
+		HibernateUtil.initialize(this.getDb());
+		HibernateUtil hu = new HibernateUtil();
+		return hu.isConnection();
+	}
+	
 }

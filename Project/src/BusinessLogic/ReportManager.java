@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
+import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
@@ -26,10 +28,24 @@ public class ReportManager extends HibernateManager {
 	private Architecture architecture;
 	private Map parameters = new HashMap();
 	private String archive;
+	private DatabaseConnection db;
 
 	/**
 	 * Getters and Setters
 	 */
+	public DatabaseConnection getDb() {
+		if (db == null) {
+			synchronized (DatabaseConnection.class) {
+				db = new DatabaseConnection();
+			}
+		}
+		return db;
+	}
+
+	public void setDb(DatabaseConnection db) {
+		this.db = db;
+	}
+	
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -151,6 +167,20 @@ public class ReportManager extends HibernateManager {
 		return arrayQualityAttribute;
 	}
 
+	/**
+	 * Return if connection with database is success
+	 * 
+	 * @return
+	 */
+	public Boolean isConnection() {
+		if (HibernateUtil.getSession().isOpen()) {
+			HibernateUtil.getSession().close();
+		}
+		HibernateUtil.initialize(this.getDb());
+		HibernateUtil hu = new HibernateUtil();
+		return hu.isConnection();
+	}
+	
 	/**
 	 * Agrega un parametro al reporte, este parametro debe coincidir con los
 	 * parametros previamente creados en el reporte

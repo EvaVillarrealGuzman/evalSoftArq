@@ -43,6 +43,9 @@ public class SystemConfigurationManager extends HibernateManager {
 		return manager;
 	}
 
+	/**
+	 * Getters and Setters
+	 */
 	public DatabaseConnection getDb() {
 		if (db == null) {
 			synchronized (DatabaseConnection.class) {
@@ -52,9 +55,6 @@ public class SystemConfigurationManager extends HibernateManager {
 		return db;
 	}
 
-	/**
-	 * Getters and Setters
-	 */
 	public void setDb(DatabaseConnection db) {
 		this.db = db;
 	}
@@ -132,7 +132,7 @@ public class SystemConfigurationManager extends HibernateManager {
 	 */
 	private void dataInitialization() {
 		List<QualityAttribute> list = this.listQualityAttribute();
-		if (list!= null && list.size() == 0) {
+		if (list != null && list.size() == 0) {
 			Data.initialize();
 		}
 	}
