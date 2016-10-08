@@ -8,6 +8,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.SoftwareArchitectureEvaluationManager;
+import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Main.TransformerSimulator;
 import Presentation.Controller;
@@ -90,7 +91,8 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		try {
 			TransformerSimulator pluginTS = new TransformerSimulator();
 
-			TableItem item = this.getForm().getTable().getItem(this.getForm().getTable().getSelectionIndex());
+			TableItem item = this.getForm().getTableSoftArc()
+					.getItem(this.getForm().getTableSoftArc().getSelectionIndex());
 			String UCMpath = item.getText(2) + "\\" + item.getText(1);
 
 			String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
@@ -118,14 +120,14 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	}
 
 	/**
-	 * Sets the model table of the quality requirements of a specific system
+	 * Sets the model table of the software architecture of a specific system
 	 * 
 	 * @param ptype
 	 */
 	public void setModelPaths(DomainModel.AnalysisEntity.System ptype) {
 		this.getManager().setSystem(ptype);
-		while (this.getForm().getTable().getItems().length > 0) {
-			this.getForm().getTable().remove(0);
+		while (this.getForm().getTableSoftArc().getItems().length > 0) {
+			this.getForm().getTableSoftArc().remove(0);
 		}
 		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture dp : this.getManager().getArchitectures()) {
@@ -134,8 +136,33 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		}
 	}
 
+	/**
+	 * Sets the model table of the quality requirements of a specific system
+	 * 
+	 * @param ptype
+	 */
+	public void setModelQualityRequirement(DomainModel.AnalysisEntity.System ptype) { // NOPMD
+																						// by
+																						// Usuario-Pc
+																						// on
+																						// 10/06/16
+																						// 21:46
+		this.getManager().setSystem(ptype);
+		while (this.getForm().getTableQR().getItems().length > 0) {
+			this.getForm().getTableQR().remove(0);
+		}
+		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
+			if (dp.isState()) {
+				TableItem item = new TableItem(this.getForm().getTableQR(), SWT.NONE);
+				item.setData(dp);
+				item.setText(new String[] { dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
+						dp.getQualityScenario().getDescription().toString() });
+			}
+		}
+	}
+
 	public void addToTable(String namePath) {
-		TableItem item = new TableItem(this.getForm().getTable(), SWT.NONE);
+		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
 		item.setData(namePath);
 
 		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),

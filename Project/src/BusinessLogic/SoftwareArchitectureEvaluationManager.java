@@ -17,6 +17,7 @@ import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Metric;
+import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.ReportsEntity.Indicator;
 import DomainModel.ReportsEntity.ResponsabilityIndicator;
@@ -143,6 +144,12 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 	}
 
+	
+	public Set<QualityRequirement> getQualityRequirements() {
+		return this.getSystem().getQualityRequirements();
+	}
+
+	
 	public boolean existSystemTrueWithArchitecture() { // NOPMD by
 		// Usuario-Pc
 		// on

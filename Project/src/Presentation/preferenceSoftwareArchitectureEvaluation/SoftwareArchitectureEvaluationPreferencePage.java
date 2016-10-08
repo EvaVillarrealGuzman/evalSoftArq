@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.hibernate.exception.JDBCConnectionException;
 
 import Presentation.controllerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPPController;
 import Presentation.preferences.DoubleFieldEditor;
@@ -45,11 +44,16 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	private SoftwareArchitectureEvaluationPPController viewController;
 	private Composite cSystemName;
 	private GridData gridData;
-	private TableViewer tblViewerQualityRequirement;
-	private Table table;
-	private TableColumn colObject;
-	private TableColumn colPath;
-	private TableColumn colName;
+	private TableViewer tblViewerSoftArc;
+	private TableViewer tblViewerQR;
+	private Table tableSoftArc;
+	private Table tableQR;
+	private TableColumn colObjectQR;
+	private TableColumn colObjectSoftArc;
+	private TableColumn colPathQR;
+	private TableColumn colPathSoftArc;
+	private TableColumn colNameQR;
+	private TableColumn colNameSoftArc;
 	private DoubleFieldEditor simulationTime;
 
 	/**
@@ -123,10 +127,10 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
 
-			Group gQualityRequirement = new Group(parent, SWT.NONE);
-			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText(Messages.getString("UCM2DEVS_SoftArcSpec_Group"));
-			gQualityRequirement.setLayout(layout);
+			Group gSoftwareArchitecture = new Group(parent, SWT.NONE);
+			gSoftwareArchitecture.setLayoutData(gridData);
+			gSoftwareArchitecture.setText(Messages.getString("UCM2DEVS_SoftArcSpec_Group"));
+			gSoftwareArchitecture.setLayout(layout);
 
 			// Create column names
 			String[] columnNames = new String[] { Messages.getString("UCM2DEVS_Object_Column"),
@@ -134,50 +138,107 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			// Create styles
 			int style = SWT.FULL_SELECTION | SWT.BORDER;
 			// create table
-			table = new Table(gQualityRequirement, style);
+			tableSoftArc = new Table(gSoftwareArchitecture, style);
 			TableLayout tableLayout = new TableLayout();
-			table.setLayout(tableLayout);
+			tableSoftArc.setLayout(tableLayout);
 			gridData = new GridData(GridData.FILL_BOTH);
 			gridData.horizontalSpan = 4;
-			table.setLayoutData(gridData);
-			table.setLinesVisible(true);
-			table.setHeaderVisible(true);
+			tableSoftArc.setLayoutData(gridData);
+			tableSoftArc.setLinesVisible(true);
+			tableSoftArc.setHeaderVisible(true);
 			// Create columns
-			colObject = new TableColumn(table, SWT.NONE);
-			colObject.setWidth(0);
-			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));
+			colObjectSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
+			colObjectSoftArc.setWidth(0);
+			colObjectSoftArc.setText(Messages.getString("UCM2DEVS_Object_Column"));
 
-			colName = new TableColumn(table, SWT.NONE);
-			colName.setWidth(100);
-			colName.setText(Messages.getString("UCM2DEVS_Name_Column"));
+			colNameSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
+			colNameSoftArc.setWidth(100);
+			colNameSoftArc.setText(Messages.getString("UCM2DEVS_Name_Column"));
 
-			colPath = new TableColumn(table, SWT.NONE);
-			colPath.setWidth(300);
-			colPath.setText(Messages.getString("UCM2DEVS_Path_Column"));
+			colPathSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
+			colPathSoftArc.setWidth(300);
+			colPathSoftArc.setText(Messages.getString("UCM2DEVS_Path_Column"));
 
 			for (int i = 0; i < 8; i++) {
-				TableItem item = new TableItem(table, SWT.NONE);
+				TableItem item = new TableItem(tableSoftArc, SWT.NONE);
 				item.setText("Item " + i);
 			}
 
 			// Create TableViewer
-			tblViewerQualityRequirement = new TableViewer(table);
-			tblViewerQualityRequirement.setUseHashlookup(true);
-			tblViewerQualityRequirement.setColumnProperties(columnNames);
+			tblViewerSoftArc = new TableViewer(tableSoftArc);
+			tblViewerSoftArc.setUseHashlookup(true);
+			tblViewerSoftArc.setColumnProperties(columnNames);
 
 			// Create the cell editors
-			CellEditor[] editors = new CellEditor[columnNames.length];
-			editors[0] = null;
-			editors[1] = null;
-			editors[2] = null;
+			CellEditor[] editorsSoftArc = new CellEditor[columnNames.length];
+			editorsSoftArc[0] = null;
+			editorsSoftArc[1] = null;
+			editorsSoftArc[2] = null;
 
 			// Assign the cell editors to the viewer
-			tblViewerQualityRequirement.setCellEditors(editors);
+			tblViewerSoftArc.setCellEditors(editorsSoftArc);
 
-			table.addSelectionListener(new SelectionAdapter() {
+			tableSoftArc.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					table.showSelection();
+					tableSoftArc.showSelection();
+					prepareView(3);
+				}
+			});
+
+			Group gQualityRequirement = new Group(parent, SWT.NONE);
+			gQualityRequirement.setLayoutData(gridData);
+			gQualityRequirement.setText("Quality Requirement");
+			gQualityRequirement.setLayout(layout);
+
+			// Create column names
+			String[] columnNamesQR = new String[] { Messages.getString("UCM2DEVS_Object_Column"), "Description",
+					"Quality Attribute" };
+
+			// create table
+			tableQR = new Table(gQualityRequirement, style);
+			tableQR.setLayout(tableLayout);
+			gridData = new GridData(GridData.FILL_BOTH);
+			tableQR.setLayoutData(gridData);
+			tableQR.setLinesVisible(true);
+			tableQR.setHeaderVisible(true);
+
+			// Create columns
+			colObjectQR = new TableColumn(tableQR, SWT.NONE);
+			colObjectQR.setWidth(0);
+			colObjectQR.setText(Messages.getString("UCM2DEVS_Object_Column"));
+
+			colNameQR = new TableColumn(tableQR, SWT.NONE);
+			colNameQR.setWidth(300);
+			colNameQR.setText("Description");
+
+			colPathQR = new TableColumn(tableQR, SWT.NONE);
+			colPathQR.setWidth(100);
+			colPathQR.setText("Quality Attribute");
+
+			for (int i = 0; i < 8; i++) {
+				TableItem item = new TableItem(tableQR, SWT.NONE);
+				item.setText("Item " + i);
+			}
+
+			// Create TableViewer
+			tblViewerQR = new TableViewer(tableQR);
+			tblViewerQR.setUseHashlookup(true);
+			tblViewerQR.setColumnProperties(columnNamesQR);
+
+			// Create the cell editors
+			CellEditor[] editorsQR = new CellEditor[columnNamesQR.length];
+			editorsQR[0] = null;
+			editorsQR[1] = null;
+			editorsQR[2] = null;
+
+			// Assign the cell editors to the viewer
+			tblViewerQR.setCellEditors(editorsSoftArc);
+
+			tableQR.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					tableQR.showSelection();
 					prepareView(3);
 				}
 			});
@@ -295,12 +356,20 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		this.btnEvaluate = btnEvaluate;
 	}
 
-	public Table getTable() {
-		return table;
+	public Table getTableSoftArc() {
+		return tableSoftArc;
 	}
 
-	public void setTable(Table table) {
-		this.table = table;
+	public void setTableSoftArc(Table table) {
+		this.tableSoftArc = table;
+	}
+
+	public Table getTableQR() {
+		return tableQR;
+	}
+
+	public void setTableQR(Table tableQR) {
+		this.tableQR = tableQR;
 	}
 
 	/**
@@ -332,23 +401,23 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		switch (pabm) {
 		case 0:// No system with architecture
 			this.getCboSystem().getCombo().setEnabled(false);
-			this.getTable().setEnabled(false);
+			this.getTableSoftArc().setEnabled(false);
+			this.getTableQR().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
-			// TODO
 			this.getBtnEvaluate().setEnabled(false);
-
 			break;
 		case 1: // There are systems with architecture
 			this.getCboSystem().getCombo().setEnabled(true);
-			this.getTable().setEnabled(false);
+			this.getTableSoftArc().setEnabled(false);
+			this.getTableQR().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
-
 			break;
 		case 2: // With system selected
-			this.getTable().setEnabled(true);
+			this.getTableSoftArc().setEnabled(true);
+			this.getTableQR().setEnabled(true);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 
@@ -367,15 +436,26 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 * prepare the view
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
-		this.fillTable();
+		this.fillTableSoftArc();
+		this.fillTableQR();
 	}
 
 	/**
 	 * Fill table with system's quality requirements (quality attribute,
 	 * description and condition)
 	 */
-	public void fillTable() {
+	public void fillTableSoftArc() {
 		this.getViewController().setModelPaths(
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+						.getFirstElement());
+	}
+
+	/**
+	 * Fill table with system's quality requirements (quality attribute,
+	 * description and condition)
+	 */
+	public void fillTableQR() {
+		this.getViewController().setModelQualityRequirement(
 				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
 						.getFirstElement());
 	}
