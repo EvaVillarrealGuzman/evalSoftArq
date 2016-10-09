@@ -155,8 +155,8 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			if (dp.isState()) {
 				TableItem item = new TableItem(this.getForm().getTableQR(), SWT.NONE);
 				item.setData(dp);
-				item.setText(new String[] { dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
-						dp.getQualityScenario().getDescription().toString() });
+				item.setText(new String[] { null, dp.getQualityScenario().getDescription().toString(),
+						dp.getQualityScenario().getQualityAttribute().toString() });
 			}
 		}
 	}
@@ -165,7 +165,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
 		item.setData(namePath);
 
-		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
+		item.setText(new String[] { "", namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
 				namePath.substring(0, namePath.lastIndexOf("\\")), });
 	}
 

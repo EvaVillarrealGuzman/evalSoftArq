@@ -162,6 +162,32 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @return True if there are systems whose state==true,
+	 *         qualityRequirement!=empty and qualityRequirement.state==true,
+	 *         else return false
+	 * 
+	 */
+	public boolean existSystemTrueWithQualityRequirementTrue() { // NOPMD by
+																	// Usuario-Pc
+																	// on
+																	// 10/06/16
+																	// 21:44
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			if (auxTipo.getQualityRequirements().isEmpty() == false) {
+				Iterator it = auxTipo.getQualityRequirements().iterator();
+				while (it.hasNext()) {
+					QualityRequirement q = (QualityRequirement) it.next();
+					if (q.isState()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 	public Architecture getArchitecture() {
 		Iterator it = this.getSystem().getArchitectures().iterator();
