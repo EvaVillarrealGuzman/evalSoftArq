@@ -1,4 +1,4 @@
-package DomainModel.ReportsEntity;
+package DomainModel.SoftwareArchitectureEvaluationEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,22 +7,24 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "SIMULATIONPARAMETER")
-public class SimulationParameter implements Comparable{
-
-	//Attributes
+@Table(name = "INDICATORTYPE")
+public class IndicatorType implements Comparable{
+		
+		//Attributes
 		@Id
 	    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 		private int id;
 		
-		private Double simulationTime;
-		private Double requestAverageTime;
+		private String name;
 		
-	
+		public IndicatorType(String pname) {
+			this.name = pname;
+		}
+
 		//CompareTo
 		@Override
 	    public int compareTo(Object p) {
-	        SimulationParameter t = (SimulationParameter) p;
+	        IndicatorType t = (IndicatorType) p;
 	        return this.toString().compareTo(t.toString());
 	    }
 }

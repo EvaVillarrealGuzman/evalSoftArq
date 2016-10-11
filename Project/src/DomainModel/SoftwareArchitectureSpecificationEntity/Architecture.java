@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import DomainModel.ReportsEntity.Simulator;
+import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 
 /**
  * This class defines an architecture view for a specific system

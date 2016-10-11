@@ -1,4 +1,4 @@
-package DomainModel.ReportsEntity;
+package DomainModel.SoftwareArchitectureEvaluationEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

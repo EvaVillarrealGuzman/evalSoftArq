@@ -1,4 +1,4 @@
-package DomainModel.ReportsEntity;
+package DomainModel.SoftwareArchitectureEvaluationEntity;
 
 import java.sql.Date;
 import java.util.HashSet;
@@ -22,9 +22,7 @@ public class Run implements Comparable { // NOPMD by Usuario-Pc on 10/06/16 21:5
 	private int id;
 
 	private Date date;
-	private Date hour;
 	private Double simulationHorizon;
-	private Double seed;
 
 	//VER QUE TAMBIÉN PUEDE SER CERO
 	@OneToMany(targetEntity = Indicator.class, cascade = CascadeType.ALL)

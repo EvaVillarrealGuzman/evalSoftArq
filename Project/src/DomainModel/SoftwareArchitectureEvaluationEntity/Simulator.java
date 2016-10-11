@@ -1,4 +1,4 @@
-package DomainModel.ReportsEntity;
+package DomainModel.SoftwareArchitectureEvaluationEntity;
 
 import java.util.HashSet;
 import java.util.Set;

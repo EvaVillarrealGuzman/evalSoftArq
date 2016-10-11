@@ -83,13 +83,13 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.SimpleComponent.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.Architecture.class);
 
-			conf.addAnnotatedClass(DomainModel.ReportsEntity.Indicator.class);
-			conf.addAnnotatedClass(DomainModel.ReportsEntity.IndicatorType.class);
-			conf.addAnnotatedClass(DomainModel.ReportsEntity.ResponsabilityIndicator.class);
-			conf.addAnnotatedClass(DomainModel.ReportsEntity.SystemIndicator.class);
-			conf.addAnnotatedClass(DomainModel.ReportsEntity.SimulationParameter.class);
-			conf.addAnnotatedClass(DomainModel.ReportsEntity.Simulator.class);
-			conf.addAnnotatedClass(DomainModel.ReportsEntity.Run.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.Indicator.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.IndicatorType.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.ResponsabilityIndicator.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.SimulationParameter.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.Simulator.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.Run.class);
 
 			try {
 				psessionFactory = conf.buildSessionFactory();
