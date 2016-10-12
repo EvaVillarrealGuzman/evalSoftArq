@@ -15,6 +15,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import BusinessLogic.SoftwareArchitectureSpecificationManager;
+import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
 import Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage;
@@ -82,6 +83,22 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	}
 
 	/**
+	 * Sets the model of unit combo
+	 */
+	public void setModelUnit() {
+		this.getForm().getCmbUnit().setInput(getManager().getComboModelUnit());
+	}
+	
+	public void setModelUnit(ComboViewer pcmb) {
+		this.setModelUnit(
+				(Unit) ((IStructuredSelection) pcmb.getSelection()).getFirstElement());
+	}
+	
+	private void setModelUnit(Unit pmodel) {
+		this.getManager().setUnit(pmodel);
+	}
+	
+	/**
 	 * Update the system with the UCM path and prepare the view
 	 */
 	public Boolean save() {
@@ -89,7 +106,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		err = this.setSystem();
 		if (err == 0) {
 			this.getForm().clearView();
-			this.getForm().prepareView();
+			this.getForm().prepareView(0);
 			return this.getManager().updateSystem();
 		}
 		return null;

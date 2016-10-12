@@ -15,6 +15,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,6 +25,8 @@ import org.w3c.dom.NodeList;
 import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
+import DomainModel.AnalysisEntity.Metric;
+import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDJoin;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
@@ -51,6 +55,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	 * Attributes
 	 */
 	private DomainModel.AnalysisEntity.System system;
+	private Unit unit;
 	Document doc;
 	private DefaultTreeModel model;
 	//private Architecture arch;
@@ -85,6 +90,14 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 	public DomainModel.AnalysisEntity.System getSystem() {
 		return this.system;
+	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 
 	/**
@@ -128,6 +141,29 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
 
+	/**
+	 * 
+	 * @return ComboBoxModel with unit names 
+	 */
+	public Unit[] getComboModelUnit() { 
+		ArrayList<Unit> units = new ArrayList<Unit>();
+		for (Unit auxTipo : this.listUnit()) {
+			units.add(auxTipo);
+		}
+		Unit[] arrayUnit = new Unit[units
+				.size()];
+		units.toArray(arrayUnit);
+		return arrayUnit;
+	}
+	
+	/**
+	 * 
+	 * @return List<Unit> with the units names
+	 */
+	public List<Unit> listUnit() {
+		return this.listClass(Unit.class, "name");
+	}
+	
 	public Boolean updateSystem() {
 		return this.updateObject(this.getSystem());
 	}
@@ -385,7 +421,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 					Responsibility child = new Responsibility(this.translateNameSimpleElement(idNode));
 					saveObject(child);
-					SpecificationParameter sp = new SpecificationParameter();
 
 					NodeList metadatasList = eResponsability.getElementsByTagName("metadata");
 
@@ -396,18 +431,40 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 						String metadataName = metadata.getAttribute("name");
 
 						if (metadataName.equals("MeanExecutionTime")) {
-							sp.setMeanExecutionTime(Double.parseDouble(metadata.getAttribute("value")));
+							SpecificationParameter sp = new SpecificationParameter();
+							sp.setMetric((Metric) this.listMetric("Mean Execution Time").get(0));
+							sp.setValue(Double.parseDouble(metadata.getAttribute("value")));
+							sp.setUnit(this.getUnit());
+							saveObject(sp);
+							child.getSpecificationParameter().add(sp);
+							//sp.setMeanExecutionTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanDowntime")) {
-							sp.setMeanDownTime(Double.parseDouble(metadata.getAttribute("value")));
+							SpecificationParameter sp = new SpecificationParameter();
+							sp.setMetric((Metric) this.listMetric("Mean Downtime").get(0));
+							sp.setValue(Double.parseDouble(metadata.getAttribute("value")));
+							sp.setUnit(this.getUnit());
+							saveObject(sp);
+							child.getSpecificationParameter().add(sp);
+							//sp.setMeanDownTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanRecoveryTime")) {
-							sp.setMeanRecoveryTime(Double.parseDouble(metadata.getAttribute("value")));
+							SpecificationParameter sp = new SpecificationParameter();
+							sp.setMetric((Metric) this.listMetric("Mean Recovery Time").get(0));
+							sp.setValue(Double.parseDouble(metadata.getAttribute("value")));
+							sp.setUnit(this.getUnit());
+							saveObject(sp);
+							child.getSpecificationParameter().add(sp);
+							//sp.setMeanRecoveryTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanTimeBFail")) {
-							sp.setMeanTimeBFail(Double.parseDouble(metadata.getAttribute("value")));
+							SpecificationParameter sp = new SpecificationParameter();
+							sp.setMetric((Metric) this.listMetric("Mean Time B Fail").get(0));
+							sp.setValue(Double.parseDouble(metadata.getAttribute("value")));
+							sp.setUnit(this.getUnit());
+							saveObject(sp);
+							child.getSpecificationParameter().add(sp);
+							//sp.setMeanTimeBFail(Double.parseDouble(metadata.getAttribute("value")));
 						}
 						
 					}
-					saveObject(sp);
-					child.setSpecificationParameter(sp);
 					updateObject(child);
 					//responsibilities.add(child);
 					pathElements.add(child);
@@ -517,6 +574,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 	}
+	
+	public List listMetric(String pmetric) {
+		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
+		return crit.list();
+	}
+
 
 	/**
 	 * Obtiene los elementos predecesores de un elemento particular

@@ -323,7 +323,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public Responsibility getResponsability(String pname) {
 		for (Responsibility dp : this.getResponsibilities()) {
-			if (dp.getName().equals("r" + pname)) {
+			if (dp.getName().equals(pname)) {
 				return dp;
 			}
 		}

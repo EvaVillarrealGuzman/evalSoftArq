@@ -3,7 +3,11 @@ package DomainModel.SoftwareArchitectureSpecificationEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import DomainModel.AnalysisEntity.Metric;
+import DomainModel.AnalysisEntity.Unit;
 
 /**
  * This class defines parameters for a specific responsibility
@@ -19,13 +23,21 @@ public class SpecificationParameter {
 	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
 	
-	private double meanExecutionTime;
+	//private double meanExecutionTime;
 	
-	private double meanRecoveryTime;
+	//private double meanRecoveryTime;
 	
-	private double meanDownTime;
+	//private double meanDownTime;
 	
-	private double meanTimeBFail;
+	//private double meanTimeBFail;
+	
+	@ManyToOne(targetEntity = Unit.class)
+	private Unit unit;
+	
+	@ManyToOne(targetEntity = Metric.class)
+	private Metric metric;
+	
+	private double value;
 	
 	public SpecificationParameter() {
 		super();
@@ -39,36 +51,60 @@ public class SpecificationParameter {
 		this.id = id;
 	}
 
-	public double getMeanExecutionTime() {
-		return meanExecutionTime;
+//	public double getMeanExecutionTime() {
+//		return meanExecutionTime;
+//	}
+//
+//	public void setMeanExecutionTime(double meanExecutionTime) {
+//		this.meanExecutionTime = meanExecutionTime;
+//	}
+//
+//	public double getMeanRecoveryTime() {
+//		return meanRecoveryTime;
+//	}
+//
+//	public void setMeanRecoveryTime(double meanRecoveryTime) {
+//		this.meanRecoveryTime = meanRecoveryTime;
+//	}
+//
+//	public double getMeanDownTime() {
+//		return meanDownTime;
+//	}
+//
+//	public void setMeanDownTime(double meanDownTime) {
+//		this.meanDownTime = meanDownTime;
+//	}
+//
+//	public double getMeanTimeBFail() {
+//		return meanTimeBFail;
+//	}
+//
+//	public void setMeanTimeBFail(double meanTimeBFail) {
+//		this.meanTimeBFail = meanTimeBFail;
+//	}
+
+	public Unit getUnit() {
+		return unit;
 	}
 
-	public void setMeanExecutionTime(double meanExecutionTime) {
-		this.meanExecutionTime = meanExecutionTime;
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 
-	public double getMeanRecoveryTime() {
-		return meanRecoveryTime;
+	public Metric getMetric() {
+		return metric;
 	}
 
-	public void setMeanRecoveryTime(double meanRecoveryTime) {
-		this.meanRecoveryTime = meanRecoveryTime;
+	public void setMetric(Metric metric) {
+		this.metric = metric;
 	}
 
-	public double getMeanDownTime() {
-		return meanDownTime;
+	public double getValue() {
+		return value;
 	}
 
-	public void setMeanDownTime(double meanDownTime) {
-		this.meanDownTime = meanDownTime;
-	}
-
-	public double getMeanTimeBFail() {
-		return meanTimeBFail;
-	}
-
-	public void setMeanTimeBFail(double meanTimeBFail) {
-		this.meanTimeBFail = meanTimeBFail;
+	public void setValue(double value) {
+		this.value = value;
 	}
 	
 }

@@ -46,6 +46,11 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		Metric m7 = new Metric("System Throughput");
 		Metric m8 = new Metric("System Turnaraound Time");
 		Metric m9 = new Metric("System Failures");
+		Metric m10 = new Metric("Mean Execution Time");
+		Metric m11 = new Metric("Mean Downtime");
+		Metric m12 = new Metric("Mean Recovery Time");
+		Metric m13 = new Metric("Mean Time B Fail");
+		
 		manager.saveObject(m1);
 		manager.saveObject(m2);
 		manager.saveObject(m3);
@@ -55,6 +60,10 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		manager.saveObject(m7);
 		manager.saveObject(m8);
 		manager.saveObject(m9);
+		manager.saveObject(m10);
+		manager.saveObject(m11);
+		manager.saveObject(m12);
+		manager.saveObject(m13);
 		
 		TacticType tacticType1 = new TacticType("Fault detection");
 		manager.saveObject(tacticType1);

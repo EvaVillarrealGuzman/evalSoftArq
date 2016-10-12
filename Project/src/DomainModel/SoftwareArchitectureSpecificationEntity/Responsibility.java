@@ -1,7 +1,11 @@
 package DomainModel.SoftwareArchitectureSpecificationEntity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -18,9 +22,8 @@ import javax.persistence.Table;
 //@PrimaryKeyJoinColumn(name = "id")
 public class Responsibility extends PathElement {
 	
-	@OneToOne
-	//@PrimaryKeyJoinColumn
-	private SpecificationParameter specificationParameter;
+	@OneToMany(targetEntity = SpecificationParameter.class)
+	private Set<SpecificationParameter> specificationParameter = new HashSet<SpecificationParameter>();
 	
 	public Responsibility(String name) {
 		super(name);
@@ -28,14 +31,16 @@ public class Responsibility extends PathElement {
 	
 	public Responsibility() {
 	}
-	
-	public SpecificationParameter getSpecificationParameter() {
+
+	public Set<SpecificationParameter> getSpecificationParameter() {
 		return specificationParameter;
 	}
 
-	public void setSpecificationParameter(SpecificationParameter specificationParameter) {
+	public void setSpecificationParameter(Set<SpecificationParameter> specificationParameter) {
 		this.specificationParameter = specificationParameter;
 	}
+	
+	
 	
 	
 	

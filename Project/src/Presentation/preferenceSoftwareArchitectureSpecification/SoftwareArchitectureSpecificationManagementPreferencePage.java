@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import DomainModel.AnalysisEntity.QualityRequirement;
 import Presentation.controllerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPPController;
 import Presentation.preferences.Messages;
 
@@ -44,10 +45,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	private Button btnAdd;
 	private Button btnConsult;
 	private Button btnDelete;
+	private ComboViewer cmbUnit;
 	private ComboViewer cmbSystem;
 	private SoftwareArchitectureSpecificationPPController viewController;
 	private FileDialog chooseFile;
 	private Composite cSystemName;
+	private Composite cUnit;
 	private GridData gridData;
 	private TableViewer tblViewerQualityRequirement;
 	private Table table;
@@ -112,9 +115,11 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			cmbSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.setModel(cmbSystem);
-					cmbSystemItemStateChanged();
-					prepareView();
+					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != null) {
+						viewController.setModel(cmbSystem);
+						cmbSystemItemStateChanged();
+						prepareView(1);
+					}
 				}
 			});
 
@@ -234,6 +239,38 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				}
 			});
 
+			layout = new GridLayout();
+			layout.numColumns = 4;
+			parent.setLayout(layout);
+
+			cUnit = new Composite(parent, SWT.NULL);
+			cUnit.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cUnit.setLayoutData(gridData);
+
+			Label labelU = new Label(cUnit, SWT.NONE);
+			labelU.setText("Select the unit of the paramaters" + ":");
+
+			gridData = new GridData();
+			gridData.widthHint = 200;
+			gridData.grabExcessHorizontalSpace = true;
+
+			cmbUnit = new ComboViewer(cUnit, SWT.READ_ONLY);
+			cmbUnit.setContentProvider(ArrayContentProvider.getInstance());
+			cmbUnit.getCombo().setLayoutData(gridData);
+			loadComboUnit();
+			cmbUnit.getCombo().addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					if (((IStructuredSelection) cmbUnit.getSelection()).getFirstElement() != null) {
+						viewController.setModelUnit(cmbUnit);
+						prepareView(2);
+					}
+				}
+			});
+
 			gridData = new GridData();
 			gridData.horizontalSpan = 2;
 
@@ -261,12 +298,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				}
 			});
 
-			this.prepareView();
+			this.prepareView(0);
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
-	
+
 		return null;
 	}
 
@@ -348,6 +385,14 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 		this.btnDelete = btnDelete;
 	}
 
+	public ComboViewer getCmbUnit() {
+		return cmbUnit;
+	}
+
+	public void setCmbUnit(ComboViewer cmbUnit) {
+		this.cmbUnit = cmbUnit;
+	}
+
 	/**
 	 * load combo with system with state=true
 	 */
@@ -356,25 +401,60 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	}
 
 	/**
+	 * load combo with units
+	 */
+	public void loadComboUnit() {
+		this.getViewController().setModelUnit();
+	}
+
+	/**
 	 * prepare the view for the different actions that are possible
 	 * 
 	 * @param pabm
 	 */
-	public void prepareView() {
-
+	public void prepareView(int pabm) {
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
+			pabm = 3;
 		}
-		if (((IStructuredSelection) this.getCboSystem().getSelection()).getFirstElement() == null) {
+		switch (pabm) {
+		case 0: // with open the form
+			cmbSystem.getCombo().setEnabled(true);
+			table.setEnabled(false);
 			btnAdd.setEnabled(false);
 			btnDelete.setEnabled(false);
 			btnConsult.setEnabled(false);
-		} else {
+			cmbUnit.getCombo().setEnabled(false);
+			btnSave.setEnabled(false);
+			break;
+		case 1:// with system selected
+			cmbSystem.getCombo().setEnabled(true);
+			table.setEnabled(true);
 			btnAdd.setEnabled(true);
 			btnDelete.setEnabled(true);
 			btnConsult.setEnabled(true);
+			cmbUnit.getCombo().setEnabled(true);
+			btnSave.setEnabled(false);
+			break;
+		case 2: // with architecture selected
+			cmbSystem.getCombo().setEnabled(true);
+			table.setEnabled(true);
+			btnAdd.setEnabled(true);
+			btnDelete.setEnabled(true);
+			btnConsult.setEnabled(true);
+			cmbUnit.getCombo().setEnabled(true);
+			btnSave.setEnabled(true);
+			break;
+		case 3: 
+			cmbSystem.getCombo().setEnabled(false);
+			table.setEnabled(false);
+			btnAdd.setEnabled(false);
+			btnDelete.setEnabled(false);
+			btnConsult.setEnabled(false);
+			cmbUnit.getCombo().setEnabled(false);
+			btnSave.setEnabled(false);
+			break;
 		}
-
 	}
 
 	/**
