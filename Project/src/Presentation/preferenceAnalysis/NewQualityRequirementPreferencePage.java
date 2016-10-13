@@ -216,7 +216,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			cmbTypeStimulusSource.setContentProvider(ArrayContentProvider.getInstance());
 
 			txtValueStimulusSource = new StringFieldEditor(Messages.getString("UCM2DEVS_ValueStimulusSource_Label"),
-					Messages.getString("UCM2DEVS_ValueStimulusSourceLabel") + ":", gStimulusSource);
+					Messages.getString("UCM2DEVS_ValueStimulusSource_Label") + ":", gStimulusSource);
 
 			Label labelDSS = new Label(gStimulusSource, SWT.NONE);
 			labelDSS.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");

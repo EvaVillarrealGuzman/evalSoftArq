@@ -26,6 +26,7 @@ import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
+import DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
 import Main.TransformerSimulator;
 
 /**
@@ -144,17 +145,11 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 	}
 
-	
 	public Set<QualityRequirement> getQualityRequirements() {
 		return this.getSystem().getQualityRequirements();
 	}
 
-	
-	public boolean existSystemTrueWithArchitecture() { // NOPMD by
-		// Usuario-Pc
-		// on
-		// 10/06/16
-		// 21:44
+	public boolean existSystemTrueWithArchitecture() {
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getArchitectures().isEmpty() == false) {
 				return true;
@@ -162,7 +157,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @return True if there are systems whose state==true,
@@ -170,11 +165,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	 *         else return false
 	 * 
 	 */
-	public boolean existSystemTrueWithQualityRequirementTrue() { // NOPMD by
-																	// Usuario-Pc
-																	// on
-																	// 10/06/16
-																	// 21:44
+	public boolean existSystemTrueWithQualityRequirementTrue() {
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getQualityRequirements().isEmpty() == false) {
 				Iterator it = auxTipo.getQualityRequirements().iterator();
@@ -270,6 +261,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Indicator ind = new Indicator();
 		ind.setType(ptype);
 		ind.setValue(Double.parseDouble(pfields[3]));
+		ind.setUnit(this.getUnitIndicator());
 		switch (pfields[2]) {
 		case "SA":
 			ind.setMetric((Metric) this.listMetric("System Availability").get(0));
@@ -291,6 +283,16 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.updateObject(this.getSystem());
 	}
 
+	public Unit getUnitIndicator() {
+		Responsibility[] r = this.getResponsibilities();
+		Iterator it = r[0].getSpecificationParameter().iterator();
+		if (it.hasNext()) {
+			SpecificationParameter sp = (SpecificationParameter) it.next();
+			return sp.getUnit();
+		}
+		return null;
+	}
+
 	public void loadResponsabilityIndicator(String[] pfields) {
 		Indicator ind = new Indicator();
 		ResponsabilityIndicator type = new ResponsabilityIndicator(pfields[0]);
@@ -298,6 +300,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.saveObject(type);
 		ind.setType(type);
 		ind.setValue(Double.parseDouble(pfields[3]));
+		ind.setUnit(this.getUnitIndicator());
 		switch (pfields[2]) {
 		case "RDT":
 			ind.setMetric((Metric) this.listMetric("Responsibility Downtime").get(0));

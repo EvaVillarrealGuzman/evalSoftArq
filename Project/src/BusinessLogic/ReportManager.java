@@ -289,5 +289,18 @@ public class ReportManager extends HibernateManager {
 
 		return lista;
 	}
+	
+	public List<Double> listResultSimulation() {
+		List<Double> lista = new ArrayList<Double>();
+
+		for (int i = 0; i < 10; i++) {
+			Double item = new Double(9.8);
+			//item.setLocalidad("hola");
+			//item.setCantidadClientes(5);
+			lista.add(item);
+		}
+
+		return lista;
+	}
 
 }

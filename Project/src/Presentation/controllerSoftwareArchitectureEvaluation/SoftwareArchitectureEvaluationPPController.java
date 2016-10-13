@@ -88,7 +88,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	 * 
 	 * @throws IOException
 	 */
-	public Boolean evaluate() {
+	public Boolean evaluate() throws IOException {
 		if (isValidData()) {
 			try {
 				TransformerSimulator pluginTS = new TransformerSimulator();
@@ -107,7 +107,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 									.getForm().getCboSystem().getSelection()).getFirstElement());
 							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue());
 							this.getManager().convertCSVToTable(
-									"C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
+									"C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/performance.csv");
 							return true;
 						} else {
 							this.createErrorDialog("The simulator is not successful");
@@ -167,7 +167,8 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			}
 		}
 	}
-
+	
+	
 	// /**
 	// * Sets the model table of the quality requirements of a specific system
 	// *
@@ -200,7 +201,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
 		item.setData(namePath);
 
-		item.setText(new String[] { "", namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
+		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
 				namePath.substring(0, namePath.lastIndexOf("\\")), });
 	}
 

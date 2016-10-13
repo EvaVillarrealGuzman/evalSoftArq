@@ -118,6 +118,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				public void widgetSelected(SelectionEvent e) {
 					viewController.setModel(cboSystem);
 					viewController.printPrueba();
+					viewController.printReport();
 					// TODO implementar
 				}
 			});
@@ -201,8 +202,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			break;
 		case 2:// No system with simulations
 			this.getCboSystem().getCombo().setEnabled(false);
-			//TODO poner en false
-			this.getBtnViewReport().setEnabled(true);
+			this.getBtnViewReport().setEnabled(false);
 			break;
 		}
 	}

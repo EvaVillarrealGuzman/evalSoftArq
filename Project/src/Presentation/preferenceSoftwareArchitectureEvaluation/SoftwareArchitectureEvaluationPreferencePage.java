@@ -1,5 +1,7 @@
 package Presentation.preferenceSoftwareArchitectureEvaluation;
 
+import java.io.IOException;
+
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -49,7 +51,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 //	private TableColumn colDescriptionQR;
 //	private TableColumn colQualityAttributeQR;
 	private TableColumn colPathSoftArc;
-//	private TableColumn colSelectionSoftArc;
+	private TableColumn colObjectSoftArc;
 //	private TableColumn colSelectionQR;
 	private TableColumn colNameSoftArc;
 	private DoubleFieldEditor simulationTime;
@@ -148,21 +150,20 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			tableSoftArc.setLinesVisible(true);
 			tableSoftArc.setHeaderVisible(true);
 
-//			colSelectionSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
-//			colSelectionSoftArc.setWidth(50);
-//			colSelectionSoftArc.setText("");
+			colObjectSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
+			colObjectSoftArc.setWidth(0);
+			colObjectSoftArc.setText("");
 
 			colNameSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
-			colNameSoftArc.setWidth(250);
+			colNameSoftArc.setWidth(100);
 			colNameSoftArc.setText(Messages.getString("UCM2DEVS_Name_Column"));
 
 			colPathSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
-			colPathSoftArc.setWidth(100);
+			colPathSoftArc.setWidth(300);
 			colPathSoftArc.setText(Messages.getString("UCM2DEVS_Path_Column"));
 			
 			for (int i = 0; i < 8; i++) {
 				TableItem item = new TableItem(tableSoftArc, SWT.NONE);
-				item.setText("Item " + i);
 			}
 
 //			for (int i = 0; i < 8; i++) {
@@ -293,10 +294,15 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			btnEvaluate.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.evaluate()) {
-						viewController.createObjectSuccessDialog();
-					} else {
-						viewController.createObjectDontUpdateErrorDialog();
+					try {
+						if (viewController.evaluate()) {
+							viewController.createObjectSuccessDialog();
+						} else {
+							viewController.createObjectDontUpdateErrorDialog();
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			});
@@ -423,12 +429,12 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
 		}
-//		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
-//			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
-//			pabm = 0;
-//		}
+		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
+			pabm = 0;
+		}
 		switch (pabm) {
-		case 0:// No system with architecture
+		case 0:// No system with architecture or quality requirement
 			this.getCboSystem().getCombo().setEnabled(false);
 			this.getTableSoftArc().setEnabled(false);
 //			this.getTableQR().setEnabled(false);

@@ -167,7 +167,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			Group gQualityRequirement = new Group(cSystemName, SWT.NONE);
 			gQualityRequirement.setLayoutData(gridData);
-			gQualityRequirement.setText(Messages.getString("UCM2DEVS_QualityRequirements_Group"));
+			gQualityRequirement.setText(Messages.getString("UCM2DEVS_QualityRequirement_Group"));
 			gQualityRequirement.setLayout(new GridLayout(2, false));
 
 			// Create column names
@@ -306,7 +306,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			cmbTypeStimulusSource.setContentProvider(ArrayContentProvider.getInstance());
 
 			txtValueStimulusSource = new StringFieldEditor(Messages.getString("UCM2DEVS_ValueStimulusSource_Label"),
-					Messages.getString("UCM2DEVS_ValueStimulusSourceLabel") + ":", gStimulusSource);
+					Messages.getString("UCM2DEVS_ValueStimulusSource_Label") + ":", gStimulusSource);
 
 			Label labelDSS = new Label(gStimulusSource, SWT.NONE);
 			labelDSS.setText(Messages.getString("UCM2DEVS_Description_Label") + ":");

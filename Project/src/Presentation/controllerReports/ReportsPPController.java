@@ -114,6 +114,20 @@ public class ReportsPPController extends Controller {
 			return false;
 		}
 	}
+	
+	public Boolean printReport() {
+		try {
+			this.openReport(this.pathReport + "ReporteProyectoFinal.jasper");
+			this.addParameterToReport("titulo", "Reporte Resultados de la Simulación");
+			// Agrega los datos al reporte
+			this.getManager().setDataCollection(this.getManager().listResultSimulation());
+			// imprime el reporte
+			this.getManager().print();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	private void addParameterToReport(String pname, Object pobject) {
 		this.getManager().addParameter(pname, pobject);
