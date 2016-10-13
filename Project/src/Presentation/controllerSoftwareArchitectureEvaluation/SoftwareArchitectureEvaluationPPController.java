@@ -13,6 +13,7 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Main.TransformerSimulator;
 import Presentation.Controller;
 import Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage;
+import Presentation.preferences.Messages;
 
 /**
  * Controller for SoftwareArchitectureEspecificationPreferencePage
@@ -87,35 +88,66 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	 * 
 	 * @throws IOException
 	 */
-	public void evaluate() {
-		try {
-			TransformerSimulator pluginTS = new TransformerSimulator();
+	public Boolean evaluate() {
+		if (isValidData()) {
+			try {
+				TransformerSimulator pluginTS = new TransformerSimulator();
 
-			TableItem item = this.getForm().getTableSoftArc()
-					.getItem(this.getForm().getTableSoftArc().getSelectionIndex());
-			String UCMpath = item.getText(2) + "\\" + item.getText(1);
+				TableItem item = this.getForm().getTableSoftArc()
+						.getItem(this.getForm().getTableSoftArc().getSelectionIndex());
+				String UCMpath = item.getText(2) + "\\" + item.getText(1);
 
-			String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
+				String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
 
-			if (chequerUCMResult.equals("")) {
-				if (this.getManager().transformer(UCMpath)) {
-					if (this.getManager().simulator()) {
-						this.createSuccessDialog("The simulation is successful");
-						this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
-								.getForm().getCboSystem().getSelection()).getFirstElement());
-						this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue());
-						this.getManager().convertCSVToTable(
-								"C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
+				if (chequerUCMResult.equals("")) {
+					if (this.getManager().transformer(UCMpath)) {
+						if (this.getManager().simulator()) {
+							this.createSuccessDialog("The simulation is successful");
+							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
+									.getForm().getCboSystem().getSelection()).getFirstElement());
+							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue());
+							this.getManager().convertCSVToTable(
+									"C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/availability.csv");
+							return true;
+						} else {
+							this.createErrorDialog("The simulator is not successful");
+							return false;
+						}
 					} else {
-						this.createErrorDialog("The simulator is not successful");
+						this.createErrorDialog("The transformer is not successful");
+						return false;
 					}
 				} else {
-					this.createErrorDialog("The transformer is not successful");
+					this.createErrorDialog(chequerUCMResult);
+					return false;
 				}
-			} else {
-				this.createErrorDialog(chequerUCMResult);
+			} catch (IOException e) {
+				return false;
 			}
-		} catch (IOException e) {
+		} 
+		return null;
+	}
+
+	public boolean isValidData() {
+		if (this.isEmpty(this.getForm().getCboSystem())) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
+			this.getForm().getCboSystem().getCombo().setFocus();
+			return false;
+		} else if (this.getForm().getTableSoftArc().getSelectionIndex() == -1) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArchitecture_ErrorDialog"));
+			return false;
+		} else if (this.isEmpty(this.getForm().getSimulationTime())) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_InputSimulationTime_ErrorDialog"));
+			return false;
+		} else if (!this.getForm().getSimulationTime().isValid()) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_InvalidSimulationTime_ErrorDialog"));
+			return false;
+		} else if (this.isEmpty(this.getForm().getCmbUnit())) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
+			this.getForm().getCmbUnit().getCombo().setFocus();
+			return false;
+		} else {
+			return true;
 		}
 	}
 
@@ -136,30 +168,33 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		}
 	}
 
-	/**
-	 * Sets the model table of the quality requirements of a specific system
-	 * 
-	 * @param ptype
-	 */
-	public void setModelQualityRequirement(DomainModel.AnalysisEntity.System ptype) { // NOPMD
-																						// by
-																						// Usuario-Pc
-																						// on
-																						// 10/06/16
-																						// 21:46
-		this.getManager().setSystem(ptype);
-		while (this.getForm().getTableQR().getItems().length > 0) {
-			this.getForm().getTableQR().remove(0);
-		}
-		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
-			if (dp.isState()) {
-				TableItem item = new TableItem(this.getForm().getTableQR(), SWT.NONE);
-				item.setData(dp);
-				item.setText(new String[] { null, dp.getQualityScenario().getDescription().toString(),
-						dp.getQualityScenario().getQualityAttribute().toString() });
-			}
-		}
-	}
+	// /**
+	// * Sets the model table of the quality requirements of a specific system
+	// *
+	// * @param ptype
+	// */
+	// public void setModelQualityRequirement(DomainModel.AnalysisEntity.System
+	// ptype) { // NOPMD
+	// // by
+	// // Usuario-Pc
+	// // on
+	// // 10/06/16
+	// // 21:46
+	// this.getManager().setSystem(ptype);
+	// while (this.getForm().getTableQR().getItems().length > 0) {
+	// this.getForm().getTableQR().remove(0);
+	// }
+	// for (QualityRequirement dp : this.getManager().getQualityRequirements())
+	// {
+	// if (dp.isState()) {
+	// TableItem item = new TableItem(this.getForm().getTableQR(), SWT.NONE);
+	// item.setData(dp);
+	// item.setText(new String[] { null,
+	// dp.getQualityScenario().getDescription().toString(),
+	// dp.getQualityScenario().getQualityAttribute().toString() });
+	// }
+	// }
+	// }
 
 	public void addToTable(String namePath) {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
