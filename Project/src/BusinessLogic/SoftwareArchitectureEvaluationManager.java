@@ -323,6 +323,34 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
 		return crit.list();
 	}
+	
+	public double convertValueAcordingToUnit(double pvalue, Unit punit){
+		double pvalueConvert = 0;
+		if (punit == this.getUnitIndicator()){
+			pvalueConvert = pvalue;
+		} else {
+			if (this.getUnitIndicator().getName().equals("Minutes")){
+				if (punit.getName().equals("Seconds")){
+					pvalueConvert = pvalue/60;
+				} else if (punit.getName().equals("Hours")){
+					pvalueConvert = pvalue*60;
+				}
+			}else if (this.getUnitIndicator().getName().equals("Seconds")){
+				if (punit.getName().equals("Minutes")){
+					pvalueConvert = pvalue*60;
+				} else if (punit.getName().equals("Hours")){
+					pvalueConvert = pvalue*3600;
+				}
+			}else if (this.getUnitIndicator().getName().equals("Hours")){
+				if (punit.getName().equals("Minutes")){
+					pvalueConvert = pvalue/60;
+				} else if (punit.getName().equals("Seconds")){
+					pvalueConvert = pvalue/3600;
+				}
+			}
+		}
+		return pvalueConvert;
+	}
 
 	public Responsibility getResponsability(String pname) {
 		for (Responsibility dp : this.getResponsibilities()) {
