@@ -86,7 +86,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
 	 * .eclipse.swt.widgets.Composite)
 	 */
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 
 		if (viewController.isConnection()) {
 

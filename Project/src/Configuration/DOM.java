@@ -13,6 +13,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.eclipse.core.runtime.Platform;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -27,7 +28,8 @@ import org.xml.sax.SAXException;
 public class DOM {
 
 	//private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/Configuration/DatabaseConnection.xml";
-	private static String PATH = "C:/Users/Micaela/git/project/Project/src/Configuration/DatabaseConnection.xml";
+	//private static String PATH = "C:/Users/Micaela/git/project/Project/src/Configuration/DatabaseConnection.xml";
+	private static String PATH = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS/Configuration/DatabaseConnection.xml";
 
 	public static String readPassword() {
 		return CryptoUtils.decrypt(internalStructureRead("password"));
