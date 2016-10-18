@@ -7,9 +7,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -45,18 +43,13 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	private ComboViewer cmbUnit;
 	private SoftwareArchitectureEvaluationPPController viewController;
 	private Composite cSystemName;
+	private Composite cSimulationTime;
 	private GridData gridData;
 	private Table tableSoftArc;
-	private Table tableQR;
-//	private TableColumn colDescriptionQR;
-//	private TableColumn colQualityAttributeQR;
 	private TableColumn colPathSoftArc;
 	private TableColumn colObjectSoftArc;
-//	private TableColumn colSelectionQR;
 	private TableColumn colNameSoftArc;
 	private DoubleFieldEditor simulationTime;
-//	private Button btonRadioQR;
-//	private Button btonRadioSoftArc;
 
 	/**
 	 * Contructor
@@ -161,22 +154,11 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			colPathSoftArc = new TableColumn(tableSoftArc, SWT.NONE);
 			colPathSoftArc.setWidth(300);
 			colPathSoftArc.setText(Messages.getString("UCM2DEVS_Path_Column"));
-			
+
 			for (int i = 0; i < 8; i++) {
 				TableItem item = new TableItem(tableSoftArc, SWT.NONE);
 			}
 
-//			for (int i = 0; i < 8; i++) {
-//				TableItem tableItem = new TableItem(tableSoftArc, SWT.NONE);
-//				TableEditor editor = new TableEditor(tableSoftArc);
-//
-//				btonRadioSoftArc = new Button(tableSoftArc, SWT.RADIO);
-//				btonRadioSoftArc.pack();
-//
-//				editor.minimumWidth = btonRadioSoftArc.getSize().x;
-//				editor.horizontalAlignment = SWT.CENTER;
-//				editor.setEditor(btonRadioSoftArc, tableItem, 0);
-//			}
 			tableSoftArc.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -185,81 +167,34 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				}
 			});
 
-			/*
-			 * gridData = new GridData(); gridData.horizontalSpan = 2;
-			 * 
-			 * Label labelEmptyTwo = new Label(parent, SWT.NULL);
-			 * labelEmptyTwo.setLayoutData(gridData);
-			 */
-
-//			Group gQualityRequirement = new Group(parent, SWT.NONE);
-//			gQualityRequirement.setLayoutData(gridData);
-//			gQualityRequirement.setText("Quality Requirement");
-//			gQualityRequirement.setLayout(layout);
-//
-//			// Create column names
-//			String[] columnNamesQR = new String[] { "", "Description", "Quality Attribute" };
-//
-//			// Messages.getString("UCM2DEVS_Object_Column")
-//
-//			// create table
-//			tableQR = new Table(gQualityRequirement, style);
-//			tableQR.setLayout(tableLayout);
-//			gridData = new GridData(GridData.FILL_BOTH);
-//			tableQR.setLayoutData(gridData);
-//			tableQR.setLinesVisible(true);
-//			tableQR.setHeaderVisible(true);
-//
-//			colSelectionQR = new TableColumn(tableQR, SWT.NONE);
-//			colSelectionQR.setWidth(50);
-//			colSelectionQR.setText("");
-//
-//			colDescriptionQR = new TableColumn(tableQR, SWT.NONE);
-//			colDescriptionQR.setWidth(250);
-//			colDescriptionQR.setText("Description");
-//
-//			colQualityAttributeQR = new TableColumn(tableQR, SWT.NONE);
-//			colQualityAttributeQR.setWidth(100);
-//			colQualityAttributeQR.setText("Quality Attribute");
-//
-//			for (int i = 0; i < 8; i++) {
-//				TableItem tableItem = new TableItem(tableQR, SWT.NONE);
-//				TableEditor editor = new TableEditor(tableQR);
-//
-//				btonRadioQR = new Button(tableQR, SWT.RADIO);
-//				btonRadioQR.pack();
-//
-//				editor.minimumWidth = btonRadioQR.getSize().x;
-//				editor.horizontalAlignment = SWT.CENTER;
-//				editor.setEditor(btonRadioQR, tableItem, 0);
-//			}
-//			tableQR.addSelectionListener(new SelectionAdapter() {
-//				@Override
-//				public void widgetSelected(SelectionEvent e) {
-//					tableQR.showSelection();
-//					prepareView(3);
-//				}
-//			});
-
 			gridData = new GridData();
-			gridData.horizontalSpan = 2;
+			gridData.horizontalSpan = 4;
 
-			Label labelEmptyTree = new Label(parent, SWT.NULL);
-			labelEmptyTree.setLayoutData(gridData);
+			Label labelEmptyThree = new Label(parent, SWT.NULL);
+			labelEmptyThree.setLayoutData(gridData);
 
+			Composite cSimulationTime = new Composite(parent, SWT.RIGHT);
+			cSimulationTime.setLayout(layout);
 			gridData = new GridData();
-			gridData.horizontalSpan = 3;
-			gridData.widthHint = 100;
 			gridData.horizontalAlignment = GridData.END;
-			gridData.verticalAlignment = SWT.BOTTOM;
+			cSimulationTime.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.END;
 			gridData.grabExcessHorizontalSpace = true;
+			gridData.widthHint = 100;
 
 			simulationTime = new DoubleFieldEditor(Messages.getString("UCM2DEVS_SimulationTime_Label"),
-					Messages.getString("UCM2DEVS_SimulationTime_Label") + ":", parent);
+					Messages.getString("UCM2DEVS_SimulationTime_Label") + ":", cSimulationTime);
+			simulationTime.getTextControl(cSimulationTime).setLayoutData(gridData);
 			simulationTime.setMinRange(0.0);
 			simulationTime.setPage(this);
-
 			addField(simulationTime);
+
+			gridData = new GridData();
+			gridData.horizontalAlignment = GridData.END;
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.widthHint = 75;
 
 			cmbUnit = new ComboViewer(parent, SWT.READ_ONLY);
 			cmbUnit.setContentProvider(ArrayContentProvider.getInstance());
@@ -268,15 +203,14 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			cmbUnit.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					//viewController.setModel(cmbSystem);
-					//cmbSystemItemStateChanged();
+					// viewController.setModel(cmbSystem);
+					// cmbSystemItemStateChanged();
 					prepareView(4);
 				}
 			});
 
-
 			gridData = new GridData();
-			gridData.horizontalSpan = 2;
+			gridData.horizontalSpan = 4;
 
 			Label labelEmptyFour = new Label(parent, SWT.NULL);
 			labelEmptyFour.setLayoutData(gridData);
@@ -380,29 +314,29 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		this.tableSoftArc = table;
 	}
 
-//	public Table getTableQR() {
-//		return tableQR;
-//	}
-//
-//	public void setTableQR(Table tableQR) {
-//		this.tableQR = tableQR;
-//	}
+	// public Table getTableQR() {
+	// return tableQR;
+	// }
+	//
+	// public void setTableQR(Table tableQR) {
+	// this.tableQR = tableQR;
+	// }
 
-//	public Button getBtonRadioQR() {
-//		return btonRadioQR;
-//	}
-//
-//	public void setBtonRadioQR(Button btonRadioQR) {
-//		this.btonRadioQR = btonRadioQR;
-//	}
-//
-//	public Button getBtonRadioSoftArc() {
-//		return btonRadioSoftArc;
-//	}
-//
-//	public void setBtonRadioSoftArc(Button btonRadioSoftArc) {
-//		this.btonRadioSoftArc = btonRadioSoftArc;
-//	}
+	// public Button getBtonRadioQR() {
+	// return btonRadioQR;
+	// }
+	//
+	// public void setBtonRadioQR(Button btonRadioQR) {
+	// this.btonRadioQR = btonRadioQR;
+	// }
+	//
+	// public Button getBtonRadioSoftArc() {
+	// return btonRadioSoftArc;
+	// }
+	//
+	// public void setBtonRadioSoftArc(Button btonRadioSoftArc) {
+	// this.btonRadioSoftArc = btonRadioSoftArc;
+	// }
 
 	/**
 	 * load combo with system with state=true
@@ -437,7 +371,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		case 0:// No system with architecture or quality requirement
 			this.getCboSystem().getCombo().setEnabled(false);
 			this.getTableSoftArc().setEnabled(false);
-//			this.getTableQR().setEnabled(false);
+			// this.getTableQR().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
@@ -446,14 +380,14 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getCboSystem().getCombo().setEnabled(true);
 			this.getTableSoftArc().setEnabled(false);
 			// TODO
-//			this.getTableQR().setEnabled(true);
+			// this.getTableQR().setEnabled(true);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
 			break;
 		case 2: // With system selected
 			this.getTableSoftArc().setEnabled(true);
-//			this.getTableQR().setEnabled(true);
+			// this.getTableQR().setEnabled(true);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 
@@ -477,7 +411,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.fillTableSoftArc();
-//		this.fillTableQR();
+		// this.fillTableQR();
 	}
 
 	/**
@@ -491,13 +425,14 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	}
 
 	/**
-//	 * Fill table with system's quality requirements (quality attribute,
-//	 * description and condition)
-//	 */
-//	public void fillTableQR() {
-//		this.getViewController().setModelQualityRequirement(
-//				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
-//						.getFirstElement());
-//	}
+	 * // * Fill table with system's quality requirements (quality attribute, //
+	 * * description and condition) //
+	 */
+	// public void fillTableQR() {
+	// this.getViewController().setModelQualityRequirement(
+	// (DomainModel.AnalysisEntity.System) ((IStructuredSelection)
+	// this.getCboSystem().getSelection())
+	// .getFirstElement());
+	// }
 
 }
