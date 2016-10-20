@@ -323,29 +323,43 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
 		return crit.list();
 	}
-	
-	public double convertValueAcordingToUnit(double pvalue, Unit punit){
+
+	public double convertValueAcordingToUnit(double pvalue, Unit punit) {
 		double pvalueConvert = 0;
-		if (punit == this.getUnitIndicator()){
+		if (punit == this.getUnitIndicator()) {
 			pvalueConvert = pvalue;
 		} else {
-			if (this.getUnitIndicator().getName().equals("Minutes")){
-				if (punit.getName().equals("Seconds")){
-					pvalueConvert = pvalue/60;
-				} else if (punit.getName().equals("Hours")){
-					pvalueConvert = pvalue*60;
+			if (this.getUnitIndicator().getName().equals("Minutes")) {
+				if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue / 60;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue * 60;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = (pvalue / 60) / 1000;
 				}
-			}else if (this.getUnitIndicator().getName().equals("Seconds")){
-				if (punit.getName().equals("Minutes")){
-					pvalueConvert = pvalue*60;
-				} else if (punit.getName().equals("Hours")){
-					pvalueConvert = pvalue*3600;
+			} else if (this.getUnitIndicator().getName().equals("Seconds")) {
+				if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue * 60;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue * 3600;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = pvalue / 1000;
 				}
-			}else if (this.getUnitIndicator().getName().equals("Hours")){
-				if (punit.getName().equals("Minutes")){
-					pvalueConvert = pvalue/60;
-				} else if (punit.getName().equals("Seconds")){
-					pvalueConvert = pvalue/3600;
+			} else if (this.getUnitIndicator().getName().equals("Hours")) {
+				if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue / 60;
+				} else if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue / 3600;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = (pvalue / 3600) / 1000;
+				}
+			} else if (this.getUnitIndicator().getName().equals("Milliseconds")) {
+				if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue * 60000;
+				} else if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue * 1000;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue * 3600000;
 				}
 			}
 		}

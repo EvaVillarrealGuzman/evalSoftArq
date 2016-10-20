@@ -36,6 +36,8 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		manager.saveObject(unit2);
 		Unit unit3 = new Unit("Hours");
 		manager.saveObject(unit3);
+		Unit unit4 = new Unit("Milliseconds");
+		manager.saveObject(unit4);
 		
 		Metric m1 = new Metric("Responsibility Downtime");
 		Metric m2 = new Metric("Responsibility Recovery Time");
