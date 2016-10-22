@@ -44,6 +44,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	private DomainModel.AnalysisEntity.System system;
 	public static final String SEPARATOR = ";";
 	public static final String QUOTE = "\"";
+	private static final String PATHEVALUATION =  Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
 	private DatabaseConnection db;
 	private TransformerSimulator pluginTS;
 
@@ -385,12 +386,11 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	}
 
 	public Boolean transformer(String inputPath) {
-		String outputPath = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
-		return this.getPluginTS().callTransformer(inputPath, outputPath.substring(1, outputPath.length()));
+		return this.getPluginTS().callTransformer(inputPath, PATHEVALUATION.substring(1, PATHEVALUATION.length()));
 	}
 
-	public Boolean simulator() {
-		return this.getPluginTS().callSimulator();
+	public Boolean simulator(double observe_t) {
+		return this.getPluginTS().callSimulator(PATHEVALUATION, observe_t);
 	}
 
 	/**

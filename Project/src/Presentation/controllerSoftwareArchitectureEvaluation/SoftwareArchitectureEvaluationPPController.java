@@ -2,13 +2,13 @@ package Presentation.controllerSoftwareArchitectureEvaluation;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.SoftwareArchitectureEvaluationManager;
-import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Main.TransformerSimulator;
 import Presentation.Controller;
@@ -101,13 +101,13 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 
 				if (chequerUCMResult.equals("")) {
 					if (this.getManager().transformer(UCMpath)) {
-						if (this.getManager().simulator()) {
+						if (this.getManager().simulator(this.getForm().getSimulationTime().getDoubleValue())) {
 							this.createSuccessDialog("The simulation is successful");
 							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
 									.getForm().getCboSystem().getSelection()).getFirstElement());
 							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue());
-							this.getManager().convertCSVToTable(
-									"C:/Users/Micaela/Dropbox/PROYECTO FINAL/EJ. SALIDAS DE SIMULACIÓN/performance.csv");
+							this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
+									+ "plugins/UCM2DEVS/Run/performance.csv");
 							return true;
 						} else {
 							this.createErrorDialog("The simulator is not successful");
@@ -124,7 +124,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			} catch (IOException e) {
 				return false;
 			}
-		} 
+		}
 		return null;
 	}
 
@@ -167,8 +167,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			}
 		}
 	}
-	
-	
+
 	// /**
 	// * Sets the model table of the quality requirements of a specific system
 	// *
