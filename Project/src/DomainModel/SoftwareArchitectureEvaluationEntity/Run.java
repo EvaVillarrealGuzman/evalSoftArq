@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,6 +28,15 @@ public class Run implements Comparable { // NOPMD by Usuario-Pc on 10/06/16
 	@OneToMany(targetEntity = Indicator.class, cascade = CascadeType.ALL)
 	private Set<Indicator> indicators = new HashSet<Indicator>();
 
+	public Run() {
+		super();
+	}
+
+	public Run(java.util.Date pdate, double psimulationHorizon) {
+		this.date = new java.sql.Date(pdate.getTime());
+		this.simulationHorizon = psimulationHorizon;
+	}
+
 	// CompareTo
 	@Override
 	public int compareTo(Object p) {
@@ -42,22 +50,6 @@ public class Run implements Comparable { // NOPMD by Usuario-Pc on 10/06/16
 
 	public void setIndicators(Set<Indicator> indicators) {
 		this.indicators = indicators;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(java.util.Date pdate) {
-		this.date = new java.sql.Date(pdate.getTime());
-	}
-
-	public Double getSimulationHorizon() {
-		return simulationHorizon;
-	}
-
-	public void setSimulationHorizon(Double psimulationHorizon) {
-		this.simulationHorizon = psimulationHorizon;
 	}
 
 }
