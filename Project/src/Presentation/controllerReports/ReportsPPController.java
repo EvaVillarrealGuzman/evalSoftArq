@@ -1,5 +1,6 @@
 package Presentation.controllerReports;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -23,7 +24,7 @@ public class ReportsPPController extends Controller {
 	private static ReportsPPController controller;
 	private ReportManager manager;
 	private ReportsPreferencePage form;
-	public static final String pathReport = "C:\\PP\\Reportes\\";
+	public static final String pathReport = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS/Report/";
 
 	/**
 	 * Getters and Setters
