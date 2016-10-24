@@ -12,10 +12,6 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
 @Table(name = "RESPONSABILIDADINDICATOR")
 public class ResponsabilityIndicator extends IndicatorType {
 
-	public ResponsabilityIndicator(String pname) {
-		super(pname);
-	}
-
 	@ManyToOne(targetEntity = Responsibility.class, cascade = CascadeType.ALL)
 	private Responsibility responsibility;
 

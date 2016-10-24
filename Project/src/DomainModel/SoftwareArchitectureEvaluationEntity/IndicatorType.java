@@ -5,26 +5,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "INDICATORTYPE")
-public class IndicatorType implements Comparable{
-		
-		//Attributes
-		@Id
-	    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-		private int id;
-		
-		private String name;
-		
-		public IndicatorType(String pname) {
-			this.name = pname;
-		}
+public class IndicatorType implements Comparable {
 
-		//CompareTo
-		@Override
-	    public int compareTo(Object p) {
-	        IndicatorType t = (IndicatorType) p;
-	        return this.toString().compareTo(t.toString());
-	    }
+	// Attributes
+	@Id
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	private int id;
+
+	private String name;
+
+
+	// CompareTo
+	@Override
+	public int compareTo(Object p) {
+		IndicatorType t = (IndicatorType) p;
+		return this.toString().compareTo(t.toString());
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

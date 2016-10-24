@@ -93,11 +93,19 @@ public class ReportsPPController extends Controller {
 		return true;
 	}
 
-	public void printFailPerResponsibility() {
-		this.openReport(this.pathReport + "FailsPerResponsibility.jasper");
-		this.addParameterToReport("Fails per Responsability", "Project");
-		// this.addDataToReport(this.getGestorClientesPorLocalidad().listar());
-		// this.printReport();
+	public Boolean printTurnaroundTimePerResponsibility() {
+		try {
+			this.openReport(this.pathReport + "ResponsibilityTurnaroundTime.jasper");
+			this.addParameterToReport("title", "Responsibility Turnaround Time");
+			// Agrega los datos al reporte
+			this.getManager().setDataCollection(this.getManager().listTurnaroundTime());
+			// imprime el reporte
+			this.getManager().print();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 
 	// TODO borrar
@@ -125,6 +133,7 @@ public class ReportsPPController extends Controller {
 			this.getManager().print();
 			return true;
 		} catch (Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}
@@ -132,6 +141,7 @@ public class ReportsPPController extends Controller {
 	private void addParameterToReport(String pname, Object pobject) {
 		this.getManager().addParameter(pname, pobject);
 	}
+	
 
 	private void openReport(String archive) {
 		try {

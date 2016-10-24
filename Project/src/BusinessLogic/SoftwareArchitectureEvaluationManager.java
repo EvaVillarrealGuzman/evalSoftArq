@@ -189,7 +189,9 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public void createSimulator(String psimulationTime) {
 		Simulator sim = new Simulator();
-		Run run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
+		Run run = new Run();
+		run.setDate(GregorianCalendar.getInstance().getTime());
+		run.setSimulationHorizon( Double.parseDouble(psimulationTime));
 		sim.getRuns().add(run);
 		this.saveObject(sim);
 		this.getArchitecture().setSimulator(sim);
@@ -197,7 +199,8 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	}
 
 	public void convertCSVToTable(String ppath) throws IOException {
-		SystemIndicator type = new SystemIndicator(this.getSystem().getSystemName());
+		SystemIndicator type = new SystemIndicator();
+		 type.setName(this.getSystem().getSystemName());
 		this.saveObject(type);
 		BufferedReader br = null;
 		try {
@@ -296,7 +299,8 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public void loadResponsabilityIndicator(String[] pfields) {
 		Indicator ind = new Indicator();
-		ResponsabilityIndicator type = new ResponsabilityIndicator(pfields[0]);
+		ResponsabilityIndicator type = new ResponsabilityIndicator();
+		type.setName(pfields[0]);
 		type.setResponsibility(this.getResponsability(pfields[0]));
 		this.saveObject(type);
 		ind.setType(type);

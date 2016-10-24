@@ -12,7 +12,11 @@ import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
+import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.ReportsEntity.ClientesPorLocalidad;
+import DomainModel.ReportsEntity.ResponsibilityTurnaroundTime;
+import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
+import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.controllerReports.DataSourceCollection;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -289,18 +293,99 @@ public class ReportManager extends HibernateManager {
 
 		return lista;
 	}
-	
+
+	public List<ResponsibilityTurnaroundTime> listTurnaroundTime() {
+
+		List<ResponsibilityTurnaroundTime> list = new ArrayList<ResponsibilityTurnaroundTime>();
+
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			if (auxTipo.getArchitectures().isEmpty() == false) {
+				System.out.println(auxTipo);
+				for (Iterator<Architecture> it = auxTipo.getArchitectures().iterator(); it.hasNext();) {
+					Architecture f = it.next();
+					System.out.println(f.getSimulator().getRuns());
+					System.out.println(f.getSimulator().getRuns().size());
+					for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+						Run r = its.next();
+						for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+							Indicator ind = iti.next();
+							if (ind.getMetric().getName().equals("Responsibility Turnaround Time")) {
+								ResponsibilityTurnaroundTime item = new ResponsibilityTurnaroundTime();
+								item.setResponsability(ind.getType().getName());
+								item.setTurnaroundTime(ind.getValue());
+								list.add(item);
+							}
+							System.out.println("value" + ind.getValue());
+							System.out.println("metric" + ind.getMetric().getName());
+							System.out.println("indicator type" + ind.getType().getName());
+						}
+					}
+				}
+			}
+		}
+
+		return list;
+	}
+
 	public List<Double> listResultSimulation() {
 		List<Double> lista = new ArrayList<Double>();
 
 		for (int i = 0; i < 10; i++) {
 			Double item = new Double(9.8);
-			//item.setLocalidad("hola");
-			//item.setCantidadClientes(5);
+			// item.setLocalidad("hola");
+			// item.setCantidadClientes(5);
 			lista.add(item);
 		}
 
 		return lista;
+	}
+
+	/**
+	 * 
+	 * @return ComboBoxModel with qualityAttribute names
+	 */
+	public QualityAttribute[] getComboModelIndicator() {
+		ArrayList<QualityAttribute> qualityAttributes = new ArrayList<QualityAttribute>();
+		for (QualityAttribute auxTipo : this.listIndicators()) {
+			System.out.println(auxTipo);
+			qualityAttributes.add(auxTipo);
+		}
+		QualityAttribute[] arrayQualityAttribute = new QualityAttribute[qualityAttributes.size()];
+		qualityAttributes.toArray(arrayQualityAttribute);
+		return arrayQualityAttribute;
+	}
+
+	/**
+	 * 
+	 * @return List<QualityAttribute> with the names of the quality attributes
+	 */
+	public List<QualityAttribute> listIndicators() {
+		return this.listClass(QualityAttribute.class, "name");
+	}
+
+	public DomainModel.AnalysisEntity.System[] getComboModelSystemWithRequirements() { // NOPMD
+		// by
+		// Usuario-Pc
+		// on
+		// 10/06/16
+		// 21:41
+		ArrayList<DomainModel.AnalysisEntity.System> systems = new ArrayList<DomainModel.AnalysisEntity.System>();
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			if (auxTipo.getQualityRequirements().isEmpty() == false) {
+				Iterator it = auxTipo.getQualityRequirements().iterator();
+				boolean i = true;
+				while (it.hasNext() && i) {
+					QualityRequirement q = (QualityRequirement) it.next();
+					if (q.isState()) {
+						systems.add(auxTipo);
+						i = false;
+					}
+				}
+			}
+		}
+		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems.size()];
+		systems.toArray(arraySystem);
+		return arraySystem;
 	}
 
 }

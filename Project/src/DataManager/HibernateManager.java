@@ -11,6 +11,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+
 /**
  * This class management Hibernate (list class, save and update objects)
  * 
@@ -37,6 +39,12 @@ public class HibernateManager extends HibernateUtil {
 	public List listClass(Class pclase, String patributoOrden, boolean pstate) {
 		Criteria crit = getSession().createCriteria(pclase).addOrder(Order.asc(patributoOrden))
 				.add(Restrictions.eq("state", pstate));
+		return crit.list();
+	}
+	
+	public List listClass(Class pclase, String patributoOrden, Architecture parchitecture) {
+		Criteria crit = getSession().createCriteria(pclase).addOrder(Order.asc(patributoOrden))
+				.add(Restrictions.eq("state", parchitecture));
 		return crit.list();
 	}
 
