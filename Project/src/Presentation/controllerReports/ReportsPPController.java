@@ -24,7 +24,7 @@ public class ReportsPPController extends Controller {
 	private static ReportsPPController controller;
 	private ReportManager manager;
 	private ReportsPreferencePage form;
-	public static final String pathReport = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS/Report/";
+	public static final String PATHREPORT = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS/Report/";
 
 	/**
 	 * Getters and Setters
@@ -96,7 +96,7 @@ public class ReportsPPController extends Controller {
 
 	public Boolean printTurnaroundTimePerResponsibility() {
 		try {
-			this.openReport(this.pathReport + "ResponsibilityTurnaroundTime.jasper");
+			this.openReport(this.PATHREPORT + "ResponsibilityTurnaroundTime.jasper");
 			this.addParameterToReport("title", "Responsibility Turnaround Time");
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listTurnaroundTime());
@@ -112,7 +112,7 @@ public class ReportsPPController extends Controller {
 	// TODO borrar
 	public Boolean printPrueba() {
 		try {
-			this.openReport(this.pathReport + "ListadoClientesPorLocalidad.jasper");
+			this.openReport(this.PATHREPORT + "ListadoClientesPorLocalidad.jasper");
 			this.addParameterToReport("titulo", "TDH Viajes");
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listClientesPorLocalidad());
@@ -126,7 +126,7 @@ public class ReportsPPController extends Controller {
 	
 	public Boolean printReport() {
 		try {
-			this.openReport(this.pathReport + "ReporteProyectoFinal.jasper");
+			this.openReport(this.PATHREPORT + "ReporteProyectoFinal.jasper");
 			this.addParameterToReport("titulo", "Reporte Resultados de la Simulación");
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listResultSimulation());
