@@ -82,15 +82,17 @@ public class DoubleFieldEditor extends StringFieldEditor {
 
 		String numberString = text.getText();
 		try {
+			setErrorMessage("Not a valid double");
 			double number = Double.valueOf(numberString).doubleValue();
-			if ((minValidValue == null || number >= minValidValue) && (maxValidValue == null || number <= maxValidValue)) {
+			if ((minValidValue == null || number > minValidValue) && (maxValidValue == null || number <= maxValidValue)) {
 				clearErrorMessage();
 				return true;
 			}
-
+			if (number == minValidValue){
+				setErrorMessage("Only number possitive");
+			}
 			showErrorMessage();
 			return false;
-
 		} catch (NumberFormatException e1) {
 			showErrorMessage();
 		}

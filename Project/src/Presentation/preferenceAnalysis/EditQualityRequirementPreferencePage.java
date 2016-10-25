@@ -941,7 +941,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		txtValueStimulus.setStringValue("");
 		txtValueEnvironment.setStringValue("");
 		txtValueResponse.setStringValue("");
-		txtValueResponseMeasure.setStringValue("0.0");
+		txtValueResponseMeasure.setStringValue("0.1");
 	}
 
 	/**
