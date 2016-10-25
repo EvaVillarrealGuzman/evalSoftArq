@@ -401,8 +401,9 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return this.getPluginTS().callTransformer(inputPath, PATHEVALUATION.substring(1, PATHEVALUATION.length()));
 	}
 
-	public Boolean simulator(double observe_t) {
-		return this.getPluginTS().callSimulator(PATHEVALUATION, observe_t);
+	public Boolean simulator(double observe_t, Unit punit) {
+		double psimulationTime = this.convertValueAcordingToUnit(observe_t, punit);
+		return this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime);
 	}
 
 	/**

@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.SoftwareArchitectureEvaluationManager;
 import DomainModel.AnalysisEntity.QualityRequirement;
+import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Main.TransformerSimulator;
 import Presentation.Controller;
@@ -102,19 +103,23 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 				String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
 
 				if (chequerUCMResult.equals("")) {
-					if (this.getManager().transformer(UCMpath)) {
-						if (this.getManager().simulator(this.getForm().getSimulationTime().getDoubleValue())) {
+					//if (this.getManager().transformer(UCMpath)) {
+
+						if (this.getManager().simulator(this.getForm().getSimulationTime().getDoubleValue(),
+								(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection())
+										.getFirstElement())) {
 							this.createSuccessDialog("The simulation is successful");
 							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
 									.getForm().getCboSystem().getSelection()).getFirstElement());
-							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue(), this.getForm().getTable());
+							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue(),
+									this.getForm().getTable());
 							this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
 									+ "plugins/UCM2DEVS/Run/performance.csv");
 							return 0;
-						} else {
-							this.createErrorDialog("The simulator is not successful");
-							return 1;
-						}
+						//} else {
+						//	this.createErrorDialog("The simulator is not successful");
+						//	return 1;
+						//}
 					} else {
 						this.createErrorDialog("The transformer is not successful");
 						return 1;
@@ -155,12 +160,12 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			return true;
 		}
 	}
-	
-	public boolean isNotChecked(Table ptable){
+
+	public boolean isNotChecked(Table ptable) {
 		TableItem[] items = ptable.getItems();
-		for(int i=0; i < items.length; i++) {
+		for (int i = 0; i < items.length; i++) {
 			TableItem item = items[i];
-			if (item.getChecked()){
+			if (item.getChecked()) {
 				return false;
 			}
 		}
@@ -189,7 +194,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	 * 
 	 * @param ptype
 	 */
-	public void setModelQualityRequirement(DomainModel.AnalysisEntity.System ptype) { 
+	public void setModelQualityRequirement(DomainModel.AnalysisEntity.System ptype) {
 		this.getManager().setSystem(ptype);
 		while (this.getForm().getTable().getItems().length > 0) {
 			this.getForm().getTable().remove(0);
@@ -203,7 +208,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			}
 		}
 	}
-	
+
 	public void addToTable(String namePath) {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
 		item.setData(namePath);
