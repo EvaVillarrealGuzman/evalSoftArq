@@ -6,9 +6,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.SoftwareArchitectureEvaluationManager;
+import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Main.TransformerSimulator;
 import Presentation.Controller;
@@ -88,7 +90,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	 * 
 	 * @throws IOException
 	 */
-	public Boolean evaluate() throws IOException {
+	public int evaluate() throws IOException {
 		if (isValidData()) {
 			try {
 				TransformerSimulator pluginTS = new TransformerSimulator();
@@ -105,27 +107,27 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 							this.createSuccessDialog("The simulation is successful");
 							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
 									.getForm().getCboSystem().getSelection()).getFirstElement());
-							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue());
+							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue(), this.getForm().getTable());
 							this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
 									+ "plugins/UCM2DEVS/Run/performance.csv");
-							return true;
+							return 0;
 						} else {
 							this.createErrorDialog("The simulator is not successful");
-							return false;
+							return 1;
 						}
 					} else {
 						this.createErrorDialog("The transformer is not successful");
-						return false;
+						return 1;
 					}
 				} else {
 					this.createErrorDialog(chequerUCMResult);
-					return false;
+					return 1;
 				}
 			} catch (IOException e) {
-				return false;
+				return 1;
 			}
 		}
-		return null;
+		return 2;
 	}
 
 	public boolean isValidData() {
@@ -135,6 +137,9 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			return false;
 		} else if (this.getForm().getTableSoftArc().getSelectionIndex() == -1) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArchitecture_ErrorDialog"));
+			return false;
+		} else if (this.isNotChecked(this.getForm().getTable())) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectRequirement_ErrorDialog"));
 			return false;
 		} else if (this.isEmpty(this.getForm().getSimulationTime())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_InputSimulationTime_ErrorDialog"));
@@ -149,6 +154,17 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		} else {
 			return true;
 		}
+	}
+	
+	public boolean isNotChecked(Table ptable){
+		TableItem[] items = ptable.getItems();
+		for(int i=0; i < items.length; i++) {
+			TableItem item = items[i];
+			if (item.getChecked()){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -168,34 +184,26 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		}
 	}
 
-	// /**
-	// * Sets the model table of the quality requirements of a specific system
-	// *
-	// * @param ptype
-	// */
-	// public void setModelQualityRequirement(DomainModel.AnalysisEntity.System
-	// ptype) { // NOPMD
-	// // by
-	// // Usuario-Pc
-	// // on
-	// // 10/06/16
-	// // 21:46
-	// this.getManager().setSystem(ptype);
-	// while (this.getForm().getTableQR().getItems().length > 0) {
-	// this.getForm().getTableQR().remove(0);
-	// }
-	// for (QualityRequirement dp : this.getManager().getQualityRequirements())
-	// {
-	// if (dp.isState()) {
-	// TableItem item = new TableItem(this.getForm().getTableQR(), SWT.NONE);
-	// item.setData(dp);
-	// item.setText(new String[] { null,
-	// dp.getQualityScenario().getDescription().toString(),
-	// dp.getQualityScenario().getQualityAttribute().toString() });
-	// }
-	// }
-	// }
-
+	/**
+	 * Sets the model table of the quality requirements of a specific system
+	 * 
+	 * @param ptype
+	 */
+	public void setModelQualityRequirement(DomainModel.AnalysisEntity.System ptype) { 
+		this.getManager().setSystem(ptype);
+		while (this.getForm().getTable().getItems().length > 0) {
+			this.getForm().getTable().remove(0);
+		}
+		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
+			if (dp.isState()) {
+				TableItem item = new TableItem(this.getForm().getTable(), SWT.NONE);
+				item.setData(dp);
+				item.setText(new String[] { "", dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
+						dp.getQualityScenario().getDescription().toString() });
+			}
+		}
+	}
+	
 	public void addToTable(String namePath) {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
 		item.setData(namePath);

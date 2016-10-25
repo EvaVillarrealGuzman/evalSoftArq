@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -187,11 +189,20 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	}
 
-	public void createSimulator(String psimulationTime) {
+	public void createSimulator(String psimulationTime, Table ptable) {
 		Simulator sim = new Simulator();
 		Run run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
 		sim.getRuns().add(run);
 		this.saveObject(sim);
+		
+		TableItem[] items = ptable.getItems();
+		for(int i=0; i < items.length; i++) {
+			TableItem item = items[i];
+			if (item.getChecked()){
+				sim.getRequirements().add((QualityRequirement)item.getData());
+			}
+		}
+		
 		this.getArchitecture().setSimulator(sim);
 		this.updateObject(this.getSystem());
 	}

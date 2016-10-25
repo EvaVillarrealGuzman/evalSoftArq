@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import DomainModel.AnalysisEntity.QualityRequirement;
+
 @Entity
 @Table(name = "SIMULATOR")
 public class Simulator implements Comparable{
@@ -25,6 +27,9 @@ public class Simulator implements Comparable{
 	
 	@OneToMany(targetEntity = Run.class, cascade = CascadeType.ALL)
 	private Set<Run> runs = new HashSet<Run>();
+	
+	@OneToMany(targetEntity = QualityRequirement.class, cascade = CascadeType.ALL)
+	private Set<QualityRequirement> requirements = new HashSet<QualityRequirement>();
 	
 	//CompareTo
 	@Override
@@ -55,6 +60,14 @@ public class Simulator implements Comparable{
 
 	public void setRuns(Set<Run> runs) {
 		this.runs = runs;
+	}
+
+	public Set<QualityRequirement> getRequirements() {
+		return requirements;
+	}
+
+	public void setRequirements(Set<QualityRequirement> requirements) {
+		this.requirements = requirements;
 	}
 
 	public Double calculateAverageIndicator(){

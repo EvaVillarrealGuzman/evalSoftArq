@@ -186,6 +186,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			table.setLinesVisible(true);
 			table.setHeaderVisible(true);
 			// Create columns
+
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
 			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));

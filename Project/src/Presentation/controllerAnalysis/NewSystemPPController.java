@@ -54,14 +54,18 @@ public class NewSystemPPController extends Controller {
 	/**
 	 * Create the system and prepare the view
 	 */
-	public Boolean save() {
+	public int save() {
 		int err;
 		err = this.newSystem();
 		if (err == 0) {
 			this.getForm().prepareView(1);
-			return this.getManager().saveSystem();
+			if (this.getManager().saveSystem()){
+				return 0;
+			}else {
+				return 1;
+			}
 		}
-		return null;
+		return 2;
 	}
 
 	/**

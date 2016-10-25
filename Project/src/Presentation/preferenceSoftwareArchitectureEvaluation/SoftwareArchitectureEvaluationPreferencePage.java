@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -17,15 +19,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import DomainModel.AnalysisEntity.QualityRequirement;
 import Presentation.controllerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
+import org.eclipse.swt.widgets.Event;
 
 /**
  * To specify a software architecture by JUCMNav
@@ -49,6 +54,12 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	private TableColumn colPathSoftArc;
 	private TableColumn colObjectSoftArc;
 	private TableColumn colNameSoftArc;
+	private TableViewer tblViewerQualityRequirement;
+	private Table table;
+	private TableColumn colCheck;
+	private TableColumn colObject;
+	private TableColumn colQualityAttribute;
+	private TableColumn colDescriptionScenario;
 	private DoubleFieldEditor simulationTime;
 
 	/**
@@ -163,10 +174,88 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					tableSoftArc.showSelection();
-					prepareView(3);
+					if (tableSoftArc.getSelectionIndex()!=-1){
+						prepareView(3);
+					}else{
+						prepareView(2);
+					}
 				}
 			});
+			
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
 
+			Label labelEmptyTwo = new Label(parent, SWT.NULL);
+			labelEmptyTwo.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+
+			Group gQualityRequirement = new Group(parent, SWT.NONE);
+			gQualityRequirement.setLayoutData(gridData);
+			gQualityRequirement.setText(Messages.getString("UCM2DEVS_QualityRequirement_Group"));
+			gQualityRequirement.setLayout(new GridLayout(2, false));
+
+			// Create column names
+			String[] columnNamesReq = new String[] { "", Messages.getString("UCM2DEVS_DescriptionObject_Column"),
+					Messages.getString("UCM2DEVS_QualityAttribute_Column"),
+					Messages.getString("UCM2DEVS_DescriptionScenario_Column") };
+			// Create styles
+			int styleReq = SWT.FULL_SELECTION | SWT.BORDER | SWT.CHECK;
+			// create table
+			table = new Table(gQualityRequirement, styleReq);
+			TableLayout tableLayoutReq = new TableLayout();
+			table.setLayout(tableLayoutReq);
+			gridData = new GridData(GridData.FILL_BOTH);
+			gridData.horizontalSpan = 4;
+			table.setLayoutData(gridData);
+			table.setLinesVisible(true);
+			table.setHeaderVisible(true);
+			// Create columns
+			colCheck = new TableColumn(table, SWT.NONE);
+			colCheck.setWidth(100);
+			colCheck.setText(Messages.getString(""));
+			
+			colObject = new TableColumn(table, SWT.NONE);
+			colObject.setWidth(0);
+			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));
+
+			colQualityAttribute = new TableColumn(table, SWT.NONE);
+			colQualityAttribute.setWidth(200);
+			colQualityAttribute.setText(Messages.getString("UCM2DEVS_QualityAttribute_Column"));
+
+			colDescriptionScenario = new TableColumn(table, SWT.NONE);
+			colDescriptionScenario.setWidth(200);
+			colDescriptionScenario.setText(Messages.getString("UCM2DEVS_DescriptionScenario_Column"));
+
+			for (int i = 0; i < 8; i++) {
+				TableItem item = new TableItem(table, SWT.NONE);
+				item.setText("");
+			}
+
+			// Create TableViewer
+			tblViewerQualityRequirement = new TableViewer(table);
+			tblViewerQualityRequirement.setUseHashlookup(true);
+			tblViewerQualityRequirement.setColumnProperties(columnNamesReq);
+
+			// Create the cell editors
+			CellEditor[] editors = new CellEditor[columnNamesReq.length];
+			editors[0] = null;
+			editors[1] = null;
+			editors[2] = null;
+			editors[3] = null;
+
+			// Assign the cell editors to the viewer
+			tblViewerQualityRequirement.setCellEditors(editors);
+			table.addListener(SWT.Selection, new Listener() {
+			      public void handleEvent(Event event) {
+			        if (event.detail == SWT.CHECK){
+			        	prepareView(4);
+			        }
+			      }
+			});
+			
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
 
@@ -205,7 +294,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				public void widgetSelected(SelectionEvent e) {
 					// viewController.setModel(cmbSystem);
 					// cmbSystemItemStateChanged();
-					prepareView(4);
+					prepareView(5);
 				}
 			});
 
@@ -229,13 +318,13 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					try {
-						if (viewController.evaluate()) {
+						int var = viewController.evaluate();
+						if (var==0) {
 							viewController.createObjectSuccessDialog();
-						} else {
+						} else if (var==1){
 							viewController.createObjectDontUpdateErrorDialog();
 						}
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -314,29 +403,21 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		this.tableSoftArc = table;
 	}
 
-	// public Table getTableQR() {
-	// return tableQR;
-	// }
-	//
-	// public void setTableQR(Table tableQR) {
-	// this.tableQR = tableQR;
-	// }
+	public TableViewer getTblViewerQualityRequirement() {
+		return tblViewerQualityRequirement;
+	}
 
-	// public Button getBtonRadioQR() {
-	// return btonRadioQR;
-	// }
-	//
-	// public void setBtonRadioQR(Button btonRadioQR) {
-	// this.btonRadioQR = btonRadioQR;
-	// }
-	//
-	// public Button getBtonRadioSoftArc() {
-	// return btonRadioSoftArc;
-	// }
-	//
-	// public void setBtonRadioSoftArc(Button btonRadioSoftArc) {
-	// this.btonRadioSoftArc = btonRadioSoftArc;
-	// }
+	public void setTblViewerQualityRequirement(TableViewer tblViewerQualityRequirement) {
+		this.tblViewerQualityRequirement = tblViewerQualityRequirement;
+	}
+
+	public Table getTable() {
+		return table;
+	}
+
+	public void setTable(Table table) {
+		this.table = table;
+	}
 
 	/**
 	 * load combo with system with state=true
@@ -371,7 +452,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		case 0:// No system with architecture or quality requirement
 			this.getCboSystem().getCombo().setEnabled(false);
 			this.getTableSoftArc().setEnabled(false);
-			// this.getTableQR().setEnabled(false);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
@@ -379,29 +460,36 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		case 1: // There are systems with architecture or quality requirement
 			this.getCboSystem().getCombo().setEnabled(true);
 			this.getTableSoftArc().setEnabled(false);
-			// TODO
-			// this.getTableQR().setEnabled(true);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
 			break;
 		case 2: // With system selected
 			this.getTableSoftArc().setEnabled(true);
-			// this.getTableQR().setEnabled(true);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
+			this.getBtnEvaluate().setEnabled(false);
 
 			break;
-		case 3:// With architecture selected and quality requirement
+		case 3:// With architecture selected
+			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
+			this.getSimulationTime().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(true);
+			this.getBtnEvaluate().setEnabled(false);
+			break;
+		case 4:// With requirement selected
 			this.getSimulationTime().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
 			this.getBtnEvaluate().setEnabled(false);
 			break;
-		case 4:// With unit selected
+		case 5:// With unit selected
 			this.getSimulationTime().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
 			this.getBtnEvaluate().setEnabled(true);
 			break;
+		
 		}
 	}
 
@@ -411,7 +499,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.fillTableSoftArc();
-		// this.fillTableQR();
+		this.fillTableQR();
 	}
 
 	/**
@@ -428,11 +516,11 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 * // * Fill table with system's quality requirements (quality attribute, //
 	 * * description and condition) //
 	 */
-	// public void fillTableQR() {
-	// this.getViewController().setModelQualityRequirement(
-	// (DomainModel.AnalysisEntity.System) ((IStructuredSelection)
-	// this.getCboSystem().getSelection())
-	// .getFirstElement());
-	// }
+	public void fillTableQR() {
+		this.getViewController().setModelQualityRequirement(
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection)
+						this.getCboSystem().getSelection())
+				.getFirstElement());
+	}
 
 }
