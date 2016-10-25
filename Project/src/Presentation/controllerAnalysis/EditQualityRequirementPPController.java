@@ -158,15 +158,20 @@ public class EditQualityRequirementPPController extends Controller {
 	/**
 	 * Update the quality requirement and prepare the view
 	 */
-	public Boolean save() {
+	public int save() {
 		int err;
 		err = this.setQualityRequirement();
 		if (err == 0) {
 			this.getFormSearch().prepareView(7);
 			this.getFormSearch().fillTable();
-			return this.getManager().updateQualityRequirement();
+			if (this.getManager().updateQualityRequirement()){
+				return 0;
+			}else {
+				return 1;
+			}
+		} else {
+			return 2;
 		}
-		return null;
 	}
 
 	/**

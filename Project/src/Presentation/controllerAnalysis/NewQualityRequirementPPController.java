@@ -154,14 +154,19 @@ public class NewQualityRequirementPPController extends Controller {
 	/**
 	 * Create the quality requirement and prepare the view
 	 */
-	public Boolean save() {
+	public int save() {
 		int err = this.newQualityRequirement();
 		if (err == 0) {
 			this.getForm().clearView();
 			this.getForm().prepareView(0);
-			return this.getManager().saveQualityRequirement();
+			if (this.getManager().saveQualityRequirement()){
+				return 0;
+			}else {
+				return 1;
+			}
+		}else{
+			return 3;
 		}
-		return null;
 	}
 
 	/**

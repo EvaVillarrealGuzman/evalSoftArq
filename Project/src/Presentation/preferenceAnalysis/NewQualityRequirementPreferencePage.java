@@ -427,9 +427,10 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (viewController.save()) {
+					int var = viewController.save();
+					if (var==0) {
 						viewController.createObjectSuccessDialog();
-					} else {
+					} else if (var==1) {
 						viewController.createObjectDontSaveErrorDialog();
 					}
 				}
