@@ -15,7 +15,7 @@ import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 
 /**
  * This class defines an architecture view for a specific system
- *  
+ * 
  * @author: FEM
  * @version: 06/09/2016
  */
@@ -30,21 +30,21 @@ public class Architecture {
 
 	@OneToMany(targetEntity = Path.class)
 	private Set<Path> paths = new HashSet<Path>();
-	
+
 	@OneToMany(targetEntity = ArchitectureElement.class)
 	private Set<ArchitectureElement> architectureElements = new HashSet<ArchitectureElement>();
-	
+
 	@OneToOne(targetEntity = Simulator.class)
 	private Simulator simulator;
 
-	private ArrayList<String> pathUCMs;
+	private String pathUCM;
 
 	public Architecture() {
-		
+
 	}
-	
-	public Architecture(ArrayList<String> ppathUCMs) {
-		this.pathUCMs = ppathUCMs;
+
+	public Architecture(String ppathUCM) {
+		this.pathUCM = ppathUCM;
 	}
 
 	public int getId() {
@@ -79,12 +79,12 @@ public class Architecture {
 		this.simulator = simulator;
 	}
 
-	public ArrayList<String> getPathUCMs() {
-		return pathUCMs;
+	public String getPathUCM() {
+		return pathUCM;
 	}
 
-	public void setPathUCMs(ArrayList<String> pathUCMs) {
-		this.pathUCMs = pathUCMs;
+	public void setPathUCM(String pathUCM) {
+		this.pathUCM = pathUCM;
 	}
-	
+
 }

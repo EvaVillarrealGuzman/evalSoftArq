@@ -138,11 +138,11 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return this.getSystem().getArchitectures();
 	}
 
-	public ArrayList<String> getPathUCMs() {
+	public String getPathUCMs() {
 		Iterator it = this.getSystem().getArchitectures().iterator();
 		if (it.hasNext()) {
 			Architecture a = (Architecture) it.next();
-			return a.getPathUCMs();
+			return a.getPathUCM();
 		} else {
 			return null;
 		}
@@ -194,15 +194,15 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Run run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
 		sim.getRuns().add(run);
 		this.saveObject(sim);
-		
+
 		TableItem[] items = ptable.getItems();
-		for(int i=0; i < items.length; i++) {
+		for (int i = 0; i < items.length; i++) {
 			TableItem item = items[i];
-			if (item.getChecked()){
-				sim.getRequirements().add((QualityRequirement)item.getData());
+			if (item.getChecked()) {
+				sim.getRequirements().add((QualityRequirement) item.getData());
 			}
 		}
-		
+
 		this.getArchitecture().setSimulator(sim);
 		this.updateObject(this.getSystem());
 	}
@@ -316,7 +316,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.saveObject(type);
 		ind.setType(type);
 		ind.setValue(Double.parseDouble(pfields[3]));
-		
+
 		switch (pfields[2]) {
 		case "RDT":
 			ind.setUnit(this.getUnitIndicator());

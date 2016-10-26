@@ -2,10 +2,14 @@ package Presentation.controllerSoftwareArchitectureSpecification;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
@@ -17,6 +21,10 @@ import org.eclipse.ui.part.FileEditorInput;
 import BusinessLogic.SoftwareArchitectureSpecificationManager;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+import DomainModel.SoftwareArchitectureSpecificationEntity.Path;
+import DomainModel.SoftwareArchitectureSpecificationEntity.PathElement;
+import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
+import DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
 import Presentation.Controller;
 import Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage;
 import Presentation.preferences.Messages;
@@ -88,16 +96,15 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	public void setModelUnit() {
 		this.getForm().getCmbUnit().setInput(getManager().getComboModelUnit());
 	}
-	
+
 	public void setModelUnit(ComboViewer pcmb) {
-		this.setModelUnit(
-				(Unit) ((IStructuredSelection) pcmb.getSelection()).getFirstElement());
+		this.setModelUnit((Unit) ((IStructuredSelection) pcmb.getSelection()).getFirstElement());
 	}
-	
+
 	private void setModelUnit(Unit pmodel) {
 		this.getManager().setUnit(pmodel);
 	}
-	
+
 	/**
 	 * Update the system with the UCM path and prepare the view
 	 */
@@ -119,11 +126,36 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	public int setSystem() {
 		if (this.isValidData()) {
-			this.getManager().setPathUCMs(getArrayListNamePath());
+			this.getManager().setArchitectures(getArchitecturesToSystem());
 			return 0;
 		} else {
 			return 1;
 		}
+	}
+
+	private Set<Architecture> getArchitecturesToSystem() {
+		/*
+		 * Iterator itArchitecture =
+		 * this.getManager().getSystem().getArchitectures().iterator(); while
+		 * (itArchitecture.hasNext()) { Architecture architecture =
+		 * (Architecture) itArchitecture.next(); architecture.setState(false); }
+		 */
+
+		// this.getManager().deleteArchitectures(getManager().getSystem().getArchitectures());
+
+		Set<Architecture> architectures = new HashSet<Architecture>();
+
+		for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
+			TableItem item = this.getForm().getTable().getItem(i);
+			if (!item.getText(2).equals("")) {
+				Architecture architecture = new Architecture(item.getText(2) + "\\" + item.getText(1));
+				this.getManager().createArchitecture(architecture, architectures);
+				// this.getManager().getSystem().getArchitectures().add(architecture);
+			}
+		}
+		this.getManager().getSystem().setArchitectures(null);
+		this.getManager().getSystem().setArchitectures(architectures);
+		return getManager().getSystem().getArchitectures();
 	}
 
 	private ArrayList<String> getArrayListNamePath() {
@@ -156,13 +188,36 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * @param ptype
 	 */
 	public void setModelPaths(DomainModel.AnalysisEntity.System ptype) {
+		Boolean first = true;
 		this.getManager().setSystem(ptype);
 		while (this.getForm().getTable().getItems().length > 0) {
 			this.getForm().getTable().remove(0);
 		}
 		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture dp : this.getManager().getArchitectures()) {
-				addToTable(dp.getPathUCMs().get(0));
+				if (first) {
+					// System.out.println(dp.getPaths().size());
+					Iterator it = dp.getPaths().iterator();
+					if (it.hasNext()) {
+						Path a = (Path) it.next();
+						Iterator itPathElements = a.getPathElements().iterator();
+						if (itPathElements.hasNext()) {
+							PathElement pathElement = (PathElement) itPathElements.next();
+							if (pathElement instanceof Responsibility) {
+								Responsibility responsability = (Responsibility) pathElement;
+								Iterator itSpePar = responsability.getSpecificationParameter().iterator();
+								if (itSpePar.hasNext()) {
+									SpecificationParameter spePar = (SpecificationParameter) itSpePar.next();
+									System.out.println(spePar.getUnit());
+									this.getForm().getCmbUnit().setSelection(new StructuredSelection(spePar.getUnit()));
+									first = false;
+								}
+							}
+						}
+					}
+
+					addToTable(dp.getPathUCM());
+				}
 			}
 		}
 	}

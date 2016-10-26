@@ -412,6 +412,9 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
+		Object valueCmbUnit;
+		TableItem item = this.getTable().getItem(0);
+		System.out.println("el item es: "+ item);
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
 			pabm = 3;
@@ -423,8 +426,14 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnAdd.setEnabled(false);
 			btnDelete.setEnabled(false);
 			btnConsult.setEnabled(false);
+			valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
+			if (valueCmbUnit == null) {
+				btnSave.setEnabled(false);
+			} else {
+				btnSave.setEnabled(true);
+			}
 			cmbUnit.getCombo().setEnabled(false);
-			btnSave.setEnabled(false);
+			clearView();
 			break;
 		case 1:// with system selected
 			cmbSystem.getCombo().setEnabled(true);
@@ -433,7 +442,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnDelete.setEnabled(true);
 			btnConsult.setEnabled(true);
 			cmbUnit.getCombo().setEnabled(true);
-			btnSave.setEnabled(false);
+			valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
+			if (valueCmbUnit == null) {
+				btnSave.setEnabled(false);
+			} else {
+				btnSave.setEnabled(true);
+			}
 			break;
 		case 2: // with architecture selected
 			cmbSystem.getCombo().setEnabled(true);
@@ -444,14 +458,19 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			cmbUnit.getCombo().setEnabled(true);
 			btnSave.setEnabled(true);
 			break;
-		case 3: 
+		case 3:
 			cmbSystem.getCombo().setEnabled(false);
 			table.setEnabled(false);
 			btnAdd.setEnabled(false);
 			btnDelete.setEnabled(false);
 			btnConsult.setEnabled(false);
+			valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
+			if (valueCmbUnit == null) {
+				btnSave.setEnabled(false);
+			} else {
+				btnSave.setEnabled(true);
+			}
 			cmbUnit.getCombo().setEnabled(false);
-			btnSave.setEnabled(false);
 			break;
 		}
 	}

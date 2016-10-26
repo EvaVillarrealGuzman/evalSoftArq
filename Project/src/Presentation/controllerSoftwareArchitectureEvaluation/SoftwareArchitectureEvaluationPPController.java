@@ -184,7 +184,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		}
 		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture dp : this.getManager().getArchitectures()) {
-				addToTable(dp.getPathUCMs().get(0));
+				addToTable(dp.getPathUCM());
 			}
 		}
 	}

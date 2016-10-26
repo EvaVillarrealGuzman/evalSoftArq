@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
-
 import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
@@ -178,23 +176,23 @@ public class ReportManager extends HibernateManager {
 		this.updateObject(this.getSystem());
 	}
 
-	public ArrayList<String> getPathUCMs() {
+	public String getPathUCMs() {
 		Iterator it = this.getSystem().getArchitectures().iterator();
 		if (it.hasNext()) {
 			Architecture a = (Architecture) it.next();
-			return a.getPathUCMs();
+			return a.getPathUCM();
 		} else {
 			return null;
 		}
 	}
 
-	public void setPathUCMs(ArrayList<String> pathUCMs) {
+	public void setPathUCMs(String pathUCM) {
 		Iterator it = this.getSystem().getArchitectures().iterator();
 		if (it.hasNext()) {
 			Architecture a = (Architecture) it.next();
-			a.setPathUCMs(pathUCMs);
+			a.setPathUCM(pathUCM);
 		} else {
-			Architecture pa = new Architecture(pathUCMs);
+			Architecture pa = new Architecture(pathUCM);
 			this.getSystem().getArchitectures().add(pa);
 		}
 	}
@@ -340,9 +338,9 @@ public class ReportManager extends HibernateManager {
 				}
 			}
 		}
-		return list;	
+		return list;
 	}
-	
+
 	public List<ResponsibilityDowntime> listResponsibilityDowntime() {
 
 		List<ResponsibilityDowntime> list = new ArrayList<ResponsibilityDowntime>();
@@ -362,9 +360,9 @@ public class ReportManager extends HibernateManager {
 				}
 			}
 		}
-		return list;	
+		return list;
 	}
-	
+
 	public List<ResponsibilityRecoveryTime> listResponsibilityRecoveryTime() {
 
 		List<ResponsibilityRecoveryTime> list = new ArrayList<ResponsibilityRecoveryTime>();
@@ -384,7 +382,7 @@ public class ReportManager extends HibernateManager {
 				}
 			}
 		}
-		return list;	
+		return list;
 	}
 
 	public List<Double> listResultSimulation() {

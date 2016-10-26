@@ -58,7 +58,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private Unit unit;
 	Document doc;
 	private DefaultTreeModel model;
-	//private Architecture arch;
+	// private Architecture arch;
 	private JTree tree;
 	private StartPoint startPoint;
 	private Set<ArchitectureElement> archElements = new HashSet<ArchitectureElement>();
@@ -66,7 +66,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private Set<Responsibility> responsibilities = new HashSet<Responsibility>();
 	private CompositeComponent child;
 	private DatabaseConnection db;
-	
 
 	/**
 	 * Getters and Setters
@@ -83,7 +82,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	public void setDb(DatabaseConnection db) {
 		this.db = db;
 	}
-	
+
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -118,17 +117,16 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	 * @return ComboBoxModel with system names whose state==true
 	 */
 	public DomainModel.AnalysisEntity.System[] getComboModelSystem() { // NOPMD
-																				// by
-																				// Usuario-Pc
-																				// on
-																				// 10/06/16
-																				// 21:42
+																		// by
+																		// Usuario-Pc
+																		// on
+																		// 10/06/16
+																		// 21:42
 		ArrayList<DomainModel.AnalysisEntity.System> systems = new ArrayList<DomainModel.AnalysisEntity.System>();
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			systems.add(auxTipo);
 		}
-		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems
-				.size()];
+		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems.size()];
 		systems.toArray(arraySystem);
 		return arraySystem;
 	}
@@ -143,19 +141,18 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 	/**
 	 * 
-	 * @return ComboBoxModel with unit names 
+	 * @return ComboBoxModel with unit names
 	 */
-	public Unit[] getComboModelUnit() { 
+	public Unit[] getComboModelUnit() {
 		ArrayList<Unit> units = new ArrayList<Unit>();
 		for (Unit auxTipo : this.listUnit()) {
 			units.add(auxTipo);
 		}
-		Unit[] arrayUnit = new Unit[units
-				.size()];
+		Unit[] arrayUnit = new Unit[units.size()];
 		units.toArray(arrayUnit);
 		return arrayUnit;
 	}
-	
+
 	/**
 	 * 
 	 * @return List<Unit> with the units names
@@ -163,31 +160,18 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	public List<Unit> listUnit() {
 		return this.listClass(Unit.class, "name");
 	}
-	
+
 	public Boolean updateSystem() {
 		return this.updateObject(this.getSystem());
 	}
 
-	public ArrayList<String> getPathUCMs() {
+	public String getPathUCM() {
 		Iterator it = this.getSystem().getArchitectures().iterator();
 		if (it.hasNext()) {
 			Architecture a = (Architecture) it.next();
-			return a.getPathUCMs();
+			return a.getPathUCM();
 		} else {
 			return null;
-		}
-	}
-
-	public void setPathUCMs(ArrayList<String> pathUCMs) {
-		Iterator it = this.getSystem().getArchitectures().iterator();
-		if (it.hasNext()) {
-			Architecture a = (Architecture) it.next();
-			a.setPathUCMs(pathUCMs);
-			createArchitecture(a);
-		} else {
-			Architecture pa = new Architecture(pathUCMs);
-			this.getSystem().getArchitectures().add(pa);
-			createArchitecture(pa);
 		}
 	}
 
@@ -195,25 +179,37 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return this.getSystem().getArchitectures();
 	}
 
-//	public Architecture getArch() {
-//		return arch;
-//	}
-//
-//	public void setArch(Architecture arch) {
-//		this.arch = arch;
-//	}
+	public void setArchitectures(Set<Architecture> architectures) {
 
-	public void createArchitecture(Architecture parch) {
+		// this.getSystem().setArchitectures(architectures);
+		// DomainModel.AnalysisEntity.System jol= this.getSystem();
+		updateObject(this.getSystem());
+		/*
+		 * Iterator it = this.getSystem().getArchitectures().iterator(); while
+		 * (it.hasNext()) { Architecture a = (Architecture) it.next(); if
+		 * (a.isState()) { System.out.println(" "); System.out.println("arc" +
+		 * a); System.out.println(" "); // createArchitecture(a); } }
+		 */
+	}
+
+	public void createArchitecture(Architecture parch, Set<Architecture> architectures) {
 		try {
-			//this.setArch(parch);
+
+			StartPoint startPoint = null;
+			Set<ArchitectureElement> archElements = new HashSet<ArchitectureElement>();
+			Set<PathElement> pathElements = new HashSet<PathElement>();
+			Set<Responsibility> responsibilities = new HashSet<Responsibility>();
+			CompositeComponent child;
+			// StartPoint startPoint;
+
 			// lee el archivo xml que se convertirá en árbol
-			File fXmlFile = new File(parch.getPathUCMs().get(0));
+			File fXmlFile = new File(parch.getPathUCM());
 
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
-			
+
 			Boolean isRootNodeASimpleComponent = true;
 
 			// busca una lista de los elementos con el tag correspondiente
@@ -228,15 +224,16 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 					String parent = eContRef.getAttribute("parent");
 					if (parent.equals("")) {
 						String id = eContRef.getAttribute("id");
-						if (isASimpleComponent(eContRef)){
+						if (isASimpleComponent(eContRef)) {
 							rootNode = new SimpleComponent(this.translateNameComponent(id));
 							parentN = new DefaultMutableTreeNode(rootNode);
-						}else{
+						} else {
 							rootNode = new CompositeComponent(this.translateNameComponent(id));
 							parentN = new DefaultMutableTreeNode(rootNode);
 							isRootNodeASimpleComponent = false;
 						}
-						//rootNode = new Domain.Component(Integer.parseInt(id), this.translateNameComponent(id));
+						// rootNode = new Domain.Component(Integer.parseInt(id),
+						// this.translateNameComponent(id));
 					}
 				}
 			}
@@ -252,10 +249,10 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			tree.getSelectionModel().addTreeSelectionListener(this);
 
 			// Cada Padre crea a su hijo, recursivamente
-			creationComponent(parentN, isRootNodeASimpleComponent);
+			creationComponent(parentN, isRootNodeASimpleComponent, archElements, pathElements);
 
-			creationStartPoint();
-			for (PathElement dp : pathElements){
+			creationStartPoint(startPoint, pathElements);
+			for (PathElement dp : pathElements) {
 				saveObject(dp);
 			}
 			Set<Path> paths = new HashSet<Path>();
@@ -264,14 +261,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			saveObject(path);
 			paths.add(path);
 			parch.setPaths(paths);
-			for (ArchitectureElement dp : archElements){
+			for (ArchitectureElement dp : archElements) {
 				saveObject(dp);
 			}
 			parch.setArchitectureElements(archElements);
-			this.getSystem().getArchitectures().clear();
-			this.getSystem().getArchitectures().add(parch);
-			
-			updateObject(this.getSystem());
+
+			architectures.add(parch);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -343,15 +338,16 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return null;
 	}
 
-	private void creationComponent(DefaultMutableTreeNode parentN, boolean pisRootNodeASimpleComponent) {
+	private void creationComponent(DefaultMutableTreeNode parentN, boolean pisRootNodeASimpleComponent,
+			Set<ArchitectureElement> archElements, Set<PathElement> pathElements) {
 		NodeList contRefsList = doc.getElementsByTagName("contRefs");
 		int index = 0;
 		ArchitectureElement dataParent;
 		Boolean isRootNodeASimpleComponent = true;
 
-		if (pisRootNodeASimpleComponent){
+		if (pisRootNodeASimpleComponent) {
 			dataParent = (SimpleComponent) parentN.getUserObject();
-		}else{
+		} else {
 			dataParent = (CompositeComponent) parentN.getUserObject();
 		}
 		for (int j = 0; j < contRefsList.getLength(); j++) {
@@ -371,9 +367,9 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 							String id = eChild.getAttribute("id");
 							ArchitectureElement child;
-							if (isASimpleComponent(eChild)){
+							if (isASimpleComponent(eChild)) {
 								child = new SimpleComponent(this.translateNameComponent(id));
-							}else{
+							} else {
 								child = new CompositeComponent(this.translateNameComponent(id));
 								isRootNodeASimpleComponent = false;
 							}
@@ -383,7 +379,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							index++;
 							// llama recursivamente, para que si este nodo tiene
 							// hijos, los cree
-							creationComponent(hijoN, isRootNodeASimpleComponent);
+							creationComponent(hijoN, isRootNodeASimpleComponent, archElements, pathElements);
 						}
 					}
 
@@ -396,7 +392,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 						String[] node = nodes.split(" ");
 						for (int k = 0; k < node.length; k++) {
 							// Por cada responsabilidad
-							this.creationSimpleElement(node[k], parentN, index);
+							this.creationSimpleElement(node[k], parentN, index, pathElements);
 						}
 					}
 				}
@@ -404,12 +400,13 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		}
 	}
 
-	private int creationSimpleElement(String idNode, DefaultMutableTreeNode parentNode, int index) {
+	private int creationSimpleElement(String idNode, DefaultMutableTreeNode parentNode, int index,
+			Set<PathElement> pathElements) {
 		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
 		NodeList nodesList = doc.getElementsByTagName("nodes");
 
 		Element eNode = this.getNodeOfResponsability(idNode, doc);
-		//responsibilities.clear();
+		// responsibilities.clear();
 
 		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
 			Node respNode = responsibilitiesList.item(i);
@@ -437,7 +434,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
 							child.getSpecificationParameter().add(sp);
-							//sp.setMeanExecutionTime(Double.parseDouble(metadata.getAttribute("value")));
+							// sp.setMeanExecutionTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanDowntime")) {
 							SpecificationParameter sp = new SpecificationParameter();
 							sp.setMetric((Metric) this.listMetric("Mean Downtime").get(0));
@@ -445,7 +442,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
 							child.getSpecificationParameter().add(sp);
-							//sp.setMeanDownTime(Double.parseDouble(metadata.getAttribute("value")));
+							// sp.setMeanDownTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanRecoveryTime")) {
 							SpecificationParameter sp = new SpecificationParameter();
 							sp.setMetric((Metric) this.listMetric("Mean Recovery Time").get(0));
@@ -453,7 +450,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
 							child.getSpecificationParameter().add(sp);
-							//sp.setMeanRecoveryTime(Double.parseDouble(metadata.getAttribute("value")));
+							// sp.setMeanRecoveryTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanTimeBFail")) {
 							SpecificationParameter sp = new SpecificationParameter();
 							sp.setMetric((Metric) this.listMetric("Mean Time B Fail").get(0));
@@ -461,12 +458,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
 							child.getSpecificationParameter().add(sp);
-							//sp.setMeanTimeBFail(Double.parseDouble(metadata.getAttribute("value")));
+							// sp.setMeanTimeBFail(Double.parseDouble(metadata.getAttribute("value")));
 						}
-						
+
 					}
 					updateObject(child);
-					//responsibilities.add(child);
+					// responsibilities.add(child);
 					pathElements.add(child);
 
 					DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
@@ -478,23 +475,21 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 				}
 			}
-			
+
 		}
-		//SimpleComponent dataParent = (SimpleComponent) parentNode.getUserObject();
-		//dataParent.setResponsabilities(responsibilities);
-		
+
 		for (int i = 0; i < nodesList.getLength(); i++) {
 			Node node = nodesList.item(i);
 
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				Element eCurrentNode = (Element) node;
 				String nodeType = eCurrentNode.getAttribute("xsi:type");
-				if (eCurrentNode.getAttribute("id").equals(idNode) && !nodeType.equals("ucm.map:StartPoint")){
-					if (nodeType.equals("ucm.map:EndPoint")){
+				if (eCurrentNode.getAttribute("id").equals(idNode) && !nodeType.equals("ucm.map:StartPoint")) {
+					if (nodeType.equals("ucm.map:EndPoint")) {
 						EndPoint child = new EndPoint(this.translateNameSimpleElement(idNode));
 						pathElements.add(child);
-					} else if (nodeType.equals("ucm.map:OrFork")){
-						ORFork child = new ORFork(this.translateNameSimpleElement(idNode)); 
+					} else if (nodeType.equals("ucm.map:OrFork")) {
+						ORFork child = new ORFork(this.translateNameSimpleElement(idNode));
 						ArrayList<Double> pathProbabilities = new ArrayList<Double>();
 
 						NodeList metadatasList = eCurrentNode.getElementsByTagName("metadata");
@@ -507,31 +502,31 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 						}
 						child.setPathProbabilities(pathProbabilities);
 						pathElements.add(child);
-						
+
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
 						index++;
-					}else if (nodeType.equals("ucm.map:OrJoin")){
+					} else if (nodeType.equals("ucm.map:OrJoin")) {
 						ORJoin child = new ORJoin(this.translateNameSimpleElement(idNode));
 						pathElements.add(child);
-						
+
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
 						index++;
-					}else if (nodeType.equals("ucm.map:AndFork")){
+					} else if (nodeType.equals("ucm.map:AndFork")) {
 						ANDFork child = new ANDFork(this.translateNameSimpleElement(idNode));
 						pathElements.add(child);
-						
+
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
 						index++;
-					}else if (nodeType.equals("ucm.map:AndJoin")){
+					} else if (nodeType.equals("ucm.map:AndJoin")) {
 						ANDJoin child = new ANDJoin(this.translateNameSimpleElement(idNode));
 						pathElements.add(child);
-						
+
 						DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 
 						model.insertNodeInto(hijoN, parentNode, index);
@@ -546,8 +541,9 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return 0;
 
 	}
-//
-	private void creationStartPoint() {
+
+	//
+	private void creationStartPoint(StartPoint startPoint, Set<PathElement> pathElements) {
 
 		NodeList nodesList = doc.getElementsByTagName("nodes");
 
@@ -563,23 +559,22 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				Element metadata = (Element) currentNode;
 
 				startPoint = new StartPoint("start point", Double.parseDouble(metadata.getAttribute("value")));
-				
+
 			}
 
 		}
-		
+
 		pathElements.add(startPoint);
 	}
 
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 	}
-	
+
 	public List listMetric(String pmetric) {
 		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
 		return crit.list();
 	}
-
 
 	/**
 	 * Obtiene los elementos predecesores de un elemento particular
@@ -705,15 +700,15 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return leafList;
 
 	}
-	
-	public boolean isASimpleComponent(Element pelem){
-		if (pelem.getAttribute("children").equals("")){
+
+	public boolean isASimpleComponent(Element pelem) {
+		if (pelem.getAttribute("children").equals("")) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Return if connection with database is success
 	 * 
@@ -727,6 +722,5 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		HibernateUtil hu = new HibernateUtil();
 		return hu.isConnection();
 	}
-	
-}
 
+}
