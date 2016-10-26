@@ -273,18 +273,21 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		Indicator ind = new Indicator();
 		ind.setType(ptype);
 		ind.setValue(Double.parseDouble(pfields[3]));
-		ind.setUnit(this.getUnitIndicator());
 		switch (pfields[2]) {
 		case "SA":
+			ind.setUnit(this.getUnitIndicator());
 			ind.setMetric((Metric) this.listMetric("System Availability").get(0));
 			break;
 		case "SNA":
+			ind.setUnit(this.getUnitIndicator());
 			ind.setMetric((Metric) this.listMetric("System No-Availability").get(0));
 			break;
 		case "ST":
+			ind.setUnit(this.getUnitIndicator());
 			ind.setMetric((Metric) this.listMetric("System Throughput").get(0));
 			break;
 		case "STT":
+			ind.setUnit(this.getUnitIndicator());
 			ind.setMetric((Metric) this.listMetric("System Turnaraound Time").get(0));
 			break;
 		case "SF":
@@ -313,15 +316,18 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.saveObject(type);
 		ind.setType(type);
 		ind.setValue(Double.parseDouble(pfields[3]));
-		ind.setUnit(this.getUnitIndicator());
+		
 		switch (pfields[2]) {
 		case "RDT":
+			ind.setUnit(this.getUnitIndicator());
 			ind.setMetric((Metric) this.listMetric("Responsibility Downtime").get(0));
 			break;
 		case "RRT":
+			ind.setUnit(this.getUnitIndicator());
 			ind.setMetric((Metric) this.listMetric("Responsibility Recovery Time").get(0));
 			break;
 		case "RTT":
+			ind.setUnit(this.getUnitIndicator());
 			ind.setMetric((Metric) this.listMetric("Responsibility Turnaround Time").get(0));
 			break;
 		case "RF":
