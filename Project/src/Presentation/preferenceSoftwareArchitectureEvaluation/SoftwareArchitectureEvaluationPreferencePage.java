@@ -251,7 +251,11 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			table.addListener(SWT.Selection, new Listener() {
 			      public void handleEvent(Event event) {
 			        if (event.detail == SWT.CHECK){
-			        	prepareView(4);
+			        	if (viewController.isNotChecked(table)){
+			        		prepareView(3);
+			        	}else {
+			        		prepareView(4);
+			        	}
 			        }
 			      }
 			});
@@ -476,7 +480,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		case 3:// With architecture selected
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
 			this.getSimulationTime().setEnabled(false);
-			this.getCmbUnit().getCombo().setEnabled(true);
+			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
 			break;
 		case 4:// With requirement selected
