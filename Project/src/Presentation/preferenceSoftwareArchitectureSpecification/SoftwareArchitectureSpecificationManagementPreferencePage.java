@@ -208,6 +208,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 					String filePath = chooseFile.open();
 					if (!viewController.isUCMDuplicate(filePath)) {
 						viewController.addToTable(filePath);
+						prepareView(2);
 					} else {
 						// TODO poner bien el nombre
 						viewController.createErrorDialog(Messages.getString("UCM2DEVS_UCMExists_ErrorDialog"));
@@ -224,6 +225,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				public void widgetSelected(SelectionEvent e) {
 					TableItem item = table.getItem(table.getSelectionIndex());
 					viewController.openJUCMNavEditor(parent, item.getText(2) + "\\" + item.getText(1));
+					prepareView(2);
 				}
 			});
 
@@ -235,6 +237,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.deleteToTable();
+					prepareView(2);
 				}
 			});
 
@@ -412,13 +415,11 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
-		Object valueCmbUnit;
-		TableItem item = this.getTable().getItem(0);
-		System.out.println("el item es: "+ item);
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
 			pabm = 3;
 		}
+		Object valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
 		switch (pabm) {
 		case 0: // with open the form
 			cmbSystem.getCombo().setEnabled(true);
@@ -426,11 +427,15 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnAdd.setEnabled(false);
 			btnDelete.setEnabled(false);
 			btnConsult.setEnabled(false);
-			valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
-			if (valueCmbUnit == null) {
-				btnSave.setEnabled(false);
-			} else {
+			/*if (!(valueCmbUnit == null) && (this.getTable().getItems().length > 0)) {
 				btnSave.setEnabled(true);
+			} else {
+				btnSave.setEnabled(false);
+			}*/
+			if (!(valueCmbUnit == null) ) {
+				btnSave.setEnabled(true);
+			} else {
+				btnSave.setEnabled(false);
 			}
 			cmbUnit.getCombo().setEnabled(false);
 			clearView();
@@ -442,11 +447,10 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnDelete.setEnabled(true);
 			btnConsult.setEnabled(true);
 			cmbUnit.getCombo().setEnabled(true);
-			valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
-			if (valueCmbUnit == null) {
-				btnSave.setEnabled(false);
-			} else {
+			if (!(valueCmbUnit == null) ) {
 				btnSave.setEnabled(true);
+			} else {
+				btnSave.setEnabled(false);
 			}
 			break;
 		case 2: // with architecture selected
@@ -456,7 +460,11 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnDelete.setEnabled(true);
 			btnConsult.setEnabled(true);
 			cmbUnit.getCombo().setEnabled(true);
-			btnSave.setEnabled(true);
+			if (!(valueCmbUnit == null) ) {
+				btnSave.setEnabled(true);
+			} else {
+				btnSave.setEnabled(false);
+			}
 			break;
 		case 3:
 			cmbSystem.getCombo().setEnabled(false);
@@ -464,11 +472,10 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnAdd.setEnabled(false);
 			btnDelete.setEnabled(false);
 			btnConsult.setEnabled(false);
-			valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
-			if (valueCmbUnit == null) {
-				btnSave.setEnabled(false);
-			} else {
+			if (!(valueCmbUnit == null) ) {
 				btnSave.setEnabled(true);
+			} else {
+				btnSave.setEnabled(false);
 			}
 			cmbUnit.getCombo().setEnabled(false);
 			break;
@@ -495,6 +502,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 
 	public void clearView() {
 		this.getCboSystem().setSelection(StructuredSelection.EMPTY);
+		this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
 		this.getTable().clearAll();
 	}
 

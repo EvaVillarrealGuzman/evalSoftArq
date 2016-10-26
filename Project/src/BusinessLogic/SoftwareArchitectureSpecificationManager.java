@@ -58,13 +58,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private Unit unit;
 	Document doc;
 	private DefaultTreeModel model;
-	// private Architecture arch;
 	private JTree tree;
-	private StartPoint startPoint;
-	private Set<ArchitectureElement> archElements = new HashSet<ArchitectureElement>();
-	private Set<PathElement> pathElements = new HashSet<PathElement>();
-	private Set<Responsibility> responsibilities = new HashSet<Responsibility>();
-	private CompositeComponent child;
 	private DatabaseConnection db;
 
 	/**
@@ -113,6 +107,10 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
+	 * get combos
+	 */
+
+	/**
 	 * 
 	 * @return ComboBoxModel with system names whose state==true
 	 */
@@ -133,14 +131,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 	/**
 	 * 
-	 * @return List<System> with the system names whose state==true
-	 */
-	public List<DomainModel.AnalysisEntity.System> listSystem() {
-		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
-	}
-
-	/**
-	 * 
 	 * @return ComboBoxModel with unit names
 	 */
 	public Unit[] getComboModelUnit() {
@@ -154,6 +144,18 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
+	 * lists
+	 */
+
+	/**
+	 * 
+	 * @return List<System> with the system names whose state==true
+	 */
+	public List<DomainModel.AnalysisEntity.System> listSystem() {
+		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
+	}
+
+	/**
 	 * 
 	 * @return List<Unit> with the units names
 	 */
@@ -161,8 +163,36 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return this.listClass(Unit.class, "name");
 	}
 
+	/**
+	 * 
+	 * @param pmetric
+	 * @return
+	 */
+	public List listMetric(String pmetric) {
+		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
+		return crit.list();
+	}
+
+	/**
+	 * db operation
+	 */
+
 	public Boolean updateSystem() {
 		return this.updateObject(this.getSystem());
+	}
+
+	/**
+	 * Return if connection with database is success
+	 * 
+	 * @return
+	 */
+	public Boolean isConnection() {
+		if (HibernateUtil.getSession().isOpen()) {
+			HibernateUtil.getSession().close();
+		}
+		HibernateUtil.initialize(this.getDb());
+		HibernateUtil hu = new HibernateUtil();
+		return hu.isConnection();
 	}
 
 	public String getPathUCM() {
@@ -179,20 +209,11 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return this.getSystem().getArchitectures();
 	}
 
-	public void setArchitectures(Set<Architecture> architectures) {
 
-		// this.getSystem().setArchitectures(architectures);
-		// DomainModel.AnalysisEntity.System jol= this.getSystem();
-		updateObject(this.getSystem());
-		/*
-		 * Iterator it = this.getSystem().getArchitectures().iterator(); while
-		 * (it.hasNext()) { Architecture a = (Architecture) it.next(); if
-		 * (a.isState()) { System.out.println(" "); System.out.println("arc" +
-		 * a); System.out.println(" "); // createArchitecture(a); } }
-		 */
-	}
-
-	public void createArchitecture(Architecture parch, Set<Architecture> architectures) {
+	/**
+	 * db method to create architecture
+	 */
+	public void createArchitecture(Architecture parch) {
 		try {
 
 			StartPoint startPoint = null;
@@ -265,8 +286,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				saveObject(dp);
 			}
 			parch.setArchitectureElements(archElements);
-
-			architectures.add(parch);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -571,11 +590,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	public void valueChanged(TreeSelectionEvent e) {
 	}
 
-	public List listMetric(String pmetric) {
-		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
-		return crit.list();
-	}
-
 	/**
 	 * Obtiene los elementos predecesores de un elemento particular
 	 * 
@@ -707,20 +721,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Return if connection with database is success
-	 * 
-	 * @return
-	 */
-	public Boolean isConnection() {
-		if (HibernateUtil.getSession().isOpen()) {
-			HibernateUtil.getSession().close();
-		}
-		HibernateUtil.initialize(this.getDb());
-		HibernateUtil hu = new HibernateUtil();
-		return hu.isConnection();
 	}
 
 }

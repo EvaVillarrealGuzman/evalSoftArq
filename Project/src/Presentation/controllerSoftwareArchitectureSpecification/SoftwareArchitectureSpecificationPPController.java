@@ -1,10 +1,7 @@
 package Presentation.controllerSoftwareArchitectureSpecification;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -126,46 +123,56 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	public int setSystem() {
 		if (this.isValidData()) {
-			this.getManager().setArchitectures(getArchitecturesToSystem());
+			getArchitecturesToSystem();
 			return 0;
 		} else {
 			return 1;
 		}
 	}
 
-	private Set<Architecture> getArchitecturesToSystem() {
-		/*
-		 * Iterator itArchitecture =
-		 * this.getManager().getSystem().getArchitectures().iterator(); while
-		 * (itArchitecture.hasNext()) { Architecture architecture =
-		 * (Architecture) itArchitecture.next(); architecture.setState(false); }
-		 */
+	private void getArchitecturesToSystem() {
 
-		// this.getManager().deleteArchitectures(getManager().getSystem().getArchitectures());
-
-		Set<Architecture> architectures = new HashSet<Architecture>();
+		deleteArchitecture();
 
 		for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
 			TableItem item = this.getForm().getTable().getItem(i);
 			if (!item.getText(2).equals("")) {
-				Architecture architecture = new Architecture(item.getText(2) + "\\" + item.getText(1));
-				this.getManager().createArchitecture(architecture, architectures);
-				// this.getManager().getSystem().getArchitectures().add(architecture);
+				boolean isNotAdd = false;
+				for (Architecture arc : this.getManager().getArchitectures()) {
+					if (arc.getPathUCM().equals(item.getText(2) + "\\" + item.getText(1))) {
+						isNotAdd = true;
+					}
+				}
+				if (!isNotAdd) {
+					Architecture architecture = new Architecture(item.getText(2) + "\\" + item.getText(1));
+					this.getManager().createArchitecture(architecture);
+					this.getManager().getArchitectures().add(architecture);
+				}
 			}
 		}
-		this.getManager().getSystem().setArchitectures(null);
-		this.getManager().getSystem().setArchitectures(architectures);
-		return getManager().getSystem().getArchitectures();
+
+		this.getManager().updateSystem();
 	}
 
-	private ArrayList<String> getArrayListNamePath() {
-		ArrayList<String> pathUCMs = new ArrayList<String>();
+	/**
+	 * Deleto to current system, architectures
+	 */
+	private void deleteArchitecture() {
+		for (Architecture arc : this.getManager().getArchitectures()) {
+			boolean isNotDelete = false;
 
-		for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
-			TableItem item = this.getForm().getTable().getItem(i);
-			pathUCMs.add(item.getText(2) + "\\" + item.getText(1));
+			for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
+				TableItem item = this.getForm().getTable().getItem(i);
+				if (arc.getPathUCM().equals(item.getText(2) + "\\" + item.getText(1))) {
+					isNotDelete = true;
+				}
+			}
+
+			if (!isNotDelete) {
+				this.getManager().getArchitectures().remove(arc);
+			}
+
 		}
-		return pathUCMs;
 	}
 
 	/**
@@ -194,29 +201,38 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			this.getForm().getTable().remove(0);
 		}
 		if (!this.getManager().getArchitectures().isEmpty()) {
-			for (Architecture dp : this.getManager().getArchitectures()) {
+			for (Architecture arc : this.getManager().getArchitectures()) {
 				if (first) {
-					// System.out.println(dp.getPaths().size());
-					Iterator it = dp.getPaths().iterator();
-					if (it.hasNext()) {
-						Path a = (Path) it.next();
-						Iterator itPathElements = a.getPathElements().iterator();
-						if (itPathElements.hasNext()) {
-							PathElement pathElement = (PathElement) itPathElements.next();
-							if (pathElement instanceof Responsibility) {
-								Responsibility responsability = (Responsibility) pathElement;
-								Iterator itSpePar = responsability.getSpecificationParameter().iterator();
-								if (itSpePar.hasNext()) {
-									SpecificationParameter spePar = (SpecificationParameter) itSpePar.next();
-									System.out.println(spePar.getUnit());
-									this.getForm().getCmbUnit().setSelection(new StructuredSelection(spePar.getUnit()));
-									first = false;
-								}
-							}
-						}
-					}
+					// Solo lo hace la primera vez
+					this.setUnit(arc);
+					first = false;
+				}
+				addToTable(arc.getPathUCM());
+			}
+		}
+	}
 
-					addToTable(dp.getPathUCM());
+	/**
+	 * coloca la unidad en el combo
+	 * 
+	 * @param architecture
+	 */
+	private void setUnit(Architecture architecture) {
+		Iterator it = architecture.getPaths().iterator();
+		if (it.hasNext()) {
+			Path a = (Path) it.next();
+			Iterator itPathElements = a.getPathElements().iterator();
+			if (itPathElements.hasNext()) {
+				PathElement pathElement = (PathElement) itPathElements.next();
+				if (pathElement instanceof Responsibility) {
+					Responsibility responsability = (Responsibility) pathElement;
+					Iterator itSpePar = responsability.getSpecificationParameter().iterator();
+					if (itSpePar.hasNext()) {
+						SpecificationParameter spePar = (SpecificationParameter) itSpePar.next();
+						System.out.println(spePar.getUnit());
+						this.getForm().getCmbUnit().setSelection(new StructuredSelection(spePar.getUnit()));
+
+					}
 				}
 			}
 		}
