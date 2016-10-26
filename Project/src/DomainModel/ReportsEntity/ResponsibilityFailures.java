@@ -3,7 +3,7 @@ package DomainModel.ReportsEntity;
 public class ResponsibilityFailures {
 	
 	private double fails;
-	private String responsability;
+	private String responsibility;
 	
 	public double getFails() {
 		return fails;
@@ -11,11 +11,11 @@ public class ResponsibilityFailures {
 	public void setFails(double fails) {
 		this.fails = fails;
 	}
-	public String getResponsability() {
-		return responsability;
+	public String getResponsibility() {
+		return responsibility;
 	}
-	public void setResponsability(String responsability) {
-		this.responsability = responsability;
+	public void setResponsibility(String responsibility) {
+		this.responsibility = responsibility;
 	}
 	
 }

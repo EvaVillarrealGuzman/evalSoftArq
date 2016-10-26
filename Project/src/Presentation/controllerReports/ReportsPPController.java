@@ -94,12 +94,15 @@ public class ReportsPPController extends Controller {
 		return true;
 	}
 
-	public Boolean printTurnaroundTimePerResponsibility() {
+	public Boolean printReportPerResponsibility() {
 		try {
-			this.openReport(this.PATHREPORT + "ResponsibilityTurnaroundTime.jasper");
-			this.addParameterToReport("title", "Responsibility Turnaround Time");
+			this.openReport(this.PATHREPORT + "Responsability.jasper");
+			this.addParameterToReport("title", "Report per Responsibility");
 			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listTurnaroundTime());
+			this.getManager().setDataCollection(this.getManager().listResponsibilityTurnaroundTime());
+			this.getManager().setDataCollection(this.getManager().listResponsibilityFailures());
+			this.getManager().setDataCollection(this.getManager().listResponsibilityDowntime());
+			this.getManager().setDataCollection(this.getManager().listResponsibilityRecoveryTime());
 			// imprime el reporte
 			this.getManager().print();
 			return true;

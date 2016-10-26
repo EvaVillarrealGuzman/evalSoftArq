@@ -3,7 +3,7 @@ package DomainModel.ReportsEntity;
 public class ResponsibilityTurnaroundTime {
 
 	private double turnaroundTime;
-	private String responsability;
+	private String responsibility;
 
 	public double getTurnaroundTime() {
 		return turnaroundTime;
@@ -13,12 +13,12 @@ public class ResponsibilityTurnaroundTime {
 		this.turnaroundTime = turnaroundTime;
 	}
 
-	public String getResponsability() {
-		return responsability;
+	public String getResponsibility() {
+		return responsibility;
 	}
 
-	public void setResponsability(String responsability) {
-		this.responsability = responsability;
+	public void setResponsibility(String responsibility) {
+		this.responsibility = responsibility;
 	}
 
 }

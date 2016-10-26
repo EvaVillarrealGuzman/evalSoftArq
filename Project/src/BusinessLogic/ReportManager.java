@@ -8,12 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
+
 import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.ReportsEntity.ClientesPorLocalidad;
+import DomainModel.ReportsEntity.ResponsibilityDowntime;
+import DomainModel.ReportsEntity.ResponsibilityFailures;
+import DomainModel.ReportsEntity.ResponsibilityRecoveryTime;
 import DomainModel.ReportsEntity.ResponsibilityTurnaroundTime;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
@@ -273,7 +278,7 @@ public class ReportManager extends HibernateManager {
 				jasperPrint = JasperFillManager.fillReport(this.getMasterReport(), this.getParameters(), jrd);
 			}
 			JasperViewer jviewer = new JasperViewer(this.getJasperPrint(), false);
-			jviewer.setTitle("Reporte");
+			jviewer.setTitle("Report");
 			jviewer.setVisible(true);
 		} catch (Exception e) {
 			System.out.println(" " + e);
@@ -294,37 +299,92 @@ public class ReportManager extends HibernateManager {
 		return lista;
 	}
 
-	public List<ResponsibilityTurnaroundTime> listTurnaroundTime() {
+	public List<ResponsibilityTurnaroundTime> listResponsibilityTurnaroundTime() {
 
 		List<ResponsibilityTurnaroundTime> list = new ArrayList<ResponsibilityTurnaroundTime>();
 
-		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			if (auxTipo.getArchitectures().isEmpty() == false) {
-				System.out.println(auxTipo);
-				for (Iterator<Architecture> it = auxTipo.getArchitectures().iterator(); it.hasNext();) {
-					Architecture f = it.next();
-					System.out.println(f.getSimulator().getRuns());
-					System.out.println(f.getSimulator().getRuns().size());
-					for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
-						Run r = its.next();
-						for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-							Indicator ind = iti.next();
-							if (ind.getMetric().getName().equals("Responsibility Turnaround Time")) {
-								ResponsibilityTurnaroundTime item = new ResponsibilityTurnaroundTime();
-								item.setResponsability(ind.getType().getName());
-								item.setTurnaroundTime(ind.getValue());
-								list.add(item);
-							}
-							System.out.println("value" + ind.getValue());
-							System.out.println("metric" + ind.getMetric().getName());
-							System.out.println("indicator type" + ind.getType().getName());
-						}
+		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
+			Architecture f = it.next();
+			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+				Run r = its.next();
+				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+					Indicator ind = iti.next();
+					if (ind.getMetric().getName().equals("Responsibility Turnaround Time")) {
+						ResponsibilityTurnaroundTime item = new ResponsibilityTurnaroundTime();
+						item.setResponsibility(ind.getType().getName());
+						item.setTurnaroundTime(ind.getValue());
+						list.add(item);
 					}
 				}
 			}
 		}
-
 		return list;
+	}
+
+	public List<ResponsibilityFailures> listResponsibilityFailures() {
+
+		List<ResponsibilityFailures> list = new ArrayList<ResponsibilityFailures>();
+
+		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
+			Architecture f = it.next();
+			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+				Run r = its.next();
+				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+					Indicator ind = iti.next();
+					if (ind.getMetric().getName().equals("Responsibility Failures")) {
+						ResponsibilityFailures item = new ResponsibilityFailures();
+						item.setResponsibility(ind.getType().getName());
+						item.setFails(ind.getValue());
+						list.add(item);
+					}
+				}
+			}
+		}
+		return list;	
+	}
+	
+	public List<ResponsibilityDowntime> listResponsibilityDowntime() {
+
+		List<ResponsibilityDowntime> list = new ArrayList<ResponsibilityDowntime>();
+
+		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
+			Architecture f = it.next();
+			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+				Run r = its.next();
+				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+					Indicator ind = iti.next();
+					if (ind.getMetric().getName().equals("Responsibility Downtime")) {
+						ResponsibilityDowntime item = new ResponsibilityDowntime();
+						item.setResponsibility(ind.getType().getName());
+						item.setDowntime(ind.getValue());
+						list.add(item);
+					}
+				}
+			}
+		}
+		return list;	
+	}
+	
+	public List<ResponsibilityRecoveryTime> listResponsibilityRecoveryTime() {
+
+		List<ResponsibilityRecoveryTime> list = new ArrayList<ResponsibilityRecoveryTime>();
+
+		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
+			Architecture f = it.next();
+			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+				Run r = its.next();
+				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+					Indicator ind = iti.next();
+					if (ind.getMetric().getName().equals("Responsibility Recovery Time")) {
+						ResponsibilityRecoveryTime item = new ResponsibilityRecoveryTime();
+						item.setResponsibility(ind.getType().getName());
+						item.setRecoveryTime(ind.getValue());
+						list.add(item);
+					}
+				}
+			}
+		}
+		return list;	
 	}
 
 	public List<Double> listResultSimulation() {
