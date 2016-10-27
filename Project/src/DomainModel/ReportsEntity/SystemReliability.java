@@ -2,14 +2,28 @@ package DomainModel.ReportsEntity;
 
 public class SystemReliability {
 
-	private double failures;
+	private double fails;
+	private double failsE;
 	private String system;
+	private String run;
 	
-	public double getFailures() {
-		return failures;
+	public double getFails() {
+		return fails;
 	}
-	public void setFailures(double failures) {
-		this.failures = failures;
+	public void setFails(double fails) {
+		this.fails = fails;
+	}
+	public double getFailsE() {
+		return failsE;
+	}
+	public void setFailsE(double failsE) {
+		this.failsE = failsE;
+	}
+	public String getRun() {
+		return run;
+	}
+	public void setRun(String run) {
+		this.run = run;
 	}
 	public String getSystem() {
 		return system;

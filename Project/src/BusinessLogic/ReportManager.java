@@ -15,9 +15,13 @@ import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.ReportsEntity.ResponsibilityAvailability;
 import DomainModel.ReportsEntity.ResponsibilityReliability;
+import DomainModel.ReportsEntity.SystemAvailability;
+import DomainModel.ReportsEntity.SystemPerformance;
+import DomainModel.ReportsEntity.SystemReliability;
 import DomainModel.ReportsEntity.ResponsibilityPerformance;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
+import DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.controllerReports.DataSourceCollection;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -353,7 +357,7 @@ public class ReportManager extends HibernateManager {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 								if (q.getResponsibility().equals(ind.getType().getName())) {
 									band = false;
-			
+
 									q.setDowntime(ind.getValue());
 								}
 								i++;
@@ -375,7 +379,7 @@ public class ReportManager extends HibernateManager {
 						} else {
 							Iterator ite = list.iterator();
 							boolean band = true;
-							int i=0;
+							int i = 0;
 							while (ite.hasNext()) {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 								if (q.getResponsibility().equals(ind.getType().getName())) {
@@ -398,6 +402,69 @@ public class ReportManager extends HibernateManager {
 		return list;
 	}
 
+	public List<SystemAvailability> listSystemAvailability() {
+
+		List<SystemAvailability> list = new ArrayList<SystemAvailability>();
+
+		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
+			Architecture f = it.next();
+			int runNum = 1;
+			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+				Run r = its.next();
+				boolean band = true;
+				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+					Indicator ind = iti.next();
+					if (ind.getType() instanceof SystemIndicator && band) {
+						SystemAvailability item = new SystemAvailability();
+						item.setAvailabilityE(0.7);
+						item.setNoAvailabilityE(0.3);
+						item.setSystem(ind.getType().getName());
+						item.setRun(Integer.toString(runNum));
+						list.add(item);
+						band = false;
+					}
+					if (ind.getMetric().getName().equals("System Availability")) {
+						SystemAvailability q = list.get(runNum - 1);
+						q.setAvailability(ind.getValue());
+					}
+					if (ind.getMetric().getName().equals("System No-Availability")) {
+						SystemAvailability q = list.get(runNum - 1);
+						q.setNoAvailability(ind.getValue());
+					}
+				}
+
+				runNum++;
+			}
+		}
+		return list;
+	}
+
+	public List<SystemReliability> listSystemReliability() {
+
+		List<SystemReliability> list = new ArrayList<SystemReliability>();
+
+		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
+			Architecture f = it.next();
+			int runNum = 1;
+			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+				Run r = its.next();
+				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+					Indicator ind = iti.next();
+					if (ind.getMetric().getName().equals("System Failures")) {
+						SystemReliability item = new SystemReliability();
+						item.setFailsE(0.7);
+						item.setFails(ind.getValue());
+						item.setSystem(ind.getType().getName());
+						item.setRun(Integer.toString(runNum));
+						list.add(item);
+					}
+				}
+				runNum++;
+			}
+		}
+		return list;
+	}
+
 	public List<Double> listResultSimulation() {
 		List<Double> lista = new ArrayList<Double>();
 
@@ -410,6 +477,44 @@ public class ReportManager extends HibernateManager {
 
 		return lista;
 	}
+	
+	public List<SystemPerformance> listSystemPerformance() {
+
+		List<SystemPerformance> list = new ArrayList<SystemPerformance>();
+
+		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
+			Architecture f = it.next();
+			int runNum = 1;
+			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+				Run r = its.next();
+				boolean band = true;
+				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+					Indicator ind = iti.next();
+					if (ind.getType() instanceof SystemIndicator && band) {
+						SystemPerformance item = new SystemPerformance();
+						item.setThroughputE(0.7);
+						item.setTurnaroundTimeE(0.3);
+						item.setSystem(ind.getType().getName());
+						item.setRun(Integer.toString(runNum));
+						list.add(item);
+						band = false;
+					}
+					if (ind.getMetric().getName().equals("System Throughput")) {
+						SystemPerformance q = list.get(runNum - 1);
+						q.setThroughput(ind.getValue());
+					}
+					if (ind.getMetric().getName().equals("System Turnaround Time")) {
+						SystemPerformance q = list.get(runNum - 1);
+						q.setTurnaroundTime(ind.getValue());
+					}
+				}
+
+				runNum++;
+			}
+		}
+		return list;
+	}
+
 
 	/**
 	 * 

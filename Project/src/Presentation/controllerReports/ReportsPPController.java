@@ -142,6 +142,54 @@ public class ReportsPPController extends Controller {
 		}
 	}
 	
+	public Boolean printReportPerSystemAvailability() {
+		try {
+			this.openReport(this.PATHREPORT + "reportSystemAvailability.jasper");
+			this.addParameterToReport("title", "Report of System - Attribute: Availability");
+			// Agrega los datos al reporte
+			this.getManager().setDataCollection(this.getManager().listSystemAvailability());
+			// imprime el reporte
+			this.getManager().print();
+			this.getManager().visibleReport();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public Boolean printReportPerSystemReliability() {
+		try {
+			this.openReport(this.PATHREPORT + "reportSystemReliability.jasper");
+			this.addParameterToReport("title", "Report of System - Attribute: Reliability");
+			// Agrega los datos al reporte
+			this.getManager().setDataCollection(this.getManager().listSystemReliability());
+			// imprime el reporte
+			this.getManager().print();
+			this.getManager().visibleReport();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public Boolean printReportPerSystemPerformance() {
+		try {
+			this.openReport(this.PATHREPORT + "reportSystemPerformance.jasper");
+			this.addParameterToReport("title", "Report of System - Attribute: Performance");
+			// Agrega los datos al reporte
+			this.getManager().setDataCollection(this.getManager().listSystemPerformance());
+			// imprime el reporte
+			this.getManager().print();
+			this.getManager().visibleReport();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
 	private void addParameterToReport(String pname, Object pobject) {
 		this.getManager().addParameter(pname, pobject);
 	}

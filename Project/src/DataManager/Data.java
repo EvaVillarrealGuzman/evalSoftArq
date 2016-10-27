@@ -46,7 +46,7 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		Metric m5 = new Metric("System Availability");
 		Metric m6 = new Metric("System No-Availability");
 		Metric m7 = new Metric("System Throughput");
-		Metric m8 = new Metric("System Turnaraound Time");
+		Metric m8 = new Metric("System Turnaround Time");
 		Metric m9 = new Metric("System Failures");
 		Metric m10 = new Metric("Mean Execution Time");
 		Metric m11 = new Metric("Mean Downtime");

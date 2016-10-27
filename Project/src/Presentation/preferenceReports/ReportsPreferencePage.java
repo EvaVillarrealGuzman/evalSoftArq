@@ -119,7 +119,10 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 					viewController.setModel(cboSystem);
 					//viewController.printReportPerResponsibilityPerformance();
 					//viewController.printReportPerResponsibilityReliability();
-					viewController.printReportPerResponsibilityAvailability();
+					//viewController.printReportPerResponsibilityAvailability();
+					//viewController.printReportPerSystemAvailability();
+					//viewController.printReportPerSystemReliability();
+					viewController.printReportPerSystemPerformance();
 				}
 			});
 
