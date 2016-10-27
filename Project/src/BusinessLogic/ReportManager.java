@@ -514,6 +514,24 @@ public class ReportManager extends HibernateManager {
 		}
 		return list;
 	}
+	
+	public QualityRequirement getQualityRequirementBySystem(String QRtoString) {
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			for (QualityRequirement qualityRequirement : auxTipo.getQualityRequirements() ) {
+				System.out.println(qualityRequirement.toString());
+				if (qualityRequirement.toString().equals(QRtoString)){
+					return qualityRequirement;
+				}
+			}
+		}
+		return null;
+	}
+	
+
+	public Set<QualityRequirement> getQualityRequirements() {
+		return this.getSystem().getQualityRequirements();
+	}
+
 
 
 	/**
@@ -562,6 +580,37 @@ public class ReportManager extends HibernateManager {
 		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems.size()];
 		systems.toArray(arraySystem);
 		return arraySystem;
+	}
+	
+	/**
+	 * 
+	 * @return True if there are systems whose state==true,
+	 *         qualityRequirement!=empty and qualityRequirement.state==true,
+	 *         else return false
+	 * 
+	 */
+	public boolean existSystemTrueWithQualityRequirementTrue() {
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			if (auxTipo.getQualityRequirements().isEmpty() == false) {
+				Iterator it = auxTipo.getQualityRequirements().iterator();
+				while (it.hasNext()) {
+					QualityRequirement q = (QualityRequirement) it.next();
+					if (q.isState()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean existSystemTrueWithArchitecture() {
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			if (auxTipo.getArchitectures().isEmpty() == false) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

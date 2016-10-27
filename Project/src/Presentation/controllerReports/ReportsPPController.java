@@ -7,9 +7,12 @@ import java.util.List;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.ReportManager;
 import DomainModel.AnalysisEntity.QualityAttribute;
+import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.Tactic;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
@@ -92,14 +95,24 @@ public class ReportsPPController extends Controller {
 	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
+	/**
+	 * Validate the necessary data for save the UCM path
+	 * 
+	 * @return boolean (is true if they have completed the required fields)
+	 */
 	public boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
-			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
 			this.getForm().getCboSystem().getCombo().setFocus();
 			return false;
+		} else if (this.getForm().getTableSimulation().getSelectionIndex() == -1) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArchitecture_ErrorDialog"));
+			return false;
+		} else {
+			return true;
 		}
-		return true;
 	}
+
 
 	public Boolean printReportPerResponsibilityPerformance() {
 		try {
@@ -291,6 +304,67 @@ public class ReportsPPController extends Controller {
 		} catch (Exception e) {
 			this.createErrorDialog(e.getLocalizedMessage());
 		}
+	}
+	
+	/**
+	 * Sets the model table of the software architecture of a specific system
+	 * 
+	 * @param ptype
+	 */
+	public void setModelSimulation(DomainModel.AnalysisEntity.System ptype) {
+		this.getManager().setSystem(ptype);
+		while (this.getForm().getTableSimulation().getItems().length > 0) {
+			this.getForm().getTableSimulation().remove(0);
+		}
+		if (!this.getManager().getArchitectures().isEmpty()) {
+			for (Architecture arc : this.getManager().getArchitectures()) {
+				if(arc.getSimulator()!=null){
+					addToTable(arc.getPathUCM());	
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sets the model table of the quality requirements of a specific system
+	 * 
+	 * @param ptype
+	 */
+	public void setModelQualityRequirement(DomainModel.AnalysisEntity.System ptype) {
+		this.getManager().setSystem(ptype);
+		while (this.getForm().getTableQualityRequirement().getItems().length > 0) {
+			this.getForm().getTableQualityRequirement().remove(0);
+		}
+		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
+			if (dp.isState()) {
+				TableItem item = new TableItem(this.getForm().getTableQualityRequirement(), SWT.NONE);
+				item.setData(dp);
+				item.setText(new String[] {  dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
+						dp.getQualityScenario().getDescription().toString() });
+			}
+		}
+	}
+	
+	public void setModelReport(){
+		TableItem item = this.getForm().getTableQualityRequirement()
+				.getItem(this.getForm().getTableQualityRequirement().getSelectionIndex());
+		this.setModelReport(this.getManager().getQualityRequirementBySystem(item.getText(0)));
+	}
+	
+
+	public void setModelReport(QualityRequirement qualityRequirement){
+		for (int i = 0; i < this.getForm().getTableReport().getItemCount(); i++) {
+			TableItem item = this.getForm().getTableReport().getItem(i);
+			item.setText(0, qualityRequirement.getQualityScenario().getQualityAttribute().getName());
+		}
+	}
+	
+	public void addToTable(String namePath) {
+		TableItem item = new TableItem(this.getForm().getTableSimulation(), SWT.NONE);
+		item.setData(namePath);
+
+		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
+				namePath.substring(0, namePath.lastIndexOf("\\")), });
 	}
 
 	public Boolean isConnection() {

@@ -2,9 +2,13 @@ package Presentation.preferenceReports;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TableLayout;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -12,7 +16,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -35,6 +45,21 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	private ReportsPPController viewController;
 	private Composite cSystemName;
 	private GridData gridData;
+	private Table tableSimulation;
+	private TableColumn colPathSoftArc;
+	private TableColumn colObjectSimulation;
+	private TableColumn colNameSoftArc;
+	private TableColumn colSimulationDate;
+	private TableViewer tblViewerQualityRequirement;
+	private Table tableQualityRequirement;
+	private TableColumn colObject;
+	private TableColumn colQRQualityAttribute;
+	private TableColumn colDescriptionScenario;
+	private TableViewer tblViewerReport;
+	private Table tableReport;
+	private TableColumn colIndicatorType;
+	private TableColumn colReportQualityAttribute;
+	private TableColumn colViewReportButtom;
 
 	/**
 	 * Contructor
@@ -91,14 +116,207 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			cboSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
 			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
 			cboSystem.getCombo().setLayoutData(gridData);
+			loadCombo();
 			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cboSystem.getSelection()).getFirstElement() != "") {
+						viewController.setModel(cboSystem);
 						cmbSystemItemStateChanged();
+						prepareView(2);
 					}
 				}
 			});
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Group gSimulation = new Group(parent, SWT.NONE);
+			gSimulation.setLayoutData(gridData);
+			gSimulation.setText(Messages.getString("UCM2DEVS_SoftArcSpec_Group"));
+			gSimulation.setLayout(layout);
+
+			// Create column names
+			String[] columnNames = new String[] { "", Messages.getString("UCM2DEVS_Name_Column"),
+					Messages.getString("UCM2DEVS_Path_Column") };
+
+			// Create styles
+			int style = SWT.FULL_SELECTION | SWT.BORDER;
+
+			// create table
+
+			// Table: Simulation
+			tableSimulation = new Table(gSimulation, style);
+			TableLayout tableLayout = new TableLayout();
+			tableSimulation.setLayout(tableLayout);
+			gridData = new GridData(GridData.FILL_BOTH);
+			tableSimulation.setLayoutData(gridData);
+			tableSimulation.setLinesVisible(true);
+			tableSimulation.setHeaderVisible(true);
+
+			colObjectSimulation = new TableColumn(tableSimulation, SWT.NONE);
+			colObjectSimulation.setWidth(0);
+			colObjectSimulation.setText("");
+
+			colNameSoftArc = new TableColumn(tableSimulation, SWT.NONE);
+			colNameSoftArc.setWidth(100);
+			colNameSoftArc.setText(Messages.getString("UCM2DEVS_Name_Column"));
+
+			colPathSoftArc = new TableColumn(tableSimulation, SWT.NONE);
+			colPathSoftArc.setWidth(300);
+			colPathSoftArc.setText(Messages.getString("UCM2DEVS_Path_Column"));
+
+			/*
+			 * colSimulationDate = new TableColumn(tableSimulation, SWT.NONE);
+			 * colSimulationDate.setWidth(300);
+			 * colSimulationDate.setText(Messages.getString("Simulation"));
+			 */
+
+			for (int i = 0; i < 5; i++) {
+				TableItem item = new TableItem(tableSimulation, SWT.NONE);
+			}
+
+			tableSimulation.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					tableSimulation.showSelection();
+					if (tableSimulation.getSelectionIndex() != -1) {
+						prepareView(3);
+					} else {
+						prepareView(2);
+					}
+				}
+			});
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+
+			// Table: Quality Requirement
+
+			Group gQualityRequirement = new Group(parent, SWT.NONE);
+			gQualityRequirement.setLayoutData(gridData);
+			gQualityRequirement.setText(Messages.getString("UCM2DEVS_QualityRequirement_Group"));
+			gQualityRequirement.setLayout(new GridLayout(2, false));
+
+			// Create column names
+			String[] columnNamesReq = new String[] { "", Messages.getString("UCM2DEVS_DescriptionObject_Column"),
+					Messages.getString("UCM2DEVS_QualityAttribute_Column"),
+					Messages.getString("UCM2DEVS_DescriptionScenario_Column") };
+			// Create styles
+			int styleReq = SWT.FULL_SELECTION | SWT.BORDER | SWT.CHECK;
+			// create table
+			tableQualityRequirement = new Table(gQualityRequirement, styleReq);
+			TableLayout tableLayoutReq = new TableLayout();
+			tableQualityRequirement.setLayout(tableLayoutReq);
+			gridData = new GridData(GridData.FILL_BOTH);
+			gridData.horizontalSpan = 4;
+			tableQualityRequirement.setLayoutData(gridData);
+			tableQualityRequirement.setLinesVisible(true);
+			tableQualityRequirement.setHeaderVisible(true);
+
+			// Create columns
+			colObject = new TableColumn(tableQualityRequirement, SWT.NONE);
+			colObject.setWidth(0);
+			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));
+
+			colQRQualityAttribute = new TableColumn(tableQualityRequirement, SWT.NONE);
+			colQRQualityAttribute.setWidth(100);
+			colQRQualityAttribute.setText(Messages.getString("UCM2DEVS_QualityAttribute_Column"));
+
+			colDescriptionScenario = new TableColumn(tableQualityRequirement, SWT.NONE);
+			colDescriptionScenario.setWidth(300);
+			colDescriptionScenario.setText(Messages.getString("UCM2DEVS_DescriptionScenario_Column"));
+
+			for (int i = 0; i < 5; i++) {
+				TableItem item = new TableItem(tableQualityRequirement, SWT.NONE);
+				item.setText("");
+			}
+
+			// Create TableViewer
+			tblViewerQualityRequirement = new TableViewer(tableQualityRequirement);
+			tblViewerQualityRequirement.setUseHashlookup(true);
+			tblViewerQualityRequirement.setColumnProperties(columnNamesReq);
+
+			// Create the cell editors
+			CellEditor[] editorsQR = new CellEditor[columnNamesReq.length];
+			editorsQR[0] = null;
+			editorsQR[1] = null;
+			editorsQR[2] = null;
+
+			// Assign the cell editors to the viewer
+			tblViewerQualityRequirement.setCellEditors(editorsQR);
+			tableQualityRequirement.addListener(SWT.Selection, new Listener() {
+				public void handleEvent(Event event) {
+					System.out.println("aaaaaaaaaaaa");
+					fillTableReport();
+				}
+			});
+
+			// Table: Report
+			Group gReport = new Group(parent, SWT.NONE);
+			gReport.setLayoutData(gridData);
+			gReport.setText(Messages.getString("UCM2DEVS_QualityRequirement_Group"));
+			gReport.setLayout(new GridLayout(2, false));
+
+			// Create column names
+			String[] columnReport = new String[] { "", Messages.getString("UCM2DEVS_DescriptionObject_Column"),
+					Messages.getString("UCM2DEVS_QualityAttribute_Column"),
+					Messages.getString("UCM2DEVS_DescriptionScenario_Column") };
+			// Create styles
+			int styleReport = SWT.FULL_SELECTION | SWT.BORDER;
+			// create table
+			tableReport = new Table(gReport, styleReport);
+			TableLayout tableLayoutReport = new TableLayout();
+			tableReport.setLayout(tableLayoutReport);
+			gridData = new GridData(GridData.FILL_BOTH);
+			gridData.horizontalSpan = 4;
+			tableReport.setLayoutData(gridData);
+			tableReport.setLinesVisible(true);
+			tableReport.setHeaderVisible(true);
+
+			// Create columns
+			colReportQualityAttribute = new TableColumn(tableReport, SWT.NONE);
+			colReportQualityAttribute.setWidth(100);
+			colReportQualityAttribute.setText(Messages.getString("UCM2DEVS_QualityAttribute_Column"));
+
+			colIndicatorType = new TableColumn(tableReport, SWT.NONE);
+			colIndicatorType.setWidth(150);
+			colIndicatorType.setText("Indicator type");
+
+			colViewReportButtom = new TableColumn(tableReport, SWT.NONE);
+			colViewReportButtom.setWidth(100);
+			colViewReportButtom.setText("");
+
+			// Create five table editors for color
+			TableEditor[] reportEditors = new TableEditor[3];
+
+			// Create five buttons for changing color
+			Button[] reportButtons = new Button[3];
+
+			for (int i = 0; i < 2; i++) {
+				final TableItem item = new TableItem(tableReport, SWT.NONE);
+				reportEditors[i] = new TableEditor(tableReport);
+				reportButtons[i] = new Button(tableReport, SWT.PUSH);
+				reportButtons[i].setText("View Report...");
+				reportEditors[i].grabHorizontal = true;
+				reportEditors[i].setEditor(reportButtons[i], item, 2);
+
+				reportButtons[i].addSelectionListener(new SelectionAdapter() {
+					public void widgetSelected(SelectionEvent event) {
+						System.out.println("hola");
+					}
+				});
+				
+			}
+			
+			tableReport.getItem(0).setText(1, "Responsability");
+			tableReport.getItem(1).setText(1, "System");
+			
+			// Create TableViewer
+			tblViewerReport = new TableViewer(tableReport);
+			tblViewerReport.setUseHashlookup(true);
+			tblViewerReport.setColumnProperties(columnReport);
 
 			new Label(parent, SWT.LEFT);
 
@@ -116,17 +334,16 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			btnViewReport.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					viewController.setModel(cboSystem);
 					//viewController.printReportPerResponsibilityPerformance();
 					//viewController.printReportPerResponsibilityReliability();
 					//viewController.printReportPerResponsibilityAvailability();
 					//viewController.printReportPerSystemAvailability();
 					//viewController.printReportPerSystemReliability();
-					viewController.printReportPerSystemPerformance();
+					//viewController.printReportPerSystemPerformance();
 				}
 			});
 
-			this.prepareView(0);
+			this.prepareView(1);
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
@@ -175,6 +392,38 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 		this.btnViewReport = btnViewReport;
 	}
 
+	public Table getTableSimulation() {
+		return tableSimulation;
+	}
+
+	public void setTableSimulation(Table tableSimulation) {
+		this.tableSimulation = tableSimulation;
+	}
+
+	public TableViewer getTblViewerQualityRequirement() {
+		return tblViewerQualityRequirement;
+	}
+
+	public void setTblViewerQualityRequirement(TableViewer tblViewerQualityRequirement) {
+		this.tblViewerQualityRequirement = tblViewerQualityRequirement;
+	}
+
+	public Table getTableQualityRequirement() {
+		return tableQualityRequirement;
+	}
+
+	public void setTableQualityRequirement(Table tableQualityRequirement) {
+		this.tableQualityRequirement = tableQualityRequirement;
+	}
+
+	public Table getTableReport() {
+		return tableReport;
+	}
+
+	public void setTableReport(Table tableReport) {
+		this.tableReport = tableReport;
+	}
+
 	/**
 	 * load combo with system with state=true
 	 */
@@ -188,25 +437,41 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
-		if (!getViewController().getManager().existSystemTrue()) {
-			this.getViewController()
-					.createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemsWithSimulations_ErrorDialog"));
-			pabm = 2;
+		this.getCboSystem().getCombo().setFocus();
+		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
+			pabm = 0;
+		}
+		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
+			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
+			pabm = 0;
 		}
 		switch (pabm) {
-		case 0:// System with simulations and yet no system selected
-			this.getCboSystem().getCombo().setEnabled(true);
-			loadCombo();
-			//TODO poner en false
-			this.getBtnViewReport().setEnabled(true);
-			break;
-		case 1:// With system selected
-			this.getBtnViewReport().setEnabled(true);
-			break;
-		case 2:// No system with simulations
+		case 0:// No system with architecture or quality requirement
 			this.getCboSystem().getCombo().setEnabled(false);
+			this.getTableSimulation().setEnabled(false);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getBtnViewReport().setEnabled(false);
 			break;
+		case 1: // There are systems with architecture or quality requirement
+			this.getCboSystem().getCombo().setEnabled(true);
+			this.getTableSimulation().setEnabled(false);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
+			this.getBtnViewReport().setEnabled(false);
+			break;
+		case 2: // With system selected
+			this.getTableSimulation().setEnabled(true);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
+			this.getBtnViewReport().setEnabled(false);
+
+			break;
+		case 3:// With architecture selected
+			this.getBtnViewReport().setEnabled(false);
+			break;
+		case 4:// With unit selected
+			this.getBtnViewReport().setEnabled(true);
+			break;
+
 		}
 	}
 
@@ -215,7 +480,33 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 * prepare the view
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
-		this.prepareView(1);
+		this.fillTableSimulation();
+		this.fillTableQR();
 	}
+
+	/**
+	 * Fill table with system's quality requirements (quality attribute,
+	 * description and condition)
+	 */
+	public void fillTableSimulation() {
+		this.getViewController().setModelSimulation(
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+						.getFirstElement());
+	}
+
+	/**
+	 * // * Fill table with system's quality requirements (quality attribute, //
+	 * * description and condition) //
+	 */
+	public void fillTableQR() {
+		this.getViewController().setModelQualityRequirement(
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+						.getFirstElement());
+	}
+
+	public void fillTableReport() {
+		this.getViewController().setModelReport();
+	}
+
 
 }
