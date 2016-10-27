@@ -34,6 +34,26 @@ public class Tactic implements Comparable{
 		this.type = ptype;
 	}
 
+	public Tactic() {
+		super();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public TacticType getType() {
+		return type;
+	}
+
+	public void setType(TacticType type) {
+		this.type = type;
+	}
+	
 	// ComparaTo
 	public int compareTo(Object p) {
 		Tactic t = (Tactic) p;

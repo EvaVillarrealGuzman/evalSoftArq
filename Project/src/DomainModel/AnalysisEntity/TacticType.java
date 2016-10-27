@@ -25,6 +25,9 @@ public class TacticType implements Comparable{
 	public TacticType(String pname) {
 		this.name = pname;
 	}
+	
+	public TacticType() {
+	}
 
 	// ComparaTo
 	public int compareTo(Object p) {
