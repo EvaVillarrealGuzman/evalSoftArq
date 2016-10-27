@@ -14,13 +14,14 @@ import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.ReportsEntity.ResponsibilityAvailability;
+import DomainModel.ReportsEntity.ResponsibilityPerformance;
 import DomainModel.ReportsEntity.ResponsibilityReliability;
 import DomainModel.ReportsEntity.SystemAvailability;
 import DomainModel.ReportsEntity.SystemPerformance;
 import DomainModel.ReportsEntity.SystemReliability;
-import DomainModel.ReportsEntity.ResponsibilityPerformance;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
+import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.controllerReports.DataSourceCollection;
@@ -152,12 +153,12 @@ public class ReportManager extends HibernateManager {
 	 */
 	public DomainModel.AnalysisEntity.System[] getComboModelSystemWithSimulations() {
 		ArrayList<DomainModel.AnalysisEntity.System> systems = new ArrayList<DomainModel.AnalysisEntity.System>();
-		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			Iterator it = auxTipo.getArchitectures().iterator();
+		for (DomainModel.AnalysisEntity.System auxSystem : this.listSystem()) {
+			Iterator it = auxSystem.getArchitectures().iterator();
 			if (it.hasNext()) {
 				Architecture q = (Architecture) it.next();
 				if (q.getSimulator() != null) {
-					systems.add(auxTipo);
+					systems.add(auxSystem);
 				}
 			}
 		}
@@ -521,6 +522,18 @@ public class ReportManager extends HibernateManager {
 				System.out.println(qualityRequirement.toString());
 				if (qualityRequirement.toString().equals(QRtoString)){
 					return qualityRequirement;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Simulator SimulatorBySystem(String ArchitecturetoString) {
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			for (Architecture architecture : auxTipo.getArchitectures() ) {
+				System.out.println(architecture.toString());
+				if (architecture.toString().equals(ArchitecturetoString)){
+					return architecture.getSimulator();
 				}
 			}
 		}

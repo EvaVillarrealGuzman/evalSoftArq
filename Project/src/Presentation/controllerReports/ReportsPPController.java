@@ -14,6 +14,7 @@ import BusinessLogic.ReportManager;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.Tactic;
+import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
 import Presentation.preferenceReports.ReportsPreferencePage;
@@ -113,7 +114,6 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
-
 	public Boolean printReportPerResponsibilityPerformance() {
 		try {
 			this.openReport(this.PATHREPORT + "reportResponsibilityPerformance.jasper");
@@ -201,7 +201,7 @@ public class ReportsPPController extends Controller {
 			this.openReport(this.PATHREPORT + "reportSystemPerformance.jasper");
 			this.addParameterToReport("title", "Report of System - Attribute: Performance");
 			this.addParameterToReport("tactics", this.getTacticsOfPerformance());
-			
+
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listSystemPerformance());
 			// imprime el reporte
@@ -216,50 +216,50 @@ public class ReportsPPController extends Controller {
 
 	public QualityAttribute getQualityAttribute(int qa) {
 		QualityAttribute[] qas = this.manager.getQualityAttributes();
-		if (qas[0].getName().equals("Performance")){
-			if (qa == 2){
+		if (qas[0].getName().equals("Performance")) {
+			if (qa == 2) {
 				return qas[0];
 			}
-		}else if (qas[0].getName().equals("Availability")){
-			if (qa == 1){
+		} else if (qas[0].getName().equals("Availability")) {
+			if (qa == 1) {
 				return qas[0];
 			}
 		} else {
-			if (qa == 0){
+			if (qa == 0) {
 				return qas[0];
 			}
 		}
-		if (qas[1].getName().equals("Performance")){
-			if (qa == 2){
+		if (qas[1].getName().equals("Performance")) {
+			if (qa == 2) {
 				return qas[1];
 			}
-		}else if (qas[1].getName().equals("Availability")){
-			if (qa == 1){
+		} else if (qas[1].getName().equals("Availability")) {
+			if (qa == 1) {
 				return qas[1];
 			}
 		} else {
-			if (qa == 0){
+			if (qa == 0) {
 				return qas[1];
 			}
 		}
-		if (qas[3].getName().equals("Performance")){
-			if (qa == 2){
+		if (qas[3].getName().equals("Performance")) {
+			if (qa == 2) {
 				return qas[3];
 			}
-		}else if (qas[3].getName().equals("Availability")){
-			if (qa == 1){
+		} else if (qas[3].getName().equals("Availability")) {
+			if (qa == 1) {
 				return qas[3];
 			}
 		} else {
-			if (qa == 0){
+			if (qa == 0) {
 				return qas[3];
 			}
 		}
 		return null;
 	}
-	
-	public List<String> getTacticsOfPerformance(){
-		QualityAttribute q= this.getQualityAttribute(2);
+
+	public List<String> getTacticsOfPerformance() {
+		QualityAttribute q = this.getQualityAttribute(2);
 		ArrayList<String> tactics = new ArrayList<String>();
 		Iterator t = q.getTactics().iterator();
 		while (t.hasNext()) {
@@ -269,8 +269,8 @@ public class ReportsPPController extends Controller {
 		return tactics;
 	}
 
-	public List<String> getTacticsOfAvailability(){
-		QualityAttribute q= this.getQualityAttribute(0);
+	public List<String> getTacticsOfAvailability() {
+		QualityAttribute q = this.getQualityAttribute(0);
 		ArrayList<String> tactics = new ArrayList<String>();
 		Iterator t = q.getTactics().iterator();
 		while (t.hasNext()) {
@@ -279,9 +279,9 @@ public class ReportsPPController extends Controller {
 		}
 		return tactics;
 	}
-	
-	public List<String> getTacticsOfReliability(){
-		QualityAttribute q= this.getQualityAttribute(1);
+
+	public List<String> getTacticsOfReliability() {
+		QualityAttribute q = this.getQualityAttribute(1);
 		ArrayList<String> tactics = new ArrayList<String>();
 		Iterator t = q.getTactics().iterator();
 		while (t.hasNext()) {
@@ -290,6 +290,7 @@ public class ReportsPPController extends Controller {
 		}
 		return tactics;
 	}
+
 	private void addParameterToReport(String pname, Object pobject) {
 		this.getManager().addParameter(pname, pobject);
 	}
@@ -305,7 +306,7 @@ public class ReportsPPController extends Controller {
 			this.createErrorDialog(e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Sets the model table of the software architecture of a specific system
 	 * 
@@ -318,11 +319,25 @@ public class ReportsPPController extends Controller {
 		}
 		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture arc : this.getManager().getArchitectures()) {
-				if(arc.getSimulator()!=null){
-					addToTable(arc.getPathUCM());	
+				if (arc.getSimulator() != null) {
+					addToTable(arc.getPathUCM(), arc.toString());
 				}
 			}
 		}
+	}
+
+	public void setModelQualityRequirement() {
+		TableItem item = this.getForm().getTableSimulation()
+				.getItem(this.getForm().getTableSimulation().getSelectionIndex());
+		Simulator simulator = this.getManager().SimulatorBySystem(item.getText(0));
+		setModelQualityRequirement(simulator);
+	}
+
+	public void setModelQualityRequirementFirst() {
+		TableItem item = this.getForm().getTableSimulation().getItem(0);
+
+		Simulator simulator = this.getManager().SimulatorBySystem(item.getText(0));
+		setModelQualityRequirement(simulator);
 	}
 
 	/**
@@ -330,40 +345,39 @@ public class ReportsPPController extends Controller {
 	 * 
 	 * @param ptype
 	 */
-	public void setModelQualityRequirement(DomainModel.AnalysisEntity.System ptype) {
-		this.getManager().setSystem(ptype);
+	public void setModelQualityRequirement(Simulator simulator) {
 		while (this.getForm().getTableQualityRequirement().getItems().length > 0) {
 			this.getForm().getTableQualityRequirement().remove(0);
 		}
-		for (QualityRequirement dp : this.getManager().getQualityRequirements()) {
+		for (QualityRequirement dp : simulator.getRequirements()) {
+
 			if (dp.isState()) {
 				TableItem item = new TableItem(this.getForm().getTableQualityRequirement(), SWT.NONE);
 				item.setData(dp);
-				item.setText(new String[] {  dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
+				item.setText(new String[] { dp.toString(), dp.getQualityScenario().getQualityAttribute().toString(),
 						dp.getQualityScenario().getDescription().toString() });
 			}
 		}
 	}
-	
-	public void setModelReport(){
+
+	public void setModelReport() {
 		TableItem item = this.getForm().getTableQualityRequirement()
 				.getItem(this.getForm().getTableQualityRequirement().getSelectionIndex());
 		this.setModelReport(this.getManager().getQualityRequirementBySystem(item.getText(0)));
 	}
-	
 
-	public void setModelReport(QualityRequirement qualityRequirement){
+	public void setModelReport(QualityRequirement qualityRequirement) {
 		for (int i = 0; i < this.getForm().getTableReport().getItemCount(); i++) {
 			TableItem item = this.getForm().getTableReport().getItem(i);
 			item.setText(0, qualityRequirement.getQualityScenario().getQualityAttribute().getName());
 		}
 	}
-	
-	public void addToTable(String namePath) {
+
+	public void addToTable(String namePath, String toString) {
 		TableItem item = new TableItem(this.getForm().getTableSimulation(), SWT.NONE);
 		item.setData(namePath);
 
-		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
+		item.setText(new String[] { toString, namePath.substring(namePath.lastIndexOf("\\") + 1),
 				namePath.substring(0, namePath.lastIndexOf("\\")), });
 	}
 

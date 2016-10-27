@@ -123,6 +123,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 					if (((IStructuredSelection) cboSystem.getSelection()).getFirstElement() != "") {
 						viewController.setModel(cboSystem);
 						cmbSystemItemStateChanged();
+						viewController.setModelQualityRequirementFirst();
 						prepareView(2);
 					}
 				}
@@ -166,12 +167,6 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			colPathSoftArc.setWidth(300);
 			colPathSoftArc.setText(Messages.getString("UCM2DEVS_Path_Column"));
 
-			/*
-			 * colSimulationDate = new TableColumn(tableSimulation, SWT.NONE);
-			 * colSimulationDate.setWidth(300);
-			 * colSimulationDate.setText(Messages.getString("Simulation"));
-			 */
-
 			for (int i = 0; i < 5; i++) {
 				TableItem item = new TableItem(tableSimulation, SWT.NONE);
 			}
@@ -181,6 +176,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				public void widgetSelected(SelectionEvent e) {
 					tableSimulation.showSelection();
 					if (tableSimulation.getSelectionIndex() != -1) {
+						fillTableQR();
 						prepareView(3);
 					} else {
 						prepareView(2);
@@ -481,7 +477,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.fillTableSimulation();
-		this.fillTableQR();
+		//this.fillTableQR();
 	}
 
 	/**
@@ -499,9 +495,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 * * description and condition) //
 	 */
 	public void fillTableQR() {
-		this.getViewController().setModelQualityRequirement(
-				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
-						.getFirstElement());
+		this.getViewController().setModelQualityRequirement();
 	}
 
 	public void fillTableReport() {
