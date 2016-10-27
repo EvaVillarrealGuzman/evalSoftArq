@@ -1,10 +1,16 @@
 package DomainModel.ReportsEntity;
 
-public class ResponsibilityRecoveryTime {
-	
+public class ResponsibilityAvailability {
+	private double downtime;
 	private double recoveryTime;
 	private String responsibility;
 	
+	public double getDowntime() {
+		return downtime;
+	}
+	public void setDowntime(double downtime) {
+		this.downtime = downtime;
+	}
 	public double getRecoveryTime() {
 		return recoveryTime;
 	}
@@ -17,5 +23,5 @@ public class ResponsibilityRecoveryTime {
 	public void setResponsibility(String responsibility) {
 		this.responsibility = responsibility;
 	}
-
+	
 }

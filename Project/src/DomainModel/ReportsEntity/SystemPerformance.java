@@ -1,6 +1,6 @@
 package DomainModel.ReportsEntity;
 
-public class SystemThroughput {
+public class SystemPerformance {
 
 	private double throughput;
 	private String system;

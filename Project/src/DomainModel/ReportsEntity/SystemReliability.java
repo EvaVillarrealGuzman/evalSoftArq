@@ -1,6 +1,6 @@
 package DomainModel.ReportsEntity;
 
-public class SystemFailures {
+public class SystemReliability {
 
 	private double failures;
 	private String system;

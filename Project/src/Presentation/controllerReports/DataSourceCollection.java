@@ -10,10 +10,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  */
 public class DataSourceCollection {
 	private static java.util.Collection DATA_COLLECTION;
-     public  JRDataSource createBeanCollectionDatasource()
-    {
-        
-        
+     
+	public  JRDataSource createBeanCollectionDatasource()
+    {     
         return new JRBeanCollectionDataSource(createBeanCollection());
     }    
      
@@ -30,4 +29,5 @@ public class DataSourceCollection {
     public static void setColeccionDeDatos(java.util.Collection aColeccionDeDatos) {
         DATA_COLLECTION = aColeccionDeDatos;
     }
+    
 }

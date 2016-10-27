@@ -117,7 +117,9 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					viewController.setModel(cboSystem);
-					viewController.printReportPerResponsibility();
+					//viewController.printReportPerResponsibilityPerformance();
+					//viewController.printReportPerResponsibilityReliability();
+					viewController.printReportPerResponsibilityAvailability();
 				}
 			});
 

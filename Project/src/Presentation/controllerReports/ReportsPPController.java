@@ -94,47 +94,31 @@ public class ReportsPPController extends Controller {
 		return true;
 	}
 
-	public Boolean printReportPerResponsibility() {
+	public Boolean printReportPerResponsibilityPerformance() {
 		try {
-			this.openReport(this.PATHREPORT + "Responsability.jasper");
-			this.addParameterToReport("title", "Report per Responsibility");
+			this.openReport(this.PATHREPORT + "reportResponsibilityPerformance.jasper");
+			this.addParameterToReport("title", "Report per Responsibility - Attribute: Performance");
 			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listResponsibilityTurnaroundTime());
-			this.getManager().setDataCollection(this.getManager().listResponsibilityFailures());
-			this.getManager().setDataCollection(this.getManager().listResponsibilityDowntime());
-			this.getManager().setDataCollection(this.getManager().listResponsibilityRecoveryTime());
+			this.getManager().setDataCollection(this.getManager().listResponsibilityPerformance());
 			// imprime el reporte
 			this.getManager().print();
+			this.getManager().visibleReport();
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
-			return false;
-		}
-	}
-
-	// TODO borrar
-	public Boolean printPrueba() {
-		try {
-			this.openReport(this.PATHREPORT + "ListadoClientesPorLocalidad.jasper");
-			this.addParameterToReport("titulo", "TDH Viajes");
-			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listClientesPorLocalidad());
-			// imprime el reporte
-			this.getManager().print();
-			return true;
-		} catch (Exception e) {
 			return false;
 		}
 	}
 	
-	public Boolean printReport() {
+	public Boolean printReportPerResponsibilityReliability() {
 		try {
-			this.openReport(this.PATHREPORT + "ReporteProyectoFinal.jasper");
-			this.addParameterToReport("titulo", "Reporte Resultados de la Simulación");
+			this.openReport(this.PATHREPORT + "reportResponsibilityReliability.jasper");
+			this.addParameterToReport("title", "Report per Responsibility - Attribute: Reliability");
 			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listResultSimulation());
+			this.getManager().setDataCollection(this.getManager().listResponsibilityReliability());
 			// imprime el reporte
 			this.getManager().print();
+			this.getManager().visibleReport();
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -142,6 +126,22 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
+	public Boolean printReportPerResponsibilityAvailability() {
+		try {
+			this.openReport(this.PATHREPORT + "reportResponsibilityAvailability.jasper");
+			this.addParameterToReport("title", "Report per Responsibility - Attribute: Availability");
+			// Agrega los datos al reporte
+			this.getManager().setDataCollection(this.getManager().listResponsibilityAvailability());
+			// imprime el reporte
+			this.getManager().print();
+			this.getManager().visibleReport();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
 	private void addParameterToReport(String pname, Object pobject) {
 		this.getManager().addParameter(pname, pobject);
 	}
