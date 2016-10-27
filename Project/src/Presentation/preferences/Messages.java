@@ -20,7 +20,7 @@ public class Messages extends NLS {
 	        try {
 	            return RESOURCE_BUNDLE.getString(key);
 	        } catch (MissingResourceException e) {
-	            return '!' + key + '!';
+	            return e.toString();
 	        }
 	    }
 }

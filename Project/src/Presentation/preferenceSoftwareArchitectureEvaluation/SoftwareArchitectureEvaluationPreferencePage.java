@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -26,11 +27,9 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import DomainModel.AnalysisEntity.QualityRequirement;
 import Presentation.controllerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
-import org.eclipse.swt.widgets.Event;
 
 /**
  * To specify a software architecture by JUCMNav
@@ -174,14 +173,14 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					tableSoftArc.showSelection();
-					if (tableSoftArc.getSelectionIndex()!=-1){
+					if (tableSoftArc.getSelectionIndex() != -1) {
 						prepareView(3);
-					}else{
+					} else {
 						prepareView(2);
 					}
 				}
 			});
-			
+
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
 
@@ -214,19 +213,19 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			table.setHeaderVisible(true);
 			// Create columns
 			colCheck = new TableColumn(table, SWT.NONE);
-			colCheck.setWidth(100);
-			colCheck.setText(Messages.getString(""));
-			
+			colCheck.setWidth(35);
+			//colCheck.setText(Messages.getString("UCM2DEVS_Object_Column"));
+
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
 			colObject.setText(Messages.getString("UCM2DEVS_Object_Column"));
 
 			colQualityAttribute = new TableColumn(table, SWT.NONE);
-			colQualityAttribute.setWidth(200);
+			colQualityAttribute.setWidth(100);
 			colQualityAttribute.setText(Messages.getString("UCM2DEVS_QualityAttribute_Column"));
 
 			colDescriptionScenario = new TableColumn(table, SWT.NONE);
-			colDescriptionScenario.setWidth(200);
+			colDescriptionScenario.setWidth(265);
 			colDescriptionScenario.setText(Messages.getString("UCM2DEVS_DescriptionScenario_Column"));
 
 			for (int i = 0; i < 8; i++) {
@@ -249,17 +248,17 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			// Assign the cell editors to the viewer
 			tblViewerQualityRequirement.setCellEditors(editors);
 			table.addListener(SWT.Selection, new Listener() {
-			      public void handleEvent(Event event) {
-			        if (event.detail == SWT.CHECK){
-			        	if (viewController.isNotChecked(table)){
-			        		prepareView(3);
-			        	}else {
-			        		prepareView(4);
-			        	}
-			        }
-			      }
+				public void handleEvent(Event event) {
+					if (event.detail == SWT.CHECK) {
+						if (viewController.isNotChecked(table)) {
+							prepareView(3);
+						} else {
+							prepareView(4);
+						}
+					}
+				}
 			});
-			
+
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
 
@@ -323,9 +322,9 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				public void widgetSelected(SelectionEvent e) {
 					try {
 						int var = viewController.evaluate();
-						if (var==0) {
+						if (var == 0) {
 							viewController.createObjectSuccessDialog();
-						} else if (var==1){
+						} else if (var == 1) {
 							viewController.createObjectDontUpdateErrorDialog();
 						}
 					} catch (IOException e1) {
@@ -443,9 +442,6 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
-		TableItem item = this.getTable().getItem(0);
-		System.out.println("el item es: "+ item);
-		
 		this.getCboSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
@@ -496,7 +492,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getCmbUnit().getCombo().setEnabled(true);
 			this.getBtnEvaluate().setEnabled(true);
 			break;
-		
+
 		}
 	}
 
@@ -525,9 +521,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	public void fillTableQR() {
 		this.getViewController().setModelQualityRequirement(
-				(DomainModel.AnalysisEntity.System) ((IStructuredSelection)
-						this.getCboSystem().getSelection())
-				.getFirstElement());
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+						.getFirstElement());
 	}
 
 }
