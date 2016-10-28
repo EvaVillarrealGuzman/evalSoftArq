@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -47,7 +48,6 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	private ComboViewer cmbUnit;
 	private SoftwareArchitectureEvaluationPPController viewController;
 	private Composite cSystemName;
-	private Composite cSimulationTime;
 	private GridData gridData;
 	private Table tableSoftArc;
 	private TableColumn colPathSoftArc;
@@ -324,6 +324,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 						int var = viewController.evaluate();
 						if (var == 0) {
 							viewController.createObjectSuccessDialog();
+							clearView();
+							prepareView(1);
 						} else if (var == 1) {
 							viewController.createObjectDontUpdateErrorDialog();
 						}
@@ -435,6 +437,14 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	public void loadComboUnit() {
 		this.getViewController().setModelUnit();
 	}
+	
+	public void clearView(){
+		cmbSystem.setSelection(StructuredSelection.EMPTY);
+		this.getTableSoftArc().clearAll();
+		this.getTblViewerQualityRequirement().getTable().clearAll();
+		cmbUnit.setSelection(StructuredSelection.EMPTY);
+		simulationTime.setStringValue("0.1");
+	}
 
 	/**
 	 * prepare the view for the different actions that are possible
@@ -456,6 +466,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getCboSystem().getCombo().setEnabled(false);
 			this.getTableSoftArc().setEnabled(false);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
+			this.getSimulationTime().setStringValue("0.1");
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
@@ -464,6 +475,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getCboSystem().getCombo().setEnabled(true);
 			this.getTableSoftArc().setEnabled(false);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
+			this.getSimulationTime().setStringValue("0.1");
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
 			this.getBtnEvaluate().setEnabled(false);
