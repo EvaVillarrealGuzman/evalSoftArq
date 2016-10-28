@@ -246,29 +246,14 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		responseTypes.add(r4);
 		responseTypes.add(r5);
 
-		Set<Unit> units = new HashSet<Unit>();
-		units.add(punit1);
-		units.add(punit2);
-		units.add(unit3);
-
-		Metric metric1 = new Metric("Reliability average time", units);
-		Metric metric2 = new Metric("Reliability half time", units);
+		Metric metric1 = new Metric("Number of failures");
 		pmanager.saveObject(metric1);
-		pmanager.saveObject(metric2);
 		Set<Metric> metrics = new HashSet<Metric>();
 		metrics.add(metric1);
-		metrics.add(metric2);
 
-		ResponseMeasureType type1 = new ResponseMeasureType("Time interval when the system must be available", metrics);
-		ResponseMeasureType type2 = new ResponseMeasureType("Reliability Time", metrics);
-		ResponseMeasureType type3 = new ResponseMeasureType("Time interval in which system can be in degraded mode",
-				metrics);
-		ResponseMeasureType type4 = new ResponseMeasureType("Repair time", metrics);
+		ResponseMeasureType type1 = new ResponseMeasureType("Failures", metrics);
 		Set<ResponseMeasureType> responseMeasureTypes = new HashSet<ResponseMeasureType>();
 		responseMeasureTypes.add(type1);
-		responseMeasureTypes.add(type2);
-		responseMeasureTypes.add(type3);
-		responseMeasureTypes.add(type4);
 
 		QualityAttribute attribute;
 		attribute = new QualityAttribute("Reliability", new GenericScenario(stimulusSourceTypes, stimulusTypes,
