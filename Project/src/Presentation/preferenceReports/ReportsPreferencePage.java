@@ -290,25 +290,35 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			// Create five buttons for changing color
 			Button[] reportButtons = new Button[3];
 
-			for (int i = 0; i < 2; i++) {
-				final TableItem item = new TableItem(tableReport, SWT.NONE);
-				reportEditors[i] = new TableEditor(tableReport);
-				reportButtons[i] = new Button(tableReport, SWT.PUSH);
-				reportButtons[i].setText("View Report...");
-				reportEditors[i].grabHorizontal = true;
-				reportEditors[i].setEditor(reportButtons[i], item, 2);
+			TableItem itemResp = new TableItem(tableReport, SWT.NONE);
+			reportEditors[0] = new TableEditor(tableReport);
+			reportButtons[0] = new Button(tableReport, SWT.PUSH);
+			reportButtons[0].setText("View Report...");
+			reportEditors[0].grabHorizontal = true;
+			reportEditors[0].setEditor(reportButtons[0], itemResp, 2);
 
-				reportButtons[i].addSelectionListener(new SelectionAdapter() {
-					public void widgetSelected(SelectionEvent event) {
-						System.out.println("hola");
-					}
-				});
-				
-			}
-			
+			reportButtons[0].addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent event) {
+					viewController.printReportResponsability();
+				}
+			});
+
+			TableItem itemSys = new TableItem(tableReport, SWT.NONE);
+			reportEditors[1] = new TableEditor(tableReport);
+			reportButtons[1] = new Button(tableReport, SWT.PUSH);
+			reportButtons[1].setText("View Report...");
+			reportEditors[1].grabHorizontal = true;
+			reportEditors[1].setEditor(reportButtons[1], itemSys, 2);
+
+			reportButtons[1].addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent event) {
+					viewController.printReportSystem();
+				}
+			});
+
 			tableReport.getItem(0).setText(1, "Responsability");
 			tableReport.getItem(1).setText(1, "System");
-			
+
 			// Create TableViewer
 			tblViewerReport = new TableViewer(tableReport);
 			tblViewerReport.setUseHashlookup(true);
@@ -330,12 +340,12 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			btnViewReport.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					//viewController.printReportPerResponsibilityPerformance();
-					//viewController.printReportPerResponsibilityReliability();
-					//viewController.printReportPerResponsibilityAvailability();
-					//viewController.printReportPerSystemAvailability();
-					//viewController.printReportPerSystemReliability();
-					//viewController.printReportPerSystemPerformance();
+					// viewController.printReportPerResponsibilityPerformance();
+					// viewController.printReportPerResponsibilityReliability();
+					// viewController.printReportPerResponsibilityAvailability();
+					// viewController.printReportPerSystemAvailability();
+					// viewController.printReportPerSystemReliability();
+					// viewController.printReportPerSystemPerformance();
 				}
 			});
 
@@ -459,7 +469,6 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			this.getTableSimulation().setEnabled(true);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
 			this.getBtnViewReport().setEnabled(false);
-
 			break;
 		case 3:// With architecture selected
 			this.getBtnViewReport().setEnabled(false);
@@ -477,7 +486,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.fillTableSimulation();
-		//this.fillTableQR();
+		// this.fillTableQR();
 	}
 
 	/**
@@ -501,6 +510,5 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	public void fillTableReport() {
 		this.getViewController().setModelReport();
 	}
-
 
 }

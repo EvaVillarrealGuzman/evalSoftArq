@@ -385,4 +385,37 @@ public class ReportsPPController extends Controller {
 		return this.getManager().isConnection();
 	}
 
+	public void printReportResponsability() {
+		TableItem item = this.getForm().getTableQualityRequirement().getItem(0);
+		String qualityAttribute = item.getText(0);
+		switch (qualityAttribute) {
+		case "Performance":// No system with architecture or quality requirement
+			printReportPerResponsibilityPerformance();
+			break;
+		case "Availability": // There are systems with architecture or quality requirement
+			printReportPerResponsibilityAvailability();
+			break;
+		case "Reliability": // With system selected
+			printReportPerResponsibilityReliability();
+			break;
+		}
+	}
+
+	public void printReportSystem() {
+		TableItem item = this.getForm().getTableQualityRequirement().getItem(1);
+		String qualityAttribute = item.getText(1);
+		switch (qualityAttribute) {
+		case "Performance":// No system with architecture or quality requirement
+			printReportPerSystemPerformance();
+			break;
+		case "Availability": // There are systems with architecture or quality requirement
+			printReportPerSystemAvailability();
+			break;
+		case "Reliability": // With system selected
+			printReportPerSystemReliability();
+			break;
+		}
+		
+	}
+
 }
