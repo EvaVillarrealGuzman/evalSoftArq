@@ -44,6 +44,7 @@ public class ReportManager extends HibernateManager {
 	 */
 	private DomainModel.AnalysisEntity.System system;
 	private Architecture architecture;
+	private QualityRequirement qualityRequirement;
 	private QualityAttribute qualityAttribute;
 	private DataSourceCollection dataSource;
 	private JasperReport masterReport;
@@ -82,6 +83,14 @@ public class ReportManager extends HibernateManager {
 
 	public void setArchitecture(Architecture architecture) {
 		this.architecture = architecture;
+	}
+
+	public QualityRequirement getQualityRequirement() {
+		return qualityRequirement;
+	}
+
+	public void setQualityRequirement(QualityRequirement qualityRequirement) {
+		this.qualityRequirement = qualityRequirement;
 	}
 
 	public QualityAttribute getQualityAttribute() {
@@ -303,18 +312,16 @@ public class ReportManager extends HibernateManager {
 
 		List<ResponsibilityPerformance> list = new ArrayList<ResponsibilityPerformance>();
 
-		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
-			Architecture f = it.next();
-			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getMetric().getName().equals("Responsibility Turnaround Time")) {
-						ResponsibilityPerformance item = new ResponsibilityPerformance();
-						item.setResponsibilityTT(ind.getType().getName());
-						item.setTurnaroundTime(ind.getValue());
-						list.add(item);
-					}
+		Architecture f = this.getArchitecture();
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			Run r = its.next();
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getMetric().getName().equals("Responsibility Turnaround Time")) {
+					ResponsibilityPerformance item = new ResponsibilityPerformance();
+					item.setResponsibilityTT(ind.getType().getName());
+					item.setTurnaroundTime(ind.getValue());
+					list.add(item);
 				}
 			}
 		}
@@ -325,18 +332,16 @@ public class ReportManager extends HibernateManager {
 
 		List<ResponsibilityReliability> list = new ArrayList<ResponsibilityReliability>();
 
-		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
-			Architecture f = it.next();
-			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getMetric().getName().equals("Responsibility Failures")) {
-						ResponsibilityReliability item = new ResponsibilityReliability();
-						item.setResponsibilityF(ind.getType().getName());
-						item.setFails(ind.getValue());
-						list.add(item);
-					}
+		Architecture f = this.getArchitecture();
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			Run r = its.next();
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getMetric().getName().equals("Responsibility Failures")) {
+					ResponsibilityReliability item = new ResponsibilityReliability();
+					item.setResponsibilityF(ind.getType().getName());
+					item.setFails(ind.getValue());
+					list.add(item);
 				}
 			}
 		}
@@ -347,63 +352,61 @@ public class ReportManager extends HibernateManager {
 
 		List<ResponsibilityAvailability> list = new ArrayList<ResponsibilityAvailability>();
 
-		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
-			Architecture f = it.next();
-			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getMetric().getName().equals("Responsibility Downtime")) {
-						if (list.isEmpty()) {
+		Architecture f = this.getArchitecture();
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			Run r = its.next();
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getMetric().getName().equals("Responsibility Downtime")) {
+					if (list.isEmpty()) {
+						ResponsibilityAvailability item = new ResponsibilityAvailability();
+						item.setResponsibility(ind.getType().getName());
+						item.setDowntime(ind.getValue());
+						list.add(item);
+					} else {
+						Iterator ite = list.iterator();
+						boolean band = true;
+						int i = 0;
+						while (ite.hasNext()) {
+							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
+							if (q.getResponsibility().equals(ind.getType().getName())) {
+								band = false;
+
+								q.setDowntime(ind.getValue());
+							}
+							i++;
+						}
+						if (band) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(ind.getType().getName());
 							item.setDowntime(ind.getValue());
 							list.add(item);
-						} else {
-							Iterator ite = list.iterator();
-							boolean band = true;
-							int i = 0;
-							while (ite.hasNext()) {
-								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-								if (q.getResponsibility().equals(ind.getType().getName())) {
-									band = false;
-
-									q.setDowntime(ind.getValue());
-								}
-								i++;
-							}
-							if (band) {
-								ResponsibilityAvailability item = new ResponsibilityAvailability();
-								item.setResponsibility(ind.getType().getName());
-								item.setDowntime(ind.getValue());
-								list.add(item);
-							}
 						}
 					}
-					if (ind.getMetric().getName().equals("Responsibility Recovery Time")) {
-						if (list.isEmpty()) {
+				}
+				if (ind.getMetric().getName().equals("Responsibility Recovery Time")) {
+					if (list.isEmpty()) {
+						ResponsibilityAvailability item = new ResponsibilityAvailability();
+						item.setResponsibility(ind.getType().getName());
+						item.setRecoveryTime(ind.getValue());
+						list.add(item);
+					} else {
+						Iterator ite = list.iterator();
+						boolean band = true;
+						int i = 0;
+						while (ite.hasNext()) {
+							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
+							if (q.getResponsibility().equals(ind.getType().getName())) {
+								band = false;
+								q.setRecoveryTime(ind.getValue());
+							}
+							i++;
+						}
+						if (band) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(ind.getType().getName());
 							item.setRecoveryTime(ind.getValue());
 							list.add(item);
-						} else {
-							Iterator ite = list.iterator();
-							boolean band = true;
-							int i = 0;
-							while (ite.hasNext()) {
-								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-								if (q.getResponsibility().equals(ind.getType().getName())) {
-									band = false;
-									q.setRecoveryTime(ind.getValue());
-								}
-								i++;
-							}
-							if (band) {
-								ResponsibilityAvailability item = new ResponsibilityAvailability();
-								item.setResponsibility(ind.getType().getName());
-								item.setRecoveryTime(ind.getValue());
-								list.add(item);
-							}
 						}
 					}
 				}
@@ -416,35 +419,33 @@ public class ReportManager extends HibernateManager {
 
 		List<SystemAvailability> list = new ArrayList<SystemAvailability>();
 
-		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
-			Architecture f = it.next();
-			int runNum = 1;
-			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				boolean band = true;
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getType() instanceof SystemIndicator && band) {
-						SystemAvailability item = new SystemAvailability();
-						item.setAvailabilityE(0.7);
-						item.setNoAvailabilityE(0.3);
-						item.setSystem(ind.getType().getName());
-						item.setRun(Integer.toString(runNum));
-						list.add(item);
-						band = false;
-					}
-					if (ind.getMetric().getName().equals("System Availability")) {
-						SystemAvailability q = list.get(runNum - 1);
-						q.setAvailability(ind.getValue());
-					}
-					if (ind.getMetric().getName().equals("System No-Availability")) {
-						SystemAvailability q = list.get(runNum - 1);
-						q.setNoAvailability(ind.getValue());
-					}
+		Architecture f = this.getArchitecture();
+		int runNum = 1;
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			Run r = its.next();
+			boolean band = true;
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getType() instanceof SystemIndicator && band) {
+					SystemAvailability item = new SystemAvailability();
+					item.setAvailabilityE(0.7);
+					item.setNoAvailabilityE(0.3);
+					item.setSystem(ind.getType().getName());
+					item.setRun(Integer.toString(runNum));
+					list.add(item);
+					band = false;
 				}
-
-				runNum++;
+				if (ind.getMetric().getName().equals("System Availability")) {
+					SystemAvailability q = list.get(runNum - 1);
+					q.setAvailability(ind.getValue());
+				}
+				if (ind.getMetric().getName().equals("System No-Availability")) {
+					SystemAvailability q = list.get(runNum - 1);
+					q.setNoAvailability(ind.getValue());
+				}
 			}
+
+			runNum++;
 		}
 		return list;
 	}
@@ -453,24 +454,22 @@ public class ReportManager extends HibernateManager {
 
 		List<SystemReliability> list = new ArrayList<SystemReliability>();
 
-		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
-			Architecture f = it.next();
-			int runNum = 1;
-			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getMetric().getName().equals("System Failures")) {
-						SystemReliability item = new SystemReliability();
-						item.setFailsE(0.7);
-						item.setFails(ind.getValue());
-						item.setSystem(ind.getType().getName());
-						item.setRun(Integer.toString(runNum));
-						list.add(item);
-					}
+		Architecture f = this.getArchitecture();
+		int runNum = 1;
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			Run r = its.next();
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getMetric().getName().equals("System Failures")) {
+					SystemReliability item = new SystemReliability();
+					item.setFailsE(0.7);
+					item.setFails(ind.getValue());
+					item.setSystem(ind.getType().getName());
+					item.setRun(Integer.toString(runNum));
+					list.add(item);
 				}
-				runNum++;
 			}
+			runNum++;
 		}
 		return list;
 	}
@@ -480,81 +479,74 @@ public class ReportManager extends HibernateManager {
 
 		for (int i = 0; i < 10; i++) {
 			Double item = new Double(9.8);
-			// item.setLocalidad("hola");
-			// item.setCantidadClientes(5);
 			lista.add(item);
 		}
 
 		return lista;
 	}
-	
+
 	public List<SystemPerformance> listSystemPerformance() {
 
 		List<SystemPerformance> list = new ArrayList<SystemPerformance>();
 
-		for (Iterator<Architecture> it = this.getSystem().getArchitectures().iterator(); it.hasNext();) {
-			Architecture f = it.next();
-			int runNum = 1;
-			for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				boolean band = true;
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getType() instanceof SystemIndicator && band) {
-						SystemPerformance item = new SystemPerformance();
-						item.setThroughputE(0.7);
-						item.setTurnaroundTimeE(0.3);
-						item.setSystem(ind.getType().getName());
-						item.setRun(Integer.toString(runNum));
-						list.add(item);
-						band = false;
-					}
-					if (ind.getMetric().getName().equals("System Throughput")) {
-						SystemPerformance q = list.get(runNum - 1);
-						q.setThroughput(ind.getValue());
-					}
-					if (ind.getMetric().getName().equals("System Turnaround Time")) {
-						SystemPerformance q = list.get(runNum - 1);
-						q.setTurnaroundTime(ind.getValue());
-					}
+		Architecture f = this.getArchitecture();
+		int runNum = 1;
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			Run r = its.next();
+			boolean band = true;
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getType() instanceof SystemIndicator && band) {
+					SystemPerformance item = new SystemPerformance();
+					item.setThroughputE(0.7);
+					item.setTurnaroundTimeE(0.3);
+					item.setSystem(ind.getType().getName());
+					item.setRun(Integer.toString(runNum));
+					list.add(item);
+					band = false;
 				}
-
-				runNum++;
+				if (ind.getMetric().getName().equals("System Throughput")) {
+					SystemPerformance q = list.get(runNum - 1);
+					q.setThroughput(ind.getValue());
+				}
+				if (ind.getMetric().getName().equals("System Turnaround Time")) {
+					SystemPerformance q = list.get(runNum - 1);
+					q.setTurnaroundTime(ind.getValue());
+				}
 			}
+
+			runNum++;
 		}
 		return list;
 	}
-	
+
 	public QualityRequirement getQualityRequirementBySystem(String QRtoString) {
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			for (QualityRequirement qualityRequirement : auxTipo.getQualityRequirements() ) {
+			for (QualityRequirement qualityRequirement : auxTipo.getQualityRequirements()) {
 				System.out.println(qualityRequirement.toString());
-				if (qualityRequirement.toString().equals(QRtoString)){
+				if (qualityRequirement.toString().equals(QRtoString)) {
 					return qualityRequirement;
 				}
 			}
 		}
 		return null;
 	}
-	
+
 	public Simulator SimulatorBySystem(String ArchitecturetoString) {
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			for (Architecture architecture : auxTipo.getArchitectures() ) {
+			for (Architecture architecture : auxTipo.getArchitectures()) {
 				System.out.println(architecture.toString());
-				if (architecture.toString().equals(ArchitecturetoString)){
+				if (architecture.toString().equals(ArchitecturetoString)) {
 					return architecture.getSimulator();
 				}
 			}
 		}
 		return null;
 	}
-	
 
 	public Set<QualityRequirement> getQualityRequirements() {
 		return this.getSystem().getQualityRequirements();
 	}
-
-
 
 	/**
 	 * 
@@ -603,7 +595,7 @@ public class ReportManager extends HibernateManager {
 		systems.toArray(arraySystem);
 		return arraySystem;
 	}
-	
+
 	/**
 	 * 
 	 * @return True if there are systems whose state==true,
@@ -625,7 +617,7 @@ public class ReportManager extends HibernateManager {
 		}
 		return false;
 	}
-	
+
 	public boolean existSystemTrueWithArchitecture() {
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getArchitectures().isEmpty() == false) {

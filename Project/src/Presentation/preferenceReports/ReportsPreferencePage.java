@@ -27,6 +27,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import DomainModel.AnalysisEntity.QualityRequirement;
+import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.controllerReports.ReportsPPController;
 import Presentation.preferences.Messages;
 
@@ -177,6 +178,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				public void widgetSelected(SelectionEvent e) {
 					tableSimulation.showSelection();
 					if (tableSimulation.getSelectionIndex() != -1) {
+						viewController.setModel((Architecture) tableSimulation.getItem(tableSimulation.getSelectionIndex()).getData());
 						fillTableQR();
 						prepareView(3);
 					} else {
@@ -246,6 +248,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			tableQualityRequirement.addListener(SWT.Selection, new Listener() {
 				public void handleEvent(Event event) {
 					viewController.setQualityAttribute((QualityRequirement) tableQualityRequirement.getItem(tableQualityRequirement.getSelectionIndex()).getData());
+					viewController.setQualityRequirement((QualityRequirement) tableQualityRequirement.getItem(tableQualityRequirement.getSelectionIndex()).getData());
 					fillTableReport();
 				}
 			});

@@ -320,10 +320,18 @@ public class ReportsPPController extends Controller {
 		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture arc : this.getManager().getArchitectures()) {
 				if (arc.getSimulator() != null) {
-					addToTable(arc.getPathUCM(), arc.toString());
+					addToTable(arc);
 				}
 			}
 		}
+	}
+	
+	public void addToTable(Architecture arc) {
+		TableItem item = new TableItem(this.getForm().getTableSimulation(), SWT.NONE);
+		item.setData(arc);
+
+		item.setText(new String[] { arc.toString(), arc.getPathUCM().substring(arc.getPathUCM().lastIndexOf("\\") + 1),
+				arc.getPathUCM().substring(0, arc.getPathUCM().lastIndexOf("\\")), });
 	}
 
 	public void setModelQualityRequirement() {
@@ -364,6 +372,10 @@ public class ReportsPPController extends Controller {
 		manager.setQualityAttribute(qr.getQualityScenario().getQualityAttribute());
 	}
 	
+	public void setQualityRequirement(QualityRequirement qr){
+		manager.setQualityRequirement(qr);
+	}
+	
 	public void setModelReport() {
 		TableItem item = this.getForm().getTableQualityRequirement()
 				.getItem(this.getForm().getTableQualityRequirement().getSelectionIndex());
@@ -375,14 +387,6 @@ public class ReportsPPController extends Controller {
 			TableItem item = this.getForm().getTableReport().getItem(i);
 			item.setText(0, qualityRequirement.getQualityScenario().getQualityAttribute().getName());
 		}
-	}
-
-	public void addToTable(String namePath, String toString) {
-		TableItem item = new TableItem(this.getForm().getTableSimulation(), SWT.NONE);
-		item.setData(namePath);
-
-		item.setText(new String[] { toString, namePath.substring(namePath.lastIndexOf("\\") + 1),
-				namePath.substring(0, namePath.lastIndexOf("\\")), });
 	}
 
 	public Boolean isConnection() {
