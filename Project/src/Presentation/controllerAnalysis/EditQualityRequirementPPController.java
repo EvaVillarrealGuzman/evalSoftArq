@@ -164,9 +164,9 @@ public class EditQualityRequirementPPController extends Controller {
 		if (err == 0) {
 			this.getFormSearch().prepareView(7);
 			this.getFormSearch().fillTable();
-			if (this.getManager().updateQualityRequirement()){
+			if (this.getManager().updateQualityRequirement()) {
 				return 0;
-			}else {
+			} else {
 				return 1;
 			}
 		} else {
@@ -230,6 +230,8 @@ public class EditQualityRequirementPPController extends Controller {
 	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
+		Metric m = (Metric) ((IStructuredSelection) this.getFormSearch().getCmbMetric().getSelection())
+				.getFirstElement();
 		if (this.isEmpty(this.getFormSearch().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
 			this.getFormSearch().getCmbSystem().getCombo().setFocus();
@@ -293,7 +295,7 @@ public class EditQualityRequirementPPController extends Controller {
 		} else if (this.getFormSearch().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_InvalidResponseMeasureValueNegative_ErrorDialog"));
 			return false;
-		} else if (this.isEmpty(this.getFormSearch().getCmbUnit())) {
+		} else if (this.isEmpty(this.getFormSearch().getCmbUnit()) && !m.getName().equals("Number of failures")) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
 			this.getFormSearch().getCmbUnit().getCombo().setFocus();
 			return false;
@@ -381,10 +383,12 @@ public class EditQualityRequirementPPController extends Controller {
 				.setSelection(new StructuredSelection(this.getManager().getTypeResponseMeasure()));
 		this.getFormSearch().getCmbMetric().setSelection(new StructuredSelection(this.getManager().getMetric()));
 		this.getFormSearch().getTxtValueResponseMeasure().setStringValue(this.getManager().getValueResponseMeasure());
-		this.getFormSearch().getCmbUnit().setSelection(new StructuredSelection(this.getManager().getUnit()));
+		if (!this.getManager().getMetric().getName().equals("Number of failures")) {
+			this.getFormSearch().getCmbUnit().setSelection(new StructuredSelection(this.getManager().getUnit()));
+		}
 	}
-	
-	public Boolean isConnection(){
+
+	public Boolean isConnection() {
 		return this.getManager().isConnection();
 	}
 

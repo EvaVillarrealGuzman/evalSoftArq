@@ -379,7 +379,10 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cmbMetric.getSelection()).getFirstElement() != "") {
-						cmbMetricItemStateChanged();
+						Metric m = (Metric) ((IStructuredSelection) cmbMetric.getSelection()).getFirstElement();
+						if (!m.getName().equals("Number of failures")) {
+							cmbMetricItemStateChanged();
+						}
 					} else {
 						getCmbUnit().getCombo().clearSelection();
 					}
@@ -428,9 +431,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					int var = viewController.save();
-					if (var==0) {
+					if (var == 0) {
 						viewController.createObjectSuccessDialog();
-					} else if (var==1) {
+					} else if (var == 1) {
 						viewController.createObjectDontSaveErrorDialog();
 					}
 				}
@@ -802,7 +805,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
-			pabm = 0;
+			pabm = 6;
 		}
 		switch (pabm) {
 		case 0:// New quality requirement
@@ -903,6 +906,38 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getBtnNew().setEnabled(true);
 
 			break;
+		case 6:// No saved system
+			this.getCmbSystem().getCombo().setEnabled(false);
+
+			this.getTxtDescription().setEnabled(false);
+			this.getCmbQualityAttribute().getCombo().setEnabled(false);
+
+			this.getTxtDescriptionStimulusSource().setEnabled(false);
+			this.getTxtDescriptionStimulus().setEnabled(false);
+			this.getTxtDescriptionEnvironment().setEnabled(false);
+			this.getTxtDescriptionArtifact().setEnabled(false);
+			this.getTxtDescriptionResponse().setEnabled(false);
+			this.getTxtDescriptionResponseMeasure().setEnabled(false);
+
+			this.getCmbTypeStimulusSource().getCombo().setEnabled(false);
+			this.getCmbTypeStimulus().getCombo().setEnabled(false);
+			this.getCmbTypeEnvironment().getCombo().setEnabled(false);
+			this.getCmbTypeArtifact().getCombo().setEnabled(false);
+			this.getCmbTypeResponse().getCombo().setEnabled(false);
+			this.getCmbTypeResponseMeasure().getCombo().setEnabled(false);
+			this.getCmbMetric().getCombo().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(false);
+
+			this.getTxtValueStimulusSource().setEnabled(false, gStimulusSource);
+			this.getTxtValueStimulus().setEnabled(false, gStimulus);
+			this.getTxtValueEnvironment().setEnabled(false, gEnvironment);
+			this.getTxtValueResponse().setEnabled(false, gResponse);
+			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
+
+			this.getBtnNew().setEnabled(false);
+
+			break;
+
 		}
 
 	}

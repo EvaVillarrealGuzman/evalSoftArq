@@ -226,6 +226,9 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 							.setModel((QualityRequirement) table.getItem(table.getSelectionIndex()).getData());
 					getViewController().getFormSearch().setView();
 					prepareView(6);
+					if (viewController.getManager().getMetric().getName().equals("Number of failures")){
+						cmbUnit.getCombo().setEnabled(false);
+					}
 				}
 			});
 
@@ -470,7 +473,10 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cmbMetric.getSelection()).getFirstElement() != "") {
-						cmbMetricItemStateChanged();
+						Metric m = (Metric) ((IStructuredSelection) cmbMetric.getSelection()).getFirstElement();
+						if (!m.getName().equals("Number of failures")) {
+							cmbMetricItemStateChanged();
+						}
 					} else {
 						getCmbUnit().getCombo().clearSelection();
 					}
@@ -963,7 +969,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
-			pabm = 0;
+			pabm = 8;
 		}
 		switch (pabm) {
 		case 0:// Search quality requirement
@@ -1109,6 +1115,41 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 			this.getBtnRemove().setEnabled(false);
 			this.getBtnSave().setEnabled(false);
+			break;
+
+		case 8:// No saved system with requirement
+			this.clearScenario();
+			this.getCmbSystem().getCombo().setEnabled(false);
+
+			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
+			this.getTxtDescription().setEnabled(false);
+			this.getCmbQualityAttribute().getCombo().setEnabled(false);
+
+			this.getTxtDescriptionStimulusSource().setEnabled(false);
+			this.getTxtDescriptionStimulus().setEnabled(false);
+			this.getTxtDescriptionEnvironment().setEnabled(false);
+			this.getTxtDescriptionArtifact().setEnabled(false);
+			this.getTxtDescriptionResponse().setEnabled(false);
+			this.getTxtDescriptionResponseMeasure().setEnabled(false);
+
+			this.getCmbTypeStimulusSource().getCombo().setEnabled(false);
+			this.getCmbTypeStimulus().getCombo().setEnabled(false);
+			this.getCmbTypeEnvironment().getCombo().setEnabled(false);
+			this.getCmbTypeArtifact().getCombo().setEnabled(false);
+			this.getCmbTypeResponse().getCombo().setEnabled(false);
+			this.getCmbTypeResponseMeasure().getCombo().setEnabled(false);
+			this.getCmbMetric().getCombo().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(false);
+
+			this.getTxtValueStimulusSource().setEnabled(false, gStimulusSource);
+			this.getTxtValueStimulus().setEnabled(false, gStimulus);
+			this.getTxtValueEnvironment().setEnabled(false, gEnvironment);
+			this.getTxtValueResponse().setEnabled(false, gResponse);
+			this.getTxtValueResponseMeasure().setEnabled(false, gResponseMeasure);
+
+			this.getBtnSave().setEnabled(false);
+			this.getBtnRemove().setEnabled(false);
+
 			break;
 
 		}

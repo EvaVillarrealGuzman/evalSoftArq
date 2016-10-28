@@ -225,6 +225,7 @@ public class NewQualityRequirementPPController extends Controller {
 	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
+		Metric m = (Metric) ((IStructuredSelection) this.getForm().getCmbMetric().getSelection()).getFirstElement();
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
 			this.getForm().getCmbSystem().getCombo().setFocus();
@@ -288,7 +289,7 @@ public class NewQualityRequirementPPController extends Controller {
 		} else if (this.getForm().getTxtValueResponseMeasure().getDoubleValue() <= 0) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_InvalidResponseMeasureValueNegative_ErrorDialog"));
 			return false;
-		} else if (this.isEmpty(this.getForm().getCmbUnit())) {
+		} else if (this.isEmpty(this.getForm().getCmbUnit()) && !m.getName().equals("Number of failures")) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
 			this.getForm().getCmbUnit().getCombo().setFocus();
 			return false;
