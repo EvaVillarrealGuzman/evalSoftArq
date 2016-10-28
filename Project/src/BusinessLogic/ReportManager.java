@@ -313,17 +313,29 @@ public class ReportManager extends HibernateManager {
 		List<ResponsibilityPerformance> list = new ArrayList<ResponsibilityPerformance>();
 
 		Architecture f = this.getArchitecture();
+		int i = 0;
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
 			Run r = its.next();
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
 				Indicator ind = iti.next();
 				if (ind.getMetric().getName().equals("Responsibility Turnaround Time")) {
-					ResponsibilityPerformance item = new ResponsibilityPerformance();
-					item.setResponsibilityTT(ind.getType().getName());
-					item.setTurnaroundTime(ind.getValue());
-					list.add(item);
+					if (i == 0) {
+						ResponsibilityPerformance item = new ResponsibilityPerformance();
+						item.setResponsibilityTT(ind.getType().getName());
+						item.setTurnaroundTime(ind.getValue()/10);
+						list.add(item);
+					}else{
+						Iterator ite = list.iterator();
+						while (ite.hasNext()) {
+							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
+							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
+								q.setTurnaroundTime(q.getTurnaroundTime() + ind.getValue() / 10);
+							}
+						}
+					}
 				}
 			}
+			i++;
 		}
 		return list;
 	}
@@ -333,17 +345,29 @@ public class ReportManager extends HibernateManager {
 		List<ResponsibilityReliability> list = new ArrayList<ResponsibilityReliability>();
 
 		Architecture f = this.getArchitecture();
+		int i = 0;
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
 			Run r = its.next();
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
 				Indicator ind = iti.next();
 				if (ind.getMetric().getName().equals("Responsibility Failures")) {
-					ResponsibilityReliability item = new ResponsibilityReliability();
-					item.setResponsibilityF(ind.getType().getName());
-					item.setFails(ind.getValue());
-					list.add(item);
+					if (i == 0) {
+						ResponsibilityReliability item = new ResponsibilityReliability();
+						item.setResponsibilityF(ind.getType().getName());
+						item.setFails(ind.getValue() / 10);
+						list.add(item);
+					} else {
+						Iterator ite = list.iterator();
+						while (ite.hasNext()) {
+							ResponsibilityReliability q = (ResponsibilityReliability) ite.next();
+							if (q.getResponsibilityF().equals(ind.getType().getName())) {
+								q.setFails(q.getFails() + ind.getValue() / 10);
+							}
+						}
+					}
 				}
 			}
+			i++;
 		}
 		return list;
 	}

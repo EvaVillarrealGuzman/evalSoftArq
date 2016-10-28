@@ -214,50 +214,6 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
-//	public QualityAttribute getQualityAttribute(int qa) {
-//		QualityAttribute[] qas = this.manager.getQualityAttributes();
-//		if (qas[0].getName().equals("Performance")) {
-//			if (qa == 2) {
-//				return qas[0];
-//			}
-//		} else if (qas[0].getName().equals("Availability")) {
-//			if (qa == 1) {
-//				return qas[0];
-//			}
-//		} else {
-//			if (qa == 0) {
-//				return qas[0];
-//			}
-//		}
-//		if (qas[1].getName().equals("Performance")) {
-//			if (qa == 2) {
-//				return qas[1];
-//			}
-//		} else if (qas[1].getName().equals("Availability")) {
-//			if (qa == 1) {
-//				return qas[1];
-//			}
-//		} else {
-//			if (qa == 0) {
-//				return qas[1];
-//			}
-//		}
-//		if (qas[3].getName().equals("Performance")) {
-//			if (qa == 2) {
-//				return qas[3];
-//			}
-//		} else if (qas[3].getName().equals("Availability")) {
-//			if (qa == 1) {
-//				return qas[3];
-//			}
-//		} else {
-//			if (qa == 0) {
-//				return qas[3];
-//			}
-//		}
-//		return null;
-//	}
-
 	public String getTactics() {
 		QualityAttribute q = this.getManager().getQualityAttribute();
 		String tactics="";
