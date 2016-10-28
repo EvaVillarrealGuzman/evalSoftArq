@@ -166,7 +166,7 @@ public class ReportsPPController extends Controller {
 		try {
 			this.openReport(this.PATHREPORT + "reportSystemAvailability.jasper");
 			this.addParameterToReport("title", "Report of System - Attribute: Availability");
-			this.addParameterToReport("tactics", this.getTacticsOfAvailability());
+			this.addParameterToReport("tactics", this.getTactics());
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listSystemAvailability());
 			// imprime el reporte
@@ -183,7 +183,7 @@ public class ReportsPPController extends Controller {
 		try {
 			this.openReport(this.PATHREPORT + "reportSystemReliability.jasper");
 			this.addParameterToReport("title", "Report of System - Attribute: Reliability");
-			this.addParameterToReport("tactics", this.getTacticsOfReliability());
+			this.addParameterToReport("tactics", this.getTactics());
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listSystemReliability());
 			// imprime el reporte
@@ -200,7 +200,7 @@ public class ReportsPPController extends Controller {
 		try {
 			this.openReport(this.PATHREPORT + "reportSystemPerformance.jasper");
 			this.addParameterToReport("title", "Report of System - Attribute: Performance");
-			this.addParameterToReport("tactics", this.getTacticsOfPerformance());
+			this.addParameterToReport("tactics", this.getTactics());
 
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listSystemPerformance());
@@ -214,79 +214,57 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
-	public QualityAttribute getQualityAttribute(int qa) {
-		QualityAttribute[] qas = this.manager.getQualityAttributes();
-		if (qas[0].getName().equals("Performance")) {
-			if (qa == 2) {
-				return qas[0];
-			}
-		} else if (qas[0].getName().equals("Availability")) {
-			if (qa == 1) {
-				return qas[0];
-			}
-		} else {
-			if (qa == 0) {
-				return qas[0];
-			}
-		}
-		if (qas[1].getName().equals("Performance")) {
-			if (qa == 2) {
-				return qas[1];
-			}
-		} else if (qas[1].getName().equals("Availability")) {
-			if (qa == 1) {
-				return qas[1];
-			}
-		} else {
-			if (qa == 0) {
-				return qas[1];
-			}
-		}
-		if (qas[3].getName().equals("Performance")) {
-			if (qa == 2) {
-				return qas[3];
-			}
-		} else if (qas[3].getName().equals("Availability")) {
-			if (qa == 1) {
-				return qas[3];
-			}
-		} else {
-			if (qa == 0) {
-				return qas[3];
-			}
-		}
-		return null;
-	}
+//	public QualityAttribute getQualityAttribute(int qa) {
+//		QualityAttribute[] qas = this.manager.getQualityAttributes();
+//		if (qas[0].getName().equals("Performance")) {
+//			if (qa == 2) {
+//				return qas[0];
+//			}
+//		} else if (qas[0].getName().equals("Availability")) {
+//			if (qa == 1) {
+//				return qas[0];
+//			}
+//		} else {
+//			if (qa == 0) {
+//				return qas[0];
+//			}
+//		}
+//		if (qas[1].getName().equals("Performance")) {
+//			if (qa == 2) {
+//				return qas[1];
+//			}
+//		} else if (qas[1].getName().equals("Availability")) {
+//			if (qa == 1) {
+//				return qas[1];
+//			}
+//		} else {
+//			if (qa == 0) {
+//				return qas[1];
+//			}
+//		}
+//		if (qas[3].getName().equals("Performance")) {
+//			if (qa == 2) {
+//				return qas[3];
+//			}
+//		} else if (qas[3].getName().equals("Availability")) {
+//			if (qa == 1) {
+//				return qas[3];
+//			}
+//		} else {
+//			if (qa == 0) {
+//				return qas[3];
+//			}
+//		}
+//		return null;
+//	}
 
-	public List<String> getTacticsOfPerformance() {
-		QualityAttribute q = this.getQualityAttribute(2);
-		ArrayList<String> tactics = new ArrayList<String>();
+	public String getTactics() {
+		QualityAttribute q = this.getManager().getQualityAttribute();
+		String tactics="";
 		Iterator t = q.getTactics().iterator();
 		while (t.hasNext()) {
 			Tactic tc = (Tactic) t.next();
-			tactics.add(tc.getName());
-		}
-		return tactics;
-	}
-
-	public List<String> getTacticsOfAvailability() {
-		QualityAttribute q = this.getQualityAttribute(0);
-		ArrayList<String> tactics = new ArrayList<String>();
-		Iterator t = q.getTactics().iterator();
-		while (t.hasNext()) {
-			Tactic tc = (Tactic) t.next();
-			tactics.add(tc.getName());
-		}
-		return tactics;
-	}
-
-	public List<String> getTacticsOfReliability() {
-		QualityAttribute q = this.getQualityAttribute(1);
-		ArrayList<String> tactics = new ArrayList<String>();
-		Iterator t = q.getTactics().iterator();
-		while (t.hasNext()) {
-			Tactic tc = (Tactic) t.next();
-			tactics.add(tc.getName());
+			tactics = tactics + "- " + tc.getName()+"\n";
 		}
 		return tactics;
 	}
