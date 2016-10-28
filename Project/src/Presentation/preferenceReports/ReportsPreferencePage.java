@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import DomainModel.AnalysisEntity.QualityRequirement;
 import Presentation.controllerReports.ReportsPPController;
 import Presentation.preferences.Messages;
 
@@ -244,7 +245,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			tblViewerQualityRequirement.setCellEditors(editorsQR);
 			tableQualityRequirement.addListener(SWT.Selection, new Listener() {
 				public void handleEvent(Event event) {
-					System.out.println("aaaaaaaaaaaa");
+					viewController.setQualityAttribute((QualityRequirement) tableQualityRequirement.getItem(tableQualityRequirement.getSelectionIndex()).getData());
 					fillTableReport();
 				}
 			});

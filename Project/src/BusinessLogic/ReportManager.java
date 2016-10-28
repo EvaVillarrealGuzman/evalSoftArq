@@ -44,6 +44,7 @@ public class ReportManager extends HibernateManager {
 	 */
 	private DomainModel.AnalysisEntity.System system;
 	private Architecture architecture;
+	private QualityAttribute qualityAttribute;
 	private DataSourceCollection dataSource;
 	private JasperReport masterReport;
 	private JasperPrint jasperPrint;
@@ -81,6 +82,14 @@ public class ReportManager extends HibernateManager {
 
 	public void setArchitecture(Architecture architecture) {
 		this.architecture = architecture;
+	}
+
+	public QualityAttribute getQualityAttribute() {
+		return qualityAttribute;
+	}
+
+	public void setQualityAttribute(QualityAttribute qualityAttribute) {
+		this.qualityAttribute = qualityAttribute;
 	}
 
 	public Map getParameters() {

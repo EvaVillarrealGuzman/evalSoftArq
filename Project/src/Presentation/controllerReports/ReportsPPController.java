@@ -360,6 +360,10 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
+	public void setQualityAttribute(QualityRequirement qr){
+		manager.setQualityAttribute(qr.getQualityScenario().getQualityAttribute());
+	}
+	
 	public void setModelReport() {
 		TableItem item = this.getForm().getTableQualityRequirement()
 				.getItem(this.getForm().getTableQualityRequirement().getSelectionIndex());
@@ -386,32 +390,30 @@ public class ReportsPPController extends Controller {
 	}
 
 	public void printReportResponsability() {
-		TableItem item = this.getForm().getTableQualityRequirement().getItem(0);
-		String qualityAttribute = item.getText(0);
+		String qualityAttribute = this.getManager().getQualityAttribute().getName();
 		switch (qualityAttribute) {
-		case "Performance":// No system with architecture or quality requirement
+		case "Performance":
 			printReportPerResponsibilityPerformance();
 			break;
-		case "Availability": // There are systems with architecture or quality requirement
+		case "Availability": 
 			printReportPerResponsibilityAvailability();
 			break;
-		case "Reliability": // With system selected
+		case "Reliability":
 			printReportPerResponsibilityReliability();
 			break;
 		}
 	}
 
 	public void printReportSystem() {
-		TableItem item = this.getForm().getTableQualityRequirement().getItem(1);
-		String qualityAttribute = item.getText(1);
+		String qualityAttribute = this.getManager().getQualityAttribute().getName();
 		switch (qualityAttribute) {
-		case "Performance":// No system with architecture or quality requirement
+		case "Performance":
 			printReportPerSystemPerformance();
 			break;
-		case "Availability": // There are systems with architecture or quality requirement
+		case "Availability": 
 			printReportPerSystemAvailability();
 			break;
-		case "Reliability": // With system selected
+		case "Reliability": 
 			printReportPerSystemReliability();
 			break;
 		}
