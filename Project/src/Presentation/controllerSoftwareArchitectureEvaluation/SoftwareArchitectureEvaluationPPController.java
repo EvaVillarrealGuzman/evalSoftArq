@@ -223,8 +223,9 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
 		item.setData(arch);
 
-		item.setText(new String[] { arch.toString(), arch.getPathUCM().substring(arch.getPathUCM().lastIndexOf("\\") + 1),
-				arch.getPathUCM().substring(0, arch.getPathUCM().lastIndexOf("\\")), });
+		item.setText(
+				new String[] { arch.toString(), arch.getPathUCM().substring(arch.getPathUCM().lastIndexOf("\\") + 1),
+						arch.getPathUCM().substring(0, arch.getPathUCM().lastIndexOf("\\")), });
 	}
 
 	public Boolean isConnection() {
