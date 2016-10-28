@@ -49,6 +49,10 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	private static final String PATHEVALUATION = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
 	private DatabaseConnection db;
 	private TransformerSimulator pluginTS;
+	private Simulator simulator;
+	private Architecture architecture;
+	private Run run;
+	private SystemIndicator typeIndicator;
 
 	/**
 	 * Getters and Setters
@@ -83,6 +87,38 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public void setPluginTS(TransformerSimulator pluginTS) {
 		this.pluginTS = pluginTS;
+	}
+
+	public Simulator getSimulator() {
+		return simulator;
+	}
+
+	public void setSimulator(Simulator simulator) {
+		this.simulator = simulator;
+	}
+
+	public Architecture getArchitecture() {
+		return architecture;
+	}
+	
+	public void setArchitecture(Architecture architecture) {
+		this.architecture = architecture;
+	}
+
+	public Run getRun() {
+		return run;
+	}
+
+	public void setRun(Run run) {
+		this.run = run;
+	}
+
+	public SystemIndicator getTypeIndicator() {
+		return typeIndicator;
+	}
+
+	public void setTypeIndicator(SystemIndicator typeIndicator) {
+		this.typeIndicator = typeIndicator;
 	}
 
 	/**
@@ -182,37 +218,31 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 		return false;
 	}
-
-	public Architecture getArchitecture() {
-		Iterator it = this.getSystem().getArchitectures().iterator();
-		return (Architecture) it.next();
-
+	
+	public void createSimulator (){
+		simulator = new Simulator();
+		typeIndicator = new SystemIndicator(this.getSystem().getSystemName());
+		this.saveObject(typeIndicator);
 	}
-
-	public void createSimulator(String psimulationTime, Table ptable) {
-		Simulator sim = new Simulator();
-		Run run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
-		sim.getRuns().add(run);
-		this.saveObject(sim);
+	
+	public void createRun(String psimulationTime, Table ptable) {
+		run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
+		this.getSimulator().getRuns().add(run);
+		this.saveObject(this.getSimulator());
 
 		TableItem[] items = ptable.getItems();
 		for (int i = 0; i < items.length; i++) {
 			TableItem item = items[i];
 			if (item.getChecked()) {
-				sim.getRequirements().add((QualityRequirement) item.getData());
+				this.getSimulator().getRequirements().add((QualityRequirement) item.getData());
 			}
 		}
 
-		this.getArchitecture().setSimulator(sim);
+		this.getArchitecture().setSimulator(this.getSimulator());
 		this.updateObject(this.getSystem());
 	}
 
-
-	
-	
 	public void convertCSVToTable(String ppath) throws IOException {
-		SystemIndicator type = new SystemIndicator(this.getSystem().getSystemName());
-		this.saveObject(type);
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(ppath));
@@ -220,7 +250,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 			while (null != line) {
 				String[] fields = line.split(SEPARATOR);
 				fields = removeTrailingQuotes(fields);
-				loadDataInBd(fields, type);
+				loadDataInBd(fields, this.getTypeIndicator());
 				line = br.readLine();
 			}
 
@@ -291,7 +321,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 			break;
 		case "STT":
 			ind.setUnit(this.getUnitIndicator());
-			ind.setMetric((Metric) this.listMetric("System Turnaraound Time").get(0));
+			ind.setMetric((Metric) this.listMetric("System Turnaround Time").get(0));
 			break;
 		case "SF":
 			ind.setMetric((Metric) this.listMetric("System Failures").get(0));
@@ -395,11 +425,6 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 			}
 		}
 		return null;
-	}
-
-	public Run getRun() {
-		Iterator it = this.getArchitecture().getSimulator().getRuns().iterator();
-		return (Run) it.next();
 	}
 
 	public String chequerUCM(String path) {

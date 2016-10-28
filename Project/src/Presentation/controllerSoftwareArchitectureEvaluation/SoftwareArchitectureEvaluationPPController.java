@@ -111,10 +111,20 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 							this.createSuccessDialog("The simulation is successful");
 							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
 									.getForm().getCboSystem().getSelection()).getFirstElement());
-							this.getManager().createSimulator(this.getForm().getSimulationTime().getStringValue(),
-									this.getForm().getTable());
-							this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-									+ "plugins/UCM2DEVS/Run/performance.csv");
+							this.getManager().setArchitecture((Architecture) this.getForm().getTableSoftArc()
+									.getItem(this.getForm().getTableSoftArc().getSelectionIndex()).getData());
+							this.getManager().createSimulator();
+							for (int i = 1; i <= 10; i++) {
+								String num = Integer.toString(i);
+								this.getManager().createRun(this.getForm().getSimulationTime().getStringValue(),
+										this.getForm().getTable());
+								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
+										+ "plugins/UCM2DEVS/Run/Run" + num + "/performance.csv");
+								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
+										+ "plugins/UCM2DEVS/Run/Run" + num + "/availability.csv");
+								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
+										+ "plugins/UCM2DEVS/Run/Run" + num + "/reliability.csv");
+							}
 							return 0;
 						} else {
 							this.createErrorDialog("The simulator is not successful");
@@ -184,7 +194,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		}
 		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture dp : this.getManager().getArchitectures()) {
-				addToTable(dp.getPathUCM());
+				this.addToTable(dp);
 			}
 		}
 	}
@@ -209,12 +219,12 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		}
 	}
 
-	public void addToTable(String namePath) {
+	public void addToTable(Architecture arch) {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
-		item.setData(namePath);
+		item.setData(arch);
 
-		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
-				namePath.substring(0, namePath.lastIndexOf("\\")), });
+		item.setText(new String[] { arch.toString(), arch.getPathUCM().substring(arch.getPathUCM().lastIndexOf("\\") + 1),
+				arch.getPathUCM().substring(0, arch.getPathUCM().lastIndexOf("\\")), });
 	}
 
 	public Boolean isConnection() {
