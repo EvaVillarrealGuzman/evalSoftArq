@@ -24,8 +24,21 @@ import DomainModel.AnalysisEntity.Unit;
  * @author: FEM
  * @version: 06/11/2015
  */
-public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
-
+public class Data { 
+	static Metric m1 = new Metric("Responsibility Downtime");
+	static Metric m2 = new Metric("Responsibility Recovery Time");
+	static Metric m3 = new Metric("Responsibility Turnaround Time");
+	static Metric m4 = new Metric("Responsibility Failures");
+	static Metric m5 = new Metric("System Availability Time");
+	static Metric m6 = new Metric("System No-Availability Time");
+	static Metric m7 = new Metric("System Throughput");
+	static Metric m8 = new Metric("System Turnaround Time");
+	static Metric m9 = new Metric("System Failures");
+	static Metric m10 = new Metric("Mean Execution Time");
+	static Metric m11 = new Metric("Mean Downtime");
+	static Metric m12 = new Metric("Mean Recovery Time");
+	static Metric m13 = new Metric("Mean Time B Fail");
+	
 	public static void initialize() {
 
 		AnalysisManager manager = AnalysisManager.getManager();
@@ -38,20 +51,6 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		manager.saveObject(unit3);
 		Unit unit4 = new Unit("Milliseconds");
 		manager.saveObject(unit4);
-		
-		Metric m1 = new Metric("Responsibility Downtime");
-		Metric m2 = new Metric("Responsibility Recovery Time");
-		Metric m3 = new Metric("Responsibility Turnaround Time");
-		Metric m4 = new Metric("Responsibility Failures");
-		Metric m5 = new Metric("System Availability");
-		Metric m6 = new Metric("System No-Availability");
-		Metric m7 = new Metric("System Throughput");
-		Metric m8 = new Metric("System Turnaround Time");
-		Metric m9 = new Metric("System Failures");
-		Metric m10 = new Metric("Mean Execution Time");
-		Metric m11 = new Metric("Mean Downtime");
-		Metric m12 = new Metric("Mean Recovery Time");
-		Metric m13 = new Metric("Mean Time B Fail");
 		
 		manager.saveObject(m1);
 		manager.saveObject(m2);
@@ -174,13 +173,9 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		units.add(punit2);
 		units.add(unit3);
 
-		Metric metric1 = new Metric("Availability average time", units);
-		Metric metric2 = new Metric("Availability half time", units);
-		pmanager.saveObject(metric1);
-		pmanager.saveObject(metric2);
 		Set<Metric> metrics = new HashSet<Metric>();
-		metrics.add(metric1);
-		metrics.add(metric2);
+		metrics.add(m5);
+		metrics.add(m6);
 
 		ResponseMeasureType type1 = new ResponseMeasureType("Time interval when the system must be available", metrics);
 		ResponseMeasureType type2 = new ResponseMeasureType("Availability Time", metrics);
@@ -301,13 +296,9 @@ public class Data { // NOPMD by Usuario-Pc on 10/06/16 21:53
 		units.add(punit2);
 		units.add(unit3);
 		
-		Metric metric1 = new Metric("Performance average time", units);
-		Metric metric2 = new Metric("Performance half time", units);
-		pmanager.saveObject(metric1);
-		pmanager.saveObject(metric2);
 		Set<Metric> metrics = new HashSet<Metric>();
-		metrics.add(metric1);
-		metrics.add(metric2);
+		metrics.add(m7);
+		metrics.add(m8);
 
 		ResponseMeasureType type1 = new ResponseMeasureType("Latency", metrics);
 		ResponseMeasureType type2 = new ResponseMeasureType("Deadline", metrics);

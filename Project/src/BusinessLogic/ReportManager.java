@@ -476,11 +476,11 @@ public class ReportManager extends HibernateManager {
 					list.add(item);
 					band = false;
 				}
-				if (ind.getMetric().getName().equals("System Availability")) {
+				if (ind.getMetric().getName().equals("System Availability Time")) {
 					SystemAvailability q = list.get(runNum - 1);
 					q.setAvailability(ind.getValue());
 				}
-				if (ind.getMetric().getName().equals("System No-Availability")) {
+				if (ind.getMetric().getName().equals("System No-Availability Time")) {
 					SystemAvailability q = list.get(runNum - 1);
 					q.setNoAvailability(ind.getValue());
 				}

@@ -309,11 +309,11 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		switch (pfields[2]) {
 		case "SA":
 			ind.setUnit(this.getUnitIndicator());
-			ind.setMetric((Metric) this.listMetric("System Availability").get(0));
+			ind.setMetric((Metric) this.listMetric("System Availability Time").get(0));
 			break;
 		case "SNA":
 			ind.setUnit(this.getUnitIndicator());
-			ind.setMetric((Metric) this.listMetric("System No-Availability").get(0));
+			ind.setMetric((Metric) this.listMetric("System No-Availability Time").get(0));
 			break;
 		case "ST":
 			ind.setUnit(this.getUnitIndicator());
