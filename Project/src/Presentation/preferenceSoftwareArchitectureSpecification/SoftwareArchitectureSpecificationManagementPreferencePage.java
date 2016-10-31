@@ -323,19 +323,37 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	/**
 	 * Getters and Setters
 	 */
+	
+	
 	public Button getBtnFileUCM() {
 		return btnBrowseUCM;
+	}
+
+	public Button getBtnBrowseUCM() {
+		return btnBrowseUCM;
+	}
+
+	public void setBtnBrowseUCM(Button btnBrowseUCM) {
+		this.btnBrowseUCM = btnBrowseUCM;
+	}
+
+	public Button getBtnConsult() {
+		return btnConsult;
+	}
+
+	public void setBtnConsult(Button btnConsult) {
+		this.btnConsult = btnConsult;
 	}
 
 	public void setBtnFileUCM(Button btnFileUCM) {
 		this.btnBrowseUCM = btnFileUCM;
 	}
 
-	public ComboViewer getCboSystem() {
+	public ComboViewer getCmbSystem() {
 		return cmbSystem;
 	}
 
-	public void setCboSystem(ComboViewer cboSystem) {
+	public void setCmbSystem(ComboViewer cboSystem) {
 		this.cmbSystem = cboSystem;
 	}
 
@@ -422,57 +440,57 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 		Object valueCmbUnit = ((IStructuredSelection) cmbUnit.getSelection()).getFirstElement();
 		switch (pabm) {
 		case 0: // with open the form
-			cmbSystem.getCombo().setEnabled(true);
-			table.setEnabled(false);
-			btnAdd.setEnabled(false);
-			btnDelete.setEnabled(false);
-			btnConsult.setEnabled(false);
+			this.getCmbSystem().getCombo().setEnabled(true);
+			this.getTable().setEnabled(false);
+			this.getBtnAdd().setEnabled(false);
+			this.getBtnDelete().setEnabled(false);
+			this.getBtnConsult().setEnabled(false);
 			if (!(valueCmbUnit == null) ) {
-				btnSave.setEnabled(true);
+				this.getBtnSave().setEnabled(true);
 			} else {
-				btnSave.setEnabled(false);
+				this.getBtnSave().setEnabled(false);
 			}
-			cmbUnit.getCombo().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(false);
 			clearView();
 			break;
 		case 1:// with system selected
-			cmbSystem.getCombo().setEnabled(true);
-			table.setEnabled(true);
-			btnAdd.setEnabled(true);
-			btnDelete.setEnabled(true);
-			btnConsult.setEnabled(true);
-			cmbUnit.getCombo().setEnabled(true);
+			this.getCmbSystem().getCombo().setEnabled(true);
+			this.getTable().setEnabled(true);
+			this.getBtnAdd().setEnabled(true);
+			this.getBtnDelete().setEnabled(true);
+			this.getBtnConsult().setEnabled(true);
+			this.getCmbUnit().getCombo().setEnabled(true);
 			if (!(valueCmbUnit == null) ) {
-				btnSave.setEnabled(true);
+				this.getBtnSave().setEnabled(true);
 			} else {
-				btnSave.setEnabled(false);
+				this.getBtnSave().setEnabled(false);
 			}
 			break;
 		case 2: // with architecture selected
-			cmbSystem.getCombo().setEnabled(true);
-			table.setEnabled(true);
-			btnAdd.setEnabled(true);
-			btnDelete.setEnabled(true);
-			btnConsult.setEnabled(true);
-			cmbUnit.getCombo().setEnabled(true);
+			this.getCmbSystem().getCombo().setEnabled(true);
+			this.getTable().setEnabled(true);
+			this.getBtnAdd().setEnabled(true);
+			this.getBtnDelete().setEnabled(true);
+			this.getBtnConsult().setEnabled(true);
+			this.getCmbUnit().getCombo().setEnabled(true);
 			if (!(valueCmbUnit == null) ) {
-				btnSave.setEnabled(true);
+				this.getBtnSave().setEnabled(true);
 			} else {
-				btnSave.setEnabled(false);
+				this.getBtnSave().setEnabled(false);
 			}
 			break;
 		case 3:
-			cmbSystem.getCombo().setEnabled(false);
-			table.setEnabled(false);
-			btnAdd.setEnabled(false);
-			btnDelete.setEnabled(false);
-			btnConsult.setEnabled(false);
+			this.getCmbSystem().getCombo().setEnabled(false);
+			this.getTable().setEnabled(false);
+			this.getBtnAdd().setEnabled(false);
+			this.getBtnDelete().setEnabled(false);
+			this.getBtnConsult().setEnabled(false);
 			if (!(valueCmbUnit == null) ) {
-				btnSave.setEnabled(true);
+				this.getBtnSave().setEnabled(true);
 			} else {
-				btnSave.setEnabled(false);
+				this.getBtnSave().setEnabled(false);
 			}
-			cmbUnit.getCombo().setEnabled(false);
+			this.getCmbUnit().getCombo().setEnabled(false);
 			break;
 		}
 	}
@@ -491,12 +509,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	 */
 	public void fillTable() {
 		this.getViewController().setModelPaths(
-				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCmbSystem().getSelection())
 						.getFirstElement());
 	}
 
 	public void clearView() {
-		this.getCboSystem().setSelection(StructuredSelection.EMPTY);
+		this.getCmbSystem().setSelection(StructuredSelection.EMPTY);
 		this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
 		this.getTable().clearAll();
 	}

@@ -174,7 +174,11 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				public void widgetSelected(SelectionEvent e) {
 					tableSoftArc.showSelection();
 					if (tableSoftArc.getSelectionIndex() != -1) {
-						prepareView(3);
+						if (viewController.isNotChecked(table)) {
+							prepareView(3);
+						} else {
+							prepareView(4);
+						}
 					} else {
 						prepareView(2);
 					}
@@ -357,11 +361,11 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 * Getters and Setters
 	 */
 
-	public ComboViewer getCboSystem() {
+	public ComboViewer getCmbSystem() {
 		return cmbSystem;
 	}
 
-	public void setCboSystem(ComboViewer cboSystem) {
+	public void setCmbSystem(ComboViewer cboSystem) {
 		this.cmbSystem = cboSystem;
 	}
 
@@ -434,8 +438,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	public void loadComboUnit() {
 		this.getViewController().setModelUnit();
 	}
-	
-	public void clearView(){
+
+	public void clearView() {
 		cmbSystem.setSelection(StructuredSelection.EMPTY);
 		this.getTableSoftArc().clearAll();
 		this.getTblViewerQualityRequirement().getTable().clearAll();
@@ -449,7 +453,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
-		this.getCboSystem().getCombo().setFocus();
+		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
@@ -458,48 +462,73 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
 			pabm = 0;
 		}
+		Object valueCmbUnit = ((IStructuredSelection) this.getCmbUnit().getSelection()).getFirstElement();
 		switch (pabm) {
 		case 0:// No system with architecture or quality requirement
-			this.getCboSystem().getCombo().setEnabled(false);
+			this.getCmbSystem().getCombo().setEnabled(false);
 			this.getTableSoftArc().setEnabled(false);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getSimulationTime().setStringValue("0.1");
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
-			this.getBtnEvaluate().setEnabled(false);
+			if (!(valueCmbUnit == null) && this.getCmbUnit().getCombo().isEnabled()) {
+				this.getBtnEvaluate().setEnabled(true);
+			} else {
+				this.getBtnEvaluate().setEnabled(false);
+			}
 			break;
 		case 1: // There are systems with architecture or quality requirement
-			this.getCboSystem().getCombo().setEnabled(true);
+			this.getCmbSystem().getCombo().setEnabled(true);
 			this.getTableSoftArc().setEnabled(false);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getSimulationTime().setStringValue("0.1");
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
-			this.getBtnEvaluate().setEnabled(false);
+			if (!(valueCmbUnit == null) && this.getCmbUnit().getCombo().isEnabled()) {
+				this.getBtnEvaluate().setEnabled(true);
+			} else {
+				this.getBtnEvaluate().setEnabled(false);
+			}
 			break;
 		case 2: // With system selected
 			this.getTableSoftArc().setEnabled(true);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
-			this.getBtnEvaluate().setEnabled(false);
+			if (!(valueCmbUnit == null) && this.getCmbUnit().getCombo().isEnabled()) {
+				this.getBtnEvaluate().setEnabled(true);
+			} else {
+				this.getBtnEvaluate().setEnabled(false);
+			}
 
 			break;
 		case 3:// With architecture selected
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
 			this.getSimulationTime().setEnabled(false);
 			this.getCmbUnit().getCombo().setEnabled(false);
-			this.getBtnEvaluate().setEnabled(false);
+			if (!(valueCmbUnit == null) && this.getCmbUnit().getCombo().isEnabled()) {
+				this.getBtnEvaluate().setEnabled(true);
+			} else {
+				this.getBtnEvaluate().setEnabled(false);
+			}
 			break;
 		case 4:// With requirement selected
 			this.getSimulationTime().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			this.getBtnEvaluate().setEnabled(false);
+			if (!(valueCmbUnit == null) && this.getCmbUnit().getCombo().isEnabled()) {
+				this.getBtnEvaluate().setEnabled(true);
+			} else {
+				this.getBtnEvaluate().setEnabled(false);
+			}
 			break;
 		case 5:// With unit selected
 			this.getSimulationTime().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			this.getBtnEvaluate().setEnabled(true);
+			if (!(valueCmbUnit == null) && this.getCmbUnit().getCombo().isEnabled()) {
+				this.getBtnEvaluate().setEnabled(true);
+			} else {
+				this.getBtnEvaluate().setEnabled(false);
+			}
 			break;
 
 		}
@@ -520,7 +549,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	public void fillTableSoftArc() {
 		this.getViewController().setModelPaths(
-				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCmbSystem().getSelection())
 						.getFirstElement());
 	}
 
@@ -530,7 +559,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	public void fillTableQR() {
 		this.getViewController().setModelQualityRequirement(
-				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCmbSystem().getSelection())
 						.getFirstElement());
 	}
 

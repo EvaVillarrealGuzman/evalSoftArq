@@ -67,7 +67,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	 * Sets the model of system combo
 	 */
 	public void setModel() {
-		this.getForm().getCboSystem().setInput(getManager().getComboModelSystemWithArchitecture());
+		this.getForm().getCmbSystem().setInput(getManager().getComboModelSystemWithArchitecture());
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 								(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection())
 										.getFirstElement())) {
 							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
-									.getForm().getCboSystem().getSelection()).getFirstElement());
+									.getForm().getCmbSystem().getSelection()).getFirstElement());
 							
 							this.getManager().createSimulator();
 							for (int i = 1; i <= 10; i++) {
@@ -148,9 +148,9 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	}
 
 	public boolean isValidData() {
-		if (this.isEmpty(this.getForm().getCboSystem())) {
+		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
-			this.getForm().getCboSystem().getCombo().setFocus();
+			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		} else if (this.getForm().getTableSoftArc().getSelectionIndex() == -1) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArchitecture_ErrorDialog"));

@@ -71,7 +71,7 @@ public class ReportsPPController extends Controller {
 	 * Sets the model of system combo
 	 */
 	public void setModel() {
-		this.getForm().getCboSystem().setInput(getManager().getComboModelSystemWithSimulations());
+		this.getForm().getCmbSystem().setInput(getManager().getComboModelSystemWithSimulations());
 	}
 
 	public void setModel(ComboViewer pcmb) {
@@ -102,9 +102,9 @@ public class ReportsPPController extends Controller {
 	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
-		if (this.isEmpty(this.getForm().getCboSystem())) {
+		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
-			this.getForm().getCboSystem().getCombo().setFocus();
+			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		} else if (this.getForm().getTableSimulation().getSelectionIndex() == -1) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArchitecture_ErrorDialog"));

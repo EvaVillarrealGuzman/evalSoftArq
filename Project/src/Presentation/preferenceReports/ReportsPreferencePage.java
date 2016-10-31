@@ -44,7 +44,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	private Button btnSystemViewReport;
 	private Button btnResponsabilityViewReport;
-	private ComboViewer cboSystem;
+	private ComboViewer cmbSystem;
 	private ReportsPPController viewController;
 	private Composite cSystemName;
 	private GridData gridData;
@@ -115,15 +115,15 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
 
-			cboSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
-			cboSystem.setContentProvider(ArrayContentProvider.getInstance());
-			cboSystem.getCombo().setLayoutData(gridData);
+			cmbSystem = new ComboViewer(cSystemName, SWT.READ_ONLY);
+			cmbSystem.setContentProvider(ArrayContentProvider.getInstance());
+			cmbSystem.getCombo().setLayoutData(gridData);
 			loadCombo();
-			cboSystem.getCombo().addSelectionListener(new SelectionAdapter() {
+			cmbSystem.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (((IStructuredSelection) cboSystem.getSelection()).getFirstElement() != "") {
-						viewController.setModel(cboSystem);
+					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != "") {
+						viewController.setModel(cmbSystem);
 						cmbSystemItemStateChanged();
 						viewController.setModelQualityRequirementFirst();
 						prepareView(1);
@@ -374,12 +374,12 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 * Getters and Setters
 	 */
 
-	public ComboViewer getCboSystem() {
-		return cboSystem;
+	public ComboViewer getCmbSystem() {
+		return cmbSystem;
 	}
 
-	public void setCboSystem(ComboViewer cboSystem) {
-		this.cboSystem = cboSystem;
+	public void setCmbSystem(ComboViewer cboSystem) {
+		this.cmbSystem = cboSystem;
 	}
 
 	public ReportsPPController getViewController() {
@@ -451,7 +451,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
-		this.getCboSystem().getCombo().setFocus();
+		this.getCmbSystem().getCombo().setFocus();
 		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
@@ -462,7 +462,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 		}
 		switch (pabm) {
 		case 0: // There are systems with architecture or quality requirement
-			this.getCboSystem().getCombo().setEnabled(true);
+			this.getCmbSystem().getCombo().setEnabled(true);
 			this.getTableSimulation().setEnabled(false);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
 			this.getBtnSystemViewReport().setEnabled(false);
@@ -501,7 +501,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	public void fillTableSimulation() {
 		this.getViewController().setModelSimulation(
-				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCboSystem().getSelection())
+				(DomainModel.AnalysisEntity.System) ((IStructuredSelection) this.getCmbSystem().getSelection())
 						.getFirstElement());
 	}
 

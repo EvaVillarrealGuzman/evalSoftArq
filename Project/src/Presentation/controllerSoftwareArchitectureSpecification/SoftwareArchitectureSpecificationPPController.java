@@ -66,7 +66,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * Sets the model of system combo
 	 */
 	public void setModel() {
-		this.getForm().getCboSystem().setInput(getManager().getComboModelSystem());
+		this.getForm().getCmbSystem().setInput(getManager().getComboModelSystem());
 	}
 
 	public void setModel(ComboViewer pcmb) {
@@ -204,9 +204,9 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * @return boolean (is true if they have completed the required fields)
 	 */
 	public boolean isValidData() {
-		if (this.isEmpty(this.getForm().getCboSystem())) {
+		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
-			this.getForm().getCboSystem().getCombo().setFocus();
+			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
 		return true;

@@ -266,6 +266,15 @@ public class Data {
 		Metric metric1 = new Metric("Number of failures");
 		pmanager.saveObject(metric1);
 		Set<Metric> metrics = new HashSet<Metric>();
+
+		Unit unit1 = new Unit("Failures");
+		pmanager.saveObject(unit1);
+
+		Set<Unit> units = new HashSet<Unit>();
+		units.add(unit1);
+
+		metric1.setUnits(units);
+
 		metrics.add(metric1);
 
 		ResponseMeasureType type1 = new ResponseMeasureType("Failures", metrics);
