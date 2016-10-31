@@ -165,7 +165,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			colPathSoftArc.setWidth(300);
 			colPathSoftArc.setText(Messages.getString("UCM2DEVS_Path_Column"));
 
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 4; i++) {
 				TableItem item = new TableItem(tableSoftArc, SWT.NONE);
 			}
 
@@ -214,7 +214,6 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			// Create columns
 			colCheck = new TableColumn(table, SWT.NONE);
 			colCheck.setWidth(35);
-			//colCheck.setText(Messages.getString("UCM2DEVS_Object_Column"));
 
 			colObject = new TableColumn(table, SWT.NONE);
 			colObject.setWidth(0);
@@ -228,7 +227,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			colDescriptionScenario.setWidth(265);
 			colDescriptionScenario.setText(Messages.getString("UCM2DEVS_DescriptionScenario_Column"));
 
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 4; i++) {
 				TableItem item = new TableItem(table, SWT.NONE);
 				item.setText("");
 			}
@@ -295,8 +294,6 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			cmbUnit.getCombo().addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// viewController.setModel(cmbSystem);
-					// cmbSystemItemStateChanged();
 					prepareView(5);
 				}
 			});

@@ -285,6 +285,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public Responsibility[] getResponsibilities() {
 		ArrayList<Responsibility> responsibilities = new ArrayList<Responsibility>();
+		System.out.println("architecture is 0: " + this.getArchitecture());
 		Iterator it2 = this.getArchitecture().getPaths().iterator();
 		DomainModel.SoftwareArchitectureSpecificationEntity.Path path = (DomainModel.SoftwareArchitectureSpecificationEntity.Path) it2
 				.next();
@@ -437,7 +438,8 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public Boolean simulator(double observe_t, Unit punit) {
 		double psimulationTime = this.convertValueAcordingToUnit(observe_t, punit);
-		return this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime);
+		//TODO return this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime);
+		return true;
 	}
 
 	/**

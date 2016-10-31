@@ -94,6 +94,9 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	public int evaluate() throws IOException {
 		if (isValidData()) {
 			try {
+				this.getManager().setArchitecture((Architecture) this.getForm().getTableSoftArc()
+						.getItem(this.getForm().getTableSoftArc().getSelectionIndex()).getData());
+				
 				TransformerSimulator pluginTS = new TransformerSimulator();
 
 				TableItem item = this.getForm().getTableSoftArc()
@@ -108,11 +111,9 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 						if (this.getManager().simulator(this.getForm().getSimulationTime().getDoubleValue(),
 								(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection())
 										.getFirstElement())) {
-							this.createSuccessDialog("The simulation is successful");
 							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
 									.getForm().getCboSystem().getSelection()).getFirstElement());
-							this.getManager().setArchitecture((Architecture) this.getForm().getTableSoftArc()
-									.getItem(this.getForm().getTableSoftArc().getSelectionIndex()).getData());
+							
 							this.getManager().createSimulator();
 							for (int i = 1; i <= 10; i++) {
 								String num = Integer.toString(i);
@@ -125,6 +126,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
 										+ "plugins/UCM2DEVS/Run/Run" + num + "/reliability.csv");
 							}
+							this.createSuccessDialog("The simulation is successful");
 							return 0;
 						} else {
 							this.createErrorDialog("The simulator is not successful");

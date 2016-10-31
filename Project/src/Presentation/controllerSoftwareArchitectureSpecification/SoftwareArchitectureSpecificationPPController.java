@@ -179,7 +179,10 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * Delete to current system, architectures
 	 */
 	private void deleteArchitecture() {
-		for (Architecture arc : this.getManager().getArchitectures()) {
+		Iterator it = this.getManager().getArchitectures().iterator();
+		while (it.hasNext() ) {
+			Architecture arc = (Architecture) it.next();
+			
 			boolean isNotDelete = false;
 
 			for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
@@ -190,9 +193,8 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			}
 
 			if (!isNotDelete) {
-				this.getManager().getArchitectures().remove(arc);
+				it.remove();
 			}
-
 		}
 	}
 

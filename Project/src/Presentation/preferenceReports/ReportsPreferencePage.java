@@ -42,7 +42,8 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	/**
 	 * Attributes
 	 */
-	private Button btnViewReport;
+	private Button btnSystemViewReport;
+	private Button btnResponsabilityViewReport;
 	private ComboViewer cboSystem;
 	private ReportsPPController viewController;
 	private Composite cSystemName;
@@ -51,7 +52,6 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	private TableColumn colPathSoftArc;
 	private TableColumn colObjectSimulation;
 	private TableColumn colNameSoftArc;
-	private TableColumn colSimulationDate;
 	private TableViewer tblViewerQualityRequirement;
 	private Table tableQualityRequirement;
 	private TableColumn colObject;
@@ -126,18 +126,25 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 						viewController.setModel(cboSystem);
 						cmbSystemItemStateChanged();
 						viewController.setModelQualityRequirementFirst();
-						prepareView(2);
+						prepareView(1);
 					}
 				}
 			});
 
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Label labelEmptyOne = new Label(parent, SWT.NULL);
+			labelEmptyOne.setLayoutData(gridData);
+			
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
 
 			Group gSimulation = new Group(parent, SWT.NONE);
 			gSimulation.setLayoutData(gridData);
 			gSimulation.setText(Messages.getString("UCM2DEVS_SoftArcSpec_Group"));
-			gSimulation.setLayout(layout);
+			gSimulation.setLayout(new GridLayout(2, false));
 
 			// Create column names
 			String[] columnNames = new String[] { "", Messages.getString("UCM2DEVS_Name_Column"),
@@ -178,18 +185,25 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				public void widgetSelected(SelectionEvent e) {
 					tableSimulation.showSelection();
 					if (tableSimulation.getSelectionIndex() != -1) {
-						viewController.setModel((Architecture) tableSimulation.getItem(tableSimulation.getSelectionIndex()).getData());
+						viewController.setModel(
+								(Architecture) tableSimulation.getItem(tableSimulation.getSelectionIndex()).getData());
 						fillTableQR();
-						prepareView(3);
+						prepareView(1);
 					} else {
-						prepareView(2);
+						prepareView(0);
 					}
 				}
 			});
+			
 
 			gridData = new GridData();
 			gridData.horizontalSpan = 4;
-			gridData.horizontalAlignment = GridData.FILL;
+
+			Label labelEmptyTwo = new Label(parent, SWT.NULL);
+			labelEmptyTwo.setLayoutData(gridData);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
 
 			// Table: Quality Requirement
 
@@ -247,12 +261,25 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			tblViewerQualityRequirement.setCellEditors(editorsQR);
 			tableQualityRequirement.addListener(SWT.Selection, new Listener() {
 				public void handleEvent(Event event) {
-					viewController.setQualityAttribute((QualityRequirement) tableQualityRequirement.getItem(tableQualityRequirement.getSelectionIndex()).getData());
-					viewController.setQualityRequirement((QualityRequirement) tableQualityRequirement.getItem(tableQualityRequirement.getSelectionIndex()).getData());
+					viewController.setQualityAttribute((QualityRequirement) tableQualityRequirement
+							.getItem(tableQualityRequirement.getSelectionIndex()).getData());
+					viewController.setQualityRequirement((QualityRequirement) tableQualityRequirement
+							.getItem(tableQualityRequirement.getSelectionIndex()).getData());
 					fillTableReport();
+					prepareView(2);
 				}
 			});
 
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+
+			Label labelEmptyTree = new Label(parent, SWT.NULL);
+			labelEmptyTree.setLayoutData(gridData);
+			
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			
 			// Table: Report
 			Group gReport = new Group(parent, SWT.NONE);
 			gReport.setLayoutData(gridData);
@@ -291,17 +318,14 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			// Create five table editors for color
 			TableEditor[] reportEditors = new TableEditor[3];
 
-			// Create five buttons for changing color
-			Button[] reportButtons = new Button[3];
-
 			TableItem itemResp = new TableItem(tableReport, SWT.NONE);
 			reportEditors[0] = new TableEditor(tableReport);
-			reportButtons[0] = new Button(tableReport, SWT.PUSH);
-			reportButtons[0].setText("View Report...");
+			btnResponsabilityViewReport = new Button(tableReport, SWT.PUSH);
+			// btnResponsabilityViewReport.setText("View Report...");
 			reportEditors[0].grabHorizontal = true;
-			reportEditors[0].setEditor(reportButtons[0], itemResp, 2);
+			reportEditors[0].setEditor(btnResponsabilityViewReport, itemResp, 2);
 
-			reportButtons[0].addSelectionListener(new SelectionAdapter() {
+			btnResponsabilityViewReport.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent event) {
 					viewController.printReportResponsability();
 				}
@@ -309,51 +333,23 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 
 			TableItem itemSys = new TableItem(tableReport, SWT.NONE);
 			reportEditors[1] = new TableEditor(tableReport);
-			reportButtons[1] = new Button(tableReport, SWT.PUSH);
-			reportButtons[1].setText("View Report...");
+			btnSystemViewReport = new Button(tableReport, SWT.PUSH);
+			// btnSystemViewReport.setText("View Report...");
 			reportEditors[1].grabHorizontal = true;
-			reportEditors[1].setEditor(reportButtons[1], itemSys, 2);
+			reportEditors[1].setEditor(btnSystemViewReport, itemSys, 2);
 
-			reportButtons[1].addSelectionListener(new SelectionAdapter() {
+			btnSystemViewReport.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent event) {
 					viewController.printReportSystem();
 				}
 			});
-
-			tableReport.getItem(0).setText(1, "Responsability");
-			tableReport.getItem(1).setText(1, "System");
 
 			// Create TableViewer
 			tblViewerReport = new TableViewer(tableReport);
 			tblViewerReport.setUseHashlookup(true);
 			tblViewerReport.setColumnProperties(columnReport);
 
-			new Label(parent, SWT.LEFT);
-
-			gridData = new GridData();
-			gridData.horizontalSpan = 1;
-			gridData.widthHint = 100;
-			gridData.horizontalAlignment = GridData.END;
-			gridData.verticalAlignment = SWT.BOTTOM;
-			gridData.grabExcessHorizontalSpace = true;
-
-			btnViewReport = new Button(parent, SWT.PUSH);
-			// TODO internacionalizar
-			btnViewReport.setText("View Report");
-			btnViewReport.setLayoutData(gridData);
-			btnViewReport.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					// viewController.printReportPerResponsibilityPerformance();
-					// viewController.printReportPerResponsibilityReliability();
-					// viewController.printReportPerResponsibilityAvailability();
-					// viewController.printReportPerSystemAvailability();
-					// viewController.printReportPerSystemReliability();
-					// viewController.printReportPerSystemPerformance();
-				}
-			});
-
-			this.prepareView(1);
+			this.prepareView(0);
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
@@ -394,12 +390,20 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 		this.viewController = viewController;
 	}
 
-	public Button getBtnViewReport() {
-		return btnViewReport;
+	public Button getBtnSystemViewReport() {
+		return btnSystemViewReport;
 	}
 
-	public void setBtnViewReport(Button btnViewReport) {
-		this.btnViewReport = btnViewReport;
+	public void setBtnSystemViewReport(Button btnSystemViewReport) {
+		this.btnSystemViewReport = btnSystemViewReport;
+	}
+
+	public Button getBtnResponsabilityViewReport() {
+		return btnResponsabilityViewReport;
+	}
+
+	public void setBtnResponsabilityViewReport(Button btnResponsabilityViewReport) {
+		this.btnResponsabilityViewReport = btnResponsabilityViewReport;
 	}
 
 	public Table getTableSimulation() {
@@ -457,30 +461,29 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			pabm = 0;
 		}
 		switch (pabm) {
-		case 0:// No system with architecture or quality requirement
-			this.getCboSystem().getCombo().setEnabled(false);
-			this.getTableSimulation().setEnabled(false);
-			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
-			this.getBtnViewReport().setEnabled(false);
-			break;
-		case 1: // There are systems with architecture or quality requirement
+		case 0: // There are systems with architecture or quality requirement
 			this.getCboSystem().getCombo().setEnabled(true);
 			this.getTableSimulation().setEnabled(false);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(false);
-			this.getBtnViewReport().setEnabled(false);
+			this.getBtnSystemViewReport().setEnabled(false);
+			this.getBtnResponsabilityViewReport().setEnabled(false);
 			break;
-		case 2: // With system selected
+		case 1: // With system selected
 			this.getTableSimulation().setEnabled(true);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
-			this.getBtnViewReport().setEnabled(false);
+			this.getBtnSystemViewReport().setEnabled(false);
+			this.getBtnResponsabilityViewReport().setEnabled(false);
 			break;
-		case 3:// With architecture selected
-			this.getBtnViewReport().setEnabled(false);
+		case 2:// With architecture selected
+			this.getTableSimulation().setEnabled(true);
+			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
+			this.getBtnSystemViewReport().setEnabled(true);
+			this.getBtnResponsabilityViewReport().setEnabled(true);
+			this.getBtnResponsabilityViewReport().setText("View Report...");
+			this.getBtnSystemViewReport().setText("View Report...");
+			this.getTableReport().getItem(0).setText(1, "Responsability");
+			this.getTableReport().getItem(1).setText(1, "System");
 			break;
-		case 4:// With unit selected
-			this.getBtnViewReport().setEnabled(true);
-			break;
-
 		}
 	}
 
@@ -490,7 +493,6 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	private void cmbSystemItemStateChanged() {// GEN-FIRST:event_cmbNombreItemStateChanged
 		this.fillTableSimulation();
-		// this.fillTableQR();
 	}
 
 	/**
