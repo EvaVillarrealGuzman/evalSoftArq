@@ -3,7 +3,6 @@ package Presentation.controllerAnalysis;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 import BusinessLogic.AnalysisManager;
-import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Artifact;
 import DomainModel.AnalysisEntity.ArtifactType;
 import DomainModel.AnalysisEntity.Environment;
@@ -33,21 +32,12 @@ public class NewQualityRequirementPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static NewQualityRequirementPPController controller;
 	private AnalysisManager manager;
 	private NewQualityRequirementPreferencePage form;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static NewQualityRequirementPPController getController() {
-		return controller;
-	}
-
-	public static void setController(NewQualityRequirementPPController controller) {
-		NewQualityRequirementPPController.controller = controller;
-	}
-
 	public AnalysisManager getManager() {
 		if (manager == null) {
 			manager = new AnalysisManager();
@@ -66,6 +56,10 @@ public class NewQualityRequirementPPController extends Controller {
 	public void setForm(NewQualityRequirementPreferencePage form) {
 		this.form = form;
 	}
+	
+	/**
+	 * Sets the model of specific combo
+	 */
 
 	public void setModelSystem() {
 		this.getForm().getCmbSystem().setInput(getManager().getComboModelSystem());

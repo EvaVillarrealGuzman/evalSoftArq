@@ -1,7 +1,6 @@
 package Presentation.controllerAnalysis;
 
 import BusinessLogic.AnalysisManager;
-import DataManager.HibernateUtil;
 import Presentation.Controller;
 import Presentation.preferenceAnalysis.NewSystemPreferencePage;
 import Presentation.preferences.Messages;
@@ -17,21 +16,12 @@ public class NewSystemPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static NewSystemPPController controller;
 	private AnalysisManager manager;
 	private NewSystemPreferencePage form;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static NewSystemPPController getController() {
-		return controller;
-	}
-
-	public static void setController(NewSystemPPController controller) {
-		NewSystemPPController.controller = controller;
-	}
-
 	public AnalysisManager getManager() {
 		if (manager == null) {
 			manager = new AnalysisManager();

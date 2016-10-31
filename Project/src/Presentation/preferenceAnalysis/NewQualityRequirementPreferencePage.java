@@ -40,7 +40,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	 */
 	private ComboViewer cmbSystem;
 	private Text txtDescription;
-	private ComboViewer cmbQualityAttribute;
 	private Text txtDescriptionStimulusSource;
 	private Text txtDescriptionStimulus;
 	private Text txtDescriptionEnvironment;
@@ -58,6 +57,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private Group gArtifact;
 	private Group gEnvironment;
 	private Group gResponseMeasure;
+	private ComboViewer cmbQualityAttribute;
 	private ComboViewer cmbMetric;
 	private ComboViewer cmbTypeStimulusSource;
 	private ComboViewer cmbTypeStimulus;
@@ -65,11 +65,10 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private ComboViewer cmbTypeArtifact;
 	private ComboViewer cmbTypeResponse;
 	private ComboViewer cmbTypeResponseMeasure;
-	private org.eclipse.swt.widgets.Label lblvalueResponseMeasure;
-	private GridData gridData;
+	private Label lblvalueResponseMeasure;
 	private ComboViewer cmbUnit;
+	private GridData gridData;
 	private Button btnNew;
-	private static NewQualityRequirementPreferencePage qualityRequirementPP;
 	private NewQualityRequirementPPController viewController;
 
 	/**
@@ -462,13 +461,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	/**
 	 * Getters and Setters
 	 */
-	public static NewQualityRequirementPreferencePage getQualityRequirementPP() {
-		return qualityRequirementPP;
-	}
-
-	public static void setQualityRequirementPP(NewQualityRequirementPreferencePage qualityRequirementPP) {
-		NewQualityRequirementPreferencePage.qualityRequirementPP = qualityRequirementPP;
-	}
 
 	public NewQualityRequirementPPController getViewController() {
 		return viewController;

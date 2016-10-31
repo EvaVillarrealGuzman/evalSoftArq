@@ -46,13 +46,12 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	/**
 	 * Attributes
 	 */
-	private ComboViewer cmbSystem;
 	private Group groupQualityRequirement;
 	private TableViewer tblViewerQualityRequirement;
 	private Table table;
 	private GridData gridData;
-	private Text txtDescription;
 	private ComboViewer cmbQualityAttribute;
+	private Text txtDescription;
 	private Text txtDescriptionStimulusSource;
 	private Text txtDescriptionStimulus;
 	private Text txtDescriptionEnvironment;
@@ -71,19 +70,19 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	private ComboViewer cmbTypeArtifact;
 	private ComboViewer cmbTypeResponse;
 	private ComboViewer cmbTypeResponseMeasure;
+	private ComboViewer cmbUnit;
+	private ComboViewer cmbSystem;
 	private Group gStimulusSource;
 	private Group gResponse;
 	private Group gStimulus;
 	private Group gArtifact;
 	private Group gEnvironment;
 	private Group gResponseMeasure;
-	private ComboViewer cmbUnit;
 	private Button btnSave;
 	private Button btnRemove;
 	private TableColumn colObject;
 	private TableColumn colQualityAttribute;
 	private TableColumn colDescriptionScenario;
-	private static EditQualityRequirementPreferencePage qualityRequirementPP;
 	private EditQualityRequirementPPController viewController;
 
 	/**
@@ -756,14 +755,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 
 	public void setBtnRemove(Button btnRemove) {
 		this.btnRemove = btnRemove;
-	}
-
-	public static EditQualityRequirementPreferencePage getQualityRequirementPP() {
-		return qualityRequirementPP;
-	}
-
-	public static void setQualityRequirementPP(EditQualityRequirementPreferencePage qualityRequirementPP) {
-		EditQualityRequirementPreferencePage.qualityRequirementPP = qualityRequirementPP;
 	}
 
 	public EditQualityRequirementPPController getViewController() {

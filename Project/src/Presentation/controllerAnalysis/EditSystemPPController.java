@@ -19,21 +19,12 @@ public class EditSystemPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static EditSystemPPController controller;
 	private AnalysisManager manager;
 	private EditSystemPreferencePage form;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static EditSystemPPController getController() {
-		return controller;
-	}
-
-	public static void setController(EditSystemPPController controller) {
-		EditSystemPPController.controller = controller;
-	}
-
 	public AnalysisManager getManager() {
 		if (manager == null) {
 			manager = new AnalysisManager();

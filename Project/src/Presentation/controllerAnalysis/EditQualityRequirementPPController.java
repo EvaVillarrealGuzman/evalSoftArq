@@ -30,21 +30,12 @@ public class EditQualityRequirementPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static EditQualityRequirementPPController controller;
 	private AnalysisManager manager;
 	private EditQualityRequirementPreferencePage formSearch;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static EditQualityRequirementPPController getController() {
-		return controller;
-	}
-
-	public static void setController(EditQualityRequirementPPController controller) {
-		EditQualityRequirementPPController.controller = controller;
-	}
-
 	public AnalysisManager getManager() {
 		if (manager == null) {
 			manager = new AnalysisManager();

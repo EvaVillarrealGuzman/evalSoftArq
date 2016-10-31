@@ -108,15 +108,7 @@ public class AnalysisManager extends HibernateManager {
 		qualityAttributes.toArray(arrayQualityAttribute);
 		return arrayQualityAttribute;
 	}
-
-	/**
-	 * 
-	 * @return List<QualityAttribute> with the names of the quality attributes
-	 */
-	public List<QualityAttribute> listQualityAttribute() {
-		return this.listClass(QualityAttribute.class, "name");
-	}
-
+	
 	/**
 	 * 
 	 * @return ComboBoxModel with system names whose state==true
@@ -135,14 +127,6 @@ public class AnalysisManager extends HibernateManager {
 				.size()];
 		systems.toArray(arraySystem);
 		return arraySystem;
-	}
-
-	/**
-	 * 
-	 * @return List<System> with the system names whose state==true
-	 */
-	public List<DomainModel.AnalysisEntity.System> listSystem() {
-		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
 
 	/**
@@ -176,46 +160,7 @@ public class AnalysisManager extends HibernateManager {
 		systems.toArray(arraySystem);
 		return arraySystem;
 	}
-
-	/**
-	 * 
-	 * @return True if there are systems whose state==true, else return false
-	 * 
-	 */
-	public boolean existSystemTrue() {
-		if (listSystem().isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	/**
-	 * 
-	 * @return True if there are systems whose state==true,
-	 *         qualityRequirement!=empty and qualityRequirement.state==true,
-	 *         else return false
-	 * 
-	 */
-	public boolean existSystemTrueWithQualityRequirementTrue() { // NOPMD by
-																	// Usuario-Pc
-																	// on
-																	// 10/06/16
-																	// 21:44
-		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			if (auxTipo.getQualityRequirements().isEmpty() == false) {
-				Iterator it = auxTipo.getQualityRequirements().iterator();
-				while (it.hasNext()) {
-					QualityRequirement q = (QualityRequirement) it.next();
-					if (q.isState()) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
+	
 	/**
 	 * @param QualityAttribute
 	 * @return ComboBoxModel with stimulusSourceType names for an specific
@@ -233,6 +178,7 @@ public class AnalysisManager extends HibernateManager {
 		stimulusSourceTypes.toArray(arrayStimulusSourceType);
 		return arrayStimulusSourceType;
 	}
+	
 
 	/**
 	 * @param QualityAttribute
@@ -358,6 +304,68 @@ public class AnalysisManager extends HibernateManager {
 		units.toArray(arrayUnit);
 		return arrayUnit;
 	}
+	
+	/**
+	 * 
+	 * @return List<QualityAttribute> with the names of the quality attributes
+	 */
+	public List<QualityAttribute> listQualityAttribute() {
+		return this.listClass(QualityAttribute.class, "name");
+	}
+
+	
+
+	/**
+	 * 
+	 * @return List<System> with the system names whose state==true
+	 */
+	public List<DomainModel.AnalysisEntity.System> listSystem() {
+		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
+	}
+
+
+
+	/**
+	 * 
+	 * @return True if there are systems whose state==true, else return false
+	 * 
+	 */
+	public boolean existSystemTrue() {
+		if (listSystem().isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * 
+	 * @return True if there are systems whose state==true,
+	 *         qualityRequirement!=empty and qualityRequirement.state==true,
+	 *         else return false
+	 * 
+	 */
+	public boolean existSystemTrueWithQualityRequirementTrue() { // NOPMD by
+																	// Usuario-Pc
+																	// on
+																	// 10/06/16
+																	// 21:44
+		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
+			if (auxTipo.getQualityRequirements().isEmpty() == false) {
+				Iterator it = auxTipo.getQualityRequirements().iterator();
+				while (it.hasNext()) {
+					QualityRequirement q = (QualityRequirement) it.next();
+					if (q.isState()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+
+
 
 	/**
 	 * Sets the parameters of its attribute system
@@ -455,14 +463,16 @@ public class AnalysisManager extends HibernateManager {
 		return this.saveObject(this.getSystem());
 
 	}
+	
+	public Boolean saveQualityRequirement() {
+		return this.updateSystem();
+	}
 
 	public Boolean updateSystem() {
 		return this.updateObject(this.getSystem());
 	}
 
-	public Boolean saveQualityRequirement() {
-		return this.updateSystem();
-	}
+
 
 	public Boolean updateQualityRequirement() {
 		return this.updateSystem();

@@ -17,17 +17,12 @@ public class DatabaseConfigurationPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static DatabaseConfigurationPreferencePage controller;
 	private SystemConfigurationManager manager;
 	private DatabaseConfigurationPreferencePage form;
 
 	/**s
 	 * Getters and Setters
 	 */
-	public static DatabaseConfigurationPreferencePage getController() {
-		return controller;
-	}
-
 	public SystemConfigurationManager getManager() {
 		if (manager == null) {
 			manager = new SystemConfigurationManager();
