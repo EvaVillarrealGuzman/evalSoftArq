@@ -38,7 +38,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	/**
 	 * Attributes
 	 */
-	private ComboViewer cmbSystem;
 	private Text txtDescription;
 	private Text txtDescriptionStimulusSource;
 	private Text txtDescriptionStimulus;
@@ -57,6 +56,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private Group gArtifact;
 	private Group gEnvironment;
 	private Group gResponseMeasure;
+	private ComboViewer cmbSystem;
 	private ComboViewer cmbQualityAttribute;
 	private ComboViewer cmbMetric;
 	private ComboViewer cmbTypeStimulusSource;
@@ -65,8 +65,8 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	private ComboViewer cmbTypeArtifact;
 	private ComboViewer cmbTypeResponse;
 	private ComboViewer cmbTypeResponseMeasure;
-	private Label lblvalueResponseMeasure;
 	private ComboViewer cmbUnit;
+	private Label lblvalueResponseMeasure;
 	private GridData gridData;
 	private Button btnNew;
 	private NewQualityRequirementPPController viewController;
@@ -839,6 +839,8 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 
 			break;
 		case 2:// With quality attribute selected
+			clearParts();
+			
 			this.getTxtDescriptionStimulusSource().setEnabled(true);
 			this.getTxtDescriptionStimulus().setEnabled(true);
 			this.getTxtDescriptionEnvironment().setEnabled(true);
@@ -858,14 +860,18 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getTxtValueEnvironment().setEnabled(true, gEnvironment);
 			this.getTxtValueResponse().setEnabled(true, gResponse);
 			this.getTxtValueResponseMeasure().setEnabled(true, gResponseMeasure);
-
+			
 			break;
 		case 3:// With type response measure selected
 			this.getCmbMetric().getCombo().setEnabled(true);
+			
+			this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
+			this.getCmbUnit().getCombo().setEnabled(false);
 
 			break;
 		case 4:// With metric selected
 			this.getCmbUnit().getCombo().setEnabled(true);
+			
 			break;
 		case 5:
 			this.getCmbSystem().getCombo().setEnabled(true);

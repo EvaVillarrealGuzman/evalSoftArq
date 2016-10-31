@@ -427,11 +427,6 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnAdd.setEnabled(false);
 			btnDelete.setEnabled(false);
 			btnConsult.setEnabled(false);
-			/*if (!(valueCmbUnit == null) && (this.getTable().getItems().length > 0)) {
-				btnSave.setEnabled(true);
-			} else {
-				btnSave.setEnabled(false);
-			}*/
 			if (!(valueCmbUnit == null) ) {
 				btnSave.setEnabled(true);
 			} else {

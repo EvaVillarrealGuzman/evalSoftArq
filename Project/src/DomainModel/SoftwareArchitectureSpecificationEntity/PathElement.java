@@ -38,8 +38,8 @@ public class PathElement {
 		this.name = name;
 	}
 	
-	public boolean isResponsibility(PathElement pelement){
-		if (pelement.getClass()== Responsibility.class){
+	public boolean isResponsibility(){
+		if (this.getClass()== Responsibility.class){
 			return true;
 		}else{
 			return false;

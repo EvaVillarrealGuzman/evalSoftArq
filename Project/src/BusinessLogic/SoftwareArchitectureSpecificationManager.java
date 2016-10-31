@@ -670,7 +670,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return null;
 	}
 
-	public boolean isInTree(DefaultMutableTreeNode rootNode, DefaultMutableTreeNode memberNode) {
+	private boolean isInTree(DefaultMutableTreeNode rootNode, DefaultMutableTreeNode memberNode) {
 		java.util.Enumeration e = rootNode.breadthFirstEnumeration();
 		while (e.hasMoreElements()) {
 			DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode) e.nextElement();
@@ -681,7 +681,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return false;
 	}
 
-	public ArrayList<DefaultMutableTreeNode> getLeafs(DefaultMutableTreeNode node) {
+	private ArrayList<DefaultMutableTreeNode> getLeafs(DefaultMutableTreeNode node) {
 		Boolean terminationCondition = true;
 
 		ArrayList<DefaultMutableTreeNode> leafList = new ArrayList<DefaultMutableTreeNode>();
@@ -715,7 +715,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 	}
 
-	public boolean isASimpleComponent(Element pelem) {
+	private boolean isASimpleComponent(Element pelem) {
 		if (pelem.getAttribute("children").equals("")) {
 			return true;
 		} else {

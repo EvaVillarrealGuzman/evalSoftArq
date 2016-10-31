@@ -37,21 +37,12 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static SoftwareArchitectureSpecificationPPController controller;
 	private SoftwareArchitectureSpecificationManager manager;
 	private SoftwareArchitectureSpecificationManagementPreferencePage form;
 
 	/**
 	 * Getters and Setters
 	 */
-	public static SoftwareArchitectureSpecificationPPController getController() {
-		return controller;
-	}
-
-	public static void setController(SoftwareArchitectureSpecificationPPController controller) {
-		SoftwareArchitectureSpecificationPPController.controller = controller;
-	}
-
 	public SoftwareArchitectureSpecificationManager getManager() {
 		if (manager == null) {
 			manager = new SoftwareArchitectureSpecificationManager();
@@ -123,23 +114,30 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	public int setSystem() {
 		if (this.isValidData()) {
-			getArchitecturesToSystem();
+			setArchitecturesToSystem();
+			//setUnitsToArchitectures();
 			return 0;
 		} else {
 			return 1;
 		}
 	}
 
-	private void getArchitecturesToSystem() {
+	/**
+	 * Update architectures to system
+	 */
+	private void setArchitecturesToSystem() {
 
 		deleteArchitecture();
 
+		//Add news architectures
 		for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
 			TableItem item = this.getForm().getTable().getItem(i);
 			if (!item.getText(2).equals("")) {
 				boolean isNotAdd = false;
 				for (Architecture arc : this.getManager().getArchitectures()) {
+					String var = item.getText(2) + "\\" + item.getText(1);
 					if (arc.getPathUCM().equals(item.getText(2) + "\\" + item.getText(1))) {
+						updateUnitsToArchitecture(arc);
 						isNotAdd = true;
 					}
 				}
@@ -151,11 +149,34 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			}
 		}
 
-		this.getManager().updateSystem();
+
+	}
+	
+	/**
+	 * update specification parameter´s unit for existing architecture
+	 * @param arc
+	 */
+	private void updateUnitsToArchitecture(Architecture arc){
+		Iterator itPaths = arc.getPaths().iterator();
+		while (itPaths.hasNext()) {
+			Path a = (Path) itPaths.next();
+			Iterator itPathElements = a.getPathElements().iterator();
+			while (itPathElements.hasNext()) {
+				PathElement pathElement = (PathElement) itPathElements.next();
+				if (pathElement.isResponsibility()) {
+					Responsibility responsability = (Responsibility) pathElement;
+					Iterator itSpePar = responsability.getSpecificationParameter().iterator();
+					while (itSpePar.hasNext()) {
+						SpecificationParameter spePar = (SpecificationParameter) itSpePar.next();
+						spePar.setUnit((Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection()).getFirstElement());
+					}
+				}
+			}
+		}
 	}
 
 	/**
-	 * Deleto to current system, architectures
+	 * Delete to current system, architectures
 	 */
 	private void deleteArchitecture() {
 		for (Architecture arc : this.getManager().getArchitectures()) {
@@ -203,9 +224,8 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture arc : this.getManager().getArchitectures()) {
 				if (first) {
-					// Solo lo hace la primera vez
+					// Solo lo hace la primera vez, para la primera architectura
 					this.setUnit(arc);
-					first = false;
 				}
 				addToTable(arc.getPathUCM());
 			}
@@ -213,13 +233,14 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	}
 
 	/**
-	 * coloca la unidad en el combo
+	 * set unit to combo
 	 * 
 	 * @param architecture
 	 */
 	private void setUnit(Architecture architecture) {
 		Iterator it = architecture.getPaths().iterator();
-		if (it.hasNext()) {
+		Boolean isSetUnit=false;
+		while (it.hasNext() && !isSetUnit) {
 			Path a = (Path) it.next();
 			Iterator itPathElements = a.getPathElements().iterator();
 			if (itPathElements.hasNext()) {
@@ -229,9 +250,8 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 					Iterator itSpePar = responsability.getSpecificationParameter().iterator();
 					if (itSpePar.hasNext()) {
 						SpecificationParameter spePar = (SpecificationParameter) itSpePar.next();
-						System.out.println(spePar.getUnit());
 						this.getForm().getCmbUnit().setSelection(new StructuredSelection(spePar.getUnit()));
-
+						isSetUnit=true;
 					}
 				}
 			}

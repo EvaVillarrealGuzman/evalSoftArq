@@ -198,7 +198,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			colDescriptionScenario.setWidth(200);
 			colDescriptionScenario.setText(Messages.getString("UCM2DEVS_DescriptionScenario_Column"));
 
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 4; i++) {
 				TableItem item = new TableItem(table, SWT.NONE);
 				item.setText("Item " + i);
 			}
@@ -1034,6 +1034,9 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			break;
 		case 4:// With type response measure selected
 			this.getCmbMetric().getCombo().setEnabled(true);
+			
+			this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
+			this.getCmbUnit().getCombo().setEnabled(false);
 
 			break;
 		case 5:// With metric selected

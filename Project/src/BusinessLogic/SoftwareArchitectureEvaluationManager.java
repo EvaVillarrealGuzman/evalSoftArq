@@ -292,7 +292,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		while (it3.hasNext()) {
 			DomainModel.SoftwareArchitectureSpecificationEntity.PathElement element = (DomainModel.SoftwareArchitectureSpecificationEntity.PathElement) it3
 					.next();
-			if (element.isResponsibility(element)) {
+			if (element.isResponsibility()) {
 				Responsibility auxTipo = (Responsibility) element;
 				responsibilities.add(auxTipo);
 			}

@@ -24,7 +24,7 @@ import DomainModel.AnalysisEntity.Unit;
  * @author: FEM
  * @version: 06/11/2015
  */
-public class Data { 
+public class Data {
 	static Metric m1 = new Metric("Responsibility Downtime");
 	static Metric m2 = new Metric("Responsibility Recovery Time");
 	static Metric m3 = new Metric("Responsibility Turnaround Time");
@@ -38,7 +38,7 @@ public class Data {
 	static Metric m11 = new Metric("Mean Downtime");
 	static Metric m12 = new Metric("Mean Recovery Time");
 	static Metric m13 = new Metric("Mean Time B Fail");
-	
+
 	public static void initialize() {
 
 		AnalysisManager manager = AnalysisManager.getManager();
@@ -51,7 +51,27 @@ public class Data {
 		manager.saveObject(unit3);
 		Unit unit4 = new Unit("Milliseconds");
 		manager.saveObject(unit4);
-		
+
+		Set<Unit> units = new HashSet<Unit>();
+		units.add(unit1);
+		units.add(unit2);
+		units.add(unit3);
+		units.add(unit4);
+
+		m1.setUnits(units);
+		m2.setUnits(units);
+		m3.setUnits(units);
+		m4.setUnits(units);
+		m5.setUnits(units);
+		m6.setUnits(units);
+		m7.setUnits(units);
+		m8.setUnits(units);
+		m9.setUnits(units);
+		m10.setUnits(units);
+		m11.setUnits(units);
+		m12.setUnits(units);
+		m13.setUnits(units);
+
 		manager.saveObject(m1);
 		manager.saveObject(m2);
 		manager.saveObject(m3);
@@ -65,7 +85,7 @@ public class Data {
 		manager.saveObject(m11);
 		manager.saveObject(m12);
 		manager.saveObject(m13);
-		
+
 		TacticType tacticType1 = new TacticType("Fault detection");
 		manager.saveObject(tacticType1);
 		Tactic tactic11 = new Tactic("Ping/echo", tacticType1);
@@ -74,7 +94,7 @@ public class Data {
 		manager.saveObject(tactic11);
 		manager.saveObject(tactic12);
 		manager.saveObject(tactic13);
-		
+
 		TacticType tacticType2 = new TacticType("Fault recovery");
 		manager.saveObject(tacticType2);
 		Tactic tactic21 = new Tactic("Voting", tacticType2);
@@ -92,7 +112,7 @@ public class Data {
 		manager.saveObject(tactic25);
 		manager.saveObject(tactic26);
 		manager.saveObject(tactic27);
-		
+
 		TacticType tacticType3 = new TacticType("Fault prevention");
 		manager.saveObject(tacticType3);
 		Tactic tactic31 = new Tactic("Removal from service", tacticType3);
@@ -101,7 +121,7 @@ public class Data {
 		manager.saveObject(tactic31);
 		manager.saveObject(tactic32);
 		manager.saveObject(tactic33);
-		
+
 		Set<Tactic> tactics = new HashSet<Tactic>();
 		tactics.add(tactic11);
 		tactics.add(tactic12);
@@ -123,7 +143,8 @@ public class Data {
 
 	}
 
-	private static void createQualityAttributeAvailability(HibernateManager pmanager, Unit punit1, Unit punit2, Unit unit3, Set<Tactic> ptactics) {
+	private static void createQualityAttributeAvailability(HibernateManager pmanager, Unit punit1, Unit punit2,
+			Unit unit3, Set<Tactic> ptactics) {
 		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
 		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -187,7 +208,7 @@ public class Data {
 		responseMeasureTypes.add(type2);
 		responseMeasureTypes.add(type3);
 		responseMeasureTypes.add(type4);
-		
+
 		QualityAttribute attribute;
 		attribute = new QualityAttribute("Availability", new GenericScenario(stimulusSourceTypes, stimulusTypes,
 				environmentTypes, artifactTypes, responseTypes, responseMeasureTypes), ptactics);
@@ -196,7 +217,8 @@ public class Data {
 
 	}
 
-	private static void createQualityAttributeReliability(HibernateManager pmanager, Unit punit1, Unit punit2, Unit unit3, Set<Tactic> ptactics) {
+	private static void createQualityAttributeReliability(HibernateManager pmanager, Unit punit1, Unit punit2,
+			Unit unit3, Set<Tactic> ptactics) {
 		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
 		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -258,7 +280,8 @@ public class Data {
 
 	}
 
-	private static void createQualityAttributePerformance(HibernateManager pmanager, Unit punit1, Unit punit2, Unit unit3) {
+	private static void createQualityAttributePerformance(HibernateManager pmanager, Unit punit1, Unit punit2,
+			Unit unit3) {
 		StimulusSourceType ss1 = new StimulusSourceType("Stimulus from internal source");
 		StimulusSourceType ss2 = new StimulusSourceType("Stimulus from external source");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -295,7 +318,7 @@ public class Data {
 		units.add(punit1);
 		units.add(punit2);
 		units.add(unit3);
-		
+
 		Set<Metric> metrics = new HashSet<Metric>();
 		metrics.add(m7);
 		metrics.add(m8);
@@ -313,7 +336,7 @@ public class Data {
 		responseMeasureTypes.add(type4);
 		responseMeasureTypes.add(type5);
 		responseMeasureTypes.add(type6);
-		
+
 		TacticType tacticType1 = new TacticType("Resource demand");
 		pmanager.saveObject(tacticType1);
 		Tactic tactic11 = new Tactic("Increase computational efficiency", tacticType1);
@@ -328,7 +351,7 @@ public class Data {
 		pmanager.saveObject(tactic14);
 		pmanager.saveObject(tactic15);
 		pmanager.saveObject(tactic16);
-		
+
 		TacticType tacticType2 = new TacticType("Resource management");
 		pmanager.saveObject(tacticType2);
 		Tactic tactic21 = new Tactic("Introduce concurrency", tacticType2);
@@ -337,7 +360,7 @@ public class Data {
 		pmanager.saveObject(tactic21);
 		pmanager.saveObject(tactic22);
 		pmanager.saveObject(tactic23);
-		
+
 		TacticType tacticType3 = new TacticType("Resource arbitration");
 		pmanager.saveObject(tacticType3);
 		Tactic tactic31 = new Tactic("First-in/First-out", tacticType3);
@@ -348,7 +371,7 @@ public class Data {
 		pmanager.saveObject(tactic32);
 		pmanager.saveObject(tactic33);
 		pmanager.saveObject(tactic34);
-		
+
 		Set<Tactic> tactics = new HashSet<Tactic>();
 		tactics.add(tactic11);
 		tactics.add(tactic12);
