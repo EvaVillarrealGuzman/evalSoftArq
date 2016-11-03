@@ -113,35 +113,35 @@ public class ReportsPPController extends Controller {
 	 */
 	public Boolean printReportPerResponsibilityPerformance() {
 		return this.getManager().createReport(PATHREPORT + "reportResponsibilityPerformance.jasper",
-				"Report per Responsibility - Attribute: Performance",
-				this.getManager().listResponsibilityPerformance());
+				"Report per Responsibility - Attribute: Performance", this.getManager().listResponsibilityPerformance(),
+				false);
 	}
 
 	public Boolean printReportPerResponsibilityReliability() {
 		return this.getManager().createReport(PATHREPORT + "reportResponsibilityReliability.jasper",
-				"Report per Responsibility - Attribute: Reliability",
-				this.getManager().listResponsibilityReliability());
+				"Report per Responsibility - Attribute: Reliability", this.getManager().listResponsibilityReliability(),
+				false);
 	}
 
 	public Boolean printReportPerResponsibilityAvailability() {
 		return this.getManager().createReport(PATHREPORT + "reportResponsibilityAvailability.jasper",
 				"Report per Responsibility - Attribute: Availability",
-				this.getManager().listResponsibilityAvailability());
+				this.getManager().listResponsibilityAvailability(), true);
 	}
 
 	public Boolean printReportPerSystemAvailability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemAvailability.jasper",
-				"Report of System - Attribute: Availability", this.getManager().listSystemAvailability());
+				"Report of System - Attribute: Availability", this.getManager().listSystemAvailability(), true);
 	}
 
 	public Boolean printReportPerSystemReliability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemReliability.jasper",
-				"Report of System - Attribute: Reliability", this.getManager().listSystemReliability());
+				"Report of System - Attribute: Reliability", this.getManager().listSystemReliability(), false);
 	}
 
 	public Boolean printReportPerSystemPerformance() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemPerformance.jasper",
-				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance());
+				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance(), true);
 	}
 
 	/**

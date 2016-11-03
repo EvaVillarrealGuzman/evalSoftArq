@@ -13,6 +13,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -91,6 +92,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	protected Control createContents(Composite parent) {
 		if (viewController.isConnection()) {
+			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
@@ -315,6 +317,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			gridData.verticalAlignment = SWT.BOTTOM;
 			gridData.grabExcessHorizontalSpace = true;
 
+
+			
 			btnEvaluate = new Button(parent, SWT.PUSH);
 			btnEvaluate.setText(Messages.getString("UCM2DEVS_Evaluate_Buttom"));
 			btnEvaluate.setLayoutData(gridData);
@@ -322,6 +326,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					try {
+						btnEvaluate.setCursor(cursor);
 						int var = viewController.evaluate();
 						if (var == 0) {
 							viewController.createObjectSuccessDialog();

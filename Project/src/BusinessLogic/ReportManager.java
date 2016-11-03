@@ -193,7 +193,6 @@ public class ReportManager extends HibernateManager {
 		return hu.isConnection();
 	}
 
-
 	public List<ResponsibilityPerformance> listResponsibilityPerformance() {
 
 		List<ResponsibilityPerformance> list = new ArrayList<ResponsibilityPerformance>();
@@ -208,14 +207,17 @@ public class ReportManager extends HibernateManager {
 					if (i == 0) {
 						ResponsibilityPerformance item = new ResponsibilityPerformance();
 						item.setResponsibilityTT(ind.getType().getName());
-						item.setTurnaroundTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+						item.setTurnaroundTime(
+								this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 						list.add(item);
 					} else {
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
 							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
-								q.setTurnaroundTime(q.getTurnaroundTime() + this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+								q.setTurnaroundTime(q.getTurnaroundTime()
+										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
+												/ 10);
 							}
 						}
 					}
@@ -273,7 +275,8 @@ public class ReportManager extends HibernateManager {
 						if (list.isEmpty()) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(ind.getType().getName());
-							item.setDowntime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+							item.setDowntime(
+									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 							list.add(item);
 						} else {
 							Iterator ite = list.iterator();
@@ -282,13 +285,16 @@ public class ReportManager extends HibernateManager {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 								if (q.getResponsibility().equals(ind.getType().getName())) {
 									band = false;
-									q.setDowntime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+									q.setDowntime(
+											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
+													/ 10);
 								}
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
 								item.setResponsibility(ind.getType().getName());
-								item.setDowntime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+								item.setDowntime(
+										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 								list.add(item);
 							}
 						}
@@ -297,7 +303,9 @@ public class ReportManager extends HibernateManager {
 						while (ite.hasNext()) {
 							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 							if (q.getResponsibility().equals(ind.getType().getName())) {
-								q.setDowntime(q.getDowntime() + this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+								q.setDowntime(q.getDowntime()
+										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
+												/ 10);
 							}
 						}
 					}
@@ -307,7 +315,8 @@ public class ReportManager extends HibernateManager {
 						if (list.isEmpty()) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(ind.getType().getName());
-							item.setRecoveryTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+							item.setRecoveryTime(
+									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 							list.add(item);
 						} else {
 							Iterator ite = list.iterator();
@@ -316,26 +325,30 @@ public class ReportManager extends HibernateManager {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 								if (q.getResponsibility().equals(ind.getType().getName())) {
 									band = false;
-									q.setRecoveryTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+									q.setRecoveryTime(
+											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 								}
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
 								item.setResponsibility(ind.getType().getName());
-								item.setRecoveryTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+								item.setRecoveryTime(
+										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 								list.add(item);
 							}
 						}
 					} else {
-					Iterator ite = list.iterator();
-					while (ite.hasNext()) {
-						ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-						if (q.getResponsibility().equals(ind.getType().getName())) {
-							q.setRecoveryTime(q.getRecoveryTime() + this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+						Iterator ite = list.iterator();
+						while (ite.hasNext()) {
+							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
+							if (q.getResponsibility().equals(ind.getType().getName())) {
+								q.setRecoveryTime(q.getRecoveryTime()
+										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
+												/ 10);
+							}
 						}
 					}
 				}
-			}
 			}
 			i++;
 		}
@@ -640,7 +653,7 @@ public class ReportManager extends HibernateManager {
 		return false;
 	}
 
-	public Boolean createReport(String path, String title, Collection pdata) {
+	public Boolean createReport(String path, String title, Collection pdata, Boolean isUnit) {
 		try {
 			ireport report = new ireport();
 
@@ -651,15 +664,17 @@ public class ReportManager extends HibernateManager {
 			report.addParameter("frase", "");
 			report.addParameter("pieMembrete", "");
 			report.addParameter("title", title);
-			//TODO LLenar solo si no se cumple
 			report.addParameter("title", title);
+			if (isUnit) {
+				report.addParameter("unit",
+						this.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
+			}
 			report.addParameter("tactics", this.getTactics());
-			// TODO agregar tácticas
 
 			report.setDataCollection(pdata);
 
 			report.print();
-			report.visibleReport(); 
+			report.visibleReport();
 			return true;
 		} catch (Exception e) {
 			System.err.println(e);
@@ -667,7 +682,7 @@ public class ReportManager extends HibernateManager {
 		}
 
 	}
-	
+
 	// TODO ver si es mejor ubicarlo en el manager
 	public String getTactics() {
 		QualityAttribute q = this.getQualityAttribute();
@@ -680,5 +695,4 @@ public class ReportManager extends HibernateManager {
 		return tactics;
 	}
 
-	
 }
