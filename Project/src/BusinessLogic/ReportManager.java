@@ -537,30 +537,6 @@ public class ReportManager extends HibernateManager {
 		Run r = its.next();
 		return r.getSimulationHorizon();
 	}
-	
-	public QualityRequirement getQualityRequirementBySystem(String QRtoString) {
-		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			for (QualityRequirement qualityRequirement : auxTipo.getQualityRequirements()) {
-				System.out.println(qualityRequirement.toString());
-				if (qualityRequirement.toString().equals(QRtoString)) {
-					return qualityRequirement;
-				}
-			}
-		}
-		return null;
-	}
-
-	public Simulator SimulatorBySystem(String ArchitecturetoString) {
-		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			for (Architecture architecture : auxTipo.getArchitectures()) {
-				System.out.println(architecture.toString());
-				if (architecture.toString().equals(ArchitecturetoString)) {
-					return architecture.getSimulator();
-				}
-			}
-		}
-		return null;
-	}
 
 	public Set<QualityRequirement> getQualityRequirements() {
 		return this.getSystem().getQualityRequirements();

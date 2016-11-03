@@ -125,7 +125,6 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != "") {
 						viewController.setModel(cmbSystem);
 						cmbSystemItemStateChanged();
-						viewController.setModelQualityRequirementFirst();
 						viewController.setModel(
 								(Architecture) tableSimulation.getItem(0).getData());
 						prepareView(1);

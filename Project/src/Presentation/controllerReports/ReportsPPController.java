@@ -139,17 +139,20 @@ public class ReportsPPController extends Controller {
 
 	public Boolean printReportPerSystemAvailability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemAvailability.jasper",
-				"Report of System - Attribute: Availability", this.getManager().listSystemAvailability(), true, this.isCumplimentRequirement());
+				"Report of System - Attribute: Availability", this.getManager().listSystemAvailability(), true,
+				this.isCumplimentRequirement());
 	}
 
 	public Boolean printReportPerSystemReliability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemReliability.jasper",
-				"Report of System - Attribute: Reliability", this.getManager().listSystemReliability(), false, this.isCumplimentRequirement());
+				"Report of System - Attribute: Reliability", this.getManager().listSystemReliability(), false,
+				this.isCumplimentRequirement());
 	}
 
 	public Boolean printReportPerSystemPerformance() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemPerformance.jasper",
-				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance(), true, this.isCumplimentRequirement());
+				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance(), true,
+				this.isCumplimentRequirement());
 	}
 
 	/**
@@ -180,17 +183,7 @@ public class ReportsPPController extends Controller {
 	}
 
 	public void setModelQualityRequirement() {
-		TableItem item = this.getForm().getTableSimulation()
-				.getItem(this.getForm().getTableSimulation().getSelectionIndex());
-		Simulator simulator = this.getManager().SimulatorBySystem(item.getText(0));
-		setModelQualityRequirement(simulator);
-	}
-
-	public void setModelQualityRequirementFirst() {
-		TableItem item = this.getForm().getTableSimulation().getItem(0);
-
-		Simulator simulator = this.getManager().SimulatorBySystem(item.getText(0));
-		setModelQualityRequirement(simulator);
+		setModelQualityRequirement(manager.getArchitecture().getSimulator());
 	}
 
 	/**
@@ -203,7 +196,6 @@ public class ReportsPPController extends Controller {
 			this.getForm().getTableQualityRequirement().remove(0);
 		}
 		for (QualityRequirement dp : simulator.getRequirements()) {
-
 			if (dp.isState()) {
 				TableItem item = new TableItem(this.getForm().getTableQualityRequirement(), SWT.NONE);
 				item.setData(dp);
@@ -222,16 +214,11 @@ public class ReportsPPController extends Controller {
 	}
 
 	public void setModelReport() {
-		TableItem item = this.getForm().getTableQualityRequirement()
-				.getItem(this.getForm().getTableQualityRequirement().getSelectionIndex());
-		this.setModelReport(this.getManager().getQualityRequirementBySystem(item.getText(0)));
-	}
-
-	public void setModelReport(QualityRequirement qualityRequirement) {
 		for (int i = 0; i < this.getForm().getTableReport().getItemCount(); i++) {
 			TableItem item = this.getForm().getTableReport().getItem(i);
-			item.setText(0, qualityRequirement.getQualityScenario().getQualityAttribute().getName());
+			item.setText(0, manager.getQualityAttribute().getName());
 		}
+
 	}
 
 	public void printReportResponsability() {
