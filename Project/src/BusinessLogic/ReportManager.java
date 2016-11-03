@@ -383,8 +383,7 @@ public class ReportManager extends HibernateManager {
 				.equals("System Availability Time")) {
 			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		} else {
-			// TODO corregir
-			return 0.01;
+			return this.getSimulationTime()-this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		}
 	}
 
@@ -393,8 +392,7 @@ public class ReportManager extends HibernateManager {
 				.equals("System No-Availability Time")) {
 			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		} else {
-			// TODO corregir
-			return 0.01;
+			return this.getSimulationTime()-this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		}
 	}
 
@@ -534,6 +532,12 @@ public class ReportManager extends HibernateManager {
 		return list;
 	}
 
+	public double getSimulationTime(){
+		Iterator<Run> its = this.getArchitecture().getSimulator().getRuns().iterator(); 
+		Run r = its.next();
+		return r.getSimulationHorizon();
+	}
+	
 	public QualityRequirement getQualityRequirementBySystem(String QRtoString) {
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			for (QualityRequirement qualityRequirement : auxTipo.getQualityRequirements()) {
@@ -641,7 +645,7 @@ public class ReportManager extends HibernateManager {
 		return false;
 	}
 
-	public Boolean createReport(String path, String title, Collection pdata, Boolean isUnit) {
+	public Boolean createReport(String path, String title, Collection pdata, Boolean isUnit, boolean isCumplimentRequirement) {
 		try {
 			ireport report = new ireport();
 
@@ -657,8 +661,11 @@ public class ReportManager extends HibernateManager {
 				report.addParameter("unit",
 						this.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
 			}
-			report.addParameter("tactics", this.getTactics());
-
+			if (!isCumplimentRequirement){
+				report.addParameter("tactics", "The requirement hasn't been completed. You can apply the next tactics:/n"+this.getTactics());
+			}else {
+				report.addParameter("tactics", "The requirement has been completed.");
+			}
 			report.setDataCollection(pdata);
 
 			report.print();

@@ -37,6 +37,14 @@ public class Run implements Comparable { // NOPMD by Usuario-Pc on 10/06/16
 		this.simulationHorizon = psimulationHorizon;
 	}
 
+	public Double getSimulationHorizon() {
+		return simulationHorizon;
+	}
+
+	public void setSimulationHorizon(Double simulationHorizon) {
+		this.simulationHorizon = simulationHorizon;
+	}
+
 	// CompareTo
 	@Override
 	public int compareTo(Object p) {
