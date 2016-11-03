@@ -122,7 +122,7 @@ public class ReportsPPController extends Controller {
 	public Boolean printReportPerResponsibilityPerformance() {
 		return this.getManager().createReport(PATHREPORT + "reportResponsibilityPerformance.jasper",
 				"Report per Responsibility - Attribute: Performance", this.getManager().listResponsibilityPerformance(),
-				false, false);
+				true, false);
 	}
 
 	public Boolean printReportPerResponsibilityReliability() {

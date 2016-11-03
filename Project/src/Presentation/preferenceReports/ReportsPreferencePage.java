@@ -473,9 +473,14 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 		case 1: // With system selected
 			this.getTableSimulation().setEnabled(true);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
-			//TODO preguntar Mica
-			//this.getBtnSystemViewReport().setEnabled(false);
-			//this.getBtnResponsabilityViewReport().setEnabled(false);
+			this.getBtnSystemViewReport().setEnabled(false);
+			this.getBtnResponsabilityViewReport().setEnabled(false);
+			this.getBtnResponsabilityViewReport().setText("");
+			this.getBtnSystemViewReport().setText("");
+			this.getTableReport().getItem(0).setText(1, "");
+			this.getTableReport().getItem(1).setText(1, "");
+			this.getTableReport().getItem(0).setText(0, "");
+			this.getTableReport().getItem(1).setText(0, "");
 			break;
 		case 2:// With architecture selected
 			this.getTableSimulation().setEnabled(true);
