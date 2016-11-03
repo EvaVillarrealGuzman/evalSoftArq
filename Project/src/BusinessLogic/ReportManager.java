@@ -472,8 +472,8 @@ public class ReportManager extends HibernateManager {
 				Indicator ind = iti.next();
 				if (ind.getType() instanceof SystemIndicator && band) {
 					SystemAvailability item = new SystemAvailability();
-					item.setAvailabilityE(0.7);
-					item.setNoAvailabilityE(0.3);
+					item.setAvailabilityE(this.getAvailabilityTimeRequirement());
+					item.setNoAvailabilityE(this.getNoAvailabilityTimeRequirement());
 					item.setSystem(ind.getType().getName());
 					item.setRun(Integer.toString(runNum));
 					list.add(item);
@@ -493,7 +493,47 @@ public class ReportManager extends HibernateManager {
 		}
 		return list;
 	}
-	
+
+	public double getAvailabilityTimeRequirement() {
+		if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
+				.equals("System Availability Time")) {
+			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
+		} else {
+			// TODO corregir
+			return 0.01;
+		}
+	}
+
+	public double getNoAvailabilityTimeRequirement() {
+		if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
+				.equals("System No-Availability Time")) {
+			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
+		} else {
+			// TODO corregir
+			return 0.01;
+		}
+	}
+
+	public double getThroughputRequirement() {
+		if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
+				.equals("System Throughput")) {
+			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
+		} else {
+			// TODO corregir
+			return 0.01;
+		}
+	}
+
+	public double getTurnaroundTimeRequirement() {
+		if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
+				.equals("System Turnaround Time")) {
+			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
+		} else {
+			// TODO corregir
+			return 0.01;
+		}
+	}
+
 	public double convertValueAcordingToUnitRequirement(double pvalue, Unit punit) {
 		double pvalueConvert = 0;
 		if (punit == this.getUnitRequirement()) {
@@ -552,7 +592,7 @@ public class ReportManager extends HibernateManager {
 				Indicator ind = iti.next();
 				if (ind.getMetric().getName().equals("System Failures")) {
 					SystemReliability item = new SystemReliability();
-					item.setFailsE(0.7);
+					item.setFailsE(this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue());
 					item.setFails(ind.getValue());
 					item.setSystem(ind.getType().getName());
 					item.setRun(Integer.toString(runNum));
@@ -588,8 +628,8 @@ public class ReportManager extends HibernateManager {
 				Indicator ind = iti.next();
 				if (ind.getType() instanceof SystemIndicator && band) {
 					SystemPerformance item = new SystemPerformance();
-					item.setThroughputE(0.7);
-					item.setTurnaroundTimeE(0.3);
+					item.setThroughputE(this.getThroughputRequirement());
+					item.setTurnaroundTimeE(this.getTurnaroundTimeRequirement());
 					item.setSystem(ind.getType().getName());
 					item.setRun(Integer.toString(runNum));
 					list.add(item);
