@@ -118,6 +118,7 @@ public class ReportsPPController extends Controller {
 		try {
 			this.openReport(this.PATHREPORT + "reportResponsibilityPerformance.jasper");
 			this.addParameterToReport("title", "Report per Responsibility - Attribute: Performance");
+			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listResponsibilityPerformance());
 			// imprime el reporte
@@ -150,6 +151,7 @@ public class ReportsPPController extends Controller {
 		try {
 			this.openReport(this.PATHREPORT + "reportResponsibilityAvailability.jasper");
 			this.addParameterToReport("title", "Report per Responsibility - Attribute: Availability");
+			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listResponsibilityAvailability());
 			// imprime el reporte
@@ -166,6 +168,7 @@ public class ReportsPPController extends Controller {
 		try {
 			this.openReport(this.PATHREPORT + "reportSystemAvailability.jasper");
 			this.addParameterToReport("title", "Report of System - Attribute: Availability");
+			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
 			this.addParameterToReport("tactics", this.getTactics());
 			// Agrega los datos al reporte
 			this.getManager().setDataCollection(this.getManager().listSystemAvailability());
@@ -200,6 +203,7 @@ public class ReportsPPController extends Controller {
 		try {
 			this.openReport(this.PATHREPORT + "reportSystemPerformance.jasper");
 			this.addParameterToReport("title", "Report of System - Attribute: Performance");
+			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
 			this.addParameterToReport("tactics", this.getTactics());
 
 			// Agrega los datos al reporte

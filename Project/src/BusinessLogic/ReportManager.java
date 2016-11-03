@@ -325,14 +325,14 @@ public class ReportManager extends HibernateManager {
 					if (i == 0) {
 						ResponsibilityPerformance item = new ResponsibilityPerformance();
 						item.setResponsibilityTT(ind.getType().getName());
-						item.setTurnaroundTime(ind.getValue() / 10);
+						item.setTurnaroundTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 						list.add(item);
 					} else {
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
 							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
-								q.setTurnaroundTime(q.getTurnaroundTime() + ind.getValue() / 10);
+								q.setTurnaroundTime(q.getTurnaroundTime() + this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 							}
 						}
 					}
@@ -390,7 +390,7 @@ public class ReportManager extends HibernateManager {
 						if (list.isEmpty()) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(ind.getType().getName());
-							item.setDowntime(ind.getValue() / 10);
+							item.setDowntime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 							list.add(item);
 						} else {
 							Iterator ite = list.iterator();
@@ -399,13 +399,13 @@ public class ReportManager extends HibernateManager {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 								if (q.getResponsibility().equals(ind.getType().getName())) {
 									band = false;
-									q.setDowntime(ind.getValue() / 10);
+									q.setDowntime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 								}
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
 								item.setResponsibility(ind.getType().getName());
-								item.setDowntime(ind.getValue() / 10);
+								item.setDowntime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 								list.add(item);
 							}
 						}
@@ -414,7 +414,7 @@ public class ReportManager extends HibernateManager {
 						while (ite.hasNext()) {
 							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 							if (q.getResponsibility().equals(ind.getType().getName())) {
-								q.setDowntime(q.getDowntime() + ind.getValue() / 10);
+								q.setDowntime(q.getDowntime() + this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 							}
 						}
 					}
@@ -424,7 +424,7 @@ public class ReportManager extends HibernateManager {
 						if (list.isEmpty()) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(ind.getType().getName());
-							item.setRecoveryTime(ind.getValue());
+							item.setRecoveryTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 							list.add(item);
 						} else {
 							Iterator ite = list.iterator();
@@ -433,26 +433,26 @@ public class ReportManager extends HibernateManager {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 								if (q.getResponsibility().equals(ind.getType().getName())) {
 									band = false;
-									q.setRecoveryTime(ind.getValue());
+									q.setRecoveryTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 								}
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
 								item.setResponsibility(ind.getType().getName());
-								item.setRecoveryTime(ind.getValue());
+								item.setRecoveryTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 								list.add(item);
 							}
 						}
-					}
-				} else {
+					} else {
 					Iterator ite = list.iterator();
 					while (ite.hasNext()) {
 						ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 						if (q.getResponsibility().equals(ind.getType().getName())) {
-							q.setRecoveryTime(q.getRecoveryTime() + ind.getValue() / 10);
+							q.setRecoveryTime(q.getRecoveryTime() + this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 						}
 					}
 				}
+			}
 			}
 			i++;
 		}
