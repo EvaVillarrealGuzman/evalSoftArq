@@ -13,6 +13,7 @@ import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
+import DomainModel.AnalysisEntity.Unit;
 import DomainModel.ReportsEntity.ResponsibilityAvailability;
 import DomainModel.ReportsEntity.ResponsibilityPerformance;
 import DomainModel.ReportsEntity.ResponsibilityReliability;
@@ -24,6 +25,8 @@ import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
+import DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
 import Presentation.controllerReports.DataSourceCollection;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -478,17 +481,63 @@ public class ReportManager extends HibernateManager {
 				}
 				if (ind.getMetric().getName().equals("System Availability Time")) {
 					SystemAvailability q = list.get(runNum - 1);
-					q.setAvailability(ind.getValue());
+					q.setAvailability(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 				}
 				if (ind.getMetric().getName().equals("System No-Availability Time")) {
 					SystemAvailability q = list.get(runNum - 1);
-					q.setNoAvailability(ind.getValue());
+					q.setNoAvailability(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 				}
 			}
 
 			runNum++;
 		}
 		return list;
+	}
+	
+	public double convertValueAcordingToUnitRequirement(double pvalue, Unit punit) {
+		double pvalueConvert = 0;
+		if (punit == this.getUnitRequirement()) {
+			pvalueConvert = pvalue;
+		} else {
+			if (this.getUnitRequirement().getName().equals("Minutes")) {
+				if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue / 60;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue * 60;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = (pvalue / 60) / 1000;
+				}
+			} else if (this.getUnitRequirement().getName().equals("Seconds")) {
+				if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue * 60;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue * 3600;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = pvalue / 1000;
+				}
+			} else if (this.getUnitRequirement().getName().equals("Hours")) {
+				if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue / 60;
+				} else if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue / 3600;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = (pvalue / 3600) / 1000;
+				}
+			} else if (this.getUnitRequirement().getName().equals("Milliseconds")) {
+				if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue * 60000;
+				} else if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue * 1000;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue * 3600000;
+				}
+			}
+		}
+		return pvalueConvert;
+	}
+
+	public Unit getUnitRequirement() {
+		return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit();
 	}
 
 	public List<SystemReliability> listSystemReliability() {
@@ -548,11 +597,11 @@ public class ReportManager extends HibernateManager {
 				}
 				if (ind.getMetric().getName().equals("System Throughput")) {
 					SystemPerformance q = list.get(runNum - 1);
-					q.setThroughput(ind.getValue());
+					q.setThroughput(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 				}
 				if (ind.getMetric().getName().equals("System Turnaround Time")) {
 					SystemPerformance q = list.get(runNum - 1);
-					q.setTurnaroundTime(ind.getValue());
+					q.setTurnaroundTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 				}
 			}
 
