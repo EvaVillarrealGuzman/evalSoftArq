@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import Configuration.DatabaseConnection;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 /**
@@ -22,7 +23,21 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 
 public class HibernateManager extends HibernateUtil {
 	public Transaction tx;
+	private DatabaseConnection db;
 
+	public DatabaseConnection getDb() {
+		if (db == null) {
+			synchronized (DatabaseConnection.class) {
+				db = new DatabaseConnection();
+			}
+		}
+		return db;
+	}
+
+	public void setDb(DatabaseConnection db) {
+		this.db = db;
+	}
+	
 	public Transaction getTx() {
 		return tx;
 	}

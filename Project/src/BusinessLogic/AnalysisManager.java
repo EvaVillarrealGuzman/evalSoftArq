@@ -42,7 +42,6 @@ public class AnalysisManager extends HibernateManager {
 	private DomainModel.AnalysisEntity.System system;
 	private QualityRequirement qualityRequirement;
 	private static AnalysisManager manager;
-	private DatabaseConnection db;
 
 	/**
 	 * Builder
@@ -66,18 +65,6 @@ public class AnalysisManager extends HibernateManager {
 	/**
 	 * Getters and Setters
 	 */
-	public DatabaseConnection getDb() {
-		if (db == null) {
-			synchronized (DatabaseConnection.class) {
-				db = new DatabaseConnection();
-			}
-		}
-		return db;
-	}
-
-	public void setDb(DatabaseConnection db) {
-		this.db = db;
-	}
 	
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;

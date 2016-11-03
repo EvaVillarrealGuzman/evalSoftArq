@@ -47,7 +47,6 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	public static final String SEPARATOR = ";";
 	public static final String QUOTE = "\"";
 	private static final String PATHEVALUATION = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
-	private DatabaseConnection db;
 	private TransformerSimulator pluginTS;
 	private Simulator simulator;
 	private Architecture architecture;
@@ -57,19 +56,6 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	/**
 	 * Getters and Setters
 	 */
-	public DatabaseConnection getDb() {
-		if (db == null) {
-			synchronized (DatabaseConnection.class) {
-				db = new DatabaseConnection();
-			}
-		}
-		return db;
-	}
-
-	public void setDb(DatabaseConnection db) {
-		this.db = db;
-	}
-
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}

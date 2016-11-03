@@ -59,24 +59,10 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	Document doc;
 	private DefaultTreeModel model;
 	private JTree tree;
-	private DatabaseConnection db;
 
 	/**
 	 * Getters and Setters
 	 */
-	public DatabaseConnection getDb() {
-		if (db == null) {
-			synchronized (DatabaseConnection.class) {
-				db = new DatabaseConnection();
-			}
-		}
-		return db;
-	}
-
-	public void setDb(DatabaseConnection db) {
-		this.db = db;
-	}
-
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}

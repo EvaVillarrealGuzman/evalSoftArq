@@ -22,7 +22,6 @@ public class SystemConfigurationManager extends HibernateManager {
 	 * Attributes
 	 */
 	private static SystemConfigurationManager manager;
-	private DatabaseConnection db;
 
 	/**
 	 * Builder
@@ -46,18 +45,6 @@ public class SystemConfigurationManager extends HibernateManager {
 	/**
 	 * Getters and Setters
 	 */
-	public DatabaseConnection getDb() {
-		if (db == null) {
-			synchronized (DatabaseConnection.class) {
-				db = new DatabaseConnection();
-			}
-		}
-		return db;
-	}
-
-	public void setDb(DatabaseConnection db) {
-		this.db = db;
-	}
 
 	public String getUserName() {
 		return this.getDb().getUserName();
