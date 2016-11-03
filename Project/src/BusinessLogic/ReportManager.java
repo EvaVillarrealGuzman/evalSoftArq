@@ -2,10 +2,8 @@ package BusinessLogic;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import Configuration.DatabaseConnection;
@@ -13,6 +11,7 @@ import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
+import DomainModel.AnalysisEntity.Tactic;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.ReportsEntity.ResponsibilityAvailability;
 import DomainModel.ReportsEntity.ResponsibilityPerformance;
@@ -20,20 +19,12 @@ import DomainModel.ReportsEntity.ResponsibilityReliability;
 import DomainModel.ReportsEntity.SystemAvailability;
 import DomainModel.ReportsEntity.SystemPerformance;
 import DomainModel.ReportsEntity.SystemReliability;
+import DomainModel.ReportsEntity.ireport;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
-import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
-import DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
-import Presentation.controllerReports.DataSourceCollection;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * This class is responsible for the management package: Report
@@ -49,11 +40,6 @@ public class ReportManager extends HibernateManager {
 	private Architecture architecture;
 	private QualityRequirement qualityRequirement;
 	private QualityAttribute qualityAttribute;
-	private DataSourceCollection dataSource;
-	private JasperReport masterReport;
-	private JasperPrint jasperPrint;
-	private Map parameters;
-	private String archive;
 	private DatabaseConnection db;
 
 	/**
@@ -102,52 +88,6 @@ public class ReportManager extends HibernateManager {
 
 	public void setQualityAttribute(QualityAttribute qualityAttribute) {
 		this.qualityAttribute = qualityAttribute;
-	}
-
-	public Map getParameters() {
-		if (parameters == null) {
-			parameters = new HashMap();
-		}
-		return parameters;
-	}
-
-	public void setParameters(Map parameters) {
-		this.parameters = parameters;
-	}
-
-	public String getArchive() {
-		return archive;
-	}
-
-	public void setArchive(String archive) {
-		this.archive = archive;
-	}
-
-	public JasperReport getMasterReport() {
-		return masterReport;
-	}
-
-	public void setMasterReport(JasperReport masterReport) {
-		this.masterReport = masterReport;
-	}
-
-	public JasperPrint getJasperPrint() {
-		return jasperPrint;
-	}
-
-	public void setJasperPrint(JasperPrint jasperPrint) {
-		this.jasperPrint = jasperPrint;
-	}
-
-	public DataSourceCollection getDataSource() {
-		if (dataSource == null) {
-			dataSource = new DataSourceCollection();
-		}
-		return dataSource;
-	}
-
-	public void setDataSource(DataSourceCollection dataSource) {
-		this.dataSource = dataSource;
 	}
 
 	/**
@@ -253,63 +193,6 @@ public class ReportManager extends HibernateManager {
 		return hu.isConnection();
 	}
 
-	/**
-	 * Agrega un parametro al reporte, este parametro debe coincidir con los
-	 * parametros previamente creados en el reporte
-	 * 
-	 * @param nombreParametro
-	 *            nombre del parametro definido en el reporte
-	 * @param valorParametro
-	 *            Object con el valor del parametro
-	 */
-	public void addParameter(String pparamenterName, Object pparameterValue) {
-		getParameters().put(pparamenterName, pparameterValue);
-	}
-
-	/**
-	 * Setea la coleccion de datos del reporte, esta coleccion debe contener
-	 * javaBeans que coincidan sus atributos, encapsulados por sus accesores,
-	 * con los fields usados en el reporte
-	 * 
-	 * @param datos
-	 */
-	public void setDataCollection(Collection pdata) {
-		DataSourceCollection.setColeccionDeDatos(pdata);
-	}
-
-	/**
-	 * Lanza un hilo con el metodo run() donde arma el reporte con los
-	 * parametros, el archivo jasper seleccionado en el constructor y la fuente
-	 * de datos mencionada anteriormente. Una vez listo el reporte instancia un
-	 * visor y lo muestra.
-	 */
-	public void print() {
-		try {
-			JRDataSource jrd = null;
-			if (this.getJasperPrint() == null) {
-				setMasterReport((JasperReport) JRLoader.loadObject(this.archive));
-				try {
-					jrd = this.getDataSource().createBeanCollectionDatasource();
-				} catch (Exception ek) {
-					System.out.println("error 1");
-					ek.printStackTrace();
-				}
-				System.out.println("parametros=" + this.getParameters().toString());
-				System.out.println("fuenteDeDatos: cantidad=" + DataSourceCollection.getColeccionDeDatos().size() + " "
-						+ DataSourceCollection.getColeccionDeDatos().toString());
-				jasperPrint = JasperFillManager.fillReport(this.getMasterReport(), this.getParameters(), jrd);
-			}
-		} catch (Exception e) {
-			System.out.println(" " + e);
-		}
-
-	}
-
-	public void visibleReport() {
-		JasperViewer jviewer = new JasperViewer(this.getJasperPrint(), false);
-		jviewer.setTitle("Report");
-		jviewer.setVisible(true);
-	}
 
 	public List<ResponsibilityPerformance> listResponsibilityPerformance() {
 
@@ -757,4 +640,45 @@ public class ReportManager extends HibernateManager {
 		return false;
 	}
 
+	public Boolean createReport(String path, String title, Collection pdata) {
+		try {
+			ireport report = new ireport();
+
+			report.setArchive(path);
+
+			report.addParameter("tituloMembrete", "Reportes");
+			report.addParameter("tituloMembrete2", "ttt");
+			report.addParameter("frase", "");
+			report.addParameter("pieMembrete", "");
+			report.addParameter("title", title);
+			//TODO LLenar solo si no se cumple
+			report.addParameter("title", title);
+			report.addParameter("tactics", this.getTactics());
+			// TODO agregar tácticas
+
+			report.setDataCollection(pdata);
+
+			report.print();
+			report.visibleReport(); 
+			return true;
+		} catch (Exception e) {
+			System.err.println(e);
+			return false;
+		}
+
+	}
+	
+	// TODO ver si es mejor ubicarlo en el manager
+	public String getTactics() {
+		QualityAttribute q = this.getQualityAttribute();
+		String tactics = "";
+		Iterator t = q.getTactics().iterator();
+		while (t.hasNext()) {
+			Tactic tc = (Tactic) t.next();
+			tactics = tactics + "- " + tc.getName() + "\n";
+		}
+		return tactics;
+	}
+
+	
 }

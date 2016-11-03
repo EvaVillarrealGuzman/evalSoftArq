@@ -126,6 +126,8 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 						viewController.setModel(cmbSystem);
 						cmbSystemItemStateChanged();
 						viewController.setModelQualityRequirementFirst();
+						viewController.setModel(
+								(Architecture) tableSimulation.getItem(0).getData());
 						prepareView(1);
 					}
 				}
@@ -471,8 +473,9 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 		case 1: // With system selected
 			this.getTableSimulation().setEnabled(true);
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
-			this.getBtnSystemViewReport().setEnabled(false);
-			this.getBtnResponsabilityViewReport().setEnabled(false);
+			//TODO preguntar Mica
+			//this.getBtnSystemViewReport().setEnabled(false);
+			//this.getBtnResponsabilityViewReport().setEnabled(false);
 			break;
 		case 2:// With architecture selected
 			this.getTableSimulation().setEnabled(true);

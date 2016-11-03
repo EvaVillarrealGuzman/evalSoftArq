@@ -1,9 +1,5 @@
 package Presentation.controllerReports;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -11,9 +7,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.ReportManager;
-import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
-import DomainModel.AnalysisEntity.Tactic;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
@@ -114,135 +108,40 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
+	/*
+	 * Methods to print reports
+	 */
 	public Boolean printReportPerResponsibilityPerformance() {
-		try {
-			this.openReport(this.PATHREPORT + "reportResponsibilityPerformance.jasper");
-			this.addParameterToReport("title", "Report per Responsibility - Attribute: Performance");
-			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
-			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listResponsibilityPerformance());
-			// imprime el reporte
-			this.getManager().print();
-			this.getManager().visibleReport();
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
-		}
+		return this.getManager().createReport(PATHREPORT + "reportResponsibilityPerformance.jasper",
+				"Report per Responsibility - Attribute: Performance",
+				this.getManager().listResponsibilityPerformance());
 	}
 
 	public Boolean printReportPerResponsibilityReliability() {
-		try {
-			this.openReport(this.PATHREPORT + "reportResponsibilityReliability.jasper");
-			this.addParameterToReport("title", "Report per Responsibility - Attribute: Reliability");
-			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listResponsibilityReliability());
-			// imprime el reporte
-			this.getManager().print();
-			this.getManager().visibleReport();
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
-		}
+		return this.getManager().createReport(PATHREPORT + "reportResponsibilityReliability.jasper",
+				"Report per Responsibility - Attribute: Reliability",
+				this.getManager().listResponsibilityReliability());
 	}
 
 	public Boolean printReportPerResponsibilityAvailability() {
-		try {
-			this.openReport(this.PATHREPORT + "reportResponsibilityAvailability.jasper");
-			this.addParameterToReport("title", "Report per Responsibility - Attribute: Availability");
-			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
-			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listResponsibilityAvailability());
-			// imprime el reporte
-			this.getManager().print();
-			this.getManager().visibleReport();
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
-		}
+		return this.getManager().createReport(PATHREPORT + "reportResponsibilityAvailability.jasper",
+				"Report per Responsibility - Attribute: Availability",
+				this.getManager().listResponsibilityAvailability());
 	}
 
 	public Boolean printReportPerSystemAvailability() {
-		try {
-			this.openReport(this.PATHREPORT + "reportSystemAvailability.jasper");
-			this.addParameterToReport("title", "Report of System - Attribute: Availability");
-			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
-			this.addParameterToReport("tactics", this.getTactics());
-			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listSystemAvailability());
-			// imprime el reporte
-			this.getManager().print();
-			this.getManager().visibleReport();
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
-		}
+		return this.getManager().createReport(PATHREPORT + "reportSystemAvailability.jasper",
+				"Report of System - Attribute: Availability", this.getManager().listSystemAvailability());
 	}
 
 	public Boolean printReportPerSystemReliability() {
-		try {
-			this.openReport(this.PATHREPORT + "reportSystemReliability.jasper");
-			this.addParameterToReport("title", "Report of System - Attribute: Reliability");
-			this.addParameterToReport("tactics", this.getTactics());
-			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listSystemReliability());
-			// imprime el reporte
-			this.getManager().print();
-			this.getManager().visibleReport();
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
-		}
+		return this.getManager().createReport(PATHREPORT + "reportSystemReliability.jasper",
+				"Report of System - Attribute: Reliability", this.getManager().listSystemReliability());
 	}
 
 	public Boolean printReportPerSystemPerformance() {
-		try {
-			this.openReport(this.PATHREPORT + "reportSystemPerformance.jasper");
-			this.addParameterToReport("title", "Report of System - Attribute: Performance");
-			this.addParameterToReport("unit", manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
-			this.addParameterToReport("tactics", this.getTactics());
-
-			// Agrega los datos al reporte
-			this.getManager().setDataCollection(this.getManager().listSystemPerformance());
-			// imprime el reporte
-			this.getManager().print();
-			this.getManager().visibleReport();
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
-		}
-	}
-
-	public String getTactics() {
-		QualityAttribute q = this.getManager().getQualityAttribute();
-		String tactics="";
-		Iterator t = q.getTactics().iterator();
-		while (t.hasNext()) {
-			Tactic tc = (Tactic) t.next();
-			tactics = tactics + "- " + tc.getName()+"\n";
-		}
-		return tactics;
-	}
-
-	private void addParameterToReport(String pname, Object pobject) {
-		this.getManager().addParameter(pname, pobject);
-	}
-
-	private void openReport(String archive) {
-		try {
-			this.getManager().setArchive(archive);
-			this.getManager().addParameter("tituloMembrete", "Reportes");
-			this.getManager().addParameter("tituloMembrete2", "ttt");
-			this.getManager().addParameter("frase", "");
-			this.getManager().addParameter("pieMembrete", "");
-		} catch (Exception e) {
-			this.createErrorDialog(e.getLocalizedMessage());
-		}
+		return this.getManager().createReport(PATHREPORT + "reportSystemPerformance.jasper",
+				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance());
 	}
 
 	/**
@@ -263,7 +162,7 @@ public class ReportsPPController extends Controller {
 			}
 		}
 	}
-	
+
 	public void addToTable(Architecture arc) {
 		TableItem item = new TableItem(this.getForm().getTableSimulation(), SWT.NONE);
 		item.setData(arc);
@@ -306,14 +205,14 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
-	public void setQualityAttribute(QualityRequirement qr){
+	public void setQualityAttribute(QualityRequirement qr) {
 		manager.setQualityAttribute(qr.getQualityScenario().getQualityAttribute());
 	}
-	
-	public void setQualityRequirement(QualityRequirement qr){
+
+	public void setQualityRequirement(QualityRequirement qr) {
 		manager.setQualityRequirement(qr);
 	}
-	
+
 	public void setModelReport() {
 		TableItem item = this.getForm().getTableQualityRequirement()
 				.getItem(this.getForm().getTableQualityRequirement().getSelectionIndex());
@@ -327,17 +226,13 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
-	public Boolean isConnection() {
-		return this.getManager().isConnection();
-	}
-
 	public void printReportResponsability() {
 		String qualityAttribute = this.getManager().getQualityAttribute().getName();
 		switch (qualityAttribute) {
 		case "Performance":
 			printReportPerResponsibilityPerformance();
 			break;
-		case "Availability": 
+		case "Availability":
 			printReportPerResponsibilityAvailability();
 			break;
 		case "Reliability":
@@ -352,14 +247,18 @@ public class ReportsPPController extends Controller {
 		case "Performance":
 			printReportPerSystemPerformance();
 			break;
-		case "Availability": 
+		case "Availability":
 			printReportPerSystemAvailability();
 			break;
-		case "Reliability": 
+		case "Reliability":
 			printReportPerSystemReliability();
 			break;
 		}
-		
+
+	}
+
+	public Boolean isConnection() {
+		return this.getManager().isConnection();
 	}
 
 }
