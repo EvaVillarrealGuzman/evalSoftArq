@@ -16,43 +16,32 @@ import DomainModel.AnalysisEntity.QualityRequirement;
 
 @Entity
 @Table(name = "SIMULATOR")
-public class Simulator implements Comparable{
+public class Simulator implements Comparable {
 
-	//Attributes
+	// Attributes
 	@Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
-	
-	@OneToOne(targetEntity = SimulationParameter.class)
-	private SimulationParameter simulationParameter;
-	
+
 	@OneToMany(targetEntity = Run.class, cascade = CascadeType.ALL)
 	private Set<Run> runs = new HashSet<Run>();
-	
+
 	@ManyToMany(targetEntity = QualityRequirement.class, cascade = CascadeType.ALL)
 	private Set<QualityRequirement> requirements = new HashSet<QualityRequirement>();
-	
-	//CompareTo
+
+	// CompareTo
 	@Override
-    public int compareTo(Object p) {
-        Simulator t = (Simulator) p;
-        return this.toString().compareTo(t.toString());
-    }
-	
+	public int compareTo(Object p) {
+		Simulator t = (Simulator) p;
+		return this.toString().compareTo(t.toString());
+	}
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public SimulationParameter getSimulationParameter() {
-		return simulationParameter;
-	}
-
-	public void setSimulationParameter(SimulationParameter simulationParameter) {
-		this.simulationParameter = simulationParameter;
 	}
 
 	public Set<Run> getRuns() {
@@ -71,8 +60,8 @@ public class Simulator implements Comparable{
 		this.requirements = requirements;
 	}
 
-	public Double calculateAverageIndicator(){
-		Double averageIndicator=0.2;
+	public Double calculateAverageIndicator() {
+		Double averageIndicator = 0.2;
 		return averageIndicator;
 	}
 }
