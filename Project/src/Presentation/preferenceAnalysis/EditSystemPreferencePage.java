@@ -10,6 +10,7 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -78,10 +79,12 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	 */
 	protected Control createContents(Composite parent) {
 		if (viewController.isConnection()) {
+			
 			if (!viewController.isConnection()) {
 				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 			}
 
+			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -174,6 +177,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					btnSave.setCursor(cursor);
 					int var = viewController.save();
 					if (var==0) {
 						viewController.createObjectSuccessDialog();
@@ -189,6 +193,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					btnRemove.setCursor(cursor);
 					if (viewController.createDeleteSystemDialog() == true) {
 						viewController.remove();
 					}

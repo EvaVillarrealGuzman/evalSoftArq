@@ -7,6 +7,7 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -70,6 +71,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 	 */
 	protected Control createContents(Composite parent) {
 		try {
+
+			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
 			parent.setLayout(layout);
@@ -145,6 +148,7 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			btnTestConnection.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					btnTestConnection.setCursor(cursor);
 					viewController.testConnection();
 				}
 			});
@@ -164,6 +168,7 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					btnSave.setCursor(cursor);
 					viewController.updateConnectionData();
 				}
 			});

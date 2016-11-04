@@ -218,7 +218,6 @@ public class ReportsPPController extends Controller {
 			TableItem item = this.getForm().getTableReport().getItem(i);
 			item.setText(0, manager.getQualityAttribute().getName());
 		}
-
 	}
 
 	public void printReportResponsability() {
@@ -249,7 +248,6 @@ public class ReportsPPController extends Controller {
 			printReportPerSystemReliability();
 			break;
 		}
-
 	}
 
 	public Boolean isConnection() {

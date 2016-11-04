@@ -11,6 +11,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -88,7 +89,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	protected Control createContents(final Composite parent) {
 
 		if (viewController.isConnection()) {
-
+			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -201,6 +202,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnAdd.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+
+					btnAdd.setCursor(cursor);
 					// Open a FileDialog that show only jucm file
 					chooseFile = new FileDialog(parent.getShell(), SWT.OPEN);
 					chooseFile.setFilterNames(new String[] { Messages.getString("UCM2DEVS_JucmFiles_Label") });
@@ -223,6 +226,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					btnConsult.setCursor(cursor);
 					TableItem item = table.getItem(table.getSelectionIndex());
 					viewController.openJUCMNavEditor(parent, item.getText(2) + "\\" + item.getText(1));
 					prepareView(2);
@@ -236,6 +240,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnDelete.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					btnDelete.setCursor(cursor);
 					viewController.deleteToTable();
 					prepareView(2);
 				}
@@ -292,6 +297,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					btnSave.setCursor(cursor);
 					if (viewController.save()) {
 						viewController.createObjectSuccessDialog();
 					} else {
