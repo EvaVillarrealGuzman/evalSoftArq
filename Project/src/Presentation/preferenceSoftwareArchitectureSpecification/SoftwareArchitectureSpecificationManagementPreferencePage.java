@@ -258,7 +258,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			cUnit.setLayoutData(gridData);
 
 			Label labelU = new Label(cUnit, SWT.NONE);
-			labelU.setText("Select the unit of the paramaters" + ":");
+			labelU.setText(Messages.getString("UCM2DEVS_UnitParameter_Label") + ":");
 
 			gridData = new GridData();
 			gridData.widthHint = 200;

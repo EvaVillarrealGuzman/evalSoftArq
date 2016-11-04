@@ -310,7 +310,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 
 			colIndicatorType = new TableColumn(tableReport, SWT.NONE);
 			colIndicatorType.setWidth(150);
-			colIndicatorType.setText("Indicator type");
+			colIndicatorType.setText(Messages.getString("UCM2DEVS_IndicatorType_Column"));
 
 			colViewReportButtom = new TableColumn(tableReport, SWT.NONE);
 			colViewReportButtom.setWidth(100);
@@ -486,10 +486,10 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 			this.getTblViewerQualityRequirement().getTable().setEnabled(true);
 			this.getBtnSystemViewReport().setEnabled(true);
 			this.getBtnResponsabilityViewReport().setEnabled(true);
-			this.getBtnResponsabilityViewReport().setText("View Report...");
-			this.getBtnSystemViewReport().setText("View Report...");
-			this.getTableReport().getItem(0).setText(1, "Responsability");
-			this.getTableReport().getItem(1).setText(1, "System");
+			this.getBtnResponsabilityViewReport().setText(Messages.getString("UCM2DEVS_ViewReport_Buttom"));
+			this.getBtnSystemViewReport().setText(Messages.getString("UCM2DEVS_ViewReport_Buttom"));
+			this.getTableReport().getItem(0).setText(1, Messages.getString("UCM2DEVS_ResponsibilityReport_Item"));
+			this.getTableReport().getItem(1).setText(1, Messages.getString("UCM2DEVS_SystemReport_Item"));
 			break;
 		}
 	}

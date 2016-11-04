@@ -126,14 +126,14 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
 										+ "plugins/UCM2DEVS/Run/Run" + num + "/reliability.csv");
 							}
-							this.createSuccessDialog("The simulation is successful");
+							this.createSuccessDialog(Messages.getString("UCM2DEVS_Simulation_Dialog"));
 							return 0;
 						} else {
-							this.createErrorDialog("The simulator is not successful");
+							this.createErrorDialog(Messages.getString("UCM2DEVS_Simulation_ErrorDialog"));
 							return 1;
 						}
 					} else {
-						this.createErrorDialog("The transformer is not successful");
+						this.createErrorDialog(Messages.getString("UCM2DEVS_Transformation_ErrorDialog"));
 						return 1;
 					}
 				} else {

@@ -8,11 +8,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import Presentation.preferences.Messages;
+
 /**
  * @author FEM
  *
  */
 public class UCM2DEVSPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+
 
 	public UCM2DEVSPreferencePage() {
 		super(GRID);
@@ -35,7 +38,7 @@ public class UCM2DEVSPreferencePage extends FieldEditorPreferencePage implements
 	protected Control createContents(Composite parent) {
 
 		Label message = new Label(parent, SWT.NONE);
-		message.setText("Expand the tree to edit preferences for a specific feature.");
+		message.setText(Messages.getString("UCM2DEVS_UCM2DEVS_Message"));
 		
 		return new Composite(parent, SWT.NULL);
 

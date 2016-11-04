@@ -48,7 +48,7 @@ public class DatabaseConfigurationPPController extends Controller {
 				this.getForm().getDatabasePortNumber().getStringValue(),
 				this.getForm().getDatabaseName().getStringValue())) {
 			this.getForm().getBtnSave().setEnabled(true);
-			this.createSuccessDialog("The connection is established to the database");
+			this.createSuccessDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_Dialog"));
 		} else {
 			this.getForm().getBtnSave().setEnabled(false);
 			this.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog") );

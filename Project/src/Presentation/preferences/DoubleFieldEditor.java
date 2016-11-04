@@ -16,6 +16,8 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
+import Presentation.preferences.Messages;
+
 public class DoubleFieldEditor extends StringFieldEditor {
 	/**
 	 * a 64-bit double has 15-17 decimal digit precision
@@ -50,7 +52,7 @@ public class DoubleFieldEditor extends StringFieldEditor {
 		this.parent = parent;
 		setTextLimit(textLimit);
 		setEmptyStringAllowed(false);
-		setErrorMessage("Not a valid double"); //$NON-NLS-1$
+		setErrorMessage(Messages.getString("UCM2DEVS_InvalidDouble_ErrorDialog")); //$NON-NLS-1$
 		createControl(parent);
 	}
 
@@ -89,7 +91,7 @@ public class DoubleFieldEditor extends StringFieldEditor {
 				return true;
 			}
 			if (number == minValidValue){
-				setErrorMessage("Only number possitive");
+				setErrorMessage(Messages.getString("UCM2DEVS_NegativeDouble_ErrorDialog"));
 			}
 			showErrorMessage();
 			return false;
