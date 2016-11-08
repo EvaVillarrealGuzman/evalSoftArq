@@ -29,6 +29,9 @@ public class Metric implements Comparable {
 
 	protected String name;
 
+	@OneToOne(targetEntity = Formula.class, cascade = CascadeType.ALL)
+	protected Formula formula;
+
 	@ManyToMany(targetEntity = Unit.class)
 	protected Set<Unit> units = new HashSet<Unit>();
 
@@ -62,6 +65,14 @@ public class Metric implements Comparable {
 
 	public void setName(String pname) {
 		this.name = pname;
+	}
+
+	public Formula getFormula() {
+		return formula;
+	}
+
+	public void setFormula(Formula pformula) {
+		this.formula = pformula;
 	}
 
 	public Set<Unit> getUnits() {

@@ -1,6 +1,7 @@
 package BusinessLogic;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
-import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Metric;
@@ -86,7 +86,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	public Architecture getArchitecture() {
 		return architecture;
 	}
-	
+
 	public void setArchitecture(Architecture architecture) {
 		this.architecture = architecture;
 	}
@@ -204,13 +204,13 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 		return false;
 	}
-	
-	public void createSimulator (){
+
+	public void createSimulator() {
 		simulator = new Simulator();
 		typeIndicator = new SystemIndicator(this.getSystem().getSystemName());
 		this.saveObject(typeIndicator);
 	}
-	
+
 	public void createRun(String psimulationTime, Table ptable) {
 		run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
 		this.getSimulator().getRuns().add(run);
@@ -424,8 +424,51 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public Boolean simulator(double observe_t, Unit punit) {
 		double psimulationTime = this.convertValueAcordingToUnit(observe_t, punit);
-		//TODO return this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime);
-		return true;
+		if (this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime)) {
+			deleteFiles();
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	// Delete files generate by plugin TS
+	private void deleteFiles() {
+		// Delete jar
+		File jarFile = new File(PATHEVALUATION + "/simulator.jar");
+		jarFile.delete();
+
+		// Delete csv
+	/*	for (int i = 1; i < 11; i++) {
+			File RunDirectory = new File(PATHEVALUATION + "/Run/Run" + i);
+
+			String[] fileList;
+			fileList = RunDirectory.list();
+			for (int j = 0; j < fileList.length; j++) {
+				File csvFile = new File(RunDirectory, fileList[j]);
+				csvFile.delete();
+			}
+		}*/
+
+		// Delete SystemTemp
+		File Directory = new File(PATHEVALUATION + "/Simulator/src/SimEnvironment/SAModel/SystemTemp");
+
+		String[] fileList;
+		fileList = Directory.list();
+		for (int i = 0; i < fileList.length; i++) {
+			File file = new File(Directory, fileList[i]);
+			file.delete();
+		}
+		
+		//Delete test.class and simenvironment.class
+		File testFile = new File(PATHEVALUATION + "/Simulator/src/Test.class");
+		testFile.delete();
+		
+		File simEnvironmentFile = new File(PATHEVALUATION + "/Simulator/src/SimEnvironment/SimEnvironment.class");
+		simEnvironmentFile.delete();
+		
+		
 	}
 
 	/**

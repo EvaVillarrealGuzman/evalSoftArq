@@ -47,8 +47,11 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.ArtifactType.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.Environment.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.EnvironmentType.class);
-
+			conf.addAnnotatedClass(DomainModel.AnalysisEntity.Formula.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.GenericScenario.class);
+
+			conf.addAnnotatedClass(DomainModel.AnalysisEntity.IndirectMetric.class);
+			conf.addAnnotatedClass(DomainModel.AnalysisEntity.DirectMetric.class);
 
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.QualityAttribute.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.QualityRequirement.class);
@@ -71,10 +74,12 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.ANDJoin.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.ORFork.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork.class);
-			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter.class);
+			conf.addAnnotatedClass(
+					DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.Path.class);
-			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.CompositeComponent.class);
+			conf.addAnnotatedClass(
+					DomainModel.SoftwareArchitectureSpecificationEntity.CompositeComponent.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.SimpleComponent.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureSpecificationEntity.Architecture.class);
 
@@ -82,6 +87,7 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.IndicatorType.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.ResponsabilityIndicator.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator.class);
+			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.SimulationParameter.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.Simulator.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.Run.class);
 
