@@ -423,9 +423,9 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	}
 
 	public Boolean simulator(double observe_t, Unit punit) {
+		//TODO modificar
 		double psimulationTime = this.convertValueAcordingToUnit(observe_t, punit);
 		if (this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime)) {
-			deleteFiles();
 			return true;
 		} else {
 			return false;
@@ -434,13 +434,13 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	}
 
 	// Delete files generate by plugin TS
-	private void deleteFiles() {
+	public void deleteFiles() {
 		// Delete jar
 		File jarFile = new File(PATHEVALUATION + "/simulator.jar");
 		jarFile.delete();
 
 		// Delete csv
-	/*	for (int i = 1; i < 11; i++) {
+		for (int i = 1; i < 11; i++) {
 			File RunDirectory = new File(PATHEVALUATION + "/Run/Run" + i);
 
 			String[] fileList;
@@ -449,7 +449,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 				File csvFile = new File(RunDirectory, fileList[j]);
 				csvFile.delete();
 			}
-		}*/
+		}
 
 		// Delete SystemTemp
 		File Directory = new File(PATHEVALUATION + "/Simulator/src/SimEnvironment/SAModel/SystemTemp");

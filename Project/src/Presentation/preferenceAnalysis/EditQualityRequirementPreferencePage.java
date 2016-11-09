@@ -12,7 +12,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -120,7 +119,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 			}
 
-			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -227,7 +225,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 							.setModel((QualityRequirement) table.getItem(table.getSelectionIndex()).getData());
 					getViewController().getFormSearch().setView();
 					prepareView(6);
-					if (viewController.getManager().getMetric().getName().equals("Number of failures")){
+					if (viewController.getManager().getMetric().getName().equals("Number of failures")) {
 						cmbUnit.getCombo().setEnabled(false);
 					}
 				}
@@ -530,12 +528,11 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnSave.setCursor(cursor);
 					int var = viewController.save();
-					if (var==0) {
+					if (var == 0) {
 						viewController.createObjectSuccessDialog();
-					} else if (var==1){
-						viewController.createObjectDontUpdateErrorDialog();	
+					} else if (var == 1) {
+						viewController.createObjectDontUpdateErrorDialog();
 					}
 				}
 			});
@@ -546,7 +543,6 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			btnRemove.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnRemove.setCursor(cursor);
 					if (viewController.createDeleteRequirementDialog() == true) {
 						viewController.remove();
 					}
@@ -1038,7 +1034,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			break;
 		case 4:// With type response measure selected
 			this.getCmbMetric().getCombo().setEnabled(true);
-			
+
 			this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
 			this.getCmbUnit().getCombo().setEnabled(false);
 

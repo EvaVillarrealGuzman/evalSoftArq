@@ -38,6 +38,8 @@ public class ReportsPPController extends Controller {
 	private ReportsPreferencePage form;
 	public static final String PATHREPORT = Platform.getInstallLocation().getURL().getPath()
 			+ "plugins/UCM2DEVS/Report/";
+//public static final String PATHREPORT = ReportsPPController.class.getProtectionDomain().getCodeSource()
+//			.getLocation().getPath() + "reports/";
 
 	/**
 	 * Getters and Setters

@@ -604,6 +604,8 @@ public class AnalysisManager extends HibernateManager {
 		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setDescription(pdescription);
 		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setValue(pvalue);
 		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setType(ptype);
+		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setMetric(pmetric);
+		this.getQualityRequirement().getQualityScenario().getResponseMeasure().setUnit(punit);
 
 	}
 

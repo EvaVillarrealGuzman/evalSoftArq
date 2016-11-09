@@ -9,7 +9,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -105,8 +104,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 			}
 
-			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
-			
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -432,7 +429,6 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnNew.setCursor(cursor);
 					int var = viewController.save();
 					if (var == 0) {
 						viewController.createObjectSuccessDialog();
@@ -844,7 +840,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			break;
 		case 2:// With quality attribute selected
 			clearParts();
-			
+
 			this.getTxtDescriptionStimulusSource().setEnabled(true);
 			this.getTxtDescriptionStimulus().setEnabled(true);
 			this.getTxtDescriptionEnvironment().setEnabled(true);
@@ -864,18 +860,18 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 			this.getTxtValueEnvironment().setEnabled(true, gEnvironment);
 			this.getTxtValueResponse().setEnabled(true, gResponse);
 			this.getTxtValueResponseMeasure().setEnabled(true, gResponseMeasure);
-			
+
 			break;
 		case 3:// With type response measure selected
 			this.getCmbMetric().getCombo().setEnabled(true);
-			
+
 			this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
 			this.getCmbUnit().getCombo().setEnabled(false);
 
 			break;
 		case 4:// With metric selected
 			this.getCmbUnit().getCombo().setEnabled(true);
-			
+
 			break;
 		case 5:
 			this.getCmbSystem().getCombo().setEnabled(true);

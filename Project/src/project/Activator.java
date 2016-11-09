@@ -5,7 +5,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import Configuration.DatabaseConnection;
-import DataManager.Data;
+import Configuration.Installation;
 import DataManager.HibernateUtil;
 
 /**
@@ -31,11 +31,16 @@ public class Activator extends AbstractUIPlugin {
 																// 11/06/16
 																// 12:38
 
+
+		/**
+		 * Create installation folder if not exists
+		 */
+		Installation inst = new Installation();
+		inst.exists();
 		/**
 		 * Initialize Hibernate
 		 */
 		HibernateUtil.initialize(new DatabaseConnection());
-		//Data.initialize();
 		super.start(context);
 		plugin = this;
 	}

@@ -69,16 +69,18 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
 	 * .eclipse.swt.widgets.Composite)
 	 */
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		try {
 
-			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
+			
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
 			parent.setLayout(layout);
 
 			// Group for project properties
-			Group groupDatabaseConfiguration = new Group(parent, SWT.SHADOW_ETCHED_IN);
+			final Group groupDatabaseConfiguration = new Group(parent, SWT.SHADOW_ETCHED_IN);
 			groupDatabaseConfiguration.setText(Messages.getString("UCM2DEVS_DatabaseConfiguration_Label"));
 			groupDatabaseConfiguration.setLayout(layout);
 
@@ -148,8 +150,9 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			btnTestConnection.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnTestConnection.setCursor(cursor);
+					parent.setCursor(cursorWait);
 					viewController.testConnection();
+					parent.setCursor(cursorNotWait);
 				}
 			});
 
@@ -168,7 +171,6 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnSave.setCursor(cursor);
 					viewController.updateConnectionData();
 				}
 			});

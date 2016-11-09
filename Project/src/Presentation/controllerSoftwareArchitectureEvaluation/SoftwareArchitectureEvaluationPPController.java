@@ -126,6 +126,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
 										+ "plugins/UCM2DEVS/Run/Run" + num + "/reliability.csv");
 							}
+							this.getManager().deleteFiles();
 							this.createSuccessDialog(Messages.getString("UCM2DEVS_Simulation_Dialog"));
 							return 0;
 						} else {

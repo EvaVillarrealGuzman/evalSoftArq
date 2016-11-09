@@ -8,7 +8,6 @@ import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -78,7 +77,6 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 			}
 
-			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
 			parent.setLayout(layout);
@@ -139,11 +137,10 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnNew.setCursor(cursor);
 					int var = viewController.save();
 					if (var == 0) {
 						viewController.createObjectSuccessDialog();
-					} else if (var == 1){
+					} else if (var == 1) {
 						viewController.createObjectDontSaveErrorDialog();
 					}
 				}
