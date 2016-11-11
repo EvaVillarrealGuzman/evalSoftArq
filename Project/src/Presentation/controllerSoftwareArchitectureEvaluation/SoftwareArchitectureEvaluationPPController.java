@@ -107,7 +107,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 				String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
 
 				if (chequerUCMResult.equals("")) {
-					if (this.getManager().transformer(UCMpath)) {*/
+					if (this.getManager().transformer(UCMpath)) {
 
 						if (this.getManager().simulator(this.getForm().getSimulationTime().getDoubleValue(),
 								(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection())
