@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.controllerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
@@ -177,6 +178,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 					tableSoftArc.showSelection();
 					if (tableSoftArc.getSelectionIndex() != -1) {
 						if (viewController.isNotChecked(table)) {
+							viewController.setModelArchitecture((Architecture) tableSoftArc.getItem(tableSoftArc.getSelectionIndex()).getData());
 							prepareView(3);
 						} else {
 							prepareView(4);

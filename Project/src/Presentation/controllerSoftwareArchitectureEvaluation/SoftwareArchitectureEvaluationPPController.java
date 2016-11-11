@@ -86,6 +86,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		this.getManager().setSystem(pmodel);
 	}
 
+
 	/**
 	 * Evaluate a architecture
 	 * 
@@ -106,7 +107,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 				String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
 
 				if (chequerUCMResult.equals("")) {
-					if (this.getManager().transformer(UCMpath)) {
+					if (this.getManager().transformer(UCMpath)) {*/
 
 						if (this.getManager().simulator(this.getForm().getSimulationTime().getDoubleValue(),
 								(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection())
@@ -233,6 +234,10 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 
 	public Boolean isConnection() {
 		return this.getManager().isConnection();
+	}
+
+	public void setModelArchitecture(Architecture pdata) {
+			this.getManager().setArchitecture(pdata);		
 	}
 
 }
