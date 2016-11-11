@@ -47,11 +47,9 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.ArtifactType.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.Environment.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.EnvironmentType.class);
-			conf.addAnnotatedClass(DomainModel.AnalysisEntity.Formula.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.GenericScenario.class);
 
-			conf.addAnnotatedClass(DomainModel.AnalysisEntity.IndirectMetric.class);
-			conf.addAnnotatedClass(DomainModel.AnalysisEntity.DirectMetric.class);
+			conf.addAnnotatedClass(DomainModel.AnalysisEntity.Metric.class);
 
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.QualityAttribute.class);
 			conf.addAnnotatedClass(DomainModel.AnalysisEntity.QualityRequirement.class);
@@ -87,7 +85,6 @@ public class HibernateUtil {
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.IndicatorType.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.ResponsabilityIndicator.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator.class);
-			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.SimulationParameter.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.Simulator.class);
 			conf.addAnnotatedClass(DomainModel.SoftwareArchitectureEvaluationEntity.Run.class);
 

@@ -304,8 +304,10 @@ public class Data {
 		environmentTypes.add(e2);
 
 		ArtifactType a1 = new ArtifactType("System");
+		ArtifactType a2 = new ArtifactType("Functionality");
 		Set<ArtifactType> artifactTypes = new HashSet<ArtifactType>();
 		artifactTypes.add(a1);
+		artifactTypes.add(a2);
 
 		ResponseType r1 = new ResponseType("Processes stimuli");
 		ResponseType r2 = new ResponseType("Changes level of service");

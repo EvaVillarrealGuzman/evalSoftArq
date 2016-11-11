@@ -55,12 +55,6 @@ public class Installation {
 			File simulatorsrc = new File(PATH + "/Simulator/src");
 			simulatorsrc.mkdir();
 
-			// File simulatorFile = new File ("C:/Users/Micaela/Dropbox/PROYECTO
-			// FINAL/UCM2DEVS/Simulator");
-			// File simulatorFile = new File
-			// (Installation.class.getProtectionDomain().getCodeSource()
-			// .getLocation().getPath() + "Configuration/Simulator");
-			// CopiarDirectorio(simulatorFile,simulator);
 			extractJar(Installation.class.getProtectionDomain().getCodeSource()
 			 .getLocation().getPath() + "src/Configuration/project.jar", simulatorsrc);
 		}
@@ -91,41 +85,6 @@ public class Installation {
 		}
 	}
 
-	/*
-	 * private static void CopiarDirectorio(File dirOrigen, File dirDestino)
-	 * throws Exception { try { if (dirOrigen.isDirectory()) { if
-	 * (!dirDestino.exists()) dirDestino.mkdir();
-	 * 
-	 * String[] hijos = dirOrigen.list(); for (int i = 0; i < hijos.length; i++)
-	 * { CopiarDirectorio(new File(dirOrigen, hijos[i]), new File(dirDestino,
-	 * hijos[i])); } // end for } else { Copiar(dirOrigen, dirDestino); } // end
-	 * if } catch (Exception e) { throw e; } // end try } // end
-	 * CopiarDirectorio
-	 * 
-	 * private static void Copiar(File dirOrigen, File dirDestino) throws
-	 * Exception {
-	 * 
-	 * InputStream in = new FileInputStream(dirOrigen); OutputStream out = new
-	 * FileOutputStream(dirDestino);
-	 * 
-	 * byte[] buffer = new byte[1024]; int len;
-	 * 
-	 * try { // recorrer el array de bytes y recomponerlo while ((len =
-	 * in.read(buffer)) > 0) { out.write(buffer, 0, len); } // end while
-	 * out.flush(); } catch (Exception e) { throw e; } finally { in.close();
-	 * out.close(); } // end ty } // end Copiar
-	 * 
-	 * private static void Copiar(String dirOrigen, String dirDestino) throws
-	 * Exception { InputStream in = new FileInputStream(dirOrigen); OutputStream
-	 * out = new FileOutputStream(dirDestino);
-	 * 
-	 * byte[] buffer = new byte[1024]; int len;
-	 * 
-	 * try { // recorrer el array de bytes y recomponerlo while ((len =
-	 * in.read(buffer)) > 0) { out.write(buffer, 0, len); } // end while
-	 * out.flush(); } catch (Exception e) { throw e; } finally { in.close();
-	 * out.close(); } // end ty } // end Copiar
-	 */
 	private void generateXML() {
 		try {
 			String nameXML = "databaseconfiguration";

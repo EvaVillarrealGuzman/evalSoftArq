@@ -23,9 +23,6 @@ public class Simulator implements Comparable{
     @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
 	
-	@OneToOne(targetEntity = SimulationParameter.class)
-	private SimulationParameter simulationParameter;
-	
 	@OneToMany(targetEntity = Run.class, cascade = CascadeType.ALL)
 	private Set<Run> runs = new HashSet<Run>();
 	
@@ -45,14 +42,6 @@ public class Simulator implements Comparable{
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public SimulationParameter getSimulationParameter() {
-		return simulationParameter;
-	}
-
-	public void setSimulationParameter(SimulationParameter simulationParameter) {
-		this.simulationParameter = simulationParameter;
 	}
 
 	public Set<Run> getRuns() {

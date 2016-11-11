@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * This class defines metrics
@@ -19,7 +20,7 @@ import javax.persistence.OneToOne;
  */
 
 @Entity
-@Inheritance(strategy = javax.persistence.InheritanceType.TABLE_PER_CLASS)
+@Table(name = "METRIC")
 public class Metric implements Comparable {
 
 	// Attributes
@@ -28,9 +29,6 @@ public class Metric implements Comparable {
 	protected int id;
 
 	protected String name;
-
-	@OneToOne(targetEntity = Formula.class, cascade = CascadeType.ALL)
-	protected Formula formula;
 
 	@ManyToMany(targetEntity = Unit.class)
 	protected Set<Unit> units = new HashSet<Unit>();
@@ -65,14 +63,6 @@ public class Metric implements Comparable {
 
 	public void setName(String pname) {
 		this.name = pname;
-	}
-
-	public Formula getFormula() {
-		return formula;
-	}
-
-	public void setFormula(Formula pformula) {
-		this.formula = pformula;
 	}
 
 	public Set<Unit> getUnits() {
