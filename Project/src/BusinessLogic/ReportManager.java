@@ -636,7 +636,7 @@ public class ReportManager extends HibernateManager {
 						this.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
 			}
 			if (!isCumplimentRequirement){
-				report.addParameter("tactics", "The requirement hasn't been completed. You can apply the next tactics:/n"+this.getTactics());
+				report.addParameter("tactics", "The requirement hasn't been completed. You can apply the next tactics:\n"+this.getTactics());
 			}else {
 				report.addParameter("tactics", "The requirement has been completed.");
 			}
