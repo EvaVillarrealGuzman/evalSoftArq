@@ -116,9 +116,9 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != null) {
+						prepareView(1);
 						viewController.setModel(cmbSystem);
 						cmbSystemItemStateChanged();
-						prepareView(1);
 					}
 				}
 			});
@@ -209,12 +209,14 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 					chooseFile.setFilterNames(new String[] { Messages.getString("UCM2DEVS_JucmFiles_Label") });
 					chooseFile.setFilterExtensions(new String[] { "*.jucm" });
 					String filePath = chooseFile.open();
-					if (!viewController.isUCMDuplicate(filePath)) {
-						viewController.addToTable(filePath);
-						prepareView(2);
-					} else {
-						// TODO poner bien el nombre
-						viewController.createErrorDialog(Messages.getString("UCM2DEVS_UCMExists_ErrorDialog"));
+					if (filePath != null) {
+						if (!viewController.isUCMDuplicate(filePath)) {
+							viewController.addToTable(filePath);
+							prepareView(2);
+						} else {
+							// TODO poner bien el nombre
+							viewController.createErrorDialog(Messages.getString("UCM2DEVS_UCMExists_ErrorDialog"));
+						}
 					}
 				}
 			});
@@ -329,8 +331,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	/**
 	 * Getters and Setters
 	 */
-	
-	
+
 	public Button getBtnFileUCM() {
 		return btnBrowseUCM;
 	}
@@ -451,7 +452,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnAdd().setEnabled(false);
 			this.getBtnDelete().setEnabled(false);
 			this.getBtnConsult().setEnabled(false);
-			if (!(valueCmbUnit == null) ) {
+			if (!(valueCmbUnit == null)) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -466,7 +467,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnDelete().setEnabled(true);
 			this.getBtnConsult().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			if (!(valueCmbUnit == null) ) {
+			this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
+			if (!(valueCmbUnit == null)) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -479,7 +481,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnDelete().setEnabled(true);
 			this.getBtnConsult().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			if (!(valueCmbUnit == null) ) {
+			if (!(valueCmbUnit == null)) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -491,7 +493,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnAdd().setEnabled(false);
 			this.getBtnDelete().setEnabled(false);
 			this.getBtnConsult().setEnabled(false);
-			if (!(valueCmbUnit == null) ) {
+			if (!(valueCmbUnit == null)) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
