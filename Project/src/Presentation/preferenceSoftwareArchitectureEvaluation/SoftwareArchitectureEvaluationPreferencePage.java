@@ -37,7 +37,7 @@ import Presentation.preferences.Messages;
 /**
  * To specify a software architecture by JUCMNav
  * 
- * @author: FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  */
 public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {

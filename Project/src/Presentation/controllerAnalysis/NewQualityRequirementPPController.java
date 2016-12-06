@@ -25,7 +25,7 @@ import Presentation.preferences.Messages;
 /**
  * Controller for NewQualityRequirementPreferencePage
  * 
- * @author FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  *
  */
 public class NewQualityRequirementPPController extends Controller {

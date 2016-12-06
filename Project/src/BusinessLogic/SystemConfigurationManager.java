@@ -3,7 +3,6 @@ package BusinessLogic;
 import java.util.List;
 
 import Configuration.DOM;
-import Configuration.DatabaseConnection;
 import DataManager.Data;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
@@ -12,7 +11,7 @@ import DomainModel.AnalysisEntity.QualityAttribute;
 /**
  * This class is responsible for the management package: system configuration
  * 
- * @author: FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  * @version: 08/08/2016
  */
 

@@ -8,7 +8,7 @@ import javax.persistence.Inheritance;
 /**
  * This class defines the pats elements
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/09/2016
  */
 

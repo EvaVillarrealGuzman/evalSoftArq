@@ -32,7 +32,7 @@ import Presentation.preferences.Messages;
 /**
  * To create a new quality requirement
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  */
 public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	/**

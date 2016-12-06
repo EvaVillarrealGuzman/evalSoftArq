@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,8 +24,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
-import Presentation.controllerReports.ReportsPPController;
-
+/**
+ * This class is responsible for the management package: Analysis
+ * 
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
+ */
 public class Installation {
 	private static final String PATH = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
 

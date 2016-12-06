@@ -21,8 +21,6 @@ import DomainModel.AnalysisEntity.Unit;
  * This class initialize the conditions, quality attributes and its responsible
  * for creating specific scenarios (Creator Pattern).
  * 
- * @author: FEM
- * @version: 06/11/2015
  */
 public class Data {
 	static Metric m1 = new Metric("Responsibility Downtime");

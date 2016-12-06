@@ -9,11 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import DomainModel.AnalysisEntity.QualityRequirement;
 
+/**
+ * This class defines join path element
+ *  
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ */
 @Entity
 @Table(name = "SIMULATOR")
 public class Simulator implements Comparable{

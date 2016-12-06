@@ -8,7 +8,7 @@ import javax.persistence.Inheritance;
 /**
  * This class defines elements of one architecture
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/09/2016
  */
 @Entity

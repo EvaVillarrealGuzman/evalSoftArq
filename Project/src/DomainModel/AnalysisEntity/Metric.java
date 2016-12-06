@@ -3,19 +3,16 @@ package DomainModel.AnalysisEntity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  * This class defines metrics
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/11/2015
  */
 

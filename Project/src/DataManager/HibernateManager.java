@@ -17,8 +17,6 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 /**
  * This class management Hibernate (list class, save and update objects)
  * 
- * @author: FEM
- * @version: 06/11/2015
  */
 
 public class HibernateManager extends HibernateUtil {

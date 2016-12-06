@@ -22,6 +22,10 @@ import Presentation.preferences.Messages;
 
 /**
  * Parent controller with the reusable methods
+ * 
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
+ * @author: Florencia Rossini. E-mail: flori.rossini@gmail.com
  */
 public class Controller {
 

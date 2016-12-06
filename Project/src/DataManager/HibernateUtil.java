@@ -16,8 +16,6 @@ import Configuration.DatabaseConnection;
 /**
  * This class initialize Hibernate
  *
- * @author: FEM
- * @version: 06/11/2015
  */
 
 public class HibernateUtil {

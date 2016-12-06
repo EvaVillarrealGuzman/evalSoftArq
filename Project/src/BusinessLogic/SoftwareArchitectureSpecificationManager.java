@@ -22,7 +22,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Metric;
@@ -46,7 +45,7 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.StartPoint;
  * This class is responsible for the management package: Software Architecture
  * Specification
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  * @version: 23/08/2016
  */
 public class SoftwareArchitectureSpecificationManager extends HibernateManager implements TreeSelectionListener {

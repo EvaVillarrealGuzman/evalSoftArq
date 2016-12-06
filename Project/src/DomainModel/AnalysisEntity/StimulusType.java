@@ -8,7 +8,7 @@ import javax.persistence.Table;
 /**
  * This class defines the generic stimulus of a generic scenario of quality
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/11/2015
  */
 

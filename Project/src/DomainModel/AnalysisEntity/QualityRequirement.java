@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * This class defines the requirement of quality which will be specified by
  * specific quality scenarios
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/11/2015
  */
 

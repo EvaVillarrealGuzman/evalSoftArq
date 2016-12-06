@@ -23,12 +23,10 @@ import org.xml.sax.SAXException;
 /**
  * This class performs file operations xml
  * 
- * @author: FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  */
 public class DOM {
 
-	//private static String PATH = "C:/Users/Usuario-Pc/git/project/Project/src/Configuration/DatabaseConnection.xml";
-	//private static String PATH = "C:/Users/Micaela/git/project/Project/src/Configuration/DatabaseConnection.xml";
 	private static String PATH = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS/Configuration/databaseconfiguration.xml";
 
 	public static String readPassword() {

@@ -18,7 +18,7 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 /**
  * This class defines the system of a project
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/11/2015
  */
 

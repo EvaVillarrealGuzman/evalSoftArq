@@ -1,6 +1,5 @@
 package DomainModel.SoftwareArchitectureSpecificationEntity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +15,7 @@ import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 /**
  * This class defines an architecture view for a specific system
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/09/2016
  */
 

@@ -12,7 +12,7 @@ import DomainModel.AnalysisEntity.Unit;
 /**
  * This class defines parameters for a specific responsibility
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/09/2016
  */
 

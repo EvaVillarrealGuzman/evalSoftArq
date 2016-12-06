@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
+ * @version: 06/11/2015
+ */
 @Entity
 @Table(name = "RESPONSEMEASURETYPE")
 public class ResponseMeasureType implements Comparable {

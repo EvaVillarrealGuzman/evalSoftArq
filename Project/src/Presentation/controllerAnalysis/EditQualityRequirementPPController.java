@@ -23,7 +23,7 @@ import Presentation.preferences.Messages;
 /**
  * Controller for EditQualityRequirementPreferencePage
  * 
- * @author FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  *
  */
 public class EditQualityRequirementPPController extends Controller {

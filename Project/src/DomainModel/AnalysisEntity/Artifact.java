@@ -9,7 +9,7 @@ import javax.persistence.Table;
 /**
  * This class defines the concrete artifact of a particular scenario of quality
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/11/2015
  */
 

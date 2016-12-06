@@ -32,7 +32,7 @@ import Presentation.preferences.Messages;
 /**
  * To specify a software architecture by JUCMNav
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  */
 public class SoftwareArchitectureSpecificationManagementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {

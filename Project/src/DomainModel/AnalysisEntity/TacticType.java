@@ -8,7 +8,7 @@ import javax.persistence.Table;
 /**
  * This class defines the tactic types
  * 
- * @author: Mica
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 19/09/2016
  */
 

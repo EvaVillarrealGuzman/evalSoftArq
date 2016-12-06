@@ -27,7 +27,7 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 /**
  * This class is responsible for the management package: Report
  * 
- * @author: MICA
+ * @author: Florencia Rossini. E-mail: flori.rossini@gmail.com
  * @version: 07/09/2016
  */
 public class ReportManager extends HibernateManager {

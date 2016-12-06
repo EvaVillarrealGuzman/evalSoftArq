@@ -10,10 +10,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import Presentation.preferences.Messages;
 
-/**
- * @author FEM
- *
- */
 public class UCM2DEVSPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 

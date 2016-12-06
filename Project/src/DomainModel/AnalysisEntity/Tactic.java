@@ -1,8 +1,5 @@
 package DomainModel.AnalysisEntity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,7 +9,7 @@ import javax.persistence.Table;
 /**
  * This class defines a tactic
  * 
- * @author: Mica
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 19/09/2016
  */
 

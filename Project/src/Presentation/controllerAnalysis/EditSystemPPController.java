@@ -11,7 +11,7 @@ import Presentation.preferences.Messages;
 /**
  * Controller for EditSystemPreferencePage
  * 
- * @author FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  *
  */
 public class EditSystemPPController extends Controller {

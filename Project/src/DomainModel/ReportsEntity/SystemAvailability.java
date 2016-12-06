@@ -1,5 +1,9 @@
 package DomainModel.ReportsEntity;
 
+/**
+ * 
+ * @author: Florencia Rossini. E-mail: flori.rossini@gmail.com
+ */
 public class SystemAvailability {
 
 	private double availability;

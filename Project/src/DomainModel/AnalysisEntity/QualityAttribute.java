@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * This class defines a attribute of quality (availability, reliability and
  * performance)
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/11/2015
  */
 

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 /**
  * This class defines the unity of a or more metric
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/11/2015
  */
 

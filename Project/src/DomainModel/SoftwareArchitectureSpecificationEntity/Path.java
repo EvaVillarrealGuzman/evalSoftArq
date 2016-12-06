@@ -12,7 +12,7 @@ import javax.persistence.Table;
 /**
  * This class defines the paths for an specific architecture view
  *  
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  * @version: 06/09/2016
  */
 

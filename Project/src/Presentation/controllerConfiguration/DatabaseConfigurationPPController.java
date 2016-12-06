@@ -4,12 +4,11 @@ import BusinessLogic.SystemConfigurationManager;
 import Presentation.Controller;
 import Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage;
 import Presentation.preferences.Messages;
-import Presentation.preferences.PreferenceConstants;
 
 /**
  * Controller for SystemConfigurationPreferencePage
  * 
- * @author FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  *
  */
 public class DatabaseConfigurationPPController extends Controller {

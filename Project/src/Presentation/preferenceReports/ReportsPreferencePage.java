@@ -35,7 +35,7 @@ import Presentation.preferences.Messages;
  * To view a report for a specific architecture and a specific quality
  * requirement
  * 
- * @author: FEM
+ * @author: Florencia Rossini. E-mail: flori.rossini@gmail.com
  */
 public class ReportsPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 

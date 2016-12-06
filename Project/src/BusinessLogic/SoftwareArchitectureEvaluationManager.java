@@ -35,7 +35,8 @@ import Main.TransformerSimulator;
  * This class is responsible for the management package: Software Architecture
  * Specification
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  * @version: 23/08/2016
  */
 public class SoftwareArchitectureEvaluationManager extends HibernateManager {

@@ -8,7 +8,7 @@ import Presentation.preferences.Messages;
 /**
  * Controller for NewSystemPreferencePage
  * 
- * @author FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  *
  */
 public class NewSystemPPController extends Controller {

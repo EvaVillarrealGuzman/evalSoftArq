@@ -39,7 +39,7 @@ import Presentation.preferences.Messages;
 /**
  * To search, consult, edit or remove a quality requirement
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  */
 public class EditQualityRequirementPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {

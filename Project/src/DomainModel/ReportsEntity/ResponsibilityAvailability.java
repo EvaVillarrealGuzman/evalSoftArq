@@ -1,5 +1,10 @@
 package DomainModel.ReportsEntity;
 
+
+/**
+ * 
+ * @author: Florencia Rossini. E-mail: flori.rossini@gmail.com
+ */
 public class ResponsibilityAvailability {
 	private double downtime;
 	private double recoveryTime;

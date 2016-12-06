@@ -3,7 +3,7 @@ package Configuration;
 /**
  * Contain data to database connection
  * 
- * @author: FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  */
 public class DatabaseConnection {
 

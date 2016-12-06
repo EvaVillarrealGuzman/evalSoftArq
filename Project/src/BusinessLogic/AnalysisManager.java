@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import Configuration.DatabaseConnection;
 import DataManager.HibernateManager;
 import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Artifact;
@@ -30,7 +29,8 @@ import DomainModel.AnalysisEntity.Unit;
 /**
  * This class is responsible for the management package: Analysis
  * 
- * @author: FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  * @version: 06/11/2015
  */
 

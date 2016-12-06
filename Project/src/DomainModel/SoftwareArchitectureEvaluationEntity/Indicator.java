@@ -9,6 +9,11 @@ import javax.persistence.Table;
 import DomainModel.AnalysisEntity.Metric;
 import DomainModel.AnalysisEntity.Unit;
 
+/**
+ * This class defines join path element
+ *  
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ */
 @Entity
 @Table(name = "INDICATOR")
 public class Indicator implements Comparable {

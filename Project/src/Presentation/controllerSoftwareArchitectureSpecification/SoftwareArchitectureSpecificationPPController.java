@@ -29,7 +29,7 @@ import Presentation.preferences.Messages;
 /**
  * Controller for SoftwareArchitectureEspecificationPreferencePage
  * 
- * @author FEM
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
  *
  */
 public class SoftwareArchitectureSpecificationPPController extends Controller {

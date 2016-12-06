@@ -25,7 +25,7 @@ import Presentation.preferences.Messages;
 /**
  * To system configuration
  * 
- * @author: FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  */
 
 public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {

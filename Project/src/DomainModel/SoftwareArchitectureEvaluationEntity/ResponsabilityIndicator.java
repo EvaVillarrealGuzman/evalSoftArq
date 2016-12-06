@@ -8,6 +8,11 @@ import javax.persistence.Table;
 import DomainModel.SoftwareArchitectureEvaluationEntity.IndicatorType;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
 
+/**
+ * This class defines join path element
+ *  
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ */
 @Entity
 @Table(name = "RESPONSABILIDADINDICATOR")
 public class ResponsabilityIndicator extends IndicatorType {

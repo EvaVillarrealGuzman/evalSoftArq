@@ -27,7 +27,7 @@ import Presentation.preferences.Messages;
 /**
  * To search, consult, edit or remove a system
  * 
- * @author: FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  */
 
 public class EditSystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {

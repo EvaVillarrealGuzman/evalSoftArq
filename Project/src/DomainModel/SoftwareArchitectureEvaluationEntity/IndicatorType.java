@@ -5,6 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * This class defines join path element
+ *  
+ * @author: Micaela Montenegro. E-mail: mica.montenegro.sistemas@gmail.com
+ */
 @Entity
 @Table(name = "INDICATORTYPE")
 public class IndicatorType implements Comparable {

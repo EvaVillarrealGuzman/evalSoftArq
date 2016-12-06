@@ -2,7 +2,6 @@ package Presentation.controllerReports;
 
 import java.util.Iterator;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -10,13 +9,9 @@ import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.ReportManager;
 import DomainModel.AnalysisEntity.QualityRequirement;
-import DomainModel.ReportsEntity.SystemAvailability;
-import DomainModel.ReportsEntity.SystemPerformance;
-import DomainModel.ReportsEntity.SystemReliability;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
-import DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
 import Presentation.preferenceReports.ReportsPreferencePage;
@@ -25,8 +20,7 @@ import Presentation.preferences.Messages;
 /**
  * Controller for ReportPreferencePage
  * 
- * @author FEM
- *
+ * @author: Florencia Rossini. E-mail: flori.rossini@gmail.com
  */
 public class ReportsPPController extends Controller {
 

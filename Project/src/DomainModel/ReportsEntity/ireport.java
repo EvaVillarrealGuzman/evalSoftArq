@@ -12,6 +12,11 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+/**
+ * 
+ * @author: Florencia Rossini. E-mail: flori.rossini@gmail.com
+ */
+
 public class ireport {
 	private DataSourceCollection dataSource;
 	private JasperReport masterReport;

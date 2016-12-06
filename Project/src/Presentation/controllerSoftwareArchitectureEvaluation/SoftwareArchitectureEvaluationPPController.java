@@ -21,7 +21,7 @@ import Presentation.preferences.Messages;
 /**
  * Controller for SoftwareArchitectureEspecificationPreferencePage
  * 
- * @author FEM
+ * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  *
  */
 public class SoftwareArchitectureEvaluationPPController extends Controller {

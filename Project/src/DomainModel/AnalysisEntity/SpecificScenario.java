@@ -7,6 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author: Micaela Montenegro. mail: mica.montenegro.sistemas@gmail.com
+ * @version: 06/11/2015
+ */
 @Entity
 @Table(name = "SPECIFICSCENARIO")
 public class SpecificScenario implements Comparable {
