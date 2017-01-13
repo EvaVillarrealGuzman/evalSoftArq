@@ -52,9 +52,9 @@ public class EditSystemPPController extends Controller {
 		err = this.setSystem();
 		if (err == 0) {
 			this.getForm().prepareView(2);
-			if(this.getManager().updateSystem()){
+			if (this.getManager().updateSystem()) {
 				return 0;
-			} else{
+			} else {
 				return 1;
 			}
 		}
@@ -74,7 +74,7 @@ public class EditSystemPPController extends Controller {
 	 * 
 	 * @return int (indicates if the update was successfully)
 	 */
-	public int setSystem() {
+	private int setSystem() {
 		if (this.isValidData()) {
 			this.getManager().setSystemName(
 					((IStructuredSelection) this.getForm().getCboSystem().getSelection()).getFirstElement().toString());
@@ -105,7 +105,7 @@ public class EditSystemPPController extends Controller {
 	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
-	public boolean isValidData() {
+	private boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCboSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
 			this.getForm().getCboSystem().getCombo().setFocus();
@@ -139,9 +139,13 @@ public class EditSystemPPController extends Controller {
 	private void setModel(DomainModel.AnalysisEntity.System pmodel) {
 		this.getManager().setSystem(pmodel);
 	}
-	
-	public Boolean isConnection(){
+
+	public Boolean isConnection() {
 		return this.getManager().isConnection();
+	}
+
+	public boolean existSystemTrue() {
+		return this.getManager().existSystemTrue();
 	}
 
 }

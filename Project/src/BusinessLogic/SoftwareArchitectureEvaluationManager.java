@@ -130,7 +130,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	 * 
 	 * @return List<System> with the system names whose state==true
 	 */
-	public List<DomainModel.AnalysisEntity.System> listSystem() {
+	private List<DomainModel.AnalysisEntity.System> listSystem() {
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
 
@@ -153,22 +153,12 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	 * 
 	 * @return List<Unit> with the unit names
 	 */
-	public List<Unit> listUnit() {
+	private List<Unit> listUnit() {
 		return this.listClass(Unit.class, "name");
 	}
 
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
-	}
-
-	public String getPathUCMs() {
-		Iterator it = this.getSystem().getArchitectures().iterator();
-		if (it.hasNext()) {
-			Architecture a = (Architecture) it.next();
-			return a.getPathUCM();
-		} else {
-			return null;
-		}
 	}
 
 	public Set<QualityRequirement> getQualityRequirements() {
@@ -206,13 +196,13 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return false;
 	}
 
-	public void createSimulator() {
+	private void createSimulator() {
 		simulator = new Simulator();
 		typeIndicator = new SystemIndicator(this.getSystem().getSystemName());
 		this.saveObject(typeIndicator);
 	}
 
-	public void createRun(String psimulationTime, Table ptable) {
+	private void createRun(String psimulationTime, Table ptable) {
 		run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
 		this.getSimulator().getRuns().add(run);
 		this.saveObject(this.getSimulator());
@@ -229,7 +219,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.updateObject(this.getSystem());
 	}
 
-	public void convertCSVToTable(String ppath) throws IOException {
+	private void convertCSVToTable(String ppath) throws IOException {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(ppath));
@@ -262,7 +252,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return result;
 	}
 
-	public void loadDataInBd(String[] pfields, SystemIndicator type) {
+	private void loadDataInBd(String[] pfields, SystemIndicator type) {
 		if (pfields[1].equals("system")) {
 			loadSystemIndicator(pfields, type);
 		} else {
@@ -270,7 +260,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 	}
 
-	public Responsibility[] getResponsibilities() {
+	private Responsibility[] getResponsibilities() {
 		ArrayList<Responsibility> responsibilities = new ArrayList<Responsibility>();
 		System.out.println("architecture is 0: " + this.getArchitecture());
 		Iterator it2 = this.getArchitecture().getPaths().iterator();
@@ -290,7 +280,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return arrayResponsibility;
 	}
 
-	public void loadSystemIndicator(String[] pfields, SystemIndicator ptype) {
+	private void loadSystemIndicator(String[] pfields, SystemIndicator ptype) {
 		Indicator ind = new Indicator();
 		ind.setType(ptype);
 		ind.setValue(Double.parseDouble(pfields[3]));
@@ -319,7 +309,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.updateObject(this.getSystem());
 	}
 
-	public Unit getUnitIndicator() {
+	private Unit getUnitIndicator() {
 		Responsibility[] r = this.getResponsibilities();
 		Iterator it = r[0].getSpecificationParameter().iterator();
 		if (it.hasNext()) {
@@ -329,7 +319,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return null;
 	}
 
-	public void loadResponsabilityIndicator(String[] pfields) {
+	private void loadResponsabilityIndicator(String[] pfields) {
 		Indicator ind = new Indicator();
 		ResponsabilityIndicator type = new ResponsabilityIndicator(pfields[0]);
 		type.setName(pfields[0]);
@@ -359,12 +349,12 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.updateObject(this.getSystem());
 	}
 
-	public List listMetric(String pmetric) {
+	private List listMetric(String pmetric) {
 		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
 		return crit.list();
 	}
 
-	public double convertValueAcordingToUnit(double pvalue, Unit punit) {
+	private double convertValueAcordingToUnit(double pvalue, Unit punit) {
 		double pvalueConvert = 0;
 		if (punit == this.getUnitIndicator()) {
 			pvalueConvert = pvalue;
@@ -419,23 +409,19 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return this.getPluginTS().callChequerUCM(path);
 	}
 
-	public Boolean transformer(String inputPath) {
+	private Boolean transformer(String inputPath) {
 		return this.getPluginTS().callTransformer(inputPath, PATHEVALUATION.substring(1, PATHEVALUATION.length()));
 	}
 
-	public Boolean simulator(double observe_t, Unit punit) {
-		//TODO modificar
+	private Boolean simulator(double observe_t, Unit punit) {
 		double psimulationTime = this.convertValueAcordingToUnit(observe_t, punit);
-		if (this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime)) {
-			return true;
-		} else {
-			return false;
-		}
-
+		return this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime);
 	}
 
-	// Delete files generate by plugin TS
-	public void deleteFiles() {
+	/**
+	 * Delete files generate by plugin TS
+	 */
+	private void deleteFiles() {
 		// Delete jar
 		File jarFile = new File(PATHEVALUATION + "/simulator.jar");
 		jarFile.delete();
@@ -461,15 +447,14 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 			File file = new File(Directory, fileList[i]);
 			file.delete();
 		}
-		
-		//Delete test.class and simenvironment.class
+
+		// Delete test.class and simenvironment.class
 		File testFile = new File(PATHEVALUATION + "/Simulator/src/Test.class");
 		testFile.delete();
-		
+
 		File simEnvironmentFile = new File(PATHEVALUATION + "/Simulator/src/SimEnvironment/SimEnvironment.class");
 		simEnvironmentFile.delete();
-		
-		
+
 	}
 
 	/**
@@ -484,6 +469,45 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		HibernateUtil.initialize(this.getDb());
 		HibernateUtil hu = new HibernateUtil();
 		return hu.isConnection();
+	}
+
+	public int evaluate(String UCMpath, String chequerUCMResult, double simulationTime, Unit unit,
+			DomainModel.AnalysisEntity.System system, String simulationTimeS, Table table) throws IOException {
+		try {
+
+			TransformerSimulator pluginTS = new TransformerSimulator();
+
+			if (chequerUCMResult.equals("")) {
+				if (this.transformer(UCMpath)) {
+
+					if (this.simulator(simulationTime, unit)) {
+						this.setSystem(system);
+
+						this.createSimulator();
+						for (int i = 1; i <= 10; i++) {
+							String num = Integer.toString(i);
+							this.createRun(simulationTimeS, table);
+							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
+									+ "plugins/UCM2DEVS/Run/Run" + num + "/performance.csv");
+							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
+									+ "plugins/UCM2DEVS/Run/Run" + num + "/availability.csv");
+							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
+									+ "plugins/UCM2DEVS/Run/Run" + num + "/reliability.csv");
+						}
+						this.deleteFiles();
+						return 0;
+					} else {
+						return 1;
+					}
+				} else {
+					return 2;
+				}
+			} else {
+				return 3;
+			}
+		} catch (IOException e) {
+			return 4;
+		}
 	}
 
 }

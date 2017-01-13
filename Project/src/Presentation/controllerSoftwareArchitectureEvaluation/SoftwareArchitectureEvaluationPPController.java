@@ -2,7 +2,6 @@ package Presentation.controllerSoftwareArchitectureEvaluation;
 
 import java.io.IOException;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -86,70 +85,62 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		this.getManager().setSystem(pmodel);
 	}
 
-
 	/**
 	 * Evaluate a architecture
 	 * 
 	 * @throws IOException
 	 */
-	public int evaluate() throws IOException {
+	public void evaluate() throws IOException {
 		if (isValidData()) {
-			try {
-				this.getManager().setArchitecture((Architecture) this.getForm().getTableSoftArc()
-						.getItem(this.getForm().getTableSoftArc().getSelectionIndex()).getData());
-				
-				TransformerSimulator pluginTS = new TransformerSimulator();
+			this.getManager().setArchitecture((Architecture) this.getForm().getTableSoftArc()
+					.getItem(this.getForm().getTableSoftArc().getSelectionIndex()).getData());
 
-				TableItem item = this.getForm().getTableSoftArc()
-						.getItem(this.getForm().getTableSoftArc().getSelectionIndex());
-				String UCMpath = item.getText(2) + "\\" + item.getText(1);
+			TransformerSimulator pluginTS = new TransformerSimulator();
 
-				String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
+			TableItem item = this.getForm().getTableSoftArc()
+					.getItem(this.getForm().getTableSoftArc().getSelectionIndex());
+			String UCMpath = item.getText(2) + "\\" + item.getText(1);
 
-				if (chequerUCMResult.equals("")) {
-					if (this.getManager().transformer(UCMpath)) {
+			String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
 
-						if (this.getManager().simulator(this.getForm().getSimulationTime().getDoubleValue(),
-								(Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection())
-										.getFirstElement())) {
-							this.getManager().setSystem((DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
-									.getForm().getCmbSystem().getSelection()).getFirstElement());
-							
-							this.getManager().createSimulator();
-							for (int i = 1; i <= 10; i++) {
-								String num = Integer.toString(i);
-								this.getManager().createRun(this.getForm().getSimulationTime().getStringValue(),
-										this.getForm().getTable());
-								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-										+ "plugins/UCM2DEVS/Run/Run" + num + "/performance.csv");
-								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-										+ "plugins/UCM2DEVS/Run/Run" + num + "/availability.csv");
-								this.getManager().convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-										+ "plugins/UCM2DEVS/Run/Run" + num + "/reliability.csv");
-							}
-							this.getManager().deleteFiles();
-							this.createSuccessDialog(Messages.getString("UCM2DEVS_Simulation_Dialog"));
-							return 0;
-						} else {
-							this.createErrorDialog(Messages.getString("UCM2DEVS_Simulation_ErrorDialog"));
-							return 1;
-						}
-					} else {
-						this.createErrorDialog(Messages.getString("UCM2DEVS_Transformation_ErrorDialog"));
-						return 1;
-					}
-				} else {
-					this.createErrorDialog(chequerUCMResult);
-					return 1;
-				}
-			} catch (IOException e) {
-				return 1;
+			double simulationTime = this.getForm().getSimulationTime().getDoubleValue();
+
+			String simulationTimeS = this.getForm().getSimulationTime().getStringValue();
+
+			Unit unit = (Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection()).getFirstElement();
+
+			Table table = this.getForm().getTable();
+
+			DomainModel.AnalysisEntity.System system = (DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
+					.getForm().getCmbSystem().getSelection()).getFirstElement();
+
+			switch (this.getManager().evaluate(UCMpath, chequerUCMResult, simulationTime, unit, system, simulationTimeS,
+					table)) {
+			case 0:
+				this.createSuccessDialog(Messages.getString("UCM2DEVS_Simulation_Dialog"));
+				this.createObjectSuccessDialog();
+				break;
+			case 1:
+				this.createErrorDialog(Messages.getString("UCM2DEVS_Simulation_ErrorDialog"));
+				this.createObjectDontUpdateErrorDialog();
+				break;
+			case 2:
+				this.createErrorDialog(Messages.getString("UCM2DEVS_Transformation_ErrorDialog"));
+				this.createObjectDontUpdateErrorDialog();
+				break;
+			case 3:
+				this.createErrorDialog(chequerUCMResult);
+				this.createObjectDontUpdateErrorDialog();
+				break;
+			case 4:
+				this.createObjectDontUpdateErrorDialog();
+				break;
+
 			}
 		}
-		return 2;
 	}
 
-	public boolean isValidData() {
+	private boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
 			this.getForm().getCmbSystem().getCombo().setFocus();
@@ -223,7 +214,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		}
 	}
 
-	public void addToTable(Architecture arch) {
+	private void addToTable(Architecture arch) {
 		TableItem item = new TableItem(this.getForm().getTableSoftArc(), SWT.NONE);
 		item.setData(arch);
 
@@ -237,7 +228,15 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	}
 
 	public void setModelArchitecture(Architecture pdata) {
-			this.getManager().setArchitecture(pdata);		
+		this.getManager().setArchitecture(pdata);
+	}
+
+	public boolean existSystemTrueWithArchitecture() {
+		return this.getManager().existSystemTrueWithArchitecture();
+	}
+
+	public boolean existSystemTrueWithQualityRequirementTrue() {
+		return this.getManager().existSystemTrueWithQualityRequirementTrue();
 	}
 
 }

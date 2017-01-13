@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import DataManager.HibernateManager;
-import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Artifact;
 import DomainModel.AnalysisEntity.ArtifactType;
 import DomainModel.AnalysisEntity.Environment;
@@ -65,7 +64,7 @@ public class AnalysisManager extends HibernateManager {
 	/**
 	 * Getters and Setters
 	 */
-	
+
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -95,23 +94,22 @@ public class AnalysisManager extends HibernateManager {
 		qualityAttributes.toArray(arrayQualityAttribute);
 		return arrayQualityAttribute;
 	}
-	
+
 	/**
 	 * 
 	 * @return ComboBoxModel with system names whose state==true
 	 */
 	public DomainModel.AnalysisEntity.System[] getComboModelSystem() { // NOPMD
-																				// by
-																				// Usuario-Pc
-																				// on
-																				// 10/06/16
-																				// 21:42
+																		// by
+																		// Usuario-Pc
+																		// on
+																		// 10/06/16
+																		// 21:42
 		ArrayList<DomainModel.AnalysisEntity.System> systems = new ArrayList<DomainModel.AnalysisEntity.System>();
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			systems.add(auxTipo);
 		}
-		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems
-				.size()];
+		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems.size()];
 		systems.toArray(arraySystem);
 		return arraySystem;
 	}
@@ -123,11 +121,11 @@ public class AnalysisManager extends HibernateManager {
 	 * 
 	 */
 	public DomainModel.AnalysisEntity.System[] getComboModelSystemWithRequirements() { // NOPMD
-																								// by
-																								// Usuario-Pc
-																								// on
-																								// 10/06/16
-																								// 21:41
+																						// by
+																						// Usuario-Pc
+																						// on
+																						// 10/06/16
+																						// 21:41
 		ArrayList<DomainModel.AnalysisEntity.System> systems = new ArrayList<DomainModel.AnalysisEntity.System>();
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getQualityRequirements().isEmpty() == false) {
@@ -142,12 +140,11 @@ public class AnalysisManager extends HibernateManager {
 				}
 			}
 		}
-		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems
-				.size()];
+		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems.size()];
 		systems.toArray(arraySystem);
 		return arraySystem;
 	}
-	
+
 	/**
 	 * @param QualityAttribute
 	 * @return ComboBoxModel with stimulusSourceType names for an specific
@@ -165,7 +162,6 @@ public class AnalysisManager extends HibernateManager {
 		stimulusSourceTypes.toArray(arrayStimulusSourceType);
 		return arrayStimulusSourceType;
 	}
-	
 
 	/**
 	 * @param QualityAttribute
@@ -291,26 +287,22 @@ public class AnalysisManager extends HibernateManager {
 		units.toArray(arrayUnit);
 		return arrayUnit;
 	}
-	
+
 	/**
 	 * 
 	 * @return List<QualityAttribute> with the names of the quality attributes
 	 */
-	public List<QualityAttribute> listQualityAttribute() {
+	private List<QualityAttribute> listQualityAttribute() {
 		return this.listClass(QualityAttribute.class, "name");
 	}
-
-	
 
 	/**
 	 * 
 	 * @return List<System> with the system names whose state==true
 	 */
-	public List<DomainModel.AnalysisEntity.System> listSystem() {
+	private List<DomainModel.AnalysisEntity.System> listSystem() {
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
-
-
 
 	/**
 	 * 
@@ -351,9 +343,6 @@ public class AnalysisManager extends HibernateManager {
 		return false;
 	}
 
-
-
-
 	/**
 	 * Sets the parameters of its attribute system
 	 * 
@@ -378,12 +367,11 @@ public class AnalysisManager extends HibernateManager {
 	 *            pcondition
 	 * 
 	 */
-	public void newQualityRequirement(DomainModel.AnalysisEntity.System psystem, String pdescription,
-			boolean pstate, QualityAttribute pqualityAttribute, StimulusSource pstimulusSource, Stimulus pstimulus,
-			Artifact partifact, Environment penvironment, Response presponse, ResponseMeasure presponseMeasure) {
-		psystem.getQualityRequirements()
-				.add(new QualityRequirement(pstate, new SpecificScenario(pdescription, pqualityAttribute,
-						pstimulusSource, pstimulus, partifact, penvironment, presponse, presponseMeasure)));
+	public void newQualityRequirement(DomainModel.AnalysisEntity.System psystem, String pdescription, boolean pstate,
+			QualityAttribute pqualityAttribute, StimulusSource pstimulusSource, Stimulus pstimulus, Artifact partifact,
+			Environment penvironment, Response presponse, ResponseMeasure presponseMeasure) {
+		psystem.getQualityRequirements().add(new QualityRequirement(pstate, new SpecificScenario(pdescription,
+				pqualityAttribute, pstimulusSource, pstimulus, partifact, penvironment, presponse, presponseMeasure)));
 		this.setSystem(psystem);
 	}
 
@@ -450,7 +438,7 @@ public class AnalysisManager extends HibernateManager {
 		return this.saveObject(this.getSystem());
 
 	}
-	
+
 	public Boolean saveQualityRequirement() {
 		return this.updateSystem();
 	}
@@ -458,8 +446,6 @@ public class AnalysisManager extends HibernateManager {
 	public Boolean updateSystem() {
 		return this.updateObject(this.getSystem());
 	}
-
-
 
 	public Boolean updateQualityRequirement() {
 		return this.updateSystem();
@@ -609,18 +595,4 @@ public class AnalysisManager extends HibernateManager {
 
 	}
 
-	/**
-	 * Return if connection with database is success
-	 * 
-	 * @return
-	 */
-	public Boolean isConnection() {
-		if (HibernateUtil.getSession().isOpen()) {
-			HibernateUtil.getSession().close();
-		}
-		HibernateUtil.initialize(this.getDb());
-		HibernateUtil hu = new HibernateUtil();
-		return hu.isConnection();
-	}
-	
 }

@@ -325,7 +325,7 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	 */
 	public void prepareView(int pabm) { // NOPMD by Usuario-Pc on 11/06/16 12:34
 		this.getCboSystem().getCombo().setFocus();
-		if (!getViewController().getManager().existSystemTrue()) {
+		if (!getViewController().existSystemTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
 			pabm = 3;
 		}

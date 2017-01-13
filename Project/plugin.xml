@@ -218,43 +218,43 @@
             category="Presentation.preferences.SAE"
             class="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
             id="Presentation.preferenceConfiguration.DatabaseConfigurationPreferencePage"
-            name="%DatabaseConfiguration">
+            name="Database Configuration">
       </page>
       <page
             category="Presentation.preferences.SAE"
             class="Presentation.preferenceAnalysis.NewSystemPreferencePage"
             id="Presentation.preferenceAnalysis.NewSystemPreferencePage"
-            name="%NewSystem">
+            name="New System">
       </page>
       <page
             category="Presentation.preferences.SAE"
             class="Presentation.preferenceAnalysis.EditSystemPreferencePage"
             id="Presentation.preferenceAnalysis.EditSystemPreferencePage"
-            name="%EditSystem">
+            name="Edit System">
       </page>
 	  <page
       		category="Presentation.preferences.SAE"
        		class="Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage"
        		id="Presentation.preferenceAnalysis.NewQualityRequirementPreferencePage"
-       		name="%NewQualityRequirement">
+       		name="New Quality Requirement">
 	  </page>
 	  <page
        		category="Presentation.preferences.SAE"
        		class="Presentation.preferenceAnalysis.EditQualityRequirementPreferencePage"
        		id="Presentation.preferenceAnalysis.EditQualityRequirementPreferencePage"
-       		name="%EditQualityRequirement">
+       		name="Edit Quality Requirement">
 	 </page>	
   <page
         category="Presentation.preferences.SAE"
         class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
         id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
-        name="%SpecificationManagement">
+        name="Specification Management">
   </page>
   <page
         category="Presentation.preferences.SAE"
         class="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
         id="Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage"
-        name="%Evaluation">
+        name="Evaluation">
   </page>
   <page
         category="Presentation.preferences.SAE"

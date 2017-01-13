@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import DataManager.HibernateManager;
-import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.Tactic;
@@ -38,12 +37,11 @@ public class ReportManager extends HibernateManager {
 	private Architecture architecture;
 	private QualityRequirement qualityRequirement;
 	private QualityAttribute qualityAttribute;
-	
 
 	/**
 	 * Getters and Setters
 	 */
-	
+
 	public void setSystem(DomainModel.AnalysisEntity.System psystem) {
 		this.system = psystem;
 	}
@@ -78,24 +76,6 @@ public class ReportManager extends HibernateManager {
 
 	/**
 	 * 
-	 * @return True if there are systems whose state==true, else return false
-	 * 
-	 */
-	public boolean existSystemTrue() {
-		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			Iterator it = auxTipo.getArchitectures().iterator();
-			if (it.hasNext()) {
-				Architecture q = (Architecture) it.next();
-				if (q.getSimulator() != null) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * 
 	 * @return ComboBoxModel with system names whose state==true
 	 */
 	public DomainModel.AnalysisEntity.System[] getComboModelSystemWithSimulations() {
@@ -118,51 +98,13 @@ public class ReportManager extends HibernateManager {
 	 * 
 	 * @return List<System> with the system names whose state==true
 	 */
-	public List<DomainModel.AnalysisEntity.System> listSystem() {
+	private List<DomainModel.AnalysisEntity.System> listSystem() {
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
 
-	public void updateSystem() {
-		this.updateObject(this.getSystem());
-	}
-
-	public String getPathUCMs() {
-		Iterator it = this.getSystem().getArchitectures().iterator();
-		if (it.hasNext()) {
-			Architecture a = (Architecture) it.next();
-			return a.getPathUCM();
-		} else {
-			return null;
-		}
-	}
-
-	public void setPathUCMs(String pathUCM) {
-		Iterator it = this.getSystem().getArchitectures().iterator();
-		if (it.hasNext()) {
-			Architecture a = (Architecture) it.next();
-			a.setPathUCM(pathUCM);
-		} else {
-			Architecture pa = new Architecture(pathUCM);
-			this.getSystem().getArchitectures().add(pa);
-		}
-	}
-
-	public List<QualityAttribute> listQualityAttribute() {
-		return this.listClass(QualityAttribute.class, "name");
-	}
 
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
-	}
-
-	public QualityAttribute[] getQualityAttributes() {
-		ArrayList<QualityAttribute> qualityAttributes = new ArrayList<QualityAttribute>();
-		for (QualityAttribute auxTipo : this.listQualityAttribute()) {
-			qualityAttributes.add(auxTipo);
-		}
-		QualityAttribute[] arrayQualityAttribute = new QualityAttribute[qualityAttributes.size()];
-		qualityAttributes.toArray(arrayQualityAttribute);
-		return arrayQualityAttribute;
 	}
 
 	/**
@@ -170,14 +112,6 @@ public class ReportManager extends HibernateManager {
 	 * 
 	 * @return
 	 */
-	public Boolean isConnection() {
-		if (HibernateUtil.getSession().isOpen()) {
-			HibernateUtil.getSession().close();
-		}
-		HibernateUtil.initialize(this.getDb());
-		HibernateUtil hu = new HibernateUtil();
-		return hu.isConnection();
-	}
 
 	public List<ResponsibilityPerformance> listResponsibilityPerformance() {
 
@@ -381,7 +315,8 @@ public class ReportManager extends HibernateManager {
 				.equals("System Availability Time")) {
 			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		} else {
-			return this.getSimulationTime()-this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
+			return this.getSimulationTime()
+					- this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		}
 	}
 
@@ -390,7 +325,8 @@ public class ReportManager extends HibernateManager {
 				.equals("System No-Availability Time")) {
 			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		} else {
-			return this.getSimulationTime()-this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
+			return this.getSimulationTime()
+					- this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		}
 	}
 
@@ -530,62 +466,10 @@ public class ReportManager extends HibernateManager {
 		return list;
 	}
 
-	public double getSimulationTime(){
-		Iterator<Run> its = this.getArchitecture().getSimulator().getRuns().iterator(); 
+	private double getSimulationTime() {
+		Iterator<Run> its = this.getArchitecture().getSimulator().getRuns().iterator();
 		Run r = its.next();
 		return r.getSimulationHorizon();
-	}
-
-	public Set<QualityRequirement> getQualityRequirements() {
-		return this.getSystem().getQualityRequirements();
-	}
-
-	/**
-	 * 
-	 * @return ComboBoxModel with qualityAttribute names
-	 */
-	public QualityAttribute[] getComboModelIndicator() {
-		ArrayList<QualityAttribute> qualityAttributes = new ArrayList<QualityAttribute>();
-		for (QualityAttribute auxTipo : this.listIndicators()) {
-			System.out.println(auxTipo);
-			qualityAttributes.add(auxTipo);
-		}
-		QualityAttribute[] arrayQualityAttribute = new QualityAttribute[qualityAttributes.size()];
-		qualityAttributes.toArray(arrayQualityAttribute);
-		return arrayQualityAttribute;
-	}
-
-	/**
-	 * 
-	 * @return List<QualityAttribute> with the names of the quality attributes
-	 */
-	public List<QualityAttribute> listIndicators() {
-		return this.listClass(QualityAttribute.class, "name");
-	}
-
-	public DomainModel.AnalysisEntity.System[] getComboModelSystemWithRequirements() { // NOPMD
-		// by
-		// Usuario-Pc
-		// on
-		// 10/06/16
-		// 21:41
-		ArrayList<DomainModel.AnalysisEntity.System> systems = new ArrayList<DomainModel.AnalysisEntity.System>();
-		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
-			if (auxTipo.getQualityRequirements().isEmpty() == false) {
-				Iterator it = auxTipo.getQualityRequirements().iterator();
-				boolean i = true;
-				while (it.hasNext() && i) {
-					QualityRequirement q = (QualityRequirement) it.next();
-					if (q.isState()) {
-						systems.add(auxTipo);
-						i = false;
-					}
-				}
-			}
-		}
-		DomainModel.AnalysisEntity.System[] arraySystem = new DomainModel.AnalysisEntity.System[systems.size()];
-		systems.toArray(arraySystem);
-		return arraySystem;
 	}
 
 	/**
@@ -619,7 +503,8 @@ public class ReportManager extends HibernateManager {
 		return false;
 	}
 
-	public Boolean createReport(String path, String title, Collection pdata, Boolean isUnit, boolean isCumplimentRequirement) {
+	public Boolean createReport(String path, String title, Collection pdata, Boolean isUnit,
+			boolean isCumplimentRequirement) {
 		try {
 			ireport report = new ireport();
 
@@ -635,9 +520,10 @@ public class ReportManager extends HibernateManager {
 				report.addParameter("unit",
 						this.getQualityRequirement().getQualityScenario().getResponseMeasure().getUnit().getName());
 			}
-			if (!isCumplimentRequirement){
-				report.addParameter("tactics", "The requirement hasn't been completed. You can apply the next tactics:\n"+this.getTactics());
-			}else {
+			if (!isCumplimentRequirement) {
+				report.addParameter("tactics",
+						"The requirement hasn't been completed. You can apply the next tactics:\n" + this.getTactics());
+			} else {
 				report.addParameter("tactics", "The requirement has been completed.");
 			}
 			report.setDataCollection(pdata);
@@ -652,8 +538,7 @@ public class ReportManager extends HibernateManager {
 
 	}
 
-	// TODO ver si es mejor ubicarlo en el manager
-	public String getTactics() {
+	private String getTactics() {
 		QualityAttribute q = this.getQualityAttribute();
 		String tactics = "";
 		Iterator t = q.getTactics().iterator();

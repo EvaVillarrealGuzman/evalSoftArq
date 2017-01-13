@@ -112,10 +112,10 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * 
 	 * @return int (indicates if the UCM path was saved successfully)
 	 */
-	public int setSystem() {
+	private int setSystem() {
 		if (this.isValidData()) {
 			setArchitecturesToSystem();
-			//setUnitsToArchitectures();
+			// setUnitsToArchitectures();
 			return 0;
 		} else {
 			return 1;
@@ -129,7 +129,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 
 		deleteArchitecture();
 
-		//Add news architectures
+		// Add news architectures
 		for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
 			TableItem item = this.getForm().getTable().getItem(i);
 			if (!item.getText(2).equals("")) {
@@ -149,14 +149,14 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			}
 		}
 
-
 	}
-	
+
 	/**
 	 * update specification parameter´s unit for existing architecture
+	 * 
 	 * @param arc
 	 */
-	private void updateUnitsToArchitecture(Architecture arc){
+	private void updateUnitsToArchitecture(Architecture arc) {
 		Iterator itPaths = arc.getPaths().iterator();
 		while (itPaths.hasNext()) {
 			Path a = (Path) itPaths.next();
@@ -168,7 +168,8 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 					Iterator itSpePar = responsability.getSpecificationParameter().iterator();
 					while (itSpePar.hasNext()) {
 						SpecificationParameter spePar = (SpecificationParameter) itSpePar.next();
-						spePar.setUnit((Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection()).getFirstElement());
+						spePar.setUnit((Unit) ((IStructuredSelection) this.getForm().getCmbUnit().getSelection())
+								.getFirstElement());
 					}
 				}
 			}
@@ -180,9 +181,9 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	private void deleteArchitecture() {
 		Iterator it = this.getManager().getArchitectures().iterator();
-		while (it.hasNext() ) {
+		while (it.hasNext()) {
 			Architecture arc = (Architecture) it.next();
-			
+
 			boolean isNotDelete = false;
 
 			for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
@@ -203,7 +204,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
-	public boolean isValidData() {
+	private boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
 			this.getForm().getCmbSystem().getCombo().setFocus();
@@ -241,7 +242,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	private void setUnit(Architecture architecture) {
 		Iterator it = architecture.getPaths().iterator();
-		Boolean isSetUnit=false;
+		Boolean isSetUnit = false;
 		while (it.hasNext() && !isSetUnit) {
 			Path a = (Path) it.next();
 			Iterator itPathElements = a.getPathElements().iterator();
@@ -253,7 +254,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 					if (itSpePar.hasNext()) {
 						SpecificationParameter spePar = (SpecificationParameter) itSpePar.next();
 						this.getForm().getCmbUnit().setSelection(new StructuredSelection(spePar.getUnit()));
-						isSetUnit=true;
+						isSetUnit = true;
 					}
 				}
 			}
@@ -302,5 +303,9 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 
 	public Boolean isConnection() {
 		return this.getManager().isConnection();
+	}
+
+	public boolean existSystemTrue() {
+		return this.getManager().existSystemTrue();
 	}
 }

@@ -453,11 +453,11 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	 */
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
-		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
+		if (!getViewController().existSystemTrueWithArchitecture()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
 		}
-		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
+		if (!getViewController().existSystemTrueWithQualityRequirementTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
 			pabm = 0;
 		}

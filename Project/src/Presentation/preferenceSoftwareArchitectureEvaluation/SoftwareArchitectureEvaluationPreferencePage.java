@@ -178,7 +178,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 					tableSoftArc.showSelection();
 					if (tableSoftArc.getSelectionIndex() != -1) {
 						if (viewController.isNotChecked(table)) {
-							viewController.setModelArchitecture((Architecture) tableSoftArc.getItem(tableSoftArc.getSelectionIndex()).getData());
+							viewController.setModelArchitecture(
+									(Architecture) tableSoftArc.getItem(tableSoftArc.getSelectionIndex()).getData());
 							prepareView(3);
 						} else {
 							prepareView(4);
@@ -319,8 +320,6 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			gridData.verticalAlignment = SWT.BOTTOM;
 			gridData.grabExcessHorizontalSpace = true;
 
-
-			
 			btnEvaluate = new Button(parent, SWT.PUSH);
 			btnEvaluate.setText(Messages.getString("UCM2DEVS_Evaluate_Buttom"));
 			btnEvaluate.setLayoutData(gridData);
@@ -329,14 +328,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				public void widgetSelected(SelectionEvent e) {
 					try {
 						btnEvaluate.setCursor(cursor);
-						int var = viewController.evaluate();
-						if (var == 0) {
-							viewController.createObjectSuccessDialog();
-							clearView();
-							prepareView(1);
-						} else if (var == 1) {
-							viewController.createObjectDontUpdateErrorDialog();
-						}
+						viewController.evaluate();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
@@ -461,11 +453,11 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
-		if (!getViewController().getManager().existSystemTrueWithArchitecture()) {
+		if (!getViewController().existSystemTrueWithArchitecture()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
 		}
-		if (!getViewController().getManager().existSystemTrueWithQualityRequirementTrue()) {
+		if (!getViewController().existSystemTrueWithQualityRequirementTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemQR_ErrorDialog"));
 			pabm = 0;
 		}

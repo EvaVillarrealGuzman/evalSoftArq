@@ -795,7 +795,7 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	 */
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
-		if (!getViewController().getManager().existSystemTrue()) {
+		if (!getViewController().existSystemTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
 			pabm = 6;
 		}

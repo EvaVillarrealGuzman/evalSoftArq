@@ -74,7 +74,7 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 
 			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
-			
+
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
 			parent.setLayout(layout);

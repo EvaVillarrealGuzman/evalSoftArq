@@ -19,8 +19,8 @@ public class DatabaseConfigurationPPController extends Controller {
 	private SystemConfigurationManager manager;
 	private DatabaseConfigurationPreferencePage form;
 
-	/**s
-	 * Getters and Setters
+	/**
+	 * s Getters and Setters
 	 */
 	public SystemConfigurationManager getManager() {
 		if (manager == null) {
@@ -50,7 +50,7 @@ public class DatabaseConfigurationPPController extends Controller {
 			this.createSuccessDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_Dialog"));
 		} else {
 			this.getForm().getBtnSave().setEnabled(false);
-			this.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog") );
+			this.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
 	}
 
@@ -71,7 +71,7 @@ public class DatabaseConfigurationPPController extends Controller {
 				this.getForm().getDatabaseName().getStringValue())) {
 			this.createObjectSuccessDialog();
 		} else {
-			this.createErrorDialog(Messages.getString("UCM2DEVS_SaveData_ErrorDialog") );
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SaveData_ErrorDialog"));
 		}
 	}
 

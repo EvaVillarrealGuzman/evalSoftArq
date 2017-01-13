@@ -63,7 +63,7 @@ public class NewSystemPPController extends Controller {
 	 * 
 	 * @return int (indicates if the system was created successfully)
 	 */
-	public int newSystem() {
+	private int newSystem() {
 		if (this.isValidData()) {
 			this.getManager().newSystem(this.getForm().getSystemName().getStringValue(),
 					this.getForm().getProjectName().getStringValue(),
@@ -80,7 +80,7 @@ public class NewSystemPPController extends Controller {
 	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
-	public boolean isValidData() {
+	private boolean isValidData() {
 		if (this.isEmpty(this.getForm().getSystemName())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
 			return false;

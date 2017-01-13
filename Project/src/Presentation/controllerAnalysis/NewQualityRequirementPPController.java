@@ -218,7 +218,7 @@ public class NewQualityRequirementPPController extends Controller {
 	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
-	public boolean isValidData() {
+	private boolean isValidData() {
 		Metric m = (Metric) ((IStructuredSelection) this.getForm().getCmbMetric().getSelection()).getFirstElement();
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
@@ -294,6 +294,10 @@ public class NewQualityRequirementPPController extends Controller {
 	
 	public Boolean isConnection(){
 		return this.getManager().isConnection();
+	}
+	
+	public boolean existSystemTrue() {
+		return this.getManager().existSystemTrue();
 	}
 
 }

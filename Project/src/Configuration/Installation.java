@@ -5,6 +5,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -53,18 +58,53 @@ public class Installation {
 
 			File simulator = new File(PATH + "/Simulator");
 			simulator.mkdir();
-			
+
 			File simulatorsrc = new File(PATH + "/Simulator/src");
 			simulatorsrc.mkdir();
 
-			extractJar(Installation.class.getProtectionDomain().getCodeSource()
-			 .getLocation().getPath() + "src/Configuration/project.jar", simulatorsrc);
+			File reports = new File(PATH + "/reports");
+			reports.mkdir();
+
+			extractJar(simulatorsrc);
+			extractReports(reports);
 		}
 
 	}
 
-	public static void extractJar(String jarFile, java.io.File directory) throws IOException {
-		java.util.jar.JarInputStream jarInput = new java.util.jar.JarInputStream(new FileInputStream(jarFile));
+	private void extractJar(java.io.File directory) throws IOException {
+		Path temp = Files.createTempFile("project-", ".jar");
+		Files.copy(getClass().getClassLoader().getResourceAsStream("/Configuration/project.jar"), temp,
+				StandardCopyOption.REPLACE_EXISTING);
+		FileInputStream input = new FileInputStream(temp.toFile());
+		java.util.jar.JarInputStream jarInput = new java.util.jar.JarInputStream(input);
+		java.util.jar.JarEntry jarEntry = null;
+		while ((jarEntry = jarInput.getNextJarEntry()) != null) {
+			java.io.File file = new java.io.File(directory, jarEntry.getName());
+			if (jarEntry.isDirectory()) {
+				if (!file.exists())
+					file.mkdirs();
+			} else {
+				java.io.File dir = new java.io.File(file.getParent());
+				if (!dir.exists())
+					dir.mkdirs();
+				byte[] bytes = new byte[1024];
+				java.io.InputStream inputStream = new BufferedInputStream(jarInput);
+				FileOutputStream fileOutputStream = new FileOutputStream(file);
+				int read = -1;
+				while ((read = inputStream.read(bytes)) != -1) {
+					fileOutputStream.write(bytes, 0, read);
+				}
+				fileOutputStream.close();
+			}
+		}
+	}
+
+	private void extractReports(java.io.File directory) throws IOException {
+		Path temp = Files.createTempFile("reports-", ".jar");
+		Files.copy(getClass().getClassLoader().getResourceAsStream("/Configuration/reports.jar"), temp,
+				StandardCopyOption.REPLACE_EXISTING);
+		FileInputStream input = new FileInputStream(temp.toFile());
+		java.util.jar.JarInputStream jarInput = new java.util.jar.JarInputStream(input);
 		java.util.jar.JarEntry jarEntry = null;
 		while ((jarEntry = jarInput.getNextJarEntry()) != null) {
 			java.io.File file = new java.io.File(directory, jarEntry.getName());

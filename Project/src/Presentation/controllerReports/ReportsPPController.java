@@ -2,6 +2,7 @@ package Presentation.controllerReports;
 
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -15,7 +16,6 @@ import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
 import Presentation.preferenceReports.ReportsPreferencePage;
-import Presentation.preferences.Messages;
 
 /**
  * Controller for ReportPreferencePage
@@ -30,8 +30,8 @@ public class ReportsPPController extends Controller {
 	private static ReportsPPController controller;
 	private ReportManager manager;
 	private ReportsPreferencePage form;
-	public static final String PATHREPORT = ReportsPPController.class.getProtectionDomain().getCodeSource()
-			.getLocation().getPath() + "reports/";
+	public static final String PATHREPORT = Platform.getInstallLocation().getURL().getPath()
+			+ "plugins/UCM2DEVS/reports/";
 
 	/**
 	 * Getters and Setters
@@ -87,57 +87,34 @@ public class ReportsPPController extends Controller {
 		this.getManager().setArchitecture(pmodel);
 	}
 
-	/**
-	 * Validate the necessary data for save the UCM path
-	 * 
-	 * @return boolean (is true if they have completed the required fields)
-	 */
-	/**
-	 * Validate the necessary data for save the UCM path
-	 * 
-	 * @return boolean (is true if they have completed the required fields)
-	 */
-	public boolean isValidData() {
-		if (this.isEmpty(this.getForm().getCmbSystem())) {
-			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
-			this.getForm().getCmbSystem().getCombo().setFocus();
-			return false;
-		} else if (this.getForm().getTableSimulation().getSelectionIndex() == -1) {
-			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectArchitecture_ErrorDialog"));
-			return false;
-		} else {
-			return true;
-		}
-	}
-
 	/*
 	 * Methods to print reports
 	 */
-	public Boolean printReportPerResponsibilityPerformance() {
+	private Boolean printReportPerResponsibilityPerformance() {
 		return this.getManager().createReport(PATHREPORT + "reportResponsibilityPerformance.jasper",
 				"Report per Responsibility - Attribute: Performance", this.getManager().listResponsibilityPerformance(),
 				true, false);
 	}
 
-	public Boolean printReportPerResponsibilityReliability() {
+	private Boolean printReportPerResponsibilityReliability() {
 		return this.getManager().createReport(PATHREPORT + "reportResponsibilityReliability.jasper",
 				"Report per Responsibility - Attribute: Reliability", this.getManager().listResponsibilityReliability(),
 				false, false);
 	}
 
-	public Boolean printReportPerResponsibilityAvailability() {
+	private Boolean printReportPerResponsibilityAvailability() {
 		return this.getManager().createReport(PATHREPORT + "reportResponsibilityAvailability.jasper",
 				"Report per Responsibility - Attribute: Availability",
 				this.getManager().listResponsibilityAvailability(), true, false);
 	}
 
-	public Boolean printReportPerSystemAvailability() {
+	private Boolean printReportPerSystemAvailability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemAvailability.jasper",
 				"Report of System - Attribute: Availability", this.getManager().listSystemAvailability(), true,
 				this.isCumplimentRequirement());
 	}
 
-	public Boolean printReportPerSystemReliability() {
+	private Boolean printReportPerSystemReliability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemReliability.jasper",
 				"Report of System - Attribute: Reliability", this.getManager().listSystemReliability(), false,
 				this.isCumplimentRequirement());
@@ -168,7 +145,7 @@ public class ReportsPPController extends Controller {
 		}
 	}
 
-	public void addToTable(Architecture arc) {
+	private void addToTable(Architecture arc) {
 		TableItem item = new TableItem(this.getForm().getTableSimulation(), SWT.NONE);
 		item.setData(arc);
 
@@ -177,7 +154,7 @@ public class ReportsPPController extends Controller {
 	}
 
 	public void setModelQualityRequirement() {
-		setModelQualityRequirement(manager.getArchitecture().getSimulator());
+		setModelQualityRequirement(this.getManager().getArchitecture().getSimulator());
 	}
 
 	/**
@@ -185,7 +162,7 @@ public class ReportsPPController extends Controller {
 	 * 
 	 * @param ptype
 	 */
-	public void setModelQualityRequirement(Simulator simulator) {
+	private void setModelQualityRequirement(Simulator simulator) {
 		while (this.getForm().getTableQualityRequirement().getItems().length > 0) {
 			this.getForm().getTableQualityRequirement().remove(0);
 		}
@@ -200,17 +177,17 @@ public class ReportsPPController extends Controller {
 	}
 
 	public void setQualityAttribute(QualityRequirement qr) {
-		manager.setQualityAttribute(qr.getQualityScenario().getQualityAttribute());
+		this.getManager().setQualityAttribute(qr.getQualityScenario().getQualityAttribute());
 	}
 
 	public void setQualityRequirement(QualityRequirement qr) {
-		manager.setQualityRequirement(qr);
+		this.getManager().setQualityRequirement(qr);
 	}
 
 	public void setModelReport() {
 		for (int i = 0; i < this.getForm().getTableReport().getItemCount(); i++) {
 			TableItem item = this.getForm().getTableReport().getItem(i);
-			item.setText(0, manager.getQualityAttribute().getName());
+			item.setText(0, this.getManager().getQualityAttribute().getName());
 		}
 	}
 
@@ -248,52 +225,52 @@ public class ReportsPPController extends Controller {
 		return this.getManager().isConnection();
 	}
 
-	public boolean isCumplimentRequirement() {
+	private boolean isCumplimentRequirement() {
 		boolean cumpliment = true;
-		if (manager.getQualityAttribute().getName().equals("Reliability")) {
-			for (Iterator<Run> its = manager.getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
+		if (this.getManager().getQualityAttribute().getName().equals("Reliability")) {
+			for (Iterator<Run> its = this.getManager().getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
 				Run r = its.next();
 				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
 					Indicator ind = iti.next();
 					if (ind.getMetric().getName().equals("System Failures")) {
-						if (manager.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue() < ind
+						if (this.getManager().getQualityRequirement().getQualityScenario().getResponseMeasure().getValue() < ind
 								.getValue()) {
 							cumpliment = false;
 						}
 					}
 				}
 			}
-		} else if (manager.getQualityAttribute().getName().equals("Availability")) {
-			for (Iterator<Run> its = manager.getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
+		} else if (this.getManager().getQualityAttribute().getName().equals("Availability")) {
+			for (Iterator<Run> its = this.getManager().getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
 				Run r = its.next();
 				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
 					Indicator ind = iti.next();
 					if (ind.getMetric().getName().equals("System Availability Time")) {
-						if (manager.getAvailabilityTimeRequirement() > manager
+						if (this.getManager().getAvailabilityTimeRequirement() > this.getManager()
 								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()))
 							cumpliment = false;
 					}
 					if (ind.getMetric().getName().equals("System No-Availability Time")) {
-						if (manager.getNoAvailabilityTimeRequirement() < manager
+						if (this.getManager().getNoAvailabilityTimeRequirement() < this.getManager()
 								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())) {
 							cumpliment = false;
 						}
 					}
 				}
 			}
-		} else if (manager.getQualityAttribute().getName().equals("Performance")) {
-			for (Iterator<Run> its = manager.getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
+		} else if (this.getManager().getQualityAttribute().getName().equals("Performance")) {
+			for (Iterator<Run> its = this.getManager().getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
 				Run r = its.next();
 				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
 					Indicator ind = iti.next();
 					if (ind.getMetric().getName().equals("System Throughput")) {
-						if (manager.getThroughputRequirement() < manager
+						if (this.getManager().getThroughputRequirement() < this.getManager()
 								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())) {
 							cumpliment = false;
 						}
 					}
 					if (ind.getMetric().getName().equals("System Turnaround Time")) {
-						if (manager.getTurnaroundTimeRequirement() < manager
+						if (this.getManager().getTurnaroundTimeRequirement() < this.getManager()
 								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())) {
 							cumpliment = false;
 						}
@@ -303,4 +280,13 @@ public class ReportsPPController extends Controller {
 		}
 		return cumpliment;
 	}
+
+	public boolean existSystemTrueWithQualityRequirementTrue() {
+		return this.getManager().existSystemTrueWithQualityRequirementTrue();
+	}
+
+	public boolean existSystemTrueWithArchitecture() {
+		return this.getManager().existSystemTrueWithArchitecture();
+	}
+
 }

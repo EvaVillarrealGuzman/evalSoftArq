@@ -3,7 +3,6 @@ package BusinessLogic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +22,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import DataManager.HibernateManager;
-import DataManager.HibernateUtil;
 import DomainModel.AnalysisEntity.Metric;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork;
@@ -136,7 +134,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	 * 
 	 * @return List<System> with the system names whose state==true
 	 */
-	public List<DomainModel.AnalysisEntity.System> listSystem() {
+	private List<DomainModel.AnalysisEntity.System> listSystem() {
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
 
@@ -144,7 +142,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	 * 
 	 * @return List<Unit> with the units names
 	 */
-	public List<Unit> listUnit() {
+	private List<Unit> listUnit() {
 		return this.listClass(Unit.class, "name");
 	}
 
@@ -153,7 +151,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	 * @param pmetric
 	 * @return
 	 */
-	public List listMetric(String pmetric) {
+	private List listMetric(String pmetric) {
 		Criteria crit = getSession().createCriteria(Metric.class).add(Restrictions.eq("name", pmetric));
 		return crit.list();
 	}
@@ -166,34 +164,9 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return this.updateObject(this.getSystem());
 	}
 
-	/**
-	 * Return if connection with database is success
-	 * 
-	 * @return
-	 */
-	public Boolean isConnection() {
-		if (HibernateUtil.getSession().isOpen()) {
-			HibernateUtil.getSession().close();
-		}
-		HibernateUtil.initialize(this.getDb());
-		HibernateUtil hu = new HibernateUtil();
-		return hu.isConnection();
-	}
-
-	public String getPathUCM() {
-		Iterator it = this.getSystem().getArchitectures().iterator();
-		if (it.hasNext()) {
-			Architecture a = (Architecture) it.next();
-			return a.getPathUCM();
-		} else {
-			return null;
-		}
-	}
-
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
 	}
-
 
 	/**
 	 * db method to create architecture

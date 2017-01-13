@@ -440,7 +440,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	 * @param pabm
 	 */
 	public void prepareView(int pabm) {
-		if (!getViewController().getManager().existSystemTrue()) {
+		if (!getViewController().existSystemTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystems_ErrorDialog"));
 			pabm = 3;
 		}

@@ -180,7 +180,7 @@ public class EditQualityRequirementPPController extends Controller {
 	 * @return int (indicates if the quality requirement was updated
 	 *         successfully)
 	 */
-	public int setQualityRequirement() {
+	private int setQualityRequirement() {
 		if (this.isValidData()) {
 			this.getManager().setDescriptionScenario(this.getFormSearch().getTxtDescription().getText());
 			this.getManager().setStimulusSource(this.getFormSearch().getTxtDescriptionStimulusSource().getText(),
@@ -220,7 +220,7 @@ public class EditQualityRequirementPPController extends Controller {
 	 * 
 	 * @return boolean (is true if they have completed the required fields)
 	 */
-	public boolean isValidData() {
+	private boolean isValidData() {
 		Metric m = (Metric) ((IStructuredSelection) this.getFormSearch().getCmbMetric().getSelection())
 				.getFirstElement();
 		if (this.isEmpty(this.getFormSearch().getCmbSystem())) {
@@ -383,4 +383,7 @@ public class EditQualityRequirementPPController extends Controller {
 		return this.getManager().isConnection();
 	}
 
+	public boolean existSystemTrueWithQualityRequirementTrue() {
+		return this.getManager().existSystemTrueWithQualityRequirementTrue();
+	}
 }
