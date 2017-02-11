@@ -3,6 +3,7 @@ package BusinessLogic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -127,15 +128,24 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
-	 * lists
-	 */
-
-	/**
 	 * 
 	 * @return List<System> with the system names whose state==true
 	 */
 	private List<DomainModel.AnalysisEntity.System> listSystem() {
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
+	}
+	
+	public boolean haveArchitectureTrue() {
+		if (this.getSystem().getArchitectures().isEmpty() == false) {
+			Iterator it = this.getSystem().getArchitectures().iterator();
+			while (it.hasNext()) {
+				Architecture arc = (Architecture) it.next();
+				if (arc.isState()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

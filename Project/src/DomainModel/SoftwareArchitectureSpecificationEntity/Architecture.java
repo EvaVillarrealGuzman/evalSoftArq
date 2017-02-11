@@ -37,13 +37,16 @@ public class Architecture {
 	private Simulator simulator;
 
 	private String pathUCM;
+	
+	private boolean state;
 
 	public Architecture() {
 
 	}
 
-	public Architecture(String ppathUCM) {
+	public Architecture(String ppathUCM, boolean pstate) {
 		this.pathUCM = ppathUCM;
+		state = pstate;
 	}
 
 	public int getId() {
@@ -85,5 +88,15 @@ public class Architecture {
 	public void setPathUCM(String pathUCM) {
 		this.pathUCM = pathUCM;
 	}
+
+	public boolean isState() {
+		return state;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
+	}
+	
+	
 
 }

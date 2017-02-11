@@ -453,7 +453,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
-		if (!getViewController().existSystemTrueWithArchitecture()) {
+		if (!getViewController().existSystemTrueWithArchitectureTrue()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
 		}

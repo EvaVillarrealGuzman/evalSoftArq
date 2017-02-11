@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.controllerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPPController;
 import Presentation.preferences.Messages;
 
@@ -243,8 +244,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					btnDelete.setCursor(cursor);
-					viewController.deleteToTable();
-					prepareView(2);
+					if (viewController.deleteArch()) {
+						prepareView(2);
+						viewController.createObjectSuccessDialog();
+					} else {
+						viewController.createObjectDontUpdateErrorDialog();
+					}
 				}
 			});
 
