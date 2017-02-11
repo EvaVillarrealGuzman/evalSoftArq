@@ -203,4 +203,13 @@ public class Controller {
 
 	}
 
+	/**
+	 * Created a dialog for architecturet's delete
+	 * 
+	 * @return boolean
+	 */
+	public boolean createDeleteArchitectureDialog() {
+		return MessageDialog.openQuestion(null, Messages.getString("UCM2DEVS_Delete_Label"),
+				Messages.getString("UCM2DEVS_WantDeleteArchitecture_QuestionDialog"));
+	}
 }

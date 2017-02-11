@@ -244,11 +244,13 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					btnDelete.setCursor(cursor);
-					if (viewController.deleteArch()) {
-						prepareView(2);
-						viewController.createObjectSuccessDialog();
-					} else {
-						viewController.createObjectDontUpdateErrorDialog();
+					if (viewController.createDeleteArchitectureDialog() == true) {
+						if (viewController.deleteArch()) {
+							prepareView(2);
+							viewController.createObjectSuccessDialog();
+						} else {
+							viewController.createObjectDontUpdateErrorDialog();
+						}
 					}
 				}
 			});
