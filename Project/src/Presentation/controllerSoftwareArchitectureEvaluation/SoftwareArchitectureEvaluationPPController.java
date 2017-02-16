@@ -84,8 +84,6 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	private void setModel(DomainModel.AnalysisEntity.System pmodel) {
 		this.getManager().setSystem(pmodel);
 	}
-	
-	
 
 	/**
 	 * Evaluate a architecture
@@ -189,11 +187,9 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		while (this.getForm().getTableSoftArc().getItems().length > 0) {
 			this.getForm().getTableSoftArc().remove(0);
 		}
-		if (this.getManager().haveArchitectureTrue()) {
+		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture dp : this.getManager().getArchitectures()) {
-				if (dp.isState()){
-					this.addToTable(dp);
-				}
+				this.addToTable(dp);
 			}
 		}
 	}
@@ -235,8 +231,8 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 		this.getManager().setArchitecture(pdata);
 	}
 
-	public boolean existSystemTrueWithArchitectureTrue() {
-		return this.getManager().existSystemTrueWithArchitectureTrue();
+	public boolean existSystemTrueWithArchitecture() {
+		return this.getManager().existSystemTrueWithArchitecture();
 	}
 
 	public boolean existSystemTrueWithQualityRequirementTrue() {

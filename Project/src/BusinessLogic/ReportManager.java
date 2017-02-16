@@ -19,6 +19,7 @@ import DomainModel.ReportsEntity.SystemPerformance;
 import DomainModel.ReportsEntity.SystemReliability;
 import DomainModel.ReportsEntity.ireport;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
+import DomainModel.SoftwareArchitectureEvaluationEntity.ResponsabilityIndicator;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
 import DomainModel.SoftwareArchitectureEvaluationEntity.SystemIndicator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
@@ -102,7 +103,6 @@ public class ReportManager extends HibernateManager {
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
 	}
 
-
 	public Set<Architecture> getArchitectures() {
 		return this.getSystem().getArchitectures();
 	}
@@ -122,22 +122,38 @@ public class ReportManager extends HibernateManager {
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
 			Run r = its.next();
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				String name;
 				Indicator ind = iti.next();
+				if (ind.getType() instanceof ResponsabilityIndicator) {
+					ResponsabilityIndicator respIndicator = (ResponsabilityIndicator) ind.getType();
+					name = respIndicator.getResponsibility().getName();
+				} else {
+					name = ind.getType().getName();
+				}
 				if (ind.getMetric().getName().equals("Responsibility Turnaround Time")) {
 					if (i == 0) {
 						ResponsibilityPerformance item = new ResponsibilityPerformance();
-						item.setResponsibilityTT(ind.getType().getName());
+						item.setResponsibilityTT(name);
 						item.setTurnaroundTime(
-								this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+								this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) );
 						list.add(item);
 					} else {
+//						Iterator ite = list.iterator();
+//						while (ite.hasNext()) {
+//							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
+//							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
+//								q.setTurnaroundTime(q.getTurnaroundTime()
+//										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
+//												/ 10);
+//							}
+//						}
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
 							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
 								q.setTurnaroundTime(q.getTurnaroundTime()
 										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												/ 10);
+												);
 							}
 						}
 					}
@@ -157,19 +173,26 @@ public class ReportManager extends HibernateManager {
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
 			Run r = its.next();
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				String name;
 				Indicator ind = iti.next();
+				if (ind.getType() instanceof ResponsabilityIndicator) {
+					ResponsabilityIndicator respIndicator = (ResponsabilityIndicator) ind.getType();
+					name = respIndicator.getResponsibility().getName();
+				} else {
+					name = ind.getType().getName();
+				}
 				if (ind.getMetric().getName().equals("Responsibility Failures")) {
 					if (i == 0) {
 						ResponsibilityReliability item = new ResponsibilityReliability();
-						item.setResponsibilityF(ind.getType().getName());
-						item.setFails(ind.getValue() / 10);
+						item.setResponsibilityF(name);
+						item.setFails(ind.getValue() );
 						list.add(item);
 					} else {
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityReliability q = (ResponsibilityReliability) ite.next();
 							if (q.getResponsibilityF().equals(ind.getType().getName())) {
-								q.setFails(q.getFails() + ind.getValue() / 10);
+								q.setFails(q.getFails() + ind.getValue() );
 							}
 						}
 					}
@@ -189,52 +212,61 @@ public class ReportManager extends HibernateManager {
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
 			Run r = its.next();
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				String name;
 				Indicator ind = iti.next();
+				if (ind.getType() instanceof ResponsabilityIndicator) {
+					ResponsabilityIndicator respIndicator = (ResponsabilityIndicator) ind.getType();
+					name = respIndicator.getResponsibility().getName();
+				} else {
+					name = ind.getType().getName();
+				}
 				if (ind.getMetric().getName().equals("Responsibility Downtime")) {
 					if (i == 0) {
 						if (list.isEmpty()) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
-							item.setResponsibility(ind.getType().getName());
+							item.setResponsibility(name);
 							item.setDowntime(
-									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 							list.add(item);
 						} else {
 							Iterator ite = list.iterator();
 							boolean band = true;
 							while (ite.hasNext()) {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-								if (q.getResponsibility().equals(ind.getType().getName())) {
+								if (q.getResponsibility().equals(name)) {
 									band = false;
 									q.setDowntime(
 											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-													/ 10);
+													);
 								}
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
-								item.setResponsibility(ind.getType().getName());
+								item.setResponsibility(name);
 								item.setDowntime(
-										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
+										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 								list.add(item);
 							}
 						}
 					} else {
-						Iterator ite = list.iterator();
+						//TODO comentado - preguntar Mica
+					}
+						/*Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-							if (q.getResponsibility().equals(ind.getType().getName())) {
+							if (q.getResponsibility().equals(name)) {
 								q.setDowntime(q.getDowntime()
 										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												/ 10);
+												);
 							}
 						}
-					}
+					}*/
 				}
 				if (ind.getMetric().getName().equals("Responsibility Recovery Time")) {
 					if (i == 0) {
 						if (list.isEmpty()) {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
-							item.setResponsibility(ind.getType().getName());
+							item.setResponsibility(name);
 							item.setRecoveryTime(
 									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 							list.add(item);
@@ -243,7 +275,7 @@ public class ReportManager extends HibernateManager {
 							boolean band = true;
 							while (ite.hasNext()) {
 								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-								if (q.getResponsibility().equals(ind.getType().getName())) {
+								if (q.getResponsibility().equals(name)) {
 									band = false;
 									q.setRecoveryTime(
 											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
@@ -251,7 +283,7 @@ public class ReportManager extends HibernateManager {
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
-								item.setResponsibility(ind.getType().getName());
+								item.setResponsibility(name);
 								item.setRecoveryTime(
 										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 								list.add(item);
@@ -261,10 +293,10 @@ public class ReportManager extends HibernateManager {
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-							if (q.getResponsibility().equals(ind.getType().getName())) {
+							if (q.getResponsibility().equals(name)) {
 								q.setRecoveryTime(q.getRecoveryTime()
 										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												/ 10);
+												);
 							}
 						}
 					}
@@ -282,6 +314,7 @@ public class ReportManager extends HibernateManager {
 		Architecture f = this.getArchitecture();
 		int runNum = 1;
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			boolean isIndicator = false;
 			Run r = its.next();
 			boolean band = true;
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
@@ -293,6 +326,7 @@ public class ReportManager extends HibernateManager {
 					item.setSystem(ind.getType().getName());
 					item.setRun(Integer.toString(runNum));
 					list.add(item);
+					isIndicator = true;
 					band = false;
 				}
 				if (ind.getMetric().getName().equals("System Availability Time")) {
@@ -305,7 +339,9 @@ public class ReportManager extends HibernateManager {
 				}
 			}
 
-			runNum++;
+			if (isIndicator) {
+				runNum++;
+			}
 		}
 		return list;
 	}
@@ -404,6 +440,7 @@ public class ReportManager extends HibernateManager {
 		int runNum = 1;
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
 			Run r = its.next();
+			boolean isIndicator = false;
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
 				Indicator ind = iti.next();
 				if (ind.getMetric().getName().equals("System Failures")) {
@@ -412,10 +449,13 @@ public class ReportManager extends HibernateManager {
 					item.setFails(ind.getValue());
 					item.setSystem(ind.getType().getName());
 					item.setRun(Integer.toString(runNum));
+					isIndicator = true;
 					list.add(item);
 				}
 			}
-			runNum++;
+			if (isIndicator) {
+				runNum++;
+			}
 		}
 		return list;
 	}
@@ -438,8 +478,10 @@ public class ReportManager extends HibernateManager {
 		Architecture f = this.getArchitecture();
 		int runNum = 1;
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			boolean isIndicator = false;
 			Run r = its.next();
 			boolean band = true;
+
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
 				Indicator ind = iti.next();
 				if (ind.getType() instanceof SystemIndicator && band) {
@@ -448,6 +490,7 @@ public class ReportManager extends HibernateManager {
 					item.setTurnaroundTimeE(this.getTurnaroundTimeRequirement());
 					item.setSystem(ind.getType().getName());
 					item.setRun(Integer.toString(runNum));
+					isIndicator = true;
 					list.add(item);
 					band = false;
 				}
@@ -460,8 +503,9 @@ public class ReportManager extends HibernateManager {
 					q.setTurnaroundTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
 				}
 			}
-
-			runNum++;
+			if (isIndicator) {
+				runNum++;
+			}
 		}
 		return list;
 	}

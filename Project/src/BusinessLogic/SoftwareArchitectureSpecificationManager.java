@@ -3,7 +3,6 @@ package BusinessLogic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -128,24 +127,15 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
+	 * lists
+	 */
+
+	/**
 	 * 
 	 * @return List<System> with the system names whose state==true
 	 */
 	private List<DomainModel.AnalysisEntity.System> listSystem() {
 		return this.listClass(DomainModel.AnalysisEntity.System.class, "systemName", true);
-	}
-	
-	public boolean haveArchitectureTrue() {
-		if (this.getSystem().getArchitectures().isEmpty() == false) {
-			Iterator it = this.getSystem().getArchitectures().iterator();
-			while (it.hasNext()) {
-				Architecture arc = (Architecture) it.next();
-				if (arc.isState()) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -221,8 +211,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							parentN = new DefaultMutableTreeNode(rootNode);
 							isRootNodeASimpleComponent = false;
 						}
-						// rootNode = new Domain.Component(Integer.parseInt(id),
-						// this.translateNameComponent(id));
 					}
 				}
 			}
@@ -302,6 +290,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			if (responsibility.getNodeType() == Node.ELEMENT_NODE) {
 				Element eResponsibility = (Element) responsibility;
 				if (eResponsibility.getAttribute("respRefs").equals(value)) {
+					String asdfdsa = eResponsibility.getAttribute("name");
 					return eResponsibility.getAttribute("name");
 				}
 			}
@@ -317,6 +306,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				String typeNode = eElement.getAttribute("xsi:type");
 				if (eElement.getAttribute("id").equals(value) && !typeNode.equals("ucm.map:EndPoint")
 						&& !typeNode.equals("ucm.map:StartPoint")) {
+					String asdf = eElement.getAttribute("name");
 					return eElement.getAttribute("name");
 				}
 			}
@@ -404,6 +394,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				if (eResponsability.getAttribute("respRefs").equals(idNode)) {
 
 					Responsibility child = new Responsibility(this.translateNameSimpleElement(idNode));
+					child.setIdUCM(idNode);
 					saveObject(child);
 
 					NodeList metadatasList = eResponsability.getElementsByTagName("metadata");
@@ -420,8 +411,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setValue(Double.parseDouble(metadata.getAttribute("value")));
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
-							child.getSpecificationParameter().add(sp);
-							// sp.setMeanExecutionTime(Double.parseDouble(metadata.getAttribute("value")));
+							child.getSpecificationParameter().add(sp);					
 						} else if (metadataName.equals("MeanDowntime")) {
 							SpecificationParameter sp = new SpecificationParameter();
 							sp.setMetric((Metric) this.listMetric("Mean Downtime").get(0));
@@ -429,7 +419,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
 							child.getSpecificationParameter().add(sp);
-							// sp.setMeanDownTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanRecoveryTime")) {
 							SpecificationParameter sp = new SpecificationParameter();
 							sp.setMetric((Metric) this.listMetric("Mean Recovery Time").get(0));

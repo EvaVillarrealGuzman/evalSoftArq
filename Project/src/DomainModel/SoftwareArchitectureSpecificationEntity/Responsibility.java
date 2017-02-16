@@ -16,8 +16,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "RESPONSABILITY")
-//@PrimaryKeyJoinColumn(name = "id")
 public class Responsibility extends PathElement {
+	
+	private String idUCM;
 	
 	@OneToMany(targetEntity = SpecificationParameter.class)
 	private Set<SpecificationParameter> specificationParameter = new HashSet<SpecificationParameter>();
@@ -36,9 +37,13 @@ public class Responsibility extends PathElement {
 	public void setSpecificationParameter(Set<SpecificationParameter> specificationParameter) {
 		this.specificationParameter = specificationParameter;
 	}
-	
-	
-	
-	
+
+	public String getIdUCM() {
+		return idUCM;
+	}
+
+	public void setIdUCM(String idUCM) {
+		this.idUCM = idUCM;
+	}
 	
 }

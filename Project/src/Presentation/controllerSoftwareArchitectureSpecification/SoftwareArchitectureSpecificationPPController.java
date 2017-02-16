@@ -2,7 +2,6 @@ package Presentation.controllerSoftwareArchitectureSpecification;
 
 import java.io.File;
 import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -17,7 +16,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import BusinessLogic.SoftwareArchitectureSpecificationManager;
-import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Path;
@@ -129,7 +127,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	private void setArchitecturesToSystem() {
 
-		//deleteArchitecture();
+		deleteArchitecture();
 
 		// Add news architectures
 		for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
@@ -144,7 +142,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 					}
 				}
 				if (!isNotAdd) {
-					Architecture architecture = new Architecture(item.getText(2) + "\\" + item.getText(1), true);
+					Architecture architecture = new Architecture(item.getText(2) + "\\" + item.getText(1));
 					this.getManager().createArchitecture(architecture);
 					this.getManager().getArchitectures().add(architecture);
 				}
@@ -183,21 +181,20 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	private void deleteArchitecture() {
 		Iterator it = this.getManager().getArchitectures().iterator();
-		// Recorre cada arquitectura del sistema y compara su path con el de
-		// cada fila de la tabla, si no hay alguna igual lo elimina
 		while (it.hasNext()) {
 			Architecture arc = (Architecture) it.next();
+
 			boolean isNotDelete = false;
+
 			for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
 				TableItem item = this.getForm().getTable().getItem(i);
-				if (arc.isState()) {
-					if (arc.getPathUCM().equals(item.getText(2) + "\\" + item.getText(1))) {
-						isNotDelete = true;
-					}
+				if (arc.getPathUCM().equals(item.getText(2) + "\\" + item.getText(1))) {
+					isNotDelete = true;
 				}
 			}
+
 			if (!isNotDelete) {
-				arc.setState(false);
+				it.remove();
 			}
 		}
 	}
@@ -227,20 +224,17 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		while (this.getForm().getTable().getItems().length > 0) {
 			this.getForm().getTable().remove(0);
 		}
-		if (this.getManager().haveArchitectureTrue()) {
+		if (!this.getManager().getArchitectures().isEmpty()) {
 			for (Architecture arc : this.getManager().getArchitectures()) {
 				if (first) {
 					// Solo lo hace la primera vez, para la primera architectura
 					this.setUnit(arc);
 				}
-				if (arc.isState()){
-					addToTable(arc.getPathUCM());
-				}
+				addToTable(arc.getPathUCM());
 			}
 		}
 	}
 
-	
 	/**
 	 * set unit to combo
 	 * 
@@ -267,6 +261,14 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		}
 	}
 
+	public void addToTable(String namePath) {
+		TableItem item = new TableItem(this.getForm().getTable(), SWT.NONE);
+		item.setData(namePath);
+
+		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
+				namePath.substring(0, namePath.lastIndexOf("\\")), });
+	}
+
 	public void deleteToTable() {
 		this.getForm().getTable().remove(this.getForm().getTable().getSelectionIndices());
 	}
@@ -279,14 +281,6 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			}
 		}
 		return false;
-	}
-	
-	public void addToTable(String namePath) {
-		TableItem item = new TableItem(this.getForm().getTable(), SWT.NONE);
-		item.setData(namePath);
-
-		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
-				namePath.substring(0, namePath.lastIndexOf("\\")), });
 	}
 
 	public void openJUCMNavEditor(Composite parent, String pathUCM) {
@@ -313,29 +307,5 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 
 	public boolean existSystemTrue() {
 		return this.getManager().existSystemTrue();
-	}
-
-	public boolean deleteArch() {
-		deleteToTable();
-		Iterator it = this.getManager().getArchitectures().iterator();
-		// Recorre cada arquitectura del sistema y compara su path con el de
-		// cada fila de la tabla, si no hay alguna igual lo elimina
-		while (it.hasNext()) {
-			boolean isRemove = true;
-			Architecture arc = (Architecture) it.next();
-			for (int i = 0; i < this.getForm().getTable().getItemCount(); i++) {
-				TableItem item = this.getForm().getTable().getItem(i);
-				if (arc.isState()) {
-					if (arc.getPathUCM().equals(item.getText(2) + "\\" + item.getText(1))) {
-						isRemove = false;
-					}
-				}
-			}
-			if (isRemove){
-				arc.setState(false);
-			}
-		}	
-		manager.updateSystem();
-		return true;
 	}
 }

@@ -108,19 +108,6 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.typeIndicator = typeIndicator;
 	}
 
-	public boolean haveArchitectureTrue() {
-		if (this.getSystem().getArchitectures().isEmpty() == false) {
-			Iterator it = this.getSystem().getArchitectures().iterator();
-			while (it.hasNext()) {
-				Architecture arc = (Architecture) it.next();
-				if (arc.isState()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	/**
 	 * 
 	 * @return ComboBoxModel with system names whose state==true and
@@ -178,21 +165,13 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return this.getSystem().getQualityRequirements();
 	}
 
-	
-	public boolean existSystemTrueWithArchitectureTrue() {
+	public boolean existSystemTrueWithArchitecture() {
 		for (DomainModel.AnalysisEntity.System auxTipo : this.listSystem()) {
 			if (auxTipo.getArchitectures().isEmpty() == false) {
-				Iterator it = auxTipo.getArchitectures().iterator();
-				while (it.hasNext()) {
-					Architecture arc = (Architecture) it.next();
-					if (arc.isState()) {
-						return true;
-					}
-				}
+				return true;
 			}
 		}
 		return false;
-
 	}
 
 	/**
@@ -419,7 +398,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	public Responsibility getResponsability(String pname) {
 		for (Responsibility dp : this.getResponsibilities()) {
-			if (dp.getName().equals(pname)) {
+			if (dp.getIdUCM().equals(pname)) {
 				return dp;
 			}
 		}

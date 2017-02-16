@@ -329,6 +329,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 					try {
 						btnEvaluate.setCursor(cursor);
 						viewController.evaluate();
+						clearView();
+						prepareView(1);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
@@ -344,6 +346,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		return null;
 
 	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -453,7 +456,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	public void prepareView(int pabm) {
 		this.getCmbSystem().getCombo().setFocus();
-		if (!getViewController().existSystemTrueWithArchitectureTrue()) {
+		if (!getViewController().existSystemTrueWithArchitecture()) {
 			this.getViewController().createErrorDialog(Messages.getString("UCM2DEVS_NoSavedSystemArch_ErrorDialog"));
 			pabm = 0;
 		}
