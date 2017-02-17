@@ -17,6 +17,8 @@ import DomainModel.ReportsEntity.ResponsibilityPerformance;
 import DomainModel.ReportsEntity.ResponsibilityReliability;
 import DomainModel.ReportsEntity.SystemAvailability;
 import DomainModel.ReportsEntity.SystemPerformance;
+import DomainModel.ReportsEntity.SystemPerformanceThroughput;
+import DomainModel.ReportsEntity.SystemPerformanceTurnaroundTime;
 import DomainModel.ReportsEntity.SystemReliability;
 import DomainModel.ReportsEntity.ireport;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
@@ -599,7 +601,75 @@ public class ReportManager extends HibernateManager {
 		}
 		return list;
 	}
+	
+	public List<SystemPerformanceTurnaroundTime> listSystemPerformanceTurnaroundTime() {
 
+		List<SystemPerformanceTurnaroundTime> list = new ArrayList<SystemPerformanceTurnaroundTime>();
+
+		Architecture f = this.getArchitecture();
+		int runNum = 1;
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			boolean isIndicator = false;
+			Run r = its.next();
+			boolean band = true;
+
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getType() instanceof SystemIndicator && band) {
+					SystemPerformanceTurnaroundTime item = new SystemPerformanceTurnaroundTime();
+					item.setTurnaroundTimeE(this.getTurnaroundTimeRequirement());
+					item.setSystem(ind.getType().getName());
+					item.setRun(Integer.toString(runNum));
+					isIndicator = true;
+					list.add(item);
+					band = false;
+				}
+				if (ind.getMetric().getName().equals("System Turnaround Time")) {
+					SystemPerformanceTurnaroundTime q = list.get(runNum - 1);
+					q.setTurnaroundTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+				}
+			}
+			if (isIndicator) {
+				runNum++;
+			}
+		}
+		return list;
+	}
+
+	public List<SystemPerformanceThroughput> listSystemPerformanceThroughput() {
+
+		List<SystemPerformanceThroughput> list = new ArrayList<SystemPerformanceThroughput>();
+
+		Architecture f = this.getArchitecture();
+		int runNum = 1;
+		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
+			boolean isIndicator = false;
+			Run r = its.next();
+			boolean band = true;
+
+			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
+				Indicator ind = iti.next();
+				if (ind.getType() instanceof SystemIndicator && band) {
+					SystemPerformanceThroughput item = new SystemPerformanceThroughput();
+					item.setThroughputE(this.getThroughputRequirement());
+					item.setSystem(ind.getType().getName());
+					item.setRun(Integer.toString(runNum));
+					isIndicator = true;
+					list.add(item);
+					band = false;
+				}
+				if (ind.getMetric().getName().equals("System Throughput")) {
+					SystemPerformanceThroughput q = list.get(runNum - 1);
+					q.setThroughput(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+				}
+			}
+			if (isIndicator) {
+				runNum++;
+			}
+		}
+		return list;
+	}
+	
 	private double getSimulationTime() {
 		Iterator<Run> its = this.getArchitecture().getSimulator().getRuns().iterator();
 		Run r = its.next();

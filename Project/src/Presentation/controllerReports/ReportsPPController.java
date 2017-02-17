@@ -121,9 +121,18 @@ public class ReportsPPController extends Controller {
 	}
 
 	public Boolean printReportPerSystemPerformance() {
-		return this.getManager().createReport(PATHREPORT + "reportSystemPerformance.jasper",
-				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance(), true,
+//		return this.getManager().createReport(PATHREPORT + "reportSystemPerformance.jasper",
+//				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance(), true,
+//				this.isCumplimentRequirement());
+		if (this.getManager().getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName().equals("System Turnaround Time")){
+			return this.getManager().createReport(PATHREPORT + "reportSystemPerformanceTurnaroundTime.jasper",
+				"Report of System - Attribute: Performance", this.getManager().listSystemPerformanceTurnaroundTime(), true,
 				this.isCumplimentRequirement());
+		}else {
+			return this.getManager().createReport(PATHREPORT + "reportSystemPerformanceThroughput.jasper",
+					"Report of System - Attribute: Performance", this.getManager().listSystemPerformanceThroughput(), true,
+					this.isCumplimentRequirement());
+		}
 	}
 
 	/**
