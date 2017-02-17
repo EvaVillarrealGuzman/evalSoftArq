@@ -49,12 +49,35 @@ public class Data {
 		manager.saveObject(unit3);
 		Unit unit4 = new Unit("Milliseconds");
 		manager.saveObject(unit4);
+		Unit unit5 = new Unit("Day");
+		manager.saveObject(unit5);
+		Unit unit6 = new Unit("Week");
+		manager.saveObject(unit6);
+		Unit unit7 = new Unit("Month");
+		manager.saveObject(unit7);
+		Unit unit8 = new Unit("Request/Hour");
+		manager.saveObject(unit8);
+		Unit unit9 = new Unit("Request/Day");
+		manager.saveObject(unit9);
+		Unit unit10 = new Unit("Request/Week");
+		manager.saveObject(unit10);
+		Unit unit11 = new Unit("Request/Month");
+		manager.saveObject(unit11);
 
 		Set<Unit> units = new HashSet<Unit>();
 		units.add(unit1);
 		units.add(unit2);
 		units.add(unit3);
 		units.add(unit4);
+		units.add(unit5);
+		units.add(unit6);
+		units.add(unit7);
+		
+		Set<Unit> unitsThroughput = new HashSet<Unit>();
+		unitsThroughput.add(unit8);
+		unitsThroughput.add(unit9);
+		unitsThroughput.add(unit10);
+		unitsThroughput.add(unit11);
 
 		m1.setUnits(units);
 		m2.setUnits(units);
@@ -62,7 +85,7 @@ public class Data {
 		m4.setUnits(units);
 		m5.setUnits(units);
 		m6.setUnits(units);
-		m7.setUnits(units);
+		m7.setUnits(unitsThroughput);
 		m8.setUnits(units);
 		m9.setUnits(units);
 		m10.setUnits(units);
@@ -135,14 +158,12 @@ public class Data {
 		tactics.add(tactic32);
 		tactics.add(tactic33);
 
-		createQualityAttributeAvailability(manager, unit1, unit2, unit3, tactics);
-		createQualityAttributeReliability(manager, unit1, unit2, unit3, tactics);
-		createQualityAttributePerformance(manager, unit1, unit2, unit3);
-
+		createQualityAttributeAvailability(manager, tactics);
+		createQualityAttributeReliability(manager, tactics);
+		createQualityAttributePerformance(manager);
 	}
 
-	private static void createQualityAttributeAvailability(HibernateManager pmanager, Unit punit1, Unit punit2,
-			Unit unit3, Set<Tactic> ptactics) {
+	private static void createQualityAttributeAvailability(HibernateManager pmanager, Set<Tactic> ptactics) {
 		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
 		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -187,11 +208,6 @@ public class Data {
 		responseTypes.add(r4);
 		responseTypes.add(r5);
 
-		Set<Unit> units = new HashSet<Unit>();
-		units.add(punit1);
-		units.add(punit2);
-		units.add(unit3);
-
 		Set<Metric> metrics = new HashSet<Metric>();
 		metrics.add(m5);
 		metrics.add(m6);
@@ -215,8 +231,7 @@ public class Data {
 
 	}
 
-	private static void createQualityAttributeReliability(HibernateManager pmanager, Unit punit1, Unit punit2,
-			Unit unit3, Set<Tactic> ptactics) {
+	private static void createQualityAttributeReliability(HibernateManager pmanager,  Set<Tactic> ptactics) {
 		StimulusSourceType ss1 = new StimulusSourceType("Internal to the system");
 		StimulusSourceType ss2 = new StimulusSourceType("External to the system");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -279,8 +294,7 @@ public class Data {
 
 	}
 
-	private static void createQualityAttributePerformance(HibernateManager pmanager, Unit punit1, Unit punit2,
-			Unit unit3) {
+	private static void createQualityAttributePerformance(HibernateManager pmanager) {
 		StimulusSourceType ss1 = new StimulusSourceType("Stimulus from internal source");
 		StimulusSourceType ss2 = new StimulusSourceType("Stimulus from external source");
 		Set<StimulusSourceType> stimulusSourceTypes = new HashSet<StimulusSourceType>();
@@ -314,11 +328,6 @@ public class Data {
 		responseTypes.add(r1);
 		responseTypes.add(r2);
 		responseTypes.add(r3);
-
-		Set<Unit> units = new HashSet<Unit>();
-		units.add(punit1);
-		units.add(punit2);
-		units.add(unit3);
 
 		Set<Metric> metrics = new HashSet<Metric>();
 		metrics.add(m7);
