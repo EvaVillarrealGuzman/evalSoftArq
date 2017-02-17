@@ -1,5 +1,6 @@
 package BusinessLogic;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -398,6 +399,12 @@ public class ReportManager extends HibernateManager {
 					pvalueConvert = pvalue * 60;
 				} else if (punit.getName().equals("Milliseconds")) {
 					pvalueConvert = (pvalue / 60) / 1000;
+				} else if (punit.getName().equals("Days")) {
+					pvalueConvert = pvalue * 1440;
+				} else if (punit.getName().equals("Weeks")) {
+					pvalueConvert = pvalue * 10080;
+				} else if (punit.getName().equals("Months")) {
+					pvalueConvert = pvalue * 40320;
 				}
 			} else if (this.getUnitRequirement().getName().equals("Seconds")) {
 				if (punit.getName().equals("Minutes")) {
@@ -406,6 +413,12 @@ public class ReportManager extends HibernateManager {
 					pvalueConvert = pvalue * 3600;
 				} else if (punit.getName().equals("Milliseconds")) {
 					pvalueConvert = pvalue / 1000;
+				} else if (punit.getName().equals("Days")) {
+					pvalueConvert = pvalue * 86400;
+				} else if (punit.getName().equals("Weeks")) {
+					pvalueConvert = pvalue * 604800;
+				} else if (punit.getName().equals("Months")) {
+					pvalueConvert = pvalue * 40320 * 60;
 				}
 			} else if (this.getUnitRequirement().getName().equals("Hours")) {
 				if (punit.getName().equals("Minutes")) {
@@ -414,6 +427,12 @@ public class ReportManager extends HibernateManager {
 					pvalueConvert = pvalue / 3600;
 				} else if (punit.getName().equals("Milliseconds")) {
 					pvalueConvert = (pvalue / 3600) / 1000;
+				} else if (punit.getName().equals("Days")) {
+					pvalueConvert = pvalue * 24;
+				} else if (punit.getName().equals("Weeks")) {
+					pvalueConvert = pvalue * 168;
+				} else if (punit.getName().equals("Months")) {
+					pvalueConvert = pvalue * 672;
 				}
 			} else if (this.getUnitRequirement().getName().equals("Milliseconds")) {
 				if (punit.getName().equals("Minutes")) {
@@ -422,10 +441,95 @@ public class ReportManager extends HibernateManager {
 					pvalueConvert = pvalue * 1000;
 				} else if (punit.getName().equals("Hours")) {
 					pvalueConvert = pvalue * 3600000;
+				} else if (punit.getName().equals("Days")) {
+					pvalueConvert = pvalue * 86400000;
+				} else if (punit.getName().equals("Weeks")) {
+					pvalueConvert = pvalue * 604800000;
+				} else if (punit.getName().equals("Months")) {
+					BigDecimal mil1 = new BigDecimal(pvalue);
+					BigDecimal mil2 = new BigDecimal("2419200000");
+					pvalueConvert = (mil1.multiply(mil2)).doubleValue();
 				}
+			} else if (this.getUnitRequirement().getName().equals("Days")) {
+				if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue / 86400;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue / 24;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = pvalue / 86400000;
+				} else if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue / 1440;
+				} else if (punit.getName().equals("Weeks")) {
+					pvalueConvert = pvalue * 7;
+				} else if (punit.getName().equals("Months")) {
+					pvalueConvert = pvalue * 28;
+				}
+			} else if (this.getUnitRequirement().getName().equals("Weeks")) {
+				if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue / 604800;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue / 168;
+				} else if (punit.getName().equals("Milliseconds")) {
+					pvalueConvert = pvalue / 604800000;
+				} else if (punit.getName().equals("Days")) {
+					pvalueConvert = pvalue / 7;
+				} else if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue / 10080;
+				} else if (punit.getName().equals("Months")) {
+					pvalueConvert = pvalue * 4;
+				}
+			} else if (this.getUnitRequirement().getName().equals("Months")) {
+				if (punit.getName().equals("Seconds")) {
+					pvalueConvert = pvalue / 2419200;
+				} else if (punit.getName().equals("Hours")) {
+					pvalueConvert = pvalue * 672;
+				} else if (punit.getName().equals("Milliseconds")) {
+					BigDecimal num1 = new BigDecimal(pvalue);
+					BigDecimal num2 = new BigDecimal("2419200000");
+					pvalueConvert = (num1.divide(num2)).doubleValue();
+				} else if (punit.getName().equals("Days")) {
+					pvalueConvert = pvalue / 28;
+				} else if (punit.getName().equals("Weeks")) {
+					pvalueConvert = pvalue / 4;
+				} else if (punit.getName().equals("Minutes")) {
+					pvalueConvert = pvalue * 40320;
+				}
+			} else if (this.getUnitRequirement().getName().equals("Request/Hour")) {
+				if (punit.getName().equals("Request/Day")) {
+					pvalueConvert = pvalue / 24;
+				} else if (punit.getName().equals("Request/Week")) {
+					pvalueConvert = pvalue / 168;
+				} else if (punit.getName().equals("Request/Month")) {
+					pvalueConvert = pvalue / 672;
+				} 
+			}  else if (this.getUnitRequirement().getName().equals("Request/Day")) {
+				if (punit.getName().equals("Request/Hour")) {
+					pvalueConvert = pvalue * 24;
+				} else if (punit.getName().equals("Request/Week")) {
+					pvalueConvert = pvalue / 7 ;
+				} else if (punit.getName().equals("Request/Month")) {
+					pvalueConvert = pvalue / 28;
+				} 
+			}  else if (this.getUnitRequirement().getName().equals("Request/Week")) {
+				if (punit.getName().equals("Request/Hour")) {
+					pvalueConvert = pvalue * 168;
+				} else if (punit.getName().equals("Request/Day")) {
+					pvalueConvert = pvalue * 7 ;
+				} else if (punit.getName().equals("Request/Month")) {
+					pvalueConvert = pvalue / 4;
+				} 
+			} else if (this.getUnitRequirement().getName().equals("Request/Month")) {
+				if (punit.getName().equals("Request/Hour")) {
+					pvalueConvert = pvalue * 672;
+				} else if (punit.getName().equals("Request/Day")) {
+					pvalueConvert = pvalue * 28 ;
+				} else if (punit.getName().equals("Request/Week")) {
+					pvalueConvert = pvalue * 4;
+				} 
 			}
 		}
 		return pvalueConvert;
+
 	}
 
 	public Unit getUnitRequirement() {

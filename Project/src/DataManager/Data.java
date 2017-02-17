@@ -49,11 +49,11 @@ public class Data {
 		manager.saveObject(unit3);
 		Unit unit4 = new Unit("Milliseconds");
 		manager.saveObject(unit4);
-		Unit unit5 = new Unit("Day");
+		Unit unit5 = new Unit("Days");
 		manager.saveObject(unit5);
-		Unit unit6 = new Unit("Week");
+		Unit unit6 = new Unit("Weeks");
 		manager.saveObject(unit6);
-		Unit unit7 = new Unit("Month");
+		Unit unit7 = new Unit("Months");
 		manager.saveObject(unit7);
 		Unit unit8 = new Unit("Request/Hour");
 		manager.saveObject(unit8);
