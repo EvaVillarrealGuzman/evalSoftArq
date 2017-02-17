@@ -123,12 +123,12 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != "") {
+						tableQualityRequirement.clearAll();
 						viewController.setModel(cmbSystem);
 						cmbSystemItemStateChanged();
 						viewController.setModel(
 								(Architecture) tableSimulation.getItem(0).getData());
 						prepareView(1);
-						
 					}
 				}
 			});
