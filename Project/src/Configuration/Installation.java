@@ -36,7 +36,7 @@ import org.w3c.dom.Text;
  * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
  */
 public class Installation {
-	private static final String PATH = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
+	private static final String PATH = Platform.getInstallLocation().getURL().getPath() + "plugins/SAE";
 
 	public void exists() throws Exception {
 		File directory = new File(PATH);

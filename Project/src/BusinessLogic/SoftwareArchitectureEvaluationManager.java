@@ -48,7 +48,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	private DomainModel.AnalysisEntity.System system;
 	public static final String SEPARATOR = ";";
 	public static final String QUOTE = "\"";
-	private static final String PATHEVALUATION = Platform.getInstallLocation().getURL().getPath() + "plugins/UCM2DEVS";
+	private static final String PATHEVALUATION = Platform.getInstallLocation().getURL().getPath() + "plugins/SAE";
 	private TransformerSimulator pluginTS;
 	private Simulator simulator;
 	private Architecture architecture;

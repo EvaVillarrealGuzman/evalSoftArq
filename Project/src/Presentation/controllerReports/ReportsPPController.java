@@ -31,7 +31,7 @@ public class ReportsPPController extends Controller {
 	private ReportManager manager;
 	private ReportsPreferencePage form;
 	public static final String PATHREPORT = Platform.getInstallLocation().getURL().getPath()
-			+ "plugins/UCM2DEVS/reports/";
+			+ "plugins/SAE/reports/";
 
 	/**
 	 * Getters and Setters
