@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportResponsibility" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="35" rightMargin="25" topMargin="35" bottomMargin="25" uuid="6653eb33-67d5-45d6-993b-4d2191a80e2e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="460"/>
+	<property name="ireport.y" value="327"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Micaela\\Desktop\\Eclipse Marte\\eclipse\\plugins\\UCM2DEVS\\Report\\"]]></defaultValueExpression>
 	</parameter>
@@ -55,15 +55,15 @@
 				</chart>
 				<categoryDataset>
 					<categorySeries>
+						<seriesExpression><![CDATA["Required Measure"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{run}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{availabilityE}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
 						<seriesExpression><![CDATA["Avg. Availability Time"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{run}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{availability}]]></valueExpression>
 						<labelExpression><![CDATA[$F{run} + " - " +$F{availability}]]></labelExpression>
-					</categorySeries>
-					<categorySeries>
-						<seriesExpression><![CDATA["Required Mesure"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{run}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{availabilityE}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
 				<linePlot>
@@ -89,14 +89,14 @@
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Avg. No-Availability Time"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{run}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{noAvailability}]]></valueExpression>
-					</categorySeries>
-					<categorySeries>
 						<seriesExpression><![CDATA["Required Measure"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{run}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{noAvailabilityE}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Avg. No-Availability Time"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{run}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{noAvailability}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
 				<linePlot>
