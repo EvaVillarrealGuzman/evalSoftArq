@@ -119,7 +119,10 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	public Unit[] getComboModelUnit() {
 		ArrayList<Unit> units = new ArrayList<Unit>();
 		for (Unit auxTipo : this.listUnit()) {
-			units.add(auxTipo);
+			if(auxTipo.getName().equals("Request/Hour") || auxTipo.getName().equals("Request/Day") || auxTipo.getName().equals("Request/Week") || auxTipo.getName().equals("Request/Month")){
+			} else{
+				units.add(auxTipo);
+			}
 		}
 		Unit[] arrayUnit = new Unit[units.size()];
 		units.toArray(arrayUnit);
