@@ -128,6 +128,7 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 						viewController.setModel(
 								(Architecture) tableSimulation.getItem(0).getData());
 						prepareView(1);
+						
 					}
 				}
 			});
