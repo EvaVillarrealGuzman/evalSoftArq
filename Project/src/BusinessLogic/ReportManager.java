@@ -115,7 +115,6 @@ public class ReportManager extends HibernateManager {
 	 */
 
 	public List<ResponsibilityPerformance> listResponsibilityPerformance() {
-
 		List<ResponsibilityPerformance> list = new ArrayList<ResponsibilityPerformance>();
 
 		Architecture f = this.getArchitecture();
@@ -135,26 +134,14 @@ public class ReportManager extends HibernateManager {
 					if (i == 0) {
 						ResponsibilityPerformance item = new ResponsibilityPerformance();
 						item.setResponsibilityTT(name);
-						item.setTurnaroundTime(
-								this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) );
+						item.setTurnaroundTime(ind.getValue());
 						list.add(item);
 					} else {
-//						Iterator ite = list.iterator();
-//						while (ite.hasNext()) {
-//							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
-//							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
-//								q.setTurnaroundTime(q.getTurnaroundTime()
-//										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-//												/ 10);
-//							}
-//						}
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
 							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
-								q.setTurnaroundTime(q.getTurnaroundTime()
-										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												);
+								q.setTurnaroundTime(q.getTurnaroundTime() + (ind.getValue()/10));
 							}
 						}
 					}
@@ -186,14 +173,14 @@ public class ReportManager extends HibernateManager {
 					if (i == 0) {
 						ResponsibilityReliability item = new ResponsibilityReliability();
 						item.setResponsibilityF(name);
-						item.setFails(ind.getValue() );
+						item.setFails(ind.getValue());
 						list.add(item);
 					} else {
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityReliability q = (ResponsibilityReliability) ite.next();
 							if (q.getResponsibilityF().equals(ind.getType().getName())) {
-								q.setFails(q.getFails() + ind.getValue() );
+								q.setFails(q.getFails() + (ind.getValue()/10));
 							}
 						}
 					}
@@ -227,7 +214,7 @@ public class ReportManager extends HibernateManager {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(name);
 							item.setDowntime(
-									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 							list.add(item);
 						} else {
 							Iterator ite = list.iterator();
@@ -238,30 +225,28 @@ public class ReportManager extends HibernateManager {
 									band = false;
 									q.setDowntime(
 											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-													);
+													/ 10);
 								}
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
 								item.setResponsibility(name);
 								item.setDowntime(
-										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 								list.add(item);
 							}
 						}
 					} else {
-						//TODO comentado - preguntar Mica
-					}
-						/*Iterator ite = list.iterator();
+						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
 							if (q.getResponsibility().equals(name)) {
 								q.setDowntime(q.getDowntime()
 										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												);
+												/ 10);
 							}
 						}
-					}*/
+					}
 				}
 				if (ind.getMetric().getName().equals("Responsibility Recovery Time")) {
 					if (i == 0) {
@@ -269,7 +254,7 @@ public class ReportManager extends HibernateManager {
 							ResponsibilityAvailability item = new ResponsibilityAvailability();
 							item.setResponsibility(name);
 							item.setRecoveryTime(
-									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 							list.add(item);
 						} else {
 							Iterator ite = list.iterator();
@@ -279,14 +264,15 @@ public class ReportManager extends HibernateManager {
 								if (q.getResponsibility().equals(name)) {
 									band = false;
 									q.setRecoveryTime(
-											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
+													/ 10);
 								}
 							}
 							if (band) {
 								ResponsibilityAvailability item = new ResponsibilityAvailability();
 								item.setResponsibility(name);
 								item.setRecoveryTime(
-										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 								list.add(item);
 							}
 						}
@@ -297,7 +283,7 @@ public class ReportManager extends HibernateManager {
 							if (q.getResponsibility().equals(name)) {
 								q.setRecoveryTime(q.getRecoveryTime()
 										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												);
+												/ 10);
 							}
 						}
 					}
@@ -501,31 +487,31 @@ public class ReportManager extends HibernateManager {
 					pvalueConvert = pvalue / 168;
 				} else if (punit.getName().equals("Request/Month")) {
 					pvalueConvert = pvalue / 672;
-				} 
-			}  else if (this.getUnitRequirement().getName().equals("Request/Day")) {
+				}
+			} else if (this.getUnitRequirement().getName().equals("Request/Day")) {
 				if (punit.getName().equals("Request/Hour")) {
 					pvalueConvert = pvalue * 24;
 				} else if (punit.getName().equals("Request/Week")) {
-					pvalueConvert = pvalue / 7 ;
+					pvalueConvert = pvalue / 7;
 				} else if (punit.getName().equals("Request/Month")) {
 					pvalueConvert = pvalue / 28;
-				} 
-			}  else if (this.getUnitRequirement().getName().equals("Request/Week")) {
+				}
+			} else if (this.getUnitRequirement().getName().equals("Request/Week")) {
 				if (punit.getName().equals("Request/Hour")) {
 					pvalueConvert = pvalue * 168;
 				} else if (punit.getName().equals("Request/Day")) {
-					pvalueConvert = pvalue * 7 ;
+					pvalueConvert = pvalue * 7;
 				} else if (punit.getName().equals("Request/Month")) {
 					pvalueConvert = pvalue / 4;
-				} 
+				}
 			} else if (this.getUnitRequirement().getName().equals("Request/Month")) {
 				if (punit.getName().equals("Request/Hour")) {
 					pvalueConvert = pvalue * 672;
 				} else if (punit.getName().equals("Request/Day")) {
-					pvalueConvert = pvalue * 28 ;
+					pvalueConvert = pvalue * 28;
 				} else if (punit.getName().equals("Request/Week")) {
 					pvalueConvert = pvalue * 4;
-				} 
+				}
 			}
 		}
 		return pvalueConvert;
