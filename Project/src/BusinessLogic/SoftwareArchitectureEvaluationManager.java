@@ -200,14 +200,14 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return false;
 	}
 
-	private void createSimulator() {
-		simulator = new Simulator();
+	private void createSimulator(Unit punit) {
+		simulator = new Simulator(punit);
 		typeIndicator = new SystemIndicator(this.getSystem().getSystemName());
 		this.saveObject(typeIndicator);
 	}
 
-	private void createRun(String psimulationTime, Table ptable) {
-		run = new Run(GregorianCalendar.getInstance().getTime(), Double.parseDouble(psimulationTime));
+	private void createRun(Double psimulationTime, Table ptable) {
+		run = new Run(GregorianCalendar.getInstance().getTime(), psimulationTime);
 		this.getSimulator().getRuns().add(run);
 		this.saveObject(this.getSimulator());
 
@@ -589,18 +589,18 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 					if (this.simulator(simulationTime, unit)) {
 						this.setSystem(system);
 
-						this.createSimulator();
+						this.createSimulator(unit);
 						for (int i = 1; i <= 10; i++) {
 							String num = Integer.toString(i);
-							this.createRun(simulationTimeS, table);
+							this.createRun(simulationTime, table);
 							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-									+ "plugins/UCM2DEVS/Run/Run" + num + "/performance.csv");
+									+ "plugins/SAE/Run/Run" + num + "/performance.csv");
 							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-									+ "plugins/UCM2DEVS/Run/Run" + num + "/availability.csv");
+									+ "plugins/SAE/Run/Run" + num + "/availability.csv");
 							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-									+ "plugins/UCM2DEVS/Run/Run" + num + "/reliability.csv");
+									+ "plugins/SAE/Run/Run" + num + "/reliability.csv");
 						}
-						this.deleteFiles();
+						//this.deleteFiles();
 						return 0;
 					} else {
 						return 1;

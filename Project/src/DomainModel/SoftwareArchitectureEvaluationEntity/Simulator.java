@@ -8,10 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import DomainModel.AnalysisEntity.QualityRequirement;
+import DomainModel.AnalysisEntity.Unit;
 
 /**
  * This class defines join path element
@@ -27,11 +29,23 @@ public class Simulator implements Comparable{
     @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
 	
+	@ManyToOne(targetEntity = Unit.class)
+	private Unit unit;
+	
 	@OneToMany(targetEntity = Run.class, cascade = CascadeType.ALL)
 	private Set<Run> runs = new HashSet<Run>();
 	
 	@ManyToMany(targetEntity = QualityRequirement.class, cascade = CascadeType.ALL)
 	private Set<QualityRequirement> requirements = new HashSet<QualityRequirement>();
+	
+	public Simulator(Unit unit) {
+		super();
+		this.unit = unit;
+	}
+
+	public Simulator() {
+		super();
+	}
 	
 	//CompareTo
 	@Override
@@ -68,4 +82,13 @@ public class Simulator implements Comparable{
 		Double averageIndicator=0.2;
 		return averageIndicator;
 	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
 }

@@ -332,21 +332,19 @@ public class ReportManager extends HibernateManager {
 				.equals("System Availability Time")) {
 			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		} else {
-			return this.getSimulationTime()
-					- this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
+			return (this.getSimulationTime()
+					- this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue());
 		}
 	}
 
 	public double getNoAvailabilityTimeRequirement() {
-		return 1.67;
-		//TODO ver
-		/*if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
+		if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
 				.equals("System No-Availability Time")) {
 			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		} else {
 			return this.getSimulationTime()
 					- this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
-		}*/
+		}
 	}
 
 	public double getThroughputRequirement() {
@@ -667,7 +665,7 @@ public class ReportManager extends HibernateManager {
 	private double getSimulationTime() {
 		Iterator<Run> its = this.getArchitecture().getSimulator().getRuns().iterator();
 		Run r = its.next();
-		return r.getSimulationHorizon();
+		return this.convertValueAcordingToUnitRequirement(r.getSimulationHorizon(),  this.getArchitecture().getSimulator().getUnit());
 	}
 
 	/**
