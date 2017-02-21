@@ -91,6 +91,8 @@ public class HibernateUtil {
 				psession = psessionFactory.openSession();
 			} catch (HibernateException pe) {
 				JOptionPane.showMessageDialog(null, pe);
+		/*	} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, e);*/
 			}
 		} catch (HeadlessException pex) {
 			throw new ExceptionInInitializerError(pex);
