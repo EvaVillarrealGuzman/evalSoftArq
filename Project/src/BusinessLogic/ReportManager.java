@@ -136,14 +136,14 @@ public class ReportManager extends HibernateManager {
 					if (i == 0) {
 						ResponsibilityPerformance item = new ResponsibilityPerformance();
 						item.setResponsibilityTT(name);
-						item.setTurnaroundTime(ind.getValue());
+						item.setTurnaroundTime(ind.getValue() / 10);
 						list.add(item);
 					} else {
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
-							if (q.getResponsibilityTT().equals(ind.getType().getName())) {
-								q.setTurnaroundTime(q.getTurnaroundTime() + (ind.getValue()/10));
+							if (q.getResponsibilityTT().equals(name)) {
+								q.setTurnaroundTime(q.getTurnaroundTime() + (ind.getValue() / 10));
 							}
 						}
 					}
@@ -156,10 +156,11 @@ public class ReportManager extends HibernateManager {
 
 	public List<ResponsibilityReliability> listResponsibilityReliability() {
 
-		List<ResponsibilityReliability> list = new ArrayList<ResponsibilityReliability>();
+		List<ResponsibilityReliability> listResponsibility = new ArrayList<ResponsibilityReliability>();
+		List<Integer> runsByResponsibility = new ArrayList<Integer>();
 
 		Architecture f = this.getArchitecture();
-		int i = 0;
+
 		for (Iterator<Run> its = f.getSimulator().getRuns().iterator(); its.hasNext();) {
 			Run r = its.next();
 			for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
@@ -172,30 +173,45 @@ public class ReportManager extends HibernateManager {
 					name = ind.getType().getName();
 				}
 				if (ind.getMetric().getName().equals("Responsibility Failures")) {
-					if (i == 0) {
+					int index = 0;
+					Boolean exist = false;
+					Iterator ite = listResponsibility.iterator();
+					while (ite.hasNext()) {
+						ResponsibilityReliability q = (ResponsibilityReliability) ite.next();
+						if (q.getResponsibilityF().equals(name)) {
+							exist = true;
+							q.setFails(q.getFails() + (ind.getValue()));
+							runsByResponsibility.set(index, runsByResponsibility.get(index) + 1);
+						}
+						index++;
+					}
+					if (!exist) {
 						ResponsibilityReliability item = new ResponsibilityReliability();
 						item.setResponsibilityF(name);
 						item.setFails(ind.getValue());
-						list.add(item);
-					} else {
-						Iterator ite = list.iterator();
-						while (ite.hasNext()) {
-							ResponsibilityReliability q = (ResponsibilityReliability) ite.next();
-							if (q.getResponsibilityF().equals(ind.getType().getName())) {
-								q.setFails(q.getFails() + (ind.getValue()/10));
-							}
-						}
+						runsByResponsibility.add(1);
+						listResponsibility.add(item);
 					}
 				}
 			}
-			i++;
 		}
-		return list;
+		// Divide el número de fallas por la cantidad de corridas
+		int index = 0;
+		Iterator ite = listResponsibility.iterator();
+		while (ite.hasNext()) {
+			ResponsibilityReliability q = (ResponsibilityReliability) ite.next();
+			q.setFails(q.getFails() / runsByResponsibility.get(index));
+			index++;
+		}
+
+		return listResponsibility;
 	}
 
 	public List<ResponsibilityAvailability> listResponsibilityAvailability() {
-
-		List<ResponsibilityAvailability> list = new ArrayList<ResponsibilityAvailability>();
+		// TODO preguntar a vero si mismo que downtime es igual a la cantidad de
+		// corridas para el otro
+		List<ResponsibilityAvailability> listResponsibility = new ArrayList<ResponsibilityAvailability>();
+		List<Integer> runsByResponsibility = new ArrayList<Integer>();
 
 		Architecture f = this.getArchitecture();
 		int i = 0;
@@ -211,89 +227,65 @@ public class ReportManager extends HibernateManager {
 					name = ind.getType().getName();
 				}
 				if (ind.getMetric().getName().equals("Responsibility Downtime")) {
-					if (i == 0) {
-						if (list.isEmpty()) {
-							ResponsibilityAvailability item = new ResponsibilityAvailability();
-							item.setResponsibility(name);
-							item.setDowntime(
-									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
-							list.add(item);
-						} else {
-							Iterator ite = list.iterator();
-							boolean band = true;
-							while (ite.hasNext()) {
-								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-								if (q.getResponsibility().equals(name)) {
-									band = false;
-									q.setDowntime(
-											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-													/ 10);
-								}
-							}
-							if (band) {
-								ResponsibilityAvailability item = new ResponsibilityAvailability();
-								item.setResponsibility(name);
-								item.setDowntime(
-										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
-								list.add(item);
-							}
+					int index = 0;
+					Boolean exist = false;
+					Iterator ite = listResponsibility.iterator();
+					while (ite.hasNext()) {
+						ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
+						if (q.getResponsibility().equals(name)) {
+							exist = true;
+							q.setDowntime(q.getDowntime()
+									+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+							runsByResponsibility.set(index, runsByResponsibility.get(index) + 1);
 						}
-					} else {
-						Iterator ite = list.iterator();
-						while (ite.hasNext()) {
-							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-							if (q.getResponsibility().equals(name)) {
-								q.setDowntime(q.getDowntime()
-										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												/ 10);
-							}
-						}
+						index++;
+					}
+					if (!exist) {
+						ResponsibilityAvailability item = new ResponsibilityAvailability();
+						item.setResponsibility(name);
+						item.setDowntime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+						listResponsibility.add(item);
+						runsByResponsibility.add(1);
+						exist = false;
 					}
 				}
 				if (ind.getMetric().getName().equals("Responsibility Recovery Time")) {
-					if (i == 0) {
-						if (list.isEmpty()) {
-							ResponsibilityAvailability item = new ResponsibilityAvailability();
-							item.setResponsibility(name);
-							item.setRecoveryTime(
-									this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
-							list.add(item);
-						} else {
-							Iterator ite = list.iterator();
-							boolean band = true;
-							while (ite.hasNext()) {
-								ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-								if (q.getResponsibility().equals(name)) {
-									band = false;
-									q.setRecoveryTime(
-											this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-													/ 10);
-								}
-							}
-							if (band) {
-								ResponsibilityAvailability item = new ResponsibilityAvailability();
-								item.setResponsibility(name);
-								item.setRecoveryTime(
-										this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
-								list.add(item);
-							}
+					int index = 0;
+					Iterator ite = listResponsibility.iterator();
+					Boolean exist = false;
+					while (ite.hasNext()) {
+						ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
+						if (q.getResponsibility().equals(name)) {
+							exist = true;
+							q.setRecoveryTime(q.getRecoveryTime()
+									+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+						//	runsByResponsibility.set(index, runsByResponsibility.get(index) + 1);
 						}
-					} else {
-						Iterator ite = list.iterator();
-						while (ite.hasNext()) {
-							ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
-							if (q.getResponsibility().equals(name)) {
-								q.setRecoveryTime(q.getRecoveryTime()
-										+ this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())
-												/ 10);
-							}
-						}
+						index++;
 					}
+					if (!exist) {
+						ResponsibilityAvailability item = new ResponsibilityAvailability();
+						item.setResponsibility(name);
+						item.setRecoveryTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()));
+						runsByResponsibility.add(1);
+					}
+
 				}
 			}
-			i++;
+
 		}
-		return list;
+		
+		// Calcula promedio
+		int index = 0;
+		Iterator ite = listResponsibility.iterator();
+		while (ite.hasNext()) {
+			ResponsibilityAvailability q = (ResponsibilityAvailability) ite.next();
+			q.setDowntime(q.getDowntime() / runsByResponsibility.get(index));
+			q.setRecoveryTime(q.getRecoveryTime() / runsByResponsibility.get(index));
+			index++;
+		}
+		
+		return listResponsibility;
 	}
 
 	public List<SystemAvailability> listSystemAvailability() {
@@ -346,13 +338,15 @@ public class ReportManager extends HibernateManager {
 	}
 
 	public double getNoAvailabilityTimeRequirement() {
-		if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
+		return 1.67;
+		//TODO ver
+		/*if (this.getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
 				.equals("System No-Availability Time")) {
 			return this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
 		} else {
 			return this.getSimulationTime()
 					- this.getQualityRequirement().getQualityScenario().getResponseMeasure().getValue();
-		}
+		}*/
 	}
 
 	public double getThroughputRequirement() {
@@ -601,7 +595,7 @@ public class ReportManager extends HibernateManager {
 		}
 		return list;
 	}
-	
+
 	public List<SystemPerformanceTurnaroundTime> listSystemPerformanceTurnaroundTime() {
 
 		List<SystemPerformanceTurnaroundTime> list = new ArrayList<SystemPerformanceTurnaroundTime>();
@@ -669,7 +663,7 @@ public class ReportManager extends HibernateManager {
 		}
 		return list;
 	}
-	
+
 	private double getSimulationTime() {
 		Iterator<Run> its = this.getArchitecture().getSimulator().getRuns().iterator();
 		Run r = its.next();
