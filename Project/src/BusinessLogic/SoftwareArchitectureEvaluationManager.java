@@ -600,7 +600,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
 									+ "plugins/SAE/Run/Run" + num + "/reliability.csv");
 						}
-						//this.deleteFiles();
+						this.deleteFiles();
 						return 0;
 					} else {
 						return 1;
