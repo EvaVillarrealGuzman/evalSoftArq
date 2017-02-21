@@ -52,7 +52,7 @@ public class HibernateManager extends HibernateUtil {
 	public List listClass(Class pclase, String patributoOrden, boolean pstate) {
 		Criteria crit = getSession().createCriteria(pclase).addOrder(Order.asc(patributoOrden))
 				.add(Restrictions.eq("state", pstate));
-		return crit.list();
+		return  crit.list();
 	}
 	
 	public List listClass(Class pclase, String patributoOrden, Architecture parchitecture) {
@@ -71,7 +71,7 @@ public class HibernateManager extends HibernateUtil {
 																								// by
 																								// Usuario-Pc
 																								// on
-																								// 10/06/16
+																					// 10/06/16
 																								// 22:02
 			return true;
 		} catch (Exception pex) {
