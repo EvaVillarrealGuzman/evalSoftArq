@@ -465,39 +465,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 				} else if (punit.getName().equals("Minutes")) {
 					pvalueConvert = pvalue * 40320;
 				}
-			}  else if (this.getUnitIndicator().getName().equals("Request/Hour")) {
-				if (punit.getName().equals("Request/Day")) {
-					pvalueConvert = pvalue / 24;
-				} else if (punit.getName().equals("Request/Week")) {
-					pvalueConvert = pvalue / 168;
-				} else if (punit.getName().equals("Request/Month")) {
-					pvalueConvert = pvalue / 672;
-				} 
-			}  else if (this.getUnitIndicator().getName().equals("Request/Day")) {
-				if (punit.getName().equals("Request/Hour")) {
-					pvalueConvert = pvalue * 24;
-				} else if (punit.getName().equals("Request/Week")) {
-					pvalueConvert = pvalue / 7 ;
-				} else if (punit.getName().equals("Request/Month")) {
-					pvalueConvert = pvalue / 28;
-				} 
-			}  else if (this.getUnitIndicator().getName().equals("Request/Week")) {
-				if (punit.getName().equals("Request/Hour")) {
-					pvalueConvert = pvalue * 168;
-				} else if (punit.getName().equals("Request/Day")) {
-					pvalueConvert = pvalue * 7 ;
-				} else if (punit.getName().equals("Request/Month")) {
-					pvalueConvert = pvalue / 4;
-				} 
-			} else if (this.getUnitIndicator().getName().equals("Request/Month")) {
-				if (punit.getName().equals("Request/Hour")) {
-					pvalueConvert = pvalue * 672;
-				} else if (punit.getName().equals("Request/Day")) {
-					pvalueConvert = pvalue * 28 ;
-				} else if (punit.getName().equals("Request/Week")) {
-					pvalueConvert = pvalue * 4;
-				} 
-			}
+			} 
 		}
 		return pvalueConvert;
 	}
