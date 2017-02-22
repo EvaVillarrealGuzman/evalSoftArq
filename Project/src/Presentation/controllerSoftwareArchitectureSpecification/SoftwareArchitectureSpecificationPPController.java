@@ -226,10 +226,16 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	private boolean isValidData() {
 		if (this.isEmpty(this.getForm().getCmbSystem())) {
-			this.createErrorDialog(Messages.getString("UCM2DEVS_EmptySystemName_ErrorDialog"));
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectSystem_ErrorDialog"));
 			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
+		if (this.getForm().getTable().getItemCount()>0 && this.isEmpty(this.getForm().getCmbUnit())) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
+			this.getForm().getCmbUnit().getCombo().setFocus();
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -249,6 +255,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 				if (first) {
 					// Solo lo hace la primera vez, para la primera architectura
 					this.setUnit(arc);
+					first = false;
 				}
 				addToTable(arc.getPathUCM());
 			}
@@ -291,6 +298,12 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 
 	public void deleteToTable() {
 		this.getForm().getTable().remove(this.getForm().getTable().getSelectionIndices());
+		if (this.getForm().getTable().getItemCount()==0){
+			this.getForm().loadComboUnit();
+			this.getForm().prepareView(4);
+		}else{
+			this.getForm().prepareView(2);
+		}
 	}
 
 	public boolean isUCMDuplicate(String newPath) {

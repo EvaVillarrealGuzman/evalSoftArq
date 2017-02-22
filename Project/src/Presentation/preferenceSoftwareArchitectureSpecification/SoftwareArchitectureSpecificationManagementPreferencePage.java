@@ -251,7 +251,6 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				public void widgetSelected(SelectionEvent e) {
 					btnDelete.setCursor(cursor);
 					viewController.deleteToTable();
-					prepareView(2);
 				}
 			});
 
@@ -507,7 +506,17 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			}
 			this.getCmbUnit().getCombo().setEnabled(false);
 			break;
+		case 4: // with delete all arquitectures
+			this.getCmbSystem().getCombo().setEnabled(true);
+			this.getTable().setEnabled(true);
+			this.getBtnAdd().setEnabled(true);
+			this.getBtnDelete().setEnabled(true);
+			this.getBtnConsult().setEnabled(true);
+			this.getCmbUnit().getCombo().setEnabled(false);
+			this.getBtnSave().setEnabled(true);
+			break;
 		}
+		
 	}
 
 	/**
