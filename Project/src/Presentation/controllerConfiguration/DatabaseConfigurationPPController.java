@@ -18,15 +18,30 @@ public class DatabaseConfigurationPPController extends Controller {
 	 */
 	private SystemConfigurationManager manager;
 	private DatabaseConfigurationPreferencePage form;
+	private static DatabaseConfigurationPPController viewController;
+
+	private DatabaseConfigurationPPController() {
+		super();
+	}
 
 	/**
-	 * s Getters and Setters
+	 * Getters and Setters
 	 */
-	public SystemConfigurationManager getManager() {
-		if (manager == null) {
-			manager = new SystemConfigurationManager();
+	public static DatabaseConfigurationPPController getViewController() {
+		if (viewController == null) {
+			synchronized (DatabaseConfigurationPPController.class) {
+				viewController = new DatabaseConfigurationPPController();
+			}
 		}
-		return manager;
+		return viewController;
+	}
+	
+	public SystemConfigurationManager getManager() {
+		//if (manager == null) {
+		//	manager = new SystemConfigurationManager();
+		//}
+		//return manager;
+		return SystemConfigurationManager.getManager();
 	}
 
 	public void setManager(SystemConfigurationManager manager) {

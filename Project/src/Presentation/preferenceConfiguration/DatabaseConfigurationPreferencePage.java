@@ -19,6 +19,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.controllerConfiguration.DatabaseConfigurationPPController;
 import Presentation.preferences.Messages;
 
@@ -48,8 +49,9 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 	public DatabaseConfigurationPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new DatabaseConfigurationPPController();
-		this.setViewController(viewController);
+		//viewController = new DatabaseConfigurationPPController();
+		//this.setViewController(viewController);
+		this.setViewController(DatabaseConfigurationPPController.getViewController());
 		this.getViewController().setForm(this);
 	}
 
