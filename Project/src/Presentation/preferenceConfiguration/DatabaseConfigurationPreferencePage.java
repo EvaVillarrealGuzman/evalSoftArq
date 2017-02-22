@@ -48,11 +48,17 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 	 */
 	public DatabaseConfigurationPreferencePage() {
 		super(GRID);
-		noDefaultAndApplyButton();
-		//viewController = new DatabaseConfigurationPPController();
-		//this.setViewController(viewController);
-		this.setViewController(DatabaseConfigurationPPController.getViewController());
-		this.getViewController().setForm(this);
+		try {
+			noDefaultAndApplyButton();
+			System.runFinalization();
+			Runtime.getRuntime().gc();
+			this.setViewController(DatabaseConfigurationPPController.getViewController());
+			this.getViewController().setForm(this);
+		} catch (Exception e) {
+
+		}
+		// viewController = new DatabaseConfigurationPPController();
+		// this.setViewController(viewController);
 	}
 
 	/*

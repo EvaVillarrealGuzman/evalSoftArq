@@ -64,12 +64,17 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	 */
 	public SoftwareArchitectureSpecificationManagementPreferencePage() {
 		super(GRID);
-		noDefaultAndApplyButton();
-		//viewController = new SoftwareArchitectureSpecificationPPController();
-		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
-												// 10/06/16 21:48
-		this.setViewController(SoftwareArchitectureSpecificationPPController.getViewController());
-		this.getViewController().setForm(this);
+		try {
+			noDefaultAndApplyButton();
+			System.runFinalization();
+			Runtime.getRuntime().gc();
+			this.setViewController(SoftwareArchitectureSpecificationPPController.getViewController());
+			this.getViewController().setForm(this);
+		} catch (Exception e) {
+
+		}
+		// viewController = new SoftwareArchitectureSpecificationPPController();
+		// this.setViewController(viewController);
 	}
 
 	/*

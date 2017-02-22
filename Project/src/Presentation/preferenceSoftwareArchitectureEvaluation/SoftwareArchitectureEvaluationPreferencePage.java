@@ -69,12 +69,17 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	public SoftwareArchitectureEvaluationPreferencePage() {
 		super(GRID);
-		noDefaultAndApplyButton();
-		//viewController = new SoftwareArchitectureEvaluationPPController();
-		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
-												// 10/06/16 21:48
-		this.setViewController(SoftwareArchitectureEvaluationPPController.getViewController());
-		this.getViewController().setForm(this);
+		try {
+			noDefaultAndApplyButton();
+			System.runFinalization();
+			Runtime.getRuntime().gc();
+			this.setViewController(SoftwareArchitectureEvaluationPPController.getViewController());
+			this.getViewController().setForm(this);
+		} catch (Exception e) {
+
+		}
+		// viewController = new SoftwareArchitectureEvaluationPPController();
+		// this.setViewController(viewController);
 	}
 
 	/*
@@ -348,7 +353,6 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 		return null;
 
 	}
-	
 
 	/*
 	 * (non-Javadoc)

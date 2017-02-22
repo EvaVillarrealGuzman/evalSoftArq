@@ -54,12 +54,17 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	 */
 	public EditSystemPreferencePage() {
 		super(GRID);
-		noDefaultAndApplyButton();
-		//viewController = new EditSystemPPController();
-		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
-												// 10/06/16 21:49
-		this.setViewController(EditSystemPPController.getViewController());
-		this.getViewController().setForm(this);
+		try {
+			noDefaultAndApplyButton();
+			System.runFinalization();
+			Runtime.getRuntime().gc();
+			this.setViewController(EditSystemPPController.getViewController());
+			this.getViewController().setForm(this);
+		} catch (Exception e) {
+
+		}
+		// viewController = new EditSystemPPController();
+		// this.setViewController(viewController);
 	}
 
 	/*

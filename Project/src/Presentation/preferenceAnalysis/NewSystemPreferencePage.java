@@ -49,11 +49,17 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	 */
 	public NewSystemPreferencePage() {
 		super(GRID);
-		noDefaultAndApplyButton();
+		try{
+			noDefaultAndApplyButton();
+			System.runFinalization();
+	        Runtime.getRuntime().gc();
+	        this.setViewController(NewSystemPPController.getViewController());
+			this.getViewController().setForm(this);
+	    }catch(Exception e){
+	            
+	    }
 		//viewController = new NewSystemPPController();
-		//this.setViewController(viewController);
-		this.setViewController(NewSystemPPController.getViewController());
-		this.getViewController().setForm(this);
+		//this.setViewController(viewController);	
 	}
 
 	/*

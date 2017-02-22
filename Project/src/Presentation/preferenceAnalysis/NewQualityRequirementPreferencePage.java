@@ -77,11 +77,17 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	 */
 	public NewQualityRequirementPreferencePage() {
 		super(GRID);
-		noDefaultAndApplyButton();
-		//viewController = new NewQualityRequirementPPController();
-		//this.setViewController(viewController);
-		this.setViewController(NewQualityRequirementPPController.getViewController());
-		this.getViewController().setForm(this);
+		try {
+			noDefaultAndApplyButton();
+			System.runFinalization();
+			Runtime.getRuntime().gc();
+			this.setViewController(NewQualityRequirementPPController.getViewController());
+			this.getViewController().setForm(this);
+		} catch (Exception e) {
+
+		}
+		// viewController = new NewQualityRequirementPPController();
+		// this.setViewController(viewController);
 	}
 
 	/*

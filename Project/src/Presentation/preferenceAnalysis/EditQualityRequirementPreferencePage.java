@@ -91,12 +91,17 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	 */
 	public EditQualityRequirementPreferencePage() {
 		super(GRID);
-		noDefaultAndApplyButton();
-		//viewController = new EditQualityRequirementPPController();
-		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
-												// 10/06/16 21:48
-		this.setViewController(EditQualityRequirementPPController.getViewController());
-		this.getViewController().setFormSearch(this);
+		try {
+			noDefaultAndApplyButton();
+			System.runFinalization();
+			Runtime.getRuntime().gc();
+			this.setViewController(EditQualityRequirementPPController.getViewController());
+			this.getViewController().setFormSearch(this);
+		} catch (Exception e) {
+
+		}
+		// viewController = new EditQualityRequirementPPController();
+		// this.setViewController(viewController);
 	}
 
 	/*
