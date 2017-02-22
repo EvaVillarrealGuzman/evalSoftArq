@@ -32,15 +32,29 @@ public class EditQualityRequirementPPController extends Controller {
 	 */
 	private AnalysisManager manager;
 	private EditQualityRequirementPreferencePage formSearch;
+	private static EditQualityRequirementPPController viewController;
+
+	private EditQualityRequirementPPController() {
+		super();
+	}
 
 	/**
 	 * Getters and Setters
 	 */
-	public AnalysisManager getManager() {
-		if (manager == null) {
-			manager = new AnalysisManager();
+	public static EditQualityRequirementPPController getViewController() {
+		if (viewController == null) {
+			synchronized (EditQualityRequirementPPController.class) {
+				viewController = new EditQualityRequirementPPController();
+			}
 		}
-		return manager;
+		return viewController;
+	}
+	public AnalysisManager getManager() {
+		//if (manager == null) {
+		//	manager = new AnalysisManager();
+		//}
+		//return manager;
+		return AnalysisManager.getManager();
 	}
 
 	public void setManager(AnalysisManager manager) {

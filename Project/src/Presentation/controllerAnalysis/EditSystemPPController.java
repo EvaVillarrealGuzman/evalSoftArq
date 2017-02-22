@@ -21,15 +21,29 @@ public class EditSystemPPController extends Controller {
 	 */
 	private AnalysisManager manager;
 	private EditSystemPreferencePage form;
+	private static EditSystemPPController viewController;
+
+	private EditSystemPPController() {
+		super();
+	}
 
 	/**
 	 * Getters and Setters
 	 */
-	public AnalysisManager getManager() {
-		if (manager == null) {
-			manager = new AnalysisManager();
+	public static EditSystemPPController getViewController() {
+		if (viewController == null) {
+			synchronized (EditSystemPPController.class) {
+				viewController = new EditSystemPPController();
+			}
 		}
-		return manager;
+		return viewController;
+	}
+	public AnalysisManager getManager() {
+		//if (manager == null) {
+		//	manager = new AnalysisManager();
+		//}
+		//return manager;
+		return AnalysisManager.getManager();
 	}
 
 	public void setManager(AnalysisManager manager) {

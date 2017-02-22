@@ -50,8 +50,9 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	public NewSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new NewSystemPPController();
-		this.setViewController(viewController);
+		//viewController = new NewSystemPPController();
+		//this.setViewController(viewController);
+		this.setViewController(NewSystemPPController.getViewController());
 		this.getViewController().setForm(this);
 	}
 

@@ -33,6 +33,7 @@ import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.ResponseMeasureType;
 import Presentation.controllerAnalysis.EditQualityRequirementPPController;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
 
@@ -91,9 +92,10 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	public EditQualityRequirementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new EditQualityRequirementPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+		//viewController = new EditQualityRequirementPPController();
+		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:48
+		this.setViewController(EditQualityRequirementPPController.getViewController());
 		this.getViewController().setFormSearch(this);
 	}
 

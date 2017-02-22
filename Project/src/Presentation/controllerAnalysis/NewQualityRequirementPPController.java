@@ -34,15 +34,29 @@ public class NewQualityRequirementPPController extends Controller {
 	 */
 	private AnalysisManager manager;
 	private NewQualityRequirementPreferencePage form;
+	private static NewQualityRequirementPPController viewController;
+
+	private NewQualityRequirementPPController() {
+		super();
+	}
 
 	/**
 	 * Getters and Setters
 	 */
-	public AnalysisManager getManager() {
-		if (manager == null) {
-			manager = new AnalysisManager();
+	public static NewQualityRequirementPPController getViewController() {
+		if (viewController == null) {
+			synchronized (NewQualityRequirementPPController.class) {
+				viewController = new NewQualityRequirementPPController();
+			}
 		}
-		return manager;
+		return viewController;
+	}
+	public AnalysisManager getManager() {
+		//if (manager == null) {
+		//	manager = new AnalysisManager();
+		//}
+		//return manager;
+		return AnalysisManager.getManager();
 	}
 
 	public void setManager(AnalysisManager manager) {

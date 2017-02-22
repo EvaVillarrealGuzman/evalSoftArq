@@ -26,6 +26,7 @@ import DomainModel.AnalysisEntity.Metric;
 import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.ResponseMeasureType;
 import Presentation.controllerAnalysis.NewQualityRequirementPPController;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
 
@@ -77,8 +78,9 @@ public class NewQualityRequirementPreferencePage extends FieldEditorPreferencePa
 	public NewQualityRequirementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new NewQualityRequirementPPController();
-		this.setViewController(viewController);
+		//viewController = new NewQualityRequirementPPController();
+		//this.setViewController(viewController);
+		this.setViewController(NewQualityRequirementPPController.getViewController());
 		this.getViewController().setForm(this);
 	}
 

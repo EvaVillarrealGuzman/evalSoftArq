@@ -18,15 +18,30 @@ public class NewSystemPPController extends Controller {
 	 */
 	private AnalysisManager manager;
 	private NewSystemPreferencePage form;
+	private static NewSystemPPController viewController;
+
+	private NewSystemPPController() {
+		super();
+	}
 
 	/**
 	 * Getters and Setters
 	 */
-	public AnalysisManager getManager() {
-		if (manager == null) {
-			manager = new AnalysisManager();
+	public static NewSystemPPController getViewController() {
+		if (viewController == null) {
+			synchronized (NewSystemPPController.class) {
+				viewController = new NewSystemPPController();
+			}
 		}
-		return manager;
+		return viewController;
+	}
+
+	public AnalysisManager getManager() {
+		// if (manager == null) {
+		// manager = new AnalysisManager();
+		// }
+		// return manager;
+		return AnalysisManager.getManager();
 	}
 
 	public void setManager(AnalysisManager manager) {
@@ -49,9 +64,9 @@ public class NewSystemPPController extends Controller {
 		err = this.newSystem();
 		if (err == 0) {
 			this.getForm().prepareView(1);
-			if (this.getManager().saveSystem()){
+			if (this.getManager().saveSystem()) {
 				return 0;
-			}else {
+			} else {
 				return 1;
 			}
 		}
@@ -97,8 +112,8 @@ public class NewSystemPPController extends Controller {
 		return true;
 	}
 
-	public Boolean isConnection(){
+	public Boolean isConnection() {
 		return this.getManager().isConnection();
 	}
-	
+
 }

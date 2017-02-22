@@ -22,6 +22,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import Presentation.controllerAnalysis.EditSystemPPController;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferences.Messages;
 
 /**
@@ -54,9 +55,10 @@ public class EditSystemPreferencePage extends FieldEditorPreferencePage implemen
 	public EditSystemPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new EditSystemPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+		//viewController = new EditSystemPPController();
+		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:49
+		this.setViewController(EditSystemPPController.getViewController());
 		this.getViewController().setForm(this);
 	}
 

@@ -45,7 +45,7 @@ public class AnalysisManager extends HibernateManager {
 	/**
 	 * Builder
 	 */
-	public AnalysisManager() {
+	private AnalysisManager() {
 		super();
 	}
 
