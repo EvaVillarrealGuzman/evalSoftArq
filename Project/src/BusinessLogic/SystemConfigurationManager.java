@@ -25,7 +25,7 @@ public class SystemConfigurationManager extends HibernateManager {
 	/**
 	 * Builder
 	 */
-	public SystemConfigurationManager() {
+	private SystemConfigurationManager() {
 		super();
 	}
 
@@ -39,6 +39,10 @@ public class SystemConfigurationManager extends HibernateManager {
 			}
 		}
 		return manager;
+	}
+
+	public static void setManager(SystemConfigurationManager manager) {
+		SystemConfigurationManager.manager = manager;
 	}
 
 	/**

@@ -41,6 +41,27 @@ public class ReportManager extends HibernateManager {
 	private Architecture architecture;
 	private QualityRequirement qualityRequirement;
 	private QualityAttribute qualityAttribute;
+	private static ReportManager manager;
+
+	private ReportManager() {
+		super();
+	}
+
+	/**
+	 * Get SystemConfigurationManager. Applied Singleton pattern
+	 */
+	public static ReportManager getManager() {
+		if (manager == null) {
+			synchronized (ReportManager.class) {
+				manager = new ReportManager();
+			}
+		}
+		return manager;
+	}
+	
+	public static void setManager(ReportManager manager) {
+		ReportManager.manager = manager;
+	}
 
 	/**
 	 * Getters and Setters

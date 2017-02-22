@@ -49,6 +49,11 @@ public class EditQualityRequirementPPController extends Controller {
 		}
 		return viewController;
 	}
+	
+	public static void setViewController(EditQualityRequirementPPController viewController) {
+		EditQualityRequirementPPController.viewController = viewController;
+	}
+
 	public AnalysisManager getManager() {
 		//if (manager == null) {
 		//	manager = new AnalysisManager();

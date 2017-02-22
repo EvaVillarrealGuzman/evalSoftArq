@@ -23,6 +23,7 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.PathElement;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
 import DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
 import Presentation.Controller;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage;
 import Presentation.preferences.Messages;
 
@@ -39,15 +40,34 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	 */
 	private SoftwareArchitectureSpecificationManager manager;
 	private SoftwareArchitectureSpecificationManagementPreferencePage form;
+	private static SoftwareArchitectureSpecificationPPController viewController;
+
+	private SoftwareArchitectureSpecificationPPController() {
+		super();
+	}
 
 	/**
 	 * Getters and Setters
 	 */
-	public SoftwareArchitectureSpecificationManager getManager() {
-		if (manager == null) {
-			manager = new SoftwareArchitectureSpecificationManager();
+	public static SoftwareArchitectureSpecificationPPController getViewController() {
+		if (viewController == null) {
+			synchronized (SoftwareArchitectureSpecificationPPController.class) {
+				viewController = new SoftwareArchitectureSpecificationPPController();
+			}
 		}
-		return manager;
+		return viewController;
+	}
+	
+	public static void setViewController(SoftwareArchitectureSpecificationPPController viewController) {
+		SoftwareArchitectureSpecificationPPController.viewController = viewController;
+	}
+
+	public SoftwareArchitectureSpecificationManager getManager() {
+		//if (manager == null) {
+		//	manager = new SoftwareArchitectureSpecificationManager();
+		//}
+		//return manager;
+		return SoftwareArchitectureSpecificationManager.getManager();
 	}
 
 	public void setManager(SoftwareArchitectureSpecificationManager manager) {

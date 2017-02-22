@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.controllerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPPController;
 import Presentation.preferences.Messages;
 
@@ -64,9 +65,10 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	public SoftwareArchitectureSpecificationManagementPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new SoftwareArchitectureSpecificationPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+		//viewController = new SoftwareArchitectureSpecificationPPController();
+		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:48
+		this.setViewController(SoftwareArchitectureSpecificationPPController.getViewController());
 		this.getViewController().setForm(this);
 	}
 

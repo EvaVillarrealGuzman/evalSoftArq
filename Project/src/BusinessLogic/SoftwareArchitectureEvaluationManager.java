@@ -54,6 +54,27 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	private Architecture architecture;
 	private Run run;
 	private SystemIndicator typeIndicator;
+	private static SoftwareArchitectureEvaluationManager manager;
+
+	private SoftwareArchitectureEvaluationManager() {
+		super();
+	}
+
+	/**
+	 * Get SystemConfigurationManager. Applied Singleton pattern
+	 */
+	public static SoftwareArchitectureEvaluationManager getManager() {
+		if (manager == null) {
+			synchronized (SoftwareArchitectureEvaluationManager.class) {
+				manager = new SoftwareArchitectureEvaluationManager();
+			}
+		}
+		return manager;
+	}
+	
+	public static void setManager(SoftwareArchitectureEvaluationManager manager) {
+		SoftwareArchitectureEvaluationManager.manager = manager;
+	}
 
 	/**
 	 * Getters and Setters

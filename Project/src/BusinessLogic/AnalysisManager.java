@@ -61,6 +61,10 @@ public class AnalysisManager extends HibernateManager {
 		return manager;
 	}
 
+	public static void setManager(AnalysisManager manager) {
+		AnalysisManager.manager = manager;
+	}
+
 	/**
 	 * Getters and Setters
 	 */

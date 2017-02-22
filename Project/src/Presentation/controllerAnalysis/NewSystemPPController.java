@@ -36,6 +36,10 @@ public class NewSystemPPController extends Controller {
 		return viewController;
 	}
 
+	public static void setViewController(NewSystemPPController viewController) {
+		NewSystemPPController.viewController = viewController;
+	}
+
 	public AnalysisManager getManager() {
 		// if (manager == null) {
 		// manager = new AnalysisManager();

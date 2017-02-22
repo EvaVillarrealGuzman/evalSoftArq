@@ -28,6 +28,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.controllerReports.ReportsPPController;
 import Presentation.preferences.Messages;
 
@@ -69,9 +70,10 @@ public class ReportsPreferencePage extends FieldEditorPreferencePage implements 
 	public ReportsPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new ReportsPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+		//viewController = new ReportsPPController();
+		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:48
+		this.setViewController(ReportsPPController.getViewController());
 		this.getViewController().setForm(this);
 	}
 

@@ -15,6 +15,7 @@ import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferenceReports.ReportsPreferencePage;
 
 /**
@@ -27,28 +28,38 @@ public class ReportsPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static ReportsPPController controller;
+	private static ReportsPPController viewController;
 	private ReportManager manager;
 	private ReportsPreferencePage form;
 	public static final String PATHREPORT = Platform.getInstallLocation().getURL().getPath()
 			+ "plugins/SAE/reports/";
 
+	private ReportsPPController() {
+		super();
+	}
+
 	/**
 	 * Getters and Setters
 	 */
-	public static ReportsPPController getController() {
-		return controller;
+	public static ReportsPPController getViewController() {
+		if (viewController == null) {
+			synchronized (ReportsPPController.class) {
+				viewController = new ReportsPPController();
+			}
+		}
+		return viewController;
 	}
 
-	public static void setController(ReportsPPController controller) {
-		ReportsPPController.controller = controller;
+	public static void setViewController(ReportsPPController viewController) {
+		ReportsPPController.viewController = viewController;
 	}
 
 	public ReportManager getManager() {
-		if (manager == null) {
-			manager = new ReportManager();
-		}
-		return manager;
+		//if (manager == null) {
+		//	manager = new ReportManager();
+		//}
+		//return manager;
+		return ReportManager.getManager();
 	}
 
 	public void setManager(ReportManager manager) {

@@ -38,6 +38,11 @@ public class EditSystemPPController extends Controller {
 		}
 		return viewController;
 	}
+	
+	public static void setViewController(EditSystemPPController viewController) {
+		EditSystemPPController.viewController = viewController;
+	}
+
 	public AnalysisManager getManager() {
 		//if (manager == null) {
 		//	manager = new AnalysisManager();

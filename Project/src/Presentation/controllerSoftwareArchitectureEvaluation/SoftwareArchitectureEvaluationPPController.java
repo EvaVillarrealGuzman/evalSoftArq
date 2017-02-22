@@ -14,6 +14,7 @@ import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Main.TransformerSimulator;
 import Presentation.Controller;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage;
 import Presentation.preferences.Messages;
 
@@ -28,26 +29,36 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	/**
 	 * Attributes
 	 */
-	private static SoftwareArchitectureEvaluationPPController controller;
+	private static SoftwareArchitectureEvaluationPPController viewController;
 	private SoftwareArchitectureEvaluationManager manager;
 	private SoftwareArchitectureEvaluationPreferencePage form;
+
+	private SoftwareArchitectureEvaluationPPController() {
+		super();
+	}
 
 	/**
 	 * Getters and Setters
 	 */
-	public static SoftwareArchitectureEvaluationPPController getController() {
-		return controller;
+	public static SoftwareArchitectureEvaluationPPController getViewController() {
+		if (viewController == null) {
+			synchronized (SoftwareArchitectureEvaluationPPController.class) {
+				viewController = new SoftwareArchitectureEvaluationPPController();
+			}
+		}
+		return viewController;
 	}
 
-	public static void setController(SoftwareArchitectureEvaluationPPController controller) {
-		SoftwareArchitectureEvaluationPPController.controller = controller;
+	public static void setViewController(SoftwareArchitectureEvaluationPPController viewController) {
+		SoftwareArchitectureEvaluationPPController.viewController = viewController;
 	}
 
 	public SoftwareArchitectureEvaluationManager getManager() {
-		if (manager == null) {
-			manager = new SoftwareArchitectureEvaluationManager();
-		}
-		return manager;
+		//if (manager == null) {
+		//	manager = new SoftwareArchitectureEvaluationManager();
+		//}
+		//return manager;
+		return SoftwareArchitectureEvaluationManager.getManager();
 	}
 
 	public void setManager(SoftwareArchitectureEvaluationManager manager) {

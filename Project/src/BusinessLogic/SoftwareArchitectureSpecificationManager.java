@@ -56,6 +56,27 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	Document doc;
 	private DefaultTreeModel model;
 	private JTree tree;
+	private static SoftwareArchitectureSpecificationManager manager;
+
+	private SoftwareArchitectureSpecificationManager() {
+		super();
+	}
+
+	/**
+	 * Get SystemConfigurationManager. Applied Singleton pattern
+	 */
+	public static SoftwareArchitectureSpecificationManager getManager() {
+		if (manager == null) {
+			synchronized (SoftwareArchitectureSpecificationManager.class) {
+				manager = new SoftwareArchitectureSpecificationManager();
+			}
+		}
+		return manager;
+	}
+	
+	public static void setManager(SoftwareArchitectureSpecificationManager manager) {
+		SoftwareArchitectureSpecificationManager.manager = manager;
+	}
 
 	/**
 	 * Getters and Setters

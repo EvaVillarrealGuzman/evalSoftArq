@@ -30,6 +30,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
+import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.controllerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
@@ -69,9 +70,10 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	public SoftwareArchitectureEvaluationPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
-		viewController = new SoftwareArchitectureEvaluationPPController();
-		this.setViewController(viewController); // NOPMD by Usuario-Pc on
+		//viewController = new SoftwareArchitectureEvaluationPPController();
+		//this.setViewController(viewController); // NOPMD by Usuario-Pc on
 												// 10/06/16 21:48
+		this.setViewController(SoftwareArchitectureEvaluationPPController.getViewController());
 		this.getViewController().setForm(this);
 	}
 

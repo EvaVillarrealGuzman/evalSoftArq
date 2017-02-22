@@ -51,6 +51,11 @@ public class NewQualityRequirementPPController extends Controller {
 		}
 		return viewController;
 	}
+	
+	public static void setViewController(NewQualityRequirementPPController viewController) {
+		NewQualityRequirementPPController.viewController = viewController;
+	}
+
 	public AnalysisManager getManager() {
 		//if (manager == null) {
 		//	manager = new AnalysisManager();
