@@ -475,7 +475,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnDelete().setEnabled(true);
 			this.getBtnConsult().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
+			//this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
 			if (!(valueCmbUnit == null) && this.getTable().getItemCount()>0) {
 				this.getBtnSave().setEnabled(true);
 			} else {
