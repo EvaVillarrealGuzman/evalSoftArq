@@ -234,6 +234,10 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
 			this.getForm().getCmbUnit().getCombo().setFocus();
 			return false;
+		} if (this.getForm().getTable().getItemCount()==0 && !(this.isEmpty(this.getForm().getCmbUnit()))) {
+			this.createErrorDialog(Messages.getString("UCM2DEVS_UnitSelectedAndArchitecturesEmpty_ErrorDialog"));
+			this.getForm().getTable().setFocus();
+			return false;
 		}
 		
 		return true;

@@ -123,9 +123,11 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (((IStructuredSelection) cmbSystem.getSelection()).getFirstElement() != null) {
-						prepareView(1);
+						getCmbUnit().setSelection(StructuredSelection.EMPTY);
+						getTable().clearAll();
 						viewController.setModel(cmbSystem);
 						cmbSystemItemStateChanged();
+						prepareView(1);
 					}
 				}
 			});
@@ -474,7 +476,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnConsult().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
 			this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
-			if (!(valueCmbUnit == null)) {
+			if (!(valueCmbUnit == null) && this.getTable().getItemCount()>0) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -487,7 +489,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnDelete().setEnabled(true);
 			this.getBtnConsult().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			if (!(valueCmbUnit == null)) {
+			if (!(valueCmbUnit == null) && this.getTable().getItemCount()>0) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -499,7 +501,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnAdd().setEnabled(false);
 			this.getBtnDelete().setEnabled(false);
 			this.getBtnConsult().setEnabled(false);
-			if (!(valueCmbUnit == null)) {
+			if (!(valueCmbUnit == null) && this.getTable().getItemCount()>0) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
