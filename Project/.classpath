@@ -18,6 +18,12 @@
 	<classpathentry kind="lib" path="lib/asm.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.11.jar"/>
-	<classpathentry kind="lib" path="lib/itext-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.6-20100309.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/groovy-all-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/iText-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.11.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
