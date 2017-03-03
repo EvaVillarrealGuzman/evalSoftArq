@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/jcommon-1.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections-2.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.0.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-9.0-802.jdbc4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-annotations.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jasperreports-4.7.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-digester-1.7.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -18,12 +13,15 @@
 	<classpathentry kind="lib" path="lib/asm.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.11.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.6-20100309.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/groovy-all-1.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.11.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.9.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/jasperreports-4.7.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

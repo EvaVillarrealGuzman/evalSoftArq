@@ -10,10 +10,10 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import Presentation.preferences.Messages;
 
-public class UCM2DEVSPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class SAEPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 
-	public UCM2DEVSPreferencePage() {
+	public SAEPreferencePage() {
 		super(GRID);
 		noDefaultAndApplyButton();
 	}

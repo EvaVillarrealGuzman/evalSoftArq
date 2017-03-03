@@ -100,7 +100,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 */
 	protected Control createContents(Composite parent) {
 		if (viewController.isConnection()) {
-			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			//final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
@@ -334,7 +334,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					try {
-						btnEvaluate.setCursor(cursor);
+					//	btnEvaluate.setCursor(cursor);
 						viewController.evaluate();
 						clearView();
 						prepareView(1);
@@ -348,6 +348,20 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
+			
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 4;
+			parent.setLayout(layout);
+
+			Composite cErrorMessage = new Composite(parent, SWT.NULL);
+			cErrorMessage.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cErrorMessage.setLayoutData(gridData);
+
+			Label labelSn = new Label(cErrorMessage, SWT.NONE);
+			labelSn.setText(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
 
 		return null;

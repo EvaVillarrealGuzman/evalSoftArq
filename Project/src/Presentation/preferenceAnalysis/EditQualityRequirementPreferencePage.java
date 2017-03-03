@@ -560,6 +560,20 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
+			
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 4;
+			parent.setLayout(layout);
+
+			Composite cErrorMessage = new Composite(parent, SWT.NULL);
+			cErrorMessage.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cErrorMessage.setLayoutData(gridData);
+
+			Label labelSn = new Label(cErrorMessage, SWT.NONE);
+			labelSn.setText(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
 
 		return null;

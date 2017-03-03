@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="tocconcepts.xml">
+      </toc>
+      <toc
+            file="tocgettingstarted.xml">
+      </toc>
+      <toc
+            file="toctoverview.xml">
+      </toc>
+   </extension>
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -268,5 +283,12 @@
       <initializer
             class="Presentation.preferences.PreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
    </extension>
 </plugin>

@@ -91,11 +91,11 @@ public class ireport {
 		if (parameters == null) {
 			parameters = new HashMap();
 		}
-		System.out.println(parameters.get("tituloMembrete"));
+		/*System.out.println(parameters.get("tituloMembrete"));
 		System.out.println(parameters.get("tituloMembrete2"));
 		System.out.println(parameters.get("frase"));
 		System.out.println(parameters.get("pieMembrete"));
-		System.out.println(parameters.get("title"));
+		System.out.println(parameters.get("title"));*/
 		
 		
 		return parameters;

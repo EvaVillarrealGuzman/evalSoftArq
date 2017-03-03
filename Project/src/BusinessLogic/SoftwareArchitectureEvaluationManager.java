@@ -287,7 +287,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	private Responsibility[] getResponsibilities() {
 		ArrayList<Responsibility> responsibilities = new ArrayList<Responsibility>();
-		System.out.println("architecture is 0: " + this.getArchitecture());
+		//System.out.println("architecture is 0: " + this.getArchitecture());
 		Iterator it2 = this.getArchitecture().getPaths().iterator();
 		DomainModel.SoftwareArchitectureSpecificationEntity.Path path = (DomainModel.SoftwareArchitectureSpecificationEntity.Path) it2
 				.next();

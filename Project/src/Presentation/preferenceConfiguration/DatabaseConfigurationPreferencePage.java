@@ -80,8 +80,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 	protected Control createContents(final Composite parent) {
 		try {
 
-			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
-			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
+			//final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			//final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
@@ -158,9 +158,9 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			btnTestConnection.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					parent.setCursor(cursorWait);
+				//	parent.setCursor(cursorWait);
 					viewController.testConnection();
-					parent.setCursor(cursorNotWait);
+					//parent.setCursor(cursorNotWait);
 				}
 			});
 

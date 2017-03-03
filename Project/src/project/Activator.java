@@ -76,11 +76,7 @@ public class Activator extends AbstractUIPlugin {
 	 *            the path
 	 * @return the image descriptor
 	 */
-	public static ImageDescriptor getImageDescriptor(String path) { // NOPMD by
-																	// Usuario-Pc
-																	// on
-																	// 11/06/16
-																	// 12:39
+	public static ImageDescriptor getImageDescriptor(String path) { // NOPMD by										// 12:39
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 }

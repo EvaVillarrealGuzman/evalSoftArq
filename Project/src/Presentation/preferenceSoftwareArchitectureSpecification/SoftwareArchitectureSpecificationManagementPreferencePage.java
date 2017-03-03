@@ -96,7 +96,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	protected Control createContents(final Composite parent) {
 
 		if (viewController.isConnection()) {
-			final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			//final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -212,7 +212,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 
-					btnAdd.setCursor(cursor);
+					//btnAdd.setCursor(cursor);
 					// Open a FileDialog that show only jucm file
 					chooseFile = new FileDialog(parent.getShell(), SWT.OPEN);
 					chooseFile.setFilterNames(new String[] { Messages.getString("UCM2DEVS_JucmFiles_Label") });
@@ -237,7 +237,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnConsult.setCursor(cursor);
+					//btnConsult.setCursor(cursor);
 					TableItem item = table.getItem(table.getSelectionIndex());
 					viewController.openJUCMNavEditor(parent, item.getText(2) + "\\" + item.getText(1));
 					prepareView(2);
@@ -251,7 +251,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnDelete.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnDelete.setCursor(cursor);
+					//btnDelete.setCursor(cursor);
 					viewController.deleteToTable();
 				}
 			});
@@ -307,7 +307,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					btnSave.setCursor(cursor);
+					//btnSave.setCursor(cursor);
 					if (viewController.save()) {
 						viewController.createObjectSuccessDialog();
 					} else {
@@ -320,6 +320,20 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
+			
+			GridLayout layout = new GridLayout();
+			layout.numColumns = 4;
+			parent.setLayout(layout);
+
+			Composite cErrorMessage = new Composite(parent, SWT.NULL);
+			cErrorMessage.setLayout(layout);
+			gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			gridData.horizontalAlignment = GridData.FILL;
+			cErrorMessage.setLayoutData(gridData);
+
+			Label labelSn = new Label(cErrorMessage, SWT.NONE);
+			labelSn.setText(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
 		}
 
 		return null;
