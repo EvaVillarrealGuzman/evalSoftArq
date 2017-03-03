@@ -274,10 +274,10 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	private void setUnit(Architecture architecture) {
 		Iterator it = architecture.getPaths().iterator();
 		Boolean isSetUnit = false;
-		while (it.hasNext() && !isSetUnit) {
+		while (it.hasNext() ) {
 			Path a = (Path) it.next();
 			Iterator itPathElements = a.getPathElements().iterator();
-			if (itPathElements.hasNext()) {
+			while (itPathElements.hasNext() && !isSetUnit) {
 				PathElement pathElement = (PathElement) itPathElements.next();
 				if (pathElement instanceof Responsibility) {
 					Responsibility responsability = (Responsibility) pathElement;
