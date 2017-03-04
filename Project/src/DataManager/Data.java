@@ -321,7 +321,7 @@ public class Data {
 		artifactTypes.add(a1);
 		artifactTypes.add(a2);
 
-		ResponseType r1 = new ResponseType("Processes stimuli");
+		ResponseType r1 = new ResponseType("Processes stimulus");
 		ResponseType r2 = new ResponseType("Changes level of service");
 		ResponseType r3 = new ResponseType("Disable sources of events");
 		Set<ResponseType> responseTypes = new HashSet<ResponseType>();

@@ -157,14 +157,14 @@ public class ReportManager extends HibernateManager {
 					if (i == 0) {
 						ResponsibilityPerformance item = new ResponsibilityPerformance();
 						item.setResponsibilityTT(name);
-						item.setTurnaroundTime(ind.getValue() / 10);
+						item.setTurnaroundTime(this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10);
 						list.add(item);
 					} else {
 						Iterator ite = list.iterator();
 						while (ite.hasNext()) {
 							ResponsibilityPerformance q = (ResponsibilityPerformance) ite.next();
 							if (q.getResponsibilityTT().equals(name)) {
-								q.setTurnaroundTime(q.getTurnaroundTime() + (ind.getValue() / 10));
+								q.setTurnaroundTime(q.getTurnaroundTime() + (this.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()) / 10));
 							}
 						}
 					}
@@ -172,6 +172,7 @@ public class ReportManager extends HibernateManager {
 			}
 			i++;
 		}
+		
 		return list;
 	}
 
@@ -224,7 +225,6 @@ public class ReportManager extends HibernateManager {
 			q.setFails(q.getFails() / runsByResponsibility.get(index));
 			index++;
 		}
-
 		return listResponsibility;
 	}
 
