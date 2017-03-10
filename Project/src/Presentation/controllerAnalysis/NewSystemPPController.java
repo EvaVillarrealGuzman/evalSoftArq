@@ -41,10 +41,6 @@ public class NewSystemPPController extends Controller {
 	}
 
 	public AnalysisManager getManager() {
-		// if (manager == null) {
-		// manager = new AnalysisManager();
-		// }
-		// return manager;
 		return AnalysisManager.getManager();
 	}
 

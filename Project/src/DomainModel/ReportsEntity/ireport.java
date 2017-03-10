@@ -23,28 +23,11 @@ public class ireport {
 	private JasperPrint jasperPrint;
 	private Map parameters;
 	private String archive;
-	
-	
-	
-	/**
-	 * Agrega un parametro al reporte, este parametro debe coincidir con los
-	 * parametros previamente creados en el reporte
-	 * 
-	 * @param nombreParametro
-	 *            nombre del parametro definido en el reporte
-	 * @param valorParametro
-	 *            Object con el valor del parametro
-	 */
+
 	public void addParameter(String pparamenterName, Object pparameterValue) {
 		getParameters().put(pparamenterName, pparameterValue);
 	}
 
-	/**
-	 * Lanza un hilo con el metodo run() donde arma el reporte con los
-	 * parametros, el archivo jasper seleccionado en el constructor y la fuente
-	 * de datos mencionada anteriormente. Una vez listo el reporte instancia un
-	 * visor y lo muestra.
-	 */
 	public void print() {
 		try {
 			JRDataSource jrd = null;
@@ -66,40 +49,25 @@ public class ireport {
 		}
 
 	}
-	
 
-	/**
-	 * Setea la coleccion de datos del reporte, esta coleccion debe contener
-	 * javaBeans que coincidan sus atributos, encapsulados por sus accesores,
-	 * con los fields usados en el reporte
-	 * 
-	 * @param datos
-	 */
 	public void setDataCollection(Collection pdata) {
 		DataSourceCollection.setColeccionDeDatos(pdata);
 	}
-
 
 	public void visibleReport() {
 		JasperViewer jviewer = new JasperViewer(this.getJasperPrint(), false);
 		jviewer.setTitle("Report");
 		jviewer.setVisible(true);
 	}
-	
-	//Getters and setters
+
+	// Getters and setters
 	public Map getParameters() {
 		if (parameters == null) {
 			parameters = new HashMap();
 		}
-		/*System.out.println(parameters.get("tituloMembrete"));
-		System.out.println(parameters.get("tituloMembrete2"));
-		System.out.println(parameters.get("frase"));
-		System.out.println(parameters.get("pieMembrete"));
-		System.out.println(parameters.get("title"));*/
-		
-		
+
 		return parameters;
-	
+
 	}
 
 	public void setParameters(Map parameters) {
@@ -140,6 +108,5 @@ public class ireport {
 	public void setDataSource(DataSourceCollection dataSource) {
 		this.dataSource = dataSource;
 	}
-	
 
 }

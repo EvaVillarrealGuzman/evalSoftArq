@@ -10,7 +10,6 @@ import javax.crypto.spec.SecretKeySpec;
  * This class is responsible for the management package: Analysis
  * 
  * @author: María Eva Villarreal Guzmán. E-mail: villarrealguzman@gmail.com
- * Source: http://www.rgagnon.com/javadetails/java-0400.html
  */
 public class CryptoUtils {
 

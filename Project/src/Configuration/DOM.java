@@ -27,7 +27,8 @@ import org.xml.sax.SAXException;
  */
 public class DOM {
 
-	private static String PATH = Platform.getInstallLocation().getURL().getPath() + "plugins/SAE/Configuration/databaseconfiguration.xml";
+	private static String PATH = Platform.getInstallLocation().getURL().getPath()
+			+ "plugins/SAE/Configuration/databaseconfiguration.xml";
 
 	public static String readPassword() {
 		return CryptoUtils.decrypt(internalStructureRead("password"));
@@ -62,6 +63,12 @@ public class DOM {
 		internalStructureWrite("portnumber", portnumber);
 	}
 
+	/**
+	 * Write in configuration file, attribute with value
+	 * 
+	 * @param attribute
+	 * @param value
+	 */
 	private static void internalStructureWrite(String attribute, String value) {
 		File fXmlFile = new File(PATH);
 
@@ -107,13 +114,18 @@ public class DOM {
 		}
 	}
 
+	/**
+	 * Read attribute in configuration file
+	 * 
+	 * @param attribute
+	 * @param value
+	 */
 	private static String internalStructureRead(String attribute) {
 		File currentDirFile = new File(".");
 		String helper = currentDirFile.getAbsolutePath();
 		try {
 			String currentDir = helper.substring(0, helper.length() - currentDirFile.getCanonicalPath().length());
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 

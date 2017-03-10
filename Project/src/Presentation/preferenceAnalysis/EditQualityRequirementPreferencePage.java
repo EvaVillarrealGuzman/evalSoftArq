@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -33,7 +34,6 @@ import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.QualityRequirement;
 import DomainModel.AnalysisEntity.ResponseMeasureType;
 import Presentation.controllerAnalysis.EditQualityRequirementPPController;
-import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
 
@@ -98,10 +98,8 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			this.setViewController(EditQualityRequirementPPController.getViewController());
 			this.getViewController().setFormSearch(this);
 		} catch (Exception e) {
-
+			System.err.print(e);
 		}
-		// viewController = new EditQualityRequirementPPController();
-		// this.setViewController(viewController);
 	}
 
 	/*
@@ -120,11 +118,10 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
 	 * .eclipse.swt.widgets.Composite)
 	 */
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		if (viewController.isConnection()) {
-			if (!viewController.isConnection()) {
-				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
-			}
+			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
@@ -535,7 +532,9 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					parent.setCursor(cursorWait);
 					int var = viewController.save();
+					parent.setCursor(cursorNotWait);
 					if (var == 0) {
 						viewController.createObjectSuccessDialog();
 					} else if (var == 1) {
@@ -551,7 +550,9 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if (viewController.createDeleteRequirementDialog() == true) {
+						parent.setCursor(cursorWait);
 						viewController.remove();
+						parent.setCursor(cursorNotWait);
 					}
 				}
 			});
@@ -560,7 +561,7 @@ public class EditQualityRequirementPreferencePage extends FieldEditorPreferenceP
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
-			
+
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);

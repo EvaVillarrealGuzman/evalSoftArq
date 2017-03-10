@@ -14,6 +14,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.eclipse.core.runtime.Platform;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.w3c.dom.Document;
@@ -38,6 +39,7 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
 import DomainModel.SoftwareArchitectureSpecificationEntity.SimpleComponent;
 import DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
 import DomainModel.SoftwareArchitectureSpecificationEntity.StartPoint;
+import Main.TransformerSimulator;
 
 /**
  * This class is responsible for the management package: Software Architecture
@@ -57,6 +59,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private DefaultTreeModel model;
 	private JTree tree;
 	private static SoftwareArchitectureSpecificationManager manager;
+	private TransformerSimulator pluginTS;
 
 	private SoftwareArchitectureSpecificationManager() {
 		super();
@@ -73,7 +76,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		}
 		return manager;
 	}
-	
+
 	public static void setManager(SoftwareArchitectureSpecificationManager manager) {
 		SoftwareArchitectureSpecificationManager.manager = manager;
 	}
@@ -97,6 +100,18 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		this.unit = unit;
 	}
 
+
+	public TransformerSimulator getPluginTS() {
+		if (pluginTS == null) {
+			pluginTS = new TransformerSimulator();
+		}
+		return pluginTS;
+	}
+
+	public void setPluginTS(TransformerSimulator pluginTS) {
+		this.pluginTS = pluginTS;
+	}
+	
 	/**
 	 * 
 	 * @return True if there are systems whose state==true, else return false
@@ -140,8 +155,9 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	public Unit[] getComboModelUnit() {
 		ArrayList<Unit> units = new ArrayList<Unit>();
 		for (Unit auxTipo : this.listUnit()) {
-			if(auxTipo.getName().equals("Request/Hour") || auxTipo.getName().equals("Request/Day") || auxTipo.getName().equals("Request/Week") || auxTipo.getName().equals("Request/Month")){
-			} else{
+			if (auxTipo.getName().equals("Request/Hour") || auxTipo.getName().equals("Request/Day")
+					|| auxTipo.getName().equals("Request/Week") || auxTipo.getName().equals("Request/Month")) {
+			} else {
 				units.add(auxTipo);
 			}
 		}
@@ -203,9 +219,8 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			Set<PathElement> pathElements = new HashSet<PathElement>();
 			Set<Responsibility> responsibilities = new HashSet<Responsibility>();
 			CompositeComponent child;
-			// StartPoint startPoint;
 
-			// lee el archivo xml que se convertirá en árbol
+			// read xml file
 			File fXmlFile = new File(parch.getPathUCM());
 
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -215,12 +230,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 			Boolean isRootNodeASimpleComponent = true;
 
-			// busca una lista de los elementos con el tag correspondiente
+			// Search item with matching tag
 			NodeList contRefsList = doc.getElementsByTagName("contRefs");
 			ArchitectureElement rootNode = null;
 
 			DefaultMutableTreeNode parentN = null;
-			// busca el padre del árbol que se creará
+			// Search parent of tree (root)
 			for (int i = 0; i < contRefsList.getLength(); i++) {
 				if (contRefsList.item(i).getNodeType() == Node.ELEMENT_NODE) {
 					Element eContRef = (Element) contRefsList.item(i);
@@ -239,17 +254,16 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 				}
 			}
 			archElements.add(rootNode);
-			// Definimos el modelo donde se agregaran los nodos
+			// define model where nodes will be added
 			model = new DefaultTreeModel(parentN);
 
-			// agregamos el modelo al arbol, donde previamente establecimos la
-			// raiz
+			// add model to tree
 			tree = new JTree(model);
 
-			// definimos los eventos
+			// define event
 			tree.getSelectionModel().addTreeSelectionListener(this);
 
-			// Cada Padre crea a su hijo, recursivamente
+			// each parent creato to children, recursively
 			creationComponent(parentN, isRootNodeASimpleComponent, archElements, pathElements);
 
 			creationStartPoint(startPoint, pathElements);
@@ -274,8 +288,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
-	 * Devuelve el nombre correspondiente de un elemento componente con un
-	 * determinado id (value)
+	 * Return name of component with id (value)
 	 * 
 	 * @param id
 	 * @return
@@ -298,8 +311,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
-	 * Devuelve el nombre correspondiente de un elemento responsabilidad con un
-	 * determinado id (value)
+	 * Return name of responsibility with id (value)
 	 * 
 	 * @param value
 	 * @return
@@ -339,6 +351,14 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return null;
 	}
 
+	/**
+	 * Create components
+	 * 
+	 * @param parentN
+	 * @param pisRootNodeASimpleComponent
+	 * @param archElements
+	 * @param pathElements
+	 */
 	private void creationComponent(DefaultMutableTreeNode parentN, boolean pisRootNodeASimpleComponent,
 			Set<ArchitectureElement> archElements, Set<PathElement> pathElements) {
 		NodeList contRefsList = doc.getElementsByTagName("contRefs");
@@ -355,12 +375,11 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 			Node contRef = contRefsList.item(j);
 			if (contRef.getNodeType() == Node.ELEMENT_NODE) {
 				Element eContRef = (Element) contRef;
-				// busca el elemento del archivo xml que representa al padre del
-				// subárbol actual en el árbol
+				// search root of subtree
 				if (this.translateNameComponent(eContRef.getAttribute("id")).equals(dataParent.getName())) {
 					String children = eContRef.getAttribute("children");
 					if (!children.equals("")) {
-						// crea un vector con los hijos del padre
+						// create array with children
 						String[] childArray = children.split(" ");
 						for (int i = 0; i < childArray.length; i++) {
 
@@ -378,21 +397,17 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
 							model.insertNodeInto(hijoN, parentN, index);
 							index++;
-							// llama recursivamente, para que si este nodo tiene
-							// hijos, los cree
+							// call recursively, if have children to create them
 							creationComponent(hijoN, isRootNodeASimpleComponent, archElements, pathElements);
 						}
 					}
 
-					// si se llega a este punto, es porque el nodo no tiene
-					// hijos
-					// por lo cual se supone que es un componente simple
-					// entonces, se buscan sus responsabilidades
+					// search his responsibilities
 					String nodes = eContRef.getAttribute("nodes");
 					if (!nodes.equals("")) {
 						String[] node = nodes.split(" ");
 						for (int k = 0; k < node.length; k++) {
-							// Por cada responsabilidad
+							// Each resopnsibility
 							this.creationSimpleElement(node[k], parentN, index, pathElements);
 						}
 					}
@@ -401,13 +416,21 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		}
 	}
 
+	/**
+	 * Create responsibilities
+	 * 
+	 * @param idNode
+	 * @param parentNode
+	 * @param index
+	 * @param pathElements
+	 * @return
+	 */
 	private int creationSimpleElement(String idNode, DefaultMutableTreeNode parentNode, int index,
 			Set<PathElement> pathElements) {
 		NodeList responsibilitiesList = doc.getElementsByTagName("responsibilities");
 		NodeList nodesList = doc.getElementsByTagName("nodes");
 
 		Element eNode = this.getNodeOfResponsability(idNode, doc);
-		// responsibilities.clear();
 
 		for (int i = 0; i < responsibilitiesList.getLength(); i++) {
 			Node respNode = responsibilitiesList.item(i);
@@ -423,7 +446,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 					NodeList metadatasList = eResponsability.getElementsByTagName("metadata");
 
-					// Busca los metadatos
+					// search metadata
 					for (int k = 0; k < metadatasList.getLength(); k++) {
 						Node node = metadatasList.item(k);
 						Element metadata = (Element) node;
@@ -435,7 +458,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setValue(Double.parseDouble(metadata.getAttribute("value")));
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
-							child.getSpecificationParameter().add(sp);					
+							child.getSpecificationParameter().add(sp);
 						} else if (metadataName.equals("MeanDowntime")) {
 							SpecificationParameter sp = new SpecificationParameter();
 							sp.setMetric((Metric) this.listMetric("Mean Downtime").get(0));
@@ -450,7 +473,6 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
 							child.getSpecificationParameter().add(sp);
-							// sp.setMeanRecoveryTime(Double.parseDouble(metadata.getAttribute("value")));
 						} else if (metadataName.equals("MeanTimeBFail")) {
 							SpecificationParameter sp = new SpecificationParameter();
 							sp.setMetric((Metric) this.listMetric("Mean Time B Fail").get(0));
@@ -458,12 +480,10 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 							sp.setUnit(this.getUnit());
 							saveObject(sp);
 							child.getSpecificationParameter().add(sp);
-							// sp.setMeanTimeBFail(Double.parseDouble(metadata.getAttribute("value")));
 						}
 
 					}
 					updateObject(child);
-					// responsibilities.add(child);
 					pathElements.add(child);
 
 					DefaultMutableTreeNode hijoN = new DefaultMutableTreeNode(child);
@@ -493,7 +513,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 						ArrayList<Double> pathProbabilities = new ArrayList<Double>();
 
 						NodeList metadatasList = eCurrentNode.getElementsByTagName("metadata");
-						// Busca los metadatos
+						// search metadata
 						for (int k = 0; k < metadatasList.getLength(); k++) {
 							Node metadataNode = metadatasList.item(k);
 							Element metadata = (Element) metadataNode;
@@ -542,7 +562,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 	}
 
-	//
+	/**
+	 * Create start point
+	 * 
+	 * @param startPoint
+	 * @param pathElements
+	 */
 	private void creationStartPoint(StartPoint startPoint, Set<PathElement> pathElements) {
 
 		NodeList nodesList = doc.getElementsByTagName("nodes");
@@ -572,7 +597,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
-	 * Obtiene los elementos predecesores de un elemento particular
+	 * Return successor of a element
 	 * 
 	 * @param idSource
 	 * @return
@@ -596,7 +621,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	}
 
 	/**
-	 * Obtiene los elementos sucesores de un elemento particular
+	 * Return predecessor of a element
 	 * 
 	 * @param idTarget
 	 * @return
@@ -635,6 +660,12 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return null;
 	}
 
+	/**
+	 * Return node in tree with id='id'
+	 * 
+	 * @param id
+	 * @return
+	 */
 	private Element getNodeOfComponent(String id) {
 		NodeList contRefsList = doc.getElementsByTagName("contRefs");
 
@@ -651,6 +682,13 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return null;
 	}
 
+	/**
+	 * Return if memberNode is child of tree
+	 * 
+	 * @param rootNode
+	 * @param memberNode
+	 * @return
+	 */
 	private boolean isInTree(DefaultMutableTreeNode rootNode, DefaultMutableTreeNode memberNode) {
 		java.util.Enumeration e = rootNode.breadthFirstEnumeration();
 		while (e.hasMoreElements()) {
@@ -662,6 +700,13 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return false;
 	}
 
+	/**
+	 * Return leafs (responsibility, andjoin, andfork, orjoin and orfork) of
+	 * tree
+	 * 
+	 * @param node
+	 * @return
+	 */
 	private ArrayList<DefaultMutableTreeNode> getLeafs(DefaultMutableTreeNode node) {
 		Boolean terminationCondition = true;
 
@@ -696,12 +741,23 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 	}
 
+	/**
+	 * Return if is a simple component
+	 * 
+	 * @param pelem
+	 * @return
+	 */
 	private boolean isASimpleComponent(Element pelem) {
 		if (pelem.getAttribute("children").equals("")) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	
+	public String chequerUCM(String path) {
+		return this.getPluginTS().callChequerUCM(path);
 	}
 
 }

@@ -23,7 +23,6 @@ import DomainModel.SoftwareArchitectureSpecificationEntity.PathElement;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Responsibility;
 import DomainModel.SoftwareArchitectureSpecificationEntity.SpecificationParameter;
 import Presentation.Controller;
-import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage;
 import Presentation.preferences.Messages;
 
@@ -57,16 +56,12 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		}
 		return viewController;
 	}
-	
+
 	public static void setViewController(SoftwareArchitectureSpecificationPPController viewController) {
 		SoftwareArchitectureSpecificationPPController.viewController = viewController;
 	}
 
 	public SoftwareArchitectureSpecificationManager getManager() {
-		//if (manager == null) {
-		//	manager = new SoftwareArchitectureSpecificationManager();
-		//}
-		//return manager;
 		return SoftwareArchitectureSpecificationManager.getManager();
 	}
 
@@ -230,16 +225,17 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 			this.getForm().getCmbSystem().getCombo().setFocus();
 			return false;
 		}
-		if (this.getForm().getTable().getItemCount()>0 && this.isEmpty(this.getForm().getCmbUnit())) {
+		if (this.getForm().getTable().getItemCount() > 0 && this.isEmpty(this.getForm().getCmbUnit())) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_SelectUnit_ErrorDialog"));
 			this.getForm().getCmbUnit().getCombo().setFocus();
 			return false;
-		} if (this.getForm().getTable().getItemCount()==0 && !(this.isEmpty(this.getForm().getCmbUnit()))) {
+		}
+		if (this.getForm().getTable().getItemCount() == 0 && !(this.isEmpty(this.getForm().getCmbUnit()))) {
 			this.createErrorDialog(Messages.getString("UCM2DEVS_UnitSelectedAndArchitecturesEmpty_ErrorDialog"));
 			this.getForm().getTable().setFocus();
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -274,7 +270,7 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	private void setUnit(Architecture architecture) {
 		Iterator it = architecture.getPaths().iterator();
 		Boolean isSetUnit = false;
-		while (it.hasNext() ) {
+		while (it.hasNext()) {
 			Path a = (Path) it.next();
 			Iterator itPathElements = a.getPathElements().iterator();
 			while (itPathElements.hasNext() && !isSetUnit) {
@@ -292,20 +288,29 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 		}
 	}
 
-	public void addToTable(String namePath) {
-		TableItem item = new TableItem(this.getForm().getTable(), SWT.NONE);
-		item.setData(namePath);
+	public String addToTable(String namePath) {
+		String result = this.getManager().chequerUCM(namePath);
 
-		item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
-				namePath.substring(0, namePath.lastIndexOf("\\")), });
+		if (result.equals("")) {
+			TableItem item = new TableItem(this.getForm().getTable(), SWT.NONE);
+			item.setData(namePath);
+
+			item.setText(new String[] { namePath, namePath.substring(namePath.lastIndexOf("\\") + 1),
+					namePath.substring(0, namePath.lastIndexOf("\\")), });
+			return "";
+
+		} else {
+			return result;
+		}
+
 	}
 
 	public void deleteToTable() {
 		this.getForm().getTable().remove(this.getForm().getTable().getSelectionIndices());
-		if (this.getForm().getTable().getItemCount()==0){
+		if (this.getForm().getTable().getItemCount() == 0) {
 			this.getForm().loadComboUnit();
 			this.getForm().prepareView(4);
-		}else{
+		} else {
 			this.getForm().prepareView(2);
 		}
 	}
@@ -345,4 +350,5 @@ public class SoftwareArchitectureSpecificationPPController extends Controller {
 	public boolean existSystemTrue() {
 		return this.getManager().existSystemTrue();
 	}
+
 }

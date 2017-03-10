@@ -19,7 +19,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.hibernate.exception.JDBCConnectionException;
 
-import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.controllerConfiguration.DatabaseConfigurationPPController;
 import Presentation.preferences.Messages;
 
@@ -55,10 +54,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			this.setViewController(DatabaseConfigurationPPController.getViewController());
 			this.getViewController().setForm(this);
 		} catch (Exception e) {
-
+			System.err.print(e);
 		}
-		// viewController = new DatabaseConfigurationPPController();
-		// this.setViewController(viewController);
 	}
 
 	/*
@@ -79,9 +76,8 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 	 */
 	protected Control createContents(final Composite parent) {
 		try {
-
-			//final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
-			//final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
+			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
@@ -158,9 +154,9 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			btnTestConnection.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-				//	parent.setCursor(cursorWait);
+					parent.setCursor(cursorWait);
 					viewController.testConnection();
-					//parent.setCursor(cursorNotWait);
+					parent.setCursor(cursorNotWait);
 				}
 			});
 
@@ -179,7 +175,9 @@ public class DatabaseConfigurationPreferencePage extends FieldEditorPreferencePa
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					parent.setCursor(cursorWait);
 					viewController.updateConnectionData();
+					parent.setCursor(cursorNotWait);
 				}
 			});
 

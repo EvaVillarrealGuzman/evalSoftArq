@@ -32,7 +32,7 @@ public class HibernateUtil {
 				conf.setProperty("hibernate.connection.url",
 						"jdbc:postgresql://localhost:" + db.getPortName() + "/" + db.getDatabaseName());
 			} catch (Exception pe) {
-				JOptionPane.showMessageDialog(null, "Database error Nº 2001");
+				JOptionPane.showMessageDialog(null, "Database error Nï¿½ 2001");
 			}
 
 			conf.setProperty("hibernate.connection.username", db.getUserName());
@@ -91,8 +91,6 @@ public class HibernateUtil {
 				psession = psessionFactory.openSession();
 			} catch (HibernateException pe) {
 				JOptionPane.showMessageDialog(null, pe);
-		/*	} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null, e);*/
 			}
 		} catch (HeadlessException pex) {
 			throw new ExceptionInInitializerError(pex);

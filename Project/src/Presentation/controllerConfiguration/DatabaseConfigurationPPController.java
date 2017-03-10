@@ -37,10 +37,6 @@ public class DatabaseConfigurationPPController extends Controller {
 	}
 	
 	public SystemConfigurationManager getManager() {
-		//if (manager == null) {
-		//	manager = new SystemConfigurationManager();
-		//}
-		//return manager;
 		return SystemConfigurationManager.getManager();
 	}
 

@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.controllerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationPPController;
 import Presentation.preferences.Messages;
 
@@ -71,10 +70,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.setViewController(SoftwareArchitectureSpecificationPPController.getViewController());
 			this.getViewController().setForm(this);
 		} catch (Exception e) {
-
+			System.err.print(e);
 		}
-		// viewController = new SoftwareArchitectureSpecificationPPController();
-		// this.setViewController(viewController);
 	}
 
 	/*
@@ -96,7 +93,9 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 	protected Control createContents(final Composite parent) {
 
 		if (viewController.isConnection()) {
-			//final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
+
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -211,8 +210,6 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnAdd.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-
-					//btnAdd.setCursor(cursor);
 					// Open a FileDialog that show only jucm file
 					chooseFile = new FileDialog(parent.getShell(), SWT.OPEN);
 					chooseFile.setFilterNames(new String[] { Messages.getString("UCM2DEVS_JucmFiles_Label") });
@@ -220,13 +217,16 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 					String filePath = chooseFile.open();
 					if (filePath != null) {
 						if (!viewController.isUCMDuplicate(filePath)) {
-							viewController.addToTable(filePath);
+							String result = viewController.addToTable(filePath);
+							if (!result.equals("")){
+								viewController.createErrorDialog(result);
+							}
 							prepareView(2);
 						} else {
-							// TODO poner bien el nombre
 							viewController.createErrorDialog(Messages.getString("UCM2DEVS_UCMExists_ErrorDialog"));
 						}
 					}
+					
 				}
 			});
 
@@ -237,9 +237,10 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnConsult.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					//btnConsult.setCursor(cursor);
+					parent.setCursor(cursorWait);
 					TableItem item = table.getItem(table.getSelectionIndex());
 					viewController.openJUCMNavEditor(parent, item.getText(2) + "\\" + item.getText(1));
+					parent.setCursor(cursorNotWait);
 					prepareView(2);
 				}
 			});
@@ -251,8 +252,9 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnDelete.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					//btnDelete.setCursor(cursor);
+					parent.setCursor(cursorWait);
 					viewController.deleteToTable();
+					parent.setCursor(cursorNotWait);
 				}
 			});
 
@@ -307,10 +309,12 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			btnSave.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					//btnSave.setCursor(cursor);
+					parent.setCursor(cursorWait);
 					if (viewController.save()) {
+						parent.setCursor(cursorNotWait);
 						viewController.createObjectSuccessDialog();
 					} else {
+						parent.setCursor(cursorNotWait);
 						viewController.createObjectDontUpdateErrorDialog();
 					}
 				}
@@ -320,7 +324,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
-			
+
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
@@ -489,8 +493,8 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnDelete().setEnabled(true);
 			this.getBtnConsult().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			//this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
-			if (!(valueCmbUnit == null) && this.getTable().getItemCount()>0) {
+			// this.getCmbUnit().setSelection(StructuredSelection.EMPTY);
+			if (!(valueCmbUnit == null) && this.getTable().getItemCount() > 0) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -503,7 +507,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnDelete().setEnabled(true);
 			this.getBtnConsult().setEnabled(true);
 			this.getCmbUnit().getCombo().setEnabled(true);
-			if (!(valueCmbUnit == null) && this.getTable().getItemCount()>0) {
+			if (!(valueCmbUnit == null) && this.getTable().getItemCount() > 0) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -515,7 +519,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnAdd().setEnabled(false);
 			this.getBtnDelete().setEnabled(false);
 			this.getBtnConsult().setEnabled(false);
-			if (!(valueCmbUnit == null) && this.getTable().getItemCount()>0) {
+			if (!(valueCmbUnit == null) && this.getTable().getItemCount() > 0) {
 				this.getBtnSave().setEnabled(true);
 			} else {
 				this.getBtnSave().setEnabled(false);
@@ -532,7 +536,7 @@ public class SoftwareArchitectureSpecificationManagementPreferencePage extends F
 			this.getBtnSave().setEnabled(true);
 			break;
 		}
-		
+
 	}
 
 	/**

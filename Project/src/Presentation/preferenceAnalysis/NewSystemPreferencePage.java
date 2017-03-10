@@ -8,6 +8,7 @@ import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -49,17 +50,15 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	 */
 	public NewSystemPreferencePage() {
 		super(GRID);
-		try{
+		try {
 			noDefaultAndApplyButton();
 			System.runFinalization();
-	        Runtime.getRuntime().gc();
-	        this.setViewController(NewSystemPPController.getViewController());
+			Runtime.getRuntime().gc();
+			this.setViewController(NewSystemPPController.getViewController());
 			this.getViewController().setForm(this);
-	    }catch(Exception e){
-	            
-	    }
-		//viewController = new NewSystemPPController();
-		//this.setViewController(viewController);	
+		} catch (Exception e) {
+			System.err.print(e);
+		}
 	}
 
 	/*
@@ -78,11 +77,10 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
 	 * .eclipse.swt.widgets.Composite)
 	 */
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		if (viewController.isConnection()) {
-			if (!viewController.isConnection()) {
-				viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
-			}
+			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
@@ -144,7 +142,9 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			btnNew.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					parent.setCursor(cursorWait);
 					int var = viewController.save();
+					parent.setCursor(cursorNotWait);
 					if (var == 0) {
 						viewController.createObjectSuccessDialog();
 					} else if (var == 1) {
@@ -157,7 +157,7 @@ public class NewSystemPreferencePage extends FieldEditorPreferencePage implement
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
-			
+
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);

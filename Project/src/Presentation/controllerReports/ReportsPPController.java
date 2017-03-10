@@ -1,7 +1,5 @@
 package Presentation.controllerReports;
 
-import java.util.Iterator;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -10,12 +8,9 @@ import org.eclipse.swt.widgets.TableItem;
 
 import BusinessLogic.ReportManager;
 import DomainModel.AnalysisEntity.QualityRequirement;
-import DomainModel.SoftwareArchitectureEvaluationEntity.Indicator;
-import DomainModel.SoftwareArchitectureEvaluationEntity.Run;
 import DomainModel.SoftwareArchitectureEvaluationEntity.Simulator;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Presentation.Controller;
-import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferenceReports.ReportsPreferencePage;
 
 /**
@@ -31,8 +26,7 @@ public class ReportsPPController extends Controller {
 	private static ReportsPPController viewController;
 	private ReportManager manager;
 	private ReportsPreferencePage form;
-	public static final String PATHREPORT = Platform.getInstallLocation().getURL().getPath()
-			+ "plugins/SAE/reports/";
+	public static final String PATHREPORT = Platform.getInstallLocation().getURL().getPath() + "plugins/SAE/reports/";
 
 	private ReportsPPController() {
 		super();
@@ -55,10 +49,6 @@ public class ReportsPPController extends Controller {
 	}
 
 	public ReportManager getManager() {
-		//if (manager == null) {
-		//	manager = new ReportManager();
-		//}
-		//return manager;
 		return ReportManager.getManager();
 	}
 
@@ -122,27 +112,26 @@ public class ReportsPPController extends Controller {
 	private Boolean printReportPerSystemAvailability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemAvailability.jasper",
 				"Report of System - Attribute: Availability", this.getManager().listSystemAvailability(), true,
-				this.isCumplimentRequirement());
+				this.getManager().isCumplimentRequirement());
 	}
 
 	private Boolean printReportPerSystemReliability() {
 		return this.getManager().createReport(PATHREPORT + "reportSystemReliability.jasper",
 				"Report of System - Attribute: Reliability", this.getManager().listSystemReliability(), false,
-				this.isCumplimentRequirement());
+				this.getManager().isCumplimentRequirement());
 	}
 
 	public Boolean printReportPerSystemPerformance() {
-//		return this.getManager().createReport(PATHREPORT + "reportSystemPerformance.jasper",
-//				"Report of System - Attribute: Performance", this.getManager().listSystemPerformance(), true,
-//				this.isCumplimentRequirement());
-		if (this.getManager().getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName().equals("System Turnaround Time")){
+		if (this.getManager().getQualityRequirement().getQualityScenario().getResponseMeasure().getMetric().getName()
+				.equals("System Turnaround Time")) {
 			return this.getManager().createReport(PATHREPORT + "reportSystemPerformanceTurnaroundTime.jasper",
-				"Report of System - Attribute: Performance", this.getManager().listSystemPerformanceTurnaroundTime(), true,
-				this.isCumplimentRequirement());
-		}else {
+					"Report of System - Attribute: Performance",
+					this.getManager().listSystemPerformanceTurnaroundTime(), true,
+					this.getManager().isCumplimentRequirement());
+		} else {
 			return this.getManager().createReport(PATHREPORT + "reportSystemPerformanceThroughput.jasper",
-					"Report of System - Attribute: Performance", this.getManager().listSystemPerformanceThroughput(), true,
-					this.isCumplimentRequirement());
+					"Report of System - Attribute: Performance", this.getManager().listSystemPerformanceThroughput(),
+					true, this.getManager().isCumplimentRequirement());
 		}
 	}
 
@@ -243,62 +232,6 @@ public class ReportsPPController extends Controller {
 
 	public Boolean isConnection() {
 		return this.getManager().isConnection();
-	}
-
-	private boolean isCumplimentRequirement() {
-		boolean cumpliment = true;
-		if (this.getManager().getQualityAttribute().getName().equals("Reliability")) {
-			for (Iterator<Run> its = this.getManager().getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getMetric().getName().equals("System Failures")) {
-						if (this.getManager().getQualityRequirement().getQualityScenario().getResponseMeasure().getValue() < ind
-								.getValue()) {
-							cumpliment = false;
-						}
-					}
-				}
-			}
-		} else if (this.getManager().getQualityAttribute().getName().equals("Availability")) {
-			for (Iterator<Run> its = this.getManager().getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getMetric().getName().equals("System Availability Time")) {
-						if (this.getManager().getAvailabilityTimeRequirement() > this.getManager()
-								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit()))
-							cumpliment = false;
-					}
-					if (ind.getMetric().getName().equals("System No-Availability Time")) {
-						if (this.getManager().getNoAvailabilityTimeRequirement() < this.getManager()
-								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())) {
-							cumpliment = false;
-						}
-					}
-				}
-			}
-		} else if (this.getManager().getQualityAttribute().getName().equals("Performance")) {
-			for (Iterator<Run> its = this.getManager().getArchitecture().getSimulator().getRuns().iterator(); its.hasNext();) {
-				Run r = its.next();
-				for (Iterator<Indicator> iti = r.getIndicators().iterator(); iti.hasNext();) {
-					Indicator ind = iti.next();
-					if (ind.getMetric().getName().equals("System Throughput")) {
-						if (this.getManager().getThroughputRequirement() < this.getManager()
-								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())) {
-							cumpliment = false;
-						}
-					}
-					if (ind.getMetric().getName().equals("System Turnaround Time")) {
-						if (this.getManager().getTurnaroundTimeRequirement() < this.getManager()
-								.convertValueAcordingToUnitRequirement(ind.getValue(), ind.getUnit())) {
-							cumpliment = false;
-						}
-					}
-				}
-			}
-		}
-		return cumpliment;
 	}
 
 	public boolean existSystemTrueWithQualityRequirementTrue() {

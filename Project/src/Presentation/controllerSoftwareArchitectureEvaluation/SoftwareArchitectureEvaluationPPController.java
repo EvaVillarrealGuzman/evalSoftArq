@@ -14,7 +14,6 @@ import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
 import Main.TransformerSimulator;
 import Presentation.Controller;
-import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.preferenceSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPreferencePage;
 import Presentation.preferences.Messages;
 
@@ -54,10 +53,6 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 	}
 
 	public SoftwareArchitectureEvaluationManager getManager() {
-		//if (manager == null) {
-		//	manager = new SoftwareArchitectureEvaluationManager();
-		//}
-		//return manager;
 		return SoftwareArchitectureEvaluationManager.getManager();
 	}
 
@@ -106,13 +101,11 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			this.getManager().setArchitecture((Architecture) this.getForm().getTableSoftArc()
 					.getItem(this.getForm().getTableSoftArc().getSelectionIndex()).getData());
 
-			TransformerSimulator pluginTS = new TransformerSimulator();
-
 			TableItem item = this.getForm().getTableSoftArc()
 					.getItem(this.getForm().getTableSoftArc().getSelectionIndex());
 			String UCMpath = item.getText(2) + "\\" + item.getText(1);
 
-			String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
+			//String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
 
 			double simulationTime = this.getForm().getSimulationTime().getDoubleValue();
 
@@ -125,7 +118,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			DomainModel.AnalysisEntity.System system = (DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
 					.getForm().getCmbSystem().getSelection()).getFirstElement();
 
-			switch (this.getManager().evaluate(UCMpath, chequerUCMResult, simulationTime, unit, system, simulationTimeS,
+			switch (this.getManager().evaluate(UCMpath,  simulationTime, unit, system, simulationTimeS,
 					table)) {
 			case 0:
 				this.createSuccessDialog(Messages.getString("UCM2DEVS_Simulation_Dialog"));
@@ -139,10 +132,10 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 				this.createErrorDialog(Messages.getString("UCM2DEVS_Transformation_ErrorDialog"));
 				this.createObjectDontUpdateErrorDialog();
 				break;
-			case 3:
+		/*	case 3:
 				this.createErrorDialog(chequerUCMResult);
 				this.createObjectDontUpdateErrorDialog();
-				break;
+				break;*/
 			case 4:
 				this.createObjectDontUpdateErrorDialog();
 				break;

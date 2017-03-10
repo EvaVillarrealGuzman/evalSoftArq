@@ -71,7 +71,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 		return manager;
 	}
-	
+
 	public static void setManager(SoftwareArchitectureEvaluationManager manager) {
 		SoftwareArchitectureEvaluationManager.manager = manager;
 	}
@@ -130,6 +130,14 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.typeIndicator = typeIndicator;
 	}
 
+	public Set<Architecture> getArchitectures() {
+		return this.getSystem().getArchitectures();
+	}
+
+	public Set<QualityRequirement> getQualityRequirements() {
+		return this.getSystem().getQualityRequirements();
+	}
+
 	/**
 	 * 
 	 * @return ComboBoxModel with system names whose state==true and
@@ -164,8 +172,9 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	public Unit[] getComboModelUnit() {
 		ArrayList<Unit> units = new ArrayList<Unit>();
 		for (Unit auxTipo : this.listUnit()) {
-			if(auxTipo.getName().equals("Request/Hour") || auxTipo.getName().equals("Request/Day") || auxTipo.getName().equals("Request/Week") || auxTipo.getName().equals("Request/Month")){
-			} else{
+			if (auxTipo.getName().equals("Request/Hour") || auxTipo.getName().equals("Request/Day")
+					|| auxTipo.getName().equals("Request/Week") || auxTipo.getName().equals("Request/Month")) {
+			} else {
 				units.add(auxTipo);
 			}
 		}
@@ -180,14 +189,6 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	 */
 	private List<Unit> listUnit() {
 		return this.listClass(Unit.class, "name");
-	}
-
-	public Set<Architecture> getArchitectures() {
-		return this.getSystem().getArchitectures();
-	}
-
-	public Set<QualityRequirement> getQualityRequirements() {
-		return this.getSystem().getQualityRequirements();
 	}
 
 	public boolean existSystemTrueWithArchitecture() {
@@ -244,6 +245,12 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		this.updateObject(this.getSystem());
 	}
 
+	/**
+	 * Convert result simulation to object
+	 * 
+	 * @param ppath
+	 * @throws IOException
+	 */
 	private void convertCSVToTable(String ppath) throws IOException {
 		BufferedReader br = null;
 		try {
@@ -287,7 +294,6 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 	private Responsibility[] getResponsibilities() {
 		ArrayList<Responsibility> responsibilities = new ArrayList<Responsibility>();
-		//System.out.println("architecture is 0: " + this.getArchitecture());
 		Iterator it2 = this.getArchitecture().getPaths().iterator();
 		DomainModel.SoftwareArchitectureSpecificationEntity.Path path = (DomainModel.SoftwareArchitectureSpecificationEntity.Path) it2
 				.next();
@@ -486,7 +492,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 				} else if (punit.getName().equals("Minutes")) {
 					pvalueConvert = pvalue * 40320;
 				}
-			} 
+			}
 		}
 		return pvalueConvert;
 	}
@@ -500,9 +506,9 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return null;
 	}
 
-	public String chequerUCM(String path) {
+	/*public String chequerUCM(String path) {
 		return this.getPluginTS().callChequerUCM(path);
-	}
+	}*/
 
 	private Boolean transformer(String inputPath) {
 		return this.getPluginTS().callTransformer(inputPath, PATHEVALUATION.substring(1, PATHEVALUATION.length()));
@@ -566,39 +572,48 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return hu.isConnection();
 	}
 
-	public int evaluate(String UCMpath, String chequerUCMResult, double simulationTime, Unit unit,
-			DomainModel.AnalysisEntity.System system, String simulationTimeS, Table table) throws IOException {
+	/**
+	 * Evaluate architecture
+	 * 
+	 * @param UCMpath
+	 * @param chequerUCMResult
+	 * @param simulationTime
+	 * @param unit
+	 * @param system
+	 * @param simulationTimeS
+	 * @param table
+	 * @return
+	 * @throws IOException
+	 */
+	public int evaluate(String UCMpath, double simulationTime, Unit unit, DomainModel.AnalysisEntity.System system,
+			String simulationTimeS, Table table) throws IOException {
 		try {
 
 			TransformerSimulator pluginTS = new TransformerSimulator();
 
-			if (chequerUCMResult.equals("")) {
-				if (this.transformer(UCMpath)) {
+			if (this.transformer(UCMpath)) {
 
-					if (this.simulator(simulationTime, unit)) {
-						this.setSystem(system);
+				if (this.simulator(simulationTime, unit)) {
+					this.setSystem(system);
 
-						this.createSimulator(unit);
-						for (int i = 1; i <= 10; i++) {
-							String num = Integer.toString(i);
-							this.createRun(simulationTime, table);
-							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-									+ "plugins/SAE/Run/Run" + num + "/performance.csv");
-							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-									+ "plugins/SAE/Run/Run" + num + "/availability.csv");
-							this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath()
-									+ "plugins/SAE/Run/Run" + num + "/reliability.csv");
-						}
-						this.deleteFiles();
-						return 0;
-					} else {
-						return 1;
+					this.createSimulator(unit);
+					for (int i = 1; i <= 10; i++) {
+						String num = Integer.toString(i);
+						this.createRun(simulationTime, table);
+						this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath() + "plugins/SAE/Run/Run"
+								+ num + "/performance.csv");
+						this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath() + "plugins/SAE/Run/Run"
+								+ num + "/availability.csv");
+						this.convertCSVToTable(Platform.getInstallLocation().getURL().getPath() + "plugins/SAE/Run/Run"
+								+ num + "/reliability.csv");
 					}
+					this.deleteFiles();
+					return 0;
 				} else {
-					return 2;
+					return 1;
 				}
 			} else {
-				return 3;
+				return 2;
 			}
 		} catch (IOException e) {
 			return 4;

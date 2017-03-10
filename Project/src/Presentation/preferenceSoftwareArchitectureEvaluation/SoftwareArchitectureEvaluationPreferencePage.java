@@ -30,7 +30,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import DomainModel.SoftwareArchitectureSpecificationEntity.Architecture;
-import Presentation.controllerAnalysis.NewSystemPPController;
 import Presentation.controllerSoftwareArchitectureEvaluation.SoftwareArchitectureEvaluationPPController;
 import Presentation.preferences.DoubleFieldEditor;
 import Presentation.preferences.Messages;
@@ -76,10 +75,8 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			this.setViewController(SoftwareArchitectureEvaluationPPController.getViewController());
 			this.getViewController().setForm(this);
 		} catch (Exception e) {
-
+			System.err.print(e);
 		}
-		// viewController = new SoftwareArchitectureEvaluationPPController();
-		// this.setViewController(viewController);
 	}
 
 	/*
@@ -98,9 +95,10 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 	 * org.eclipse.jface.preference.FieldEditorPreferencePage#createContents(org
 	 * .eclipse.swt.widgets.Composite)
 	 */
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		if (viewController.isConnection()) {
-			//final Cursor cursor = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+			final Cursor cursorNotWait = parent.getDisplay().getSystemCursor(SWT.CURSOR_ARROW);
 
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
@@ -334,9 +332,10 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					try {
-					//	btnEvaluate.setCursor(cursor);
+						parent.setCursor(cursorWait);
 						viewController.evaluate();
 						clearView();
+						parent.setCursor(cursorNotWait);
 						prepareView(1);
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -348,7 +347,7 @@ public class SoftwareArchitectureEvaluationPreferencePage extends FieldEditorPre
 			return new Composite(parent, SWT.NULL);
 		} else {
 			viewController.createErrorDialog(Messages.getString("UCM2DEVS_ConnectionDatabase_ErrorDialog"));
-			
+
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 4;
 			parent.setLayout(layout);
