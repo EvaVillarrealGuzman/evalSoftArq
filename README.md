@@ -11,7 +11,7 @@
         * jUCMNav: 7.0.0  ( http://jucmnav.softwareengineering.ca/jucmnav)
         * PostgreSQL: 9.0 or higher (https://www.postgresql.org)
 
-*Note: Before you've installed SAE, in Windows, you must set the  PATH  environment variable to point to the Java installation directory.*
+*Note:* Before you've installed SAE, in Windows, you must set the  PATH  environment variable to point to the Java installation directory.
 
 To set the PATH variable:
         1) Locate the Java installation directory. If you didn't change the path during installation, it'll be something like C:\Program Files\Java\jdk1.7.0_07\bin
@@ -32,6 +32,6 @@ You'll need to close and re-open any command windows that were open before you m
         3) Type a name into the Name text box
         4) The software site is in your local file system (including a SAE folder), click Local... to specify the directory location of the site
 
-*Note: Make sure you have Java 8 running in Eclipse:
-        1) Window > Preference > Java  > Installed JREs
-        2) Select JRE 1.8.0_51*
+*Note:* Make sure you have Java 8 running in Eclipse:
+        1. Window > Preference > Java  > Installed JREs
+        2. Select JRE 1.8.0_51
