@@ -105,7 +105,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 					.getItem(this.getForm().getTableSoftArc().getSelectionIndex());
 			String UCMpath = item.getText(2) + "\\" + item.getText(1);
 
-			//String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
+			// String chequerUCMResult = this.getManager().chequerUCM(UCMpath);
 
 			double simulationTime = this.getForm().getSimulationTime().getDoubleValue();
 
@@ -118,8 +118,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 			DomainModel.AnalysisEntity.System system = (DomainModel.AnalysisEntity.System) ((IStructuredSelection) this
 					.getForm().getCmbSystem().getSelection()).getFirstElement();
 
-			switch (this.getManager().evaluate(UCMpath,  simulationTime, unit, system, simulationTimeS,
-					table)) {
+			switch (this.getManager().evaluate(UCMpath, simulationTime, unit, system, simulationTimeS, table)) {
 			case 0:
 				this.createSuccessDialog(Messages.getString("UCM2DEVS_Simulation_Dialog"));
 				this.createObjectSuccessDialog();
@@ -132,10 +131,11 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 				this.createErrorDialog(Messages.getString("UCM2DEVS_Transformation_ErrorDialog"));
 				this.createObjectDontUpdateErrorDialog();
 				break;
-		/*	case 3:
-				this.createErrorDialog(chequerUCMResult);
+			case 3:
+				this.createErrorDialog(Messages.getString("UCM2DEVS_FileNotFoundPart1") + " " + UCMpath + " "
+						+ Messages.getString("UCM2DEVS_FileNotFoundPart2"));
 				this.createObjectDontUpdateErrorDialog();
-				break;*/
+				break;
 			case 4:
 				this.createObjectDontUpdateErrorDialog();
 				break;
