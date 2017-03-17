@@ -32,7 +32,7 @@ public class ireport {
 		try {
 			JRDataSource jrd = null;
 			if (this.getJasperPrint() == null) {
-				setMasterReport((JasperReport) JRLoader.loadObject(this.archive));
+				setMasterReport((JasperReport) JRLoader.loadObjectFromFile(this.archive));
 				try {
 					jrd = this.getDataSource().createBeanCollectionDatasource();
 				} catch (Exception ek) {
