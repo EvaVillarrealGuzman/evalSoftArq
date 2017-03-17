@@ -17,7 +17,6 @@
 	<classpathentry kind="lib" path="lib/c3p0-0.9.0.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.0.jar"/>
-	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-digester-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/groovy-all-2.0.1.jar"/>
@@ -25,9 +24,6 @@
 	<classpathentry kind="lib" path="lib/itextpdf-5.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-6.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jdbc2_0-stdext.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.11.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.9.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
