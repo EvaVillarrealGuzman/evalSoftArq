@@ -132,8 +132,7 @@ public class SoftwareArchitectureEvaluationPPController extends Controller {
 				this.createObjectDontUpdateErrorDialog();
 				break;
 			case 3:
-				this.createErrorDialog(Messages.getString("UCM2DEVS_FileNotFoundPart1") + " " + UCMpath + " "
-						+ Messages.getString("UCM2DEVS_FileNotFoundPart2"));
+				this.createErrorDialog(Messages.getString("UCM2DEVS_UCMNotExists_ErrorDialog"));
 				this.createObjectDontUpdateErrorDialog();
 				break;
 			case 4:
