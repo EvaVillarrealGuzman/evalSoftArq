@@ -21,6 +21,10 @@ public class ArchitectureElement {
 	
 	private String name;
 
+	public ArchitectureElement() {
+		super();
+	}
+	
 	public ArchitectureElement(String name) {
 		super();
 		this.name = name;

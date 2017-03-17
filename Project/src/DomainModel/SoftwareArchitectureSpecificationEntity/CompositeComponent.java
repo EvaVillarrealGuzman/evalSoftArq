@@ -28,5 +28,8 @@ public class CompositeComponent extends ArchitectureElement {
 		super(name);
 	}
 
+	public CompositeComponent() {
+		super();
+	}
 }
 

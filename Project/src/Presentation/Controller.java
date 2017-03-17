@@ -190,6 +190,16 @@ public class Controller {
 	}
 
 	/**
+	 * Created a dialog for specification's delete
+	 * 
+	 * @return boolean
+	 */
+	public boolean createDeleteSpecificationDialog() {
+		return MessageDialog.openQuestion(null, Messages.getString("UCM2DEVS_Delete_Label"),
+				Messages.getString("UCM2DEVS_WantDeleteSpecification_QuestionDialog"));
+	}
+	
+	/**
 	 * Convert a File to IFile
 	 * 
 	 * @param file
