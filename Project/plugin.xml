@@ -40,6 +40,11 @@
       </command>
       <command
             categoryId="Project.commands.category"
+            id="Project.commands.softwareArchitectureSpecificationEditCommand"
+            name="SoftwareArchitectureSpecificationEdit">
+      </command>
+      <command
+            categoryId="Project.commands.category"
             id="Project.commands.softwareArchitectureSpecificationNewCommand"
             name="SoftwareArchitectureSpecificationNew">
       </command>
@@ -95,6 +100,10 @@
       <handler
             class="Presentation.handlerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementHandler"
             commandId="Project.commands.softwareArchitectureSpecificationManagementCommand">
+      </handler>
+      <handler
+            class="Presentation.handlerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationEditHandler"
+            commandId="Project.commands.softwareArchitectureSpecificationEditCommand">
       </handler>
       <handler
             class="Presentation.handlerSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationNewHandler"
@@ -198,6 +207,13 @@
                   		mnemonic="SASM"
           	  	        style="push">
         		    </command>
+        		    <command
+                  	 	commandId="Project.commands.softwareArchitectureSpecificationEditCommand"
+                  		id="Project.menus.softwareArchitectureSpecificationEditCommand"
+                  		label="%Edit"
+                  		mnemonic="SASE"
+          	  	        style="push">
+        		    </command>
      	    </menu>
             <command
                   commandId="Project.commands.softwareArchitectureEvaluationCommand"
@@ -264,6 +280,12 @@
         class="Presentation.preferenceSoftwareArchitectureSpecification.ManagementSoftwareArchitectureSpecificationPreferencePage"
         id="Presentation.preferenceSoftwareArchitectureSpecification.ManagementSoftwareArchitectureSpecificationPreferencePage"
         name="Specification Management">
+  </page>
+  <page
+        category="Presentation.preferences.SAE"
+        class="Presentation.preferenceSoftwareArchitectureSpecification.EditSoftwareArchitectureSpecificationPreferencePage"
+        id="Presentation.preferenceSoftwareArchitectureSpecification.EditSoftwareArchitectureSpecificationPreferencePage"
+        name="Specification Edit">
   </page>
   <page
         category="Presentation.preferences.SAE"
