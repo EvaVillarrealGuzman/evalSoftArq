@@ -28,9 +28,11 @@ public class SoftwareArchitectureSpecificationManagementHandler extends Abstract
 	public Object execute(ExecutionEvent event) {
 		PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				"Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage",
+				//"Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage",
+				"Presentation.preferenceSoftwareArchitectureSpecification.ManagementSoftwareArchitectureSpecificationPreferencePage",
 				new String[] {
-						"Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage" },
+						//"Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage" },
+						"Presentation.preferenceSoftwareArchitectureSpecification.ManagementSoftwareArchitectureSpecificationManagementPreferencePage" },
 				null);
 		if (pref != null)
 			pref.open();

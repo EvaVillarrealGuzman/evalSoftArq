@@ -24,6 +24,7 @@ import org.w3c.dom.NodeList;
 
 import DataManager.HibernateManager;
 import DomainModel.AnalysisEntity.Metric;
+import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDJoin;
@@ -60,6 +61,7 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	private JTree tree;
 	private static SoftwareArchitectureSpecificationManager manager;
 	private TransformerSimulator pluginTS;
+	private Architecture architecture;
 
 	private SoftwareArchitectureSpecificationManager() {
 		super();
@@ -90,6 +92,16 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 
 	public DomainModel.AnalysisEntity.System getSystem() {
 		return this.system;
+	}
+	
+	
+
+	public Architecture getArchitecture() {
+		return architecture;
+	}
+
+	public void setArchitecture(Architecture architecture) {
+		this.architecture = architecture;
 	}
 
 	public Unit getUnit() {
@@ -760,4 +772,11 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 		return this.getPluginTS().callChequerUCM(path);
 	}
 
+	public String getPath() {
+		return this.getArchitecture().getPathUCM().substring(0, this.getArchitecture().getPathUCM().lastIndexOf("\\"));
+	}
+	
+	public String getName() {
+		return this.getArchitecture().getPathUCM().substring(this.getArchitecture().getPathUCM().lastIndexOf("\\") + 1);
+	}
 }

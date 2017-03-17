@@ -261,8 +261,8 @@
 	 </page>	
   <page
         category="Presentation.preferences.SAE"
-        class="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
-        id="Presentation.preferenceSoftwareArchitectureSpecification.SoftwareArchitectureSpecificationManagementPreferencePage"
+        class="Presentation.preferenceSoftwareArchitectureSpecification.ManagementSoftwareArchitectureSpecificationPreferencePage"
+        id="Presentation.preferenceSoftwareArchitectureSpecification.ManagementSoftwareArchitectureSpecificationPreferencePage"
         name="Specification Management">
   </page>
   <page
