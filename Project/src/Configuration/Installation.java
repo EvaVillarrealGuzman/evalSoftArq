@@ -158,7 +158,7 @@ public class Installation {
 			root.appendChild(itemPortnumber);
 
 			Element itemDatabase = document.createElement("database");
-			Text nodeDatabaseValue = document.createTextNode("ProyectoFinal");
+			Text nodeDatabaseValue = document.createTextNode("database");
 			itemDatabase.appendChild(nodeDatabaseValue);
 
 			root.appendChild(itemDatabase);
