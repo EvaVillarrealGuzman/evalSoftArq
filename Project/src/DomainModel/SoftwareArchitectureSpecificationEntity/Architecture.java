@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,10 +31,10 @@ public class Architecture {
 	@OneToMany(targetEntity = Path.class)
 	private Set<Path> paths = new HashSet<Path>();
 
-	@OneToMany(targetEntity = ArchitectureElement.class)
+	@OneToMany(targetEntity = ArchitectureElement.class, cascade = CascadeType.REMOVE)
 	private Set<ArchitectureElement> architectureElements = new HashSet<ArchitectureElement>();
 
-	@OneToOne(targetEntity = Simulator.class)
+	@OneToOne(targetEntity = Simulator.class, cascade = CascadeType.REMOVE)
 	private Simulator simulator;
 
 	private String pathUCM;

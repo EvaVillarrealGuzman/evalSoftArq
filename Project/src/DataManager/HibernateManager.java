@@ -67,17 +67,11 @@ public class HibernateManager extends HibernateUtil {
 			Transaction tx = s.beginTransaction();
 			s.save(pobjet);
 			tx.commit();
-			System.out.println(" saveObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD
-																								// by
-																								// Usuario-Pc
-																								// on
-																					// 10/06/16
-																								// 22:02
+			System.out.println(" saveObjet() " + pobjet.getClass() + ": " + pobjet.toString()); 
 			return true;
 		} catch (Exception pex) {
-			System.out.println("error " + pex); // NOPMD by Usuario-Pc on
-												// 10/06/16 22:02
-			System.out.println( // NOPMD by Usuario-Pc on 10/06/16 22:02
+			System.out.println("error " + pex); 
+			System.out.println(
 					"Repository.saveObjet(Object objetj)" + pobjet.getClass() + ": " + pobjet.toString() + pex);
 			pex.printStackTrace();
 			getTx().rollback();
@@ -91,12 +85,22 @@ public class HibernateManager extends HibernateUtil {
 		try {
 			s.update(pobjet);
 			tx.commit();
-			System.out.println(" updateObjet() " + pobjet.getClass() + ": " + pobjet.toString()); // NOPMD
-																									// by
-																									// Usuario-Pc
-																									// on
-																									// 10/06/16
-																									// 22:02
+			System.out.println(" updateObjet() " + pobjet.getClass() + ": " + pobjet.toString()); 
+			return true;
+		} catch (HibernateException pe) {
+			JOptionPane.showMessageDialog(null, pe);
+			tx.rollback();
+			return false;
+		}
+	}
+	
+	public boolean deleteObject(Object pobjet) {
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+		try {
+			s.delete(pobjet);
+			tx.commit();
+			//System.out.println(" deleteObjet() " + pobjet.getClass() + ": " + pobjet.toString()); 
 			return true;
 		} catch (HibernateException pe) {
 			JOptionPane.showMessageDialog(null, pe);

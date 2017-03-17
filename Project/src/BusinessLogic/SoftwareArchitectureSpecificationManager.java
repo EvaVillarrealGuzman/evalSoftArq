@@ -3,6 +3,7 @@ package BusinessLogic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.eclipse.core.runtime.Platform;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.w3c.dom.Document;
@@ -24,7 +24,6 @@ import org.w3c.dom.NodeList;
 
 import DataManager.HibernateManager;
 import DomainModel.AnalysisEntity.Metric;
-import DomainModel.AnalysisEntity.QualityAttribute;
 import DomainModel.AnalysisEntity.Unit;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDFork;
 import DomainModel.SoftwareArchitectureSpecificationEntity.ANDJoin;
@@ -778,5 +777,32 @@ public class SoftwareArchitectureSpecificationManager extends HibernateManager i
 	
 	public String getName() {
 		return this.getArchitecture().getPathUCM().substring(this.getArchitecture().getPathUCM().lastIndexOf("\\") + 1);
+	}
+	
+	public Boolean deleteArchitecture() {
+		return this.deleteObject(this.getArchitecture());
+		//return this.updateSystem();
+	}
+
+	public Boolean removeArchitecture() {
+		this.deleteAsociation();
+		this.updateSystem();
+		return this.deleteArchitecture();
+	}
+	
+	/**
+	 * Delete to current system, association with selected architecture
+	 */
+	private void deleteAsociation() {
+		Iterator it = this.getArchitectures().iterator();
+		while (it.hasNext()) {
+			Architecture arc = (Architecture) it.next();
+
+			boolean isNotDelete = false;
+			if (arc.equals(this.getArchitecture())) {
+					it.remove();
+			}
+
+		}
 	}
 }
