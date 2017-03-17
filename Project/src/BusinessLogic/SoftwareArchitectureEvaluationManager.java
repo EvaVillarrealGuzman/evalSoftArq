@@ -48,7 +48,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	private DomainModel.AnalysisEntity.System system;
 	public static final String SEPARATOR = ";";
 	public static final String QUOTE = "\"";
-	private static final String PATHEVALUATION = Platform.getInstallLocation().getURL().getPath() + "plugins/SAE";
+	private static final String PATH = Platform.getInstallLocation().getURL().getPath() + "plugins/SAE";
 	private TransformerSimulator pluginTS;
 	private Simulator simulator;
 	private Architecture architecture;
@@ -510,13 +510,13 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		return this.getPluginTS().callChequerUCM(path);
 	}*/
 
-	private Boolean transformer(String inputPath) {
-		return this.getPluginTS().callTransformer(inputPath, PATHEVALUATION.substring(1, PATHEVALUATION.length()));
+	private String transformer(String inputPath) {
+		return this.getPluginTS().callTransformer(inputPath, PATH.substring(1, PATH.length()));
 	}
 
 	private Boolean simulator(double observe_t, Unit punit) {
 		double psimulationTime = this.convertValueAcordingToUnit(observe_t, punit);
-		return this.getPluginTS().callSimulator(PATHEVALUATION, psimulationTime);
+		return this.getPluginTS().callSimulator(PATH, psimulationTime);
 	}
 
 	/**
@@ -524,12 +524,12 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 	 */
 	private void deleteFiles() {
 		// Delete jar
-		File jarFile = new File(PATHEVALUATION + "/simulator.jar");
+		File jarFile = new File(PATH + "/simulator.jar");
 		jarFile.delete();
 
 		// Delete csv
 		for (int i = 1; i < 11; i++) {
-			File RunDirectory = new File(PATHEVALUATION + "/Run/Run" + i);
+			File RunDirectory = new File(PATH + "/Run/Run" + i);
 
 			String[] fileList;
 			fileList = RunDirectory.list();
@@ -540,7 +540,7 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 
 		// Delete SystemTemp
-		File Directory = new File(PATHEVALUATION + "/Simulator/src/SimEnvironment/SAModel/SystemTemp");
+		File Directory = new File(PATH + "/Simulator/src/SimEnvironment/SAModel/SystemTemp");
 
 		String[] fileList;
 		fileList = Directory.list();
@@ -550,10 +550,10 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 		}
 
 		// Delete test.class and simenvironment.class
-		File testFile = new File(PATHEVALUATION + "/Simulator/src/Test.class");
+		File testFile = new File(PATH + "/Simulator/src/Test.class");
 		testFile.delete();
 
-		File simEnvironmentFile = new File(PATHEVALUATION + "/Simulator/src/SimEnvironment/SimEnvironment.class");
+		File simEnvironmentFile = new File(PATH + "/Simulator/src/SimEnvironment/SimEnvironment.class");
 		simEnvironmentFile.delete();
 
 	}
@@ -591,7 +591,9 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 
 			TransformerSimulator pluginTS = new TransformerSimulator();
 
-			if (this.transformer(UCMpath)) {
+			String resultTransformer = this.transformer(UCMpath);
+			
+			if (resultTransformer.equals("")) {
 
 				if (this.simulator(simulationTime, unit)) {
 					this.setSystem(system);
@@ -612,7 +614,9 @@ public class SoftwareArchitectureEvaluationManager extends HibernateManager {
 				} else {
 					return 1;
 				}
-			} else {
+			} else if (resultTransformer.equals("FileNotFoundException")){
+				return 3;
+			} else{
 				return 2;
 			}
 		} catch (IOException e) {
